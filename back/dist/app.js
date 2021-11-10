@@ -17,11 +17,9 @@ const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const connect_history_api_fallback_1 = __importDefault(require("connect-history-api-fallback"));
 const helmet_1 = __importDefault(require("helmet"));
-// import { mongoDB } from './lib/db'
+const db_1 = require("./lib/db");
 const app = (0, express_1.default)();
-app.use((0, helmet_1.default)({
-    contentSecurityPolicy: false,
-}));
+app.use((0, helmet_1.default)());
 // app.use(noCache())
 app.use((0, connect_history_api_fallback_1.default)());
 app.use(express_1.default.json({ limit: '2mb' }));
@@ -34,7 +32,7 @@ const server = http_1.default.createServer(app);
 const port = process.env.PORT || ecosystem.port;
 {
     (() => __awaiter(void 0, void 0, void 0, function* () {
-        // await mongoDB.connect()
+        yield db_1.mongoDB.connect();
         server.listen(port, () => {
             console.log(process.env.NODE_ENV ? 'production' : 'development');
             console.log(`Listening on port ${port}`);

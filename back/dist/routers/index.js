@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import Auth from '../lib/auth'
-// const auth: Auth = new Auth()
-// import UserController from '../controllers/userController'
-// const userCtr: UserController = new UserController()
+const auth_1 = __importDefault(require("../lib/auth"));
+const auth = new auth_1.default();
+const userController_1 = __importDefault(require("../controllers/userController"));
+const userCtr = new userController_1.default();
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
 // import NoticeController from '../controllers/boardNoticeController'
@@ -35,10 +35,8 @@ const express_1 = __importDefault(require("express"));
 // import BankController from '../controllers/bankController'
 // const bankCtr: BankController = new BankController()
 const router = express_1.default.Router();
-// // Auth
-// router.get('/auth', adminCtr.auth)
-// router.get('/login', adminCtr.login)
-// // User
+// User
+router.get('/login', userCtr.login);
 // router.get('/user', auth.checkLogin(), userCtr.getUserList)
 // router.post('/set-user', auth.checkLogin(), userCtr.setUser)
 // router.put('/edit-user', auth.checkLogin(), userCtr.editUser)

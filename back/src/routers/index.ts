@@ -1,10 +1,10 @@
 import express from 'express'
 
-// import Auth from '../lib/auth'
-// const auth: Auth = new Auth()
+import Auth from '../lib/auth'
+const auth: Auth = new Auth()
 
-// import UserController from '../controllers/userController'
-// const userCtr: UserController = new UserController()
+import UserController from '../controllers/userController'
+const userCtr: UserController = new UserController()
 
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
@@ -47,11 +47,10 @@ import express from 'express'
 
 const router = express.Router()
 
-// // Auth
-// router.get('/auth', adminCtr.auth)
-// router.get('/login', adminCtr.login)
 
-// // User
+
+// User
+router.get('/login', userCtr.login)
 // router.get('/user', auth.checkLogin(), userCtr.getUserList)
 // router.post('/set-user', auth.checkLogin(), userCtr.setUser)
 // router.put('/edit-user', auth.checkLogin(), userCtr.editUser)

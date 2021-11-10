@@ -5,12 +5,10 @@ import http from 'http'
 import history from 'connect-history-api-fallback'
 import helmet from 'helmet'
 import noCache from 'nocache'
-// import { mongoDB } from './lib/db'
+import { mongoDB } from './lib/db'
 
 const app = express()
-app.use(helmet({
-    contentSecurityPolicy: false,
-}))
+app.use(helmet())
 
 // app.use(noCache())
 app.use(history())
@@ -27,7 +25,7 @@ const port = process.env.PORT || ecosystem.port
 
 {
     (async () => {
-        // await mongoDB.connect()
+        await mongoDB.connect()
 
         server.listen(port, () => {
             console.log(process.env.NODE_ENV ? 'production' : 'development')
