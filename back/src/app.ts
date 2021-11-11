@@ -11,7 +11,7 @@ const app = express()
 app.use(helmet({
     contentSecurityPolicy: false,
 }))
-app.use(helmet())
+// app.use(helmet())
 
 // app.use(noCache())
 app.use(history())

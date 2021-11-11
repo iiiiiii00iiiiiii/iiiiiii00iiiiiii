@@ -22,7 +22,7 @@ const app = (0, express_1.default)();
 app.use((0, helmet_1.default)({
     contentSecurityPolicy: false,
 }));
-app.use((0, helmet_1.default)());
+// app.use(helmet())
 // app.use(noCache())
 app.use((0, connect_history_api_fallback_1.default)());
 app.use(express_1.default.json({ limit: '2mb' }));
