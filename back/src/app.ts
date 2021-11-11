@@ -8,9 +8,9 @@ import noCache from 'nocache'
 import { mongoDB } from './lib/db'
 
 const app = express()
-// app.use(helmet({
-//     contentSecurityPolicy: false,
-// }))
+app.use(helmet({
+    contentSecurityPolicy: false,
+}))
 app.use(helmet())
 
 // app.use(noCache())

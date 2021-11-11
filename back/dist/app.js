@@ -19,9 +19,9 @@ const connect_history_api_fallback_1 = __importDefault(require("connect-history-
 const helmet_1 = __importDefault(require("helmet"));
 const db_1 = require("./lib/db");
 const app = (0, express_1.default)();
-// app.use(helmet({
-//     contentSecurityPolicy: false,
-// }))
+app.use((0, helmet_1.default)({
+    contentSecurityPolicy: false,
+}));
 app.use((0, helmet_1.default)());
 // app.use(noCache())
 app.use((0, connect_history_api_fallback_1.default)());
