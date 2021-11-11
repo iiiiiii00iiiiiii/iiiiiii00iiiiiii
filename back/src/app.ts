@@ -16,7 +16,7 @@ app.use(helmet())
 // app.use(noCache())
 app.use(history())
 app.use(express.json({limit: '2mb'}))
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/www'))
 
 //라우트 설정
