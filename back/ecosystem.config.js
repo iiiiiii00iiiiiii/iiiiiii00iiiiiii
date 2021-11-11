@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: "[SPORTS]CLIENT",
+            name: "[GOLDEN]CLIENT",
             script: "./dist/app.js",
             env: {
                 "PORT": 2009,
