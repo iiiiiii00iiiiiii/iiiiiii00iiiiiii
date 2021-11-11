@@ -37,6 +37,8 @@ const userCtr = new userController_1.default();
 const router = express_1.default.Router();
 // User
 router.get('/login', userCtr.login);
+router.post('/join', userCtr.join);
+router.get('/get-user-info', auth.checkLogin(), userCtr.getUserInfo);
 // router.get('/user', auth.checkLogin(), userCtr.getUserList)
 // router.post('/set-user', auth.checkLogin(), userCtr.setUser)
 // router.put('/edit-user', auth.checkLogin(), userCtr.editUser)
