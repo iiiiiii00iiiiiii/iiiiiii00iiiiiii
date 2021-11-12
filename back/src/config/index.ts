@@ -34,9 +34,9 @@ const config: TConfig = {
         password: 'Qufdl@4860'
     },
     casino: {
-        apiURL: 'http://api.krw.ximaxgames.com',
-        operator: 'glam',
-        privateKey: '749BD1571F84B3BCDAF0525FC220B0BD'
+        apiURL: '',
+        operator: '',
+        privateKey: ''
     },
     // transactionOptions: {
     //     readPreference: 'primary',

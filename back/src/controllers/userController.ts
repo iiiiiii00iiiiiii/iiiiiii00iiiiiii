@@ -159,7 +159,7 @@ export default class UserController implements IUserController {
             res.set('duplicate', duplicateToken)
 
             // ■■■■■■■■■■ DB-중복접속 방지용 token 업데이트 ■■■■■■■■■■
-            let rUpdateToken = await userService.updateToken(v.id, duplicateToken)
+            let rUpdateToken: TService = await userService.updateToken(v.id, duplicateToken)
             if(rUpdateToken.error) {
                 res.set('access-token', '')
                 res.set('duplicate', '')
@@ -440,12 +440,13 @@ export default class UserController implements IUserController {
         try {
             const getKeys: Array<string> = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'point']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-            let r = await userService.getUserInfo(v.decoded._id, getKeys)
+            const r: TService = await userService.getUserInfo(v.decoded._id, getKeys)
             if(r.error) {
                 data.errorTitle = null
                 res.status(500).json(data)
                 return
             }
+            // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
 
             res.json(r.data)
         } catch (e) {

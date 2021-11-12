@@ -6,6 +6,12 @@ const auth: Auth = new Auth()
 import UserController from '../controllers/userController'
 const userCtr: UserController = new UserController()
 
+import MoneyController from '../controllers/moneyController'
+const moneyCtr: MoneyController = new MoneyController()
+
+import BoardController from '../controllers/boardController'
+const boardCtr: BoardController = new BoardController()
+
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
 
@@ -53,6 +59,26 @@ const router = express.Router()
 router.get('/login', userCtr.login)
 router.post('/join', userCtr.join)
 router.get('/get-user-info', auth.checkLogin(), userCtr.getUserInfo)
+
+// Charge
+router.get('/get-charge-list', auth.checkLogin(), moneyCtr.getChargeList)
+router.post('/set-charge', auth.checkLogin(), moneyCtr.setCharge)
+router.delete('/delete-charge', auth.checkLogin(), moneyCtr.deleteCharge)
+router.delete('/delete-charge-all', auth.checkLogin(), moneyCtr.deleteChargeAll)
+
+
+// Exchange
+router.get('/get-exchange-list', auth.checkLogin(), moneyCtr.getExchangeList)
+router.post('/set-exchange', auth.checkLogin(), moneyCtr.setExchange)
+router.delete('/delete-exchange', auth.checkLogin(), moneyCtr.deleteExchange)
+router.delete('/delete-exchange-all', auth.checkLogin(), moneyCtr.deleteExchangeAll)
+
+// Board
+router.get('/get-notice-list', auth.checkLogin(), boardCtr.getNoticeList)
+router.get('/get-notice-detail', auth.checkLogin(), boardCtr.getNoticeDetail)
+
+
+
 
 // router.get('/user', auth.checkLogin(), userCtr.getUserList)
 // router.post('/set-user', auth.checkLogin(), userCtr.setUser)

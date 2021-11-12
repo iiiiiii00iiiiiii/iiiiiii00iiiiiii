@@ -523,13 +523,13 @@ export default class UserService implements IUserService {
         })
     }
 
-    public getUserInfo = (_id: string, getKeys: Array<string>): Promise<TService> => {
+    public getUserInfo = (userOID: string, getKeys: Array<string>): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
             try {
                 const findQuery: any = {
-                    _id: new ObjectID(_id)
+                    _id: new ObjectID(userOID)
                 }
 
                 let whatQuery: any = {
@@ -545,6 +545,42 @@ export default class UserService implements IUserService {
                 resolve(r)
             } catch (err) {
                 logger.error('UserService > getUserInfo')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public subtractUserMoney = (userOID: string, exchangeAmount: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID),
+                    money: {
+                        $gte: Math.trunc(mongoSanitize(exchangeAmount))
+                    }
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        money: -Math.trunc(mongoSanitize(exchangeAmount))
+                    }
+                }
+
+                const optionsQuery: any = {
+                    projection: {
+                        money: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > subtractUserMoney')
                 logger.error(err)
                 r.error = err
                 resolve(r)
