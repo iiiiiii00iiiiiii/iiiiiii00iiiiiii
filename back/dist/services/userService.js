@@ -498,12 +498,12 @@ class UserService {
                 }
             }));
         };
-        this.getUserInfo = (_id, getKeys) => {
+        this.getUserInfo = (userOID, getKeys) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
                     const findQuery = {
-                        _id: new db_1.ObjectID(_id)
+                        _id: new db_1.ObjectID(userOID)
                     };
                     let whatQuery = {
                         projection: {}
@@ -517,6 +517,38 @@ class UserService {
                 }
                 catch (err) {
                     modules_1.logger.error('UserService > getUserInfo');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.subtractUserMoney = (userOID, exchangeAmount) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID),
+                        money: {
+                            $gte: Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount))
+                        }
+                    };
+                    const setQuery = {
+                        $inc: {
+                            money: -Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount))
+                        }
+                    };
+                    const optionsQuery = {
+                        projection: {
+                            money: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > subtractUserMoney');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

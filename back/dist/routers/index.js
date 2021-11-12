@@ -8,6 +8,10 @@ const auth_1 = __importDefault(require("../lib/auth"));
 const auth = new auth_1.default();
 const userController_1 = __importDefault(require("../controllers/userController"));
 const userCtr = new userController_1.default();
+const moneyController_1 = __importDefault(require("../controllers/moneyController"));
+const moneyCtr = new moneyController_1.default();
+const boardController_1 = __importDefault(require("../controllers/boardController"));
+const boardCtr = new boardController_1.default();
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
 // import NoticeController from '../controllers/boardNoticeController'
@@ -39,6 +43,19 @@ const router = express_1.default.Router();
 router.get('/login', userCtr.login);
 router.post('/join', userCtr.join);
 router.get('/get-user-info', auth.checkLogin(), userCtr.getUserInfo);
+// Charge
+router.get('/get-charge-list', auth.checkLogin(), moneyCtr.getChargeList);
+router.post('/set-charge', auth.checkLogin(), moneyCtr.setCharge);
+router.delete('/delete-charge', auth.checkLogin(), moneyCtr.deleteCharge);
+router.delete('/delete-charge-all', auth.checkLogin(), moneyCtr.deleteChargeAll);
+// Exchange
+router.get('/get-exchange-list', auth.checkLogin(), moneyCtr.getExchangeList);
+router.post('/set-exchange', auth.checkLogin(), moneyCtr.setExchange);
+router.delete('/delete-exchange', auth.checkLogin(), moneyCtr.deleteExchange);
+router.delete('/delete-exchange-all', auth.checkLogin(), moneyCtr.deleteExchangeAll);
+// Board
+router.get('/get-notice-list', auth.checkLogin(), boardCtr.getNoticeList);
+router.get('/get-notice-detail', auth.checkLogin(), boardCtr.getNoticeDetail);
 // router.get('/user', auth.checkLogin(), userCtr.getUserList)
 // router.post('/set-user', auth.checkLogin(), userCtr.setUser)
 // router.put('/edit-user', auth.checkLogin(), userCtr.editUser)

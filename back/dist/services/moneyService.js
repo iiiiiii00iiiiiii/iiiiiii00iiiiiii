@@ -1,0 +1,382 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const modules_1 = require("../lib/modules");
+const db_1 = require("../lib/db");
+const config_1 = __importDefault(require("../config"));
+class MoneyService {
+    constructor() {
+        this.getChargeList = (page, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        deleteStatus: false,
+                        type: 'C'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            status: 1,
+                            money: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const skip = (page - 1) * config_1.default.pageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config_1.default.pageSize).toArray();
+                    r.count = yield pool.collection('money').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > getChargeList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.checkIngCharge = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        status: 0,
+                        type: 'C'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            status: 1,
+                            money: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > checkIngCharge');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setCharge = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, chargeAmount, ipaddress) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        status: 0,
+                        type: 'C',
+                        userOID: new db_1.ObjectID(userOID),
+                        userID,
+                        userNick,
+                        userGrade,
+                        bank: userBank,
+                        bankOwner: userBankOwner,
+                        bankAccount: userBankAccount,
+                        isAgent,
+                        isTest,
+                        recommendTree: userRecommendTree,
+                        money: (0, modules_1.mongoSanitize)(chargeAmount),
+                        deleteStatus: false,
+                        ipaddress: ipaddress,
+                        regDateTime: new Date()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > setCharge');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.chargeAlarm = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: 'alarm'
+                    };
+                    const setQuery = {
+                        $set: {
+                            newCharge: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > chargeAlarm');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deleteCharge = (_id, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(_id),
+                        userOID: new db_1.ObjectID(userOID),
+                        status: {
+                            $ne: 0
+                        },
+                        type: 'C',
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > deleteCharge');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deleteChargeAll = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        status: {
+                            $ne: 0
+                        },
+                        type: 'C',
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').updateMany(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > deleteChargeAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getExchangeList = (page, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        deleteStatus: false,
+                        type: 'E'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            status: 1,
+                            money: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const skip = (page - 1) * config_1.default.pageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config_1.default.pageSize).toArray();
+                    r.count = yield pool.collection('money').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > getExchangeList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setExchange = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, exchangeAmount, ipaddress) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        status: 0,
+                        type: 'E',
+                        userOID: new db_1.ObjectID(userOID),
+                        userID,
+                        userNick,
+                        userGrade,
+                        bank: userBank,
+                        bankOwner: userBankOwner,
+                        bankAccount: userBankAccount,
+                        isAgent,
+                        isTest,
+                        recommendTree: userRecommendTree,
+                        money: (0, modules_1.mongoSanitize)(exchangeAmount),
+                        deleteStatus: false,
+                        ipaddress: ipaddress,
+                        regDateTime: new Date()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > setExchange');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setExchangeLog = (_id, userOID, userID, userNick, userGrade, userBankOwner, isAgent, isTest, userRecommendTree, money, exchangeAmount) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        moneyOID: new db_1.ObjectID(_id),
+                        userOID: new db_1.ObjectID(userOID),
+                        userID: userID,
+                        userNick: userNick,
+                        userGrade: userGrade,
+                        bankOwner: userBankOwner,
+                        isTest,
+                        isAgent,
+                        recommendTree: userRecommendTree,
+                        before: Math.trunc(money),
+                        process: Math.trunc(-exchangeAmount),
+                        after: Math.trunc(money) - Math.trunc(exchangeAmount),
+                        sortation: 'exchange',
+                        reason: '환전',
+                        adminOID: null,
+                        adminID: null,
+                        adminNick: null,
+                        adminGrade: null,
+                        deleteStatus: false,
+                        regDateTime: new Date()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > setExchangeLog');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.exchangeAlarm = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: 'alarm'
+                    };
+                    const setQuery = {
+                        $set: {
+                            newExchange: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > exchangeAlarm');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deleteExchange = (_id, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(_id),
+                        userOID: new db_1.ObjectID(userOID),
+                        status: {
+                            $ne: 0
+                        },
+                        type: 'E',
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > deleteExchange');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deleteExchangeAll = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        status: {
+                            $ne: 0
+                        },
+                        type: 'E',
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').updateMany(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > deleteExchangeAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+    }
+}
+exports.default = MoneyService;

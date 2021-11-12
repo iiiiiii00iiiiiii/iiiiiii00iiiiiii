@@ -415,12 +415,13 @@ class UserController {
             try {
                 const getKeys = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'point'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                let r = yield userService.getUserInfo(v.decoded._id, getKeys);
+                const r = yield userService.getUserInfo(v.decoded._id, getKeys);
                 if (r.error) {
                     data.errorTitle = null;
                     res.status(500).json(data);
                     return;
                 }
+                // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 res.json(r.data);
             }
             catch (e) {
