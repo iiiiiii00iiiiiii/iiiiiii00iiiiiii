@@ -20,8 +20,11 @@ const moneyService_1 = __importDefault(require("../services/moneyService"));
 const moneyService = new moneyService_1.default();
 const userService_1 = __importDefault(require("../services/userService"));
 const userService = new userService_1.default();
+const boardService_1 = __importDefault(require("../services/boardService"));
+const boardService = new boardService_1.default();
 class MoneyController {
     constructor() {
+        // 입금
         this.getChargeList = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const validateData = {
                 page: {
@@ -64,7 +67,7 @@ class MoneyController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-입금 내역 가져오기 ■■■■■■■■■■
-                let r = yield moneyService.getChargeList(v.page, v.decoded._id);
+                const r = yield moneyService.getChargeList(v.page, v.decoded._id);
                 if (r.error) {
                     data.errorTitle = '입금 내역 실패 - 500';
                     res.status(500).json(data);
@@ -232,7 +235,7 @@ class MoneyController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
-                let rDeleteCharge = yield moneyService.deleteCharge(v._id, v.decoded._id);
+                const rDeleteCharge = yield moneyService.deleteCharge(v._id, v.decoded._id);
                 if (rDeleteCharge.error) {
                     v.errorTitle = '입금 내역 삭제 validate 실패 - 500';
                     res.status(500).json(v);
@@ -255,7 +258,7 @@ class MoneyController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
-                let rDeleteCharge = yield moneyService.deleteChargeAll(v.decoded._id);
+                const rDeleteCharge = yield moneyService.deleteChargeAll(v.decoded._id);
                 if (rDeleteCharge.error) {
                     v.errorTitle = '입금 내역 삭제 validate 실패 - 500';
                     res.status(500).json(v);
@@ -271,6 +274,7 @@ class MoneyController {
                 return;
             }
         });
+        // 출금
         this.getExchangeList = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const validateData = {
                 page: {
@@ -313,7 +317,7 @@ class MoneyController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-출금 내역 가져오기 ■■■■■■■■■■
-                let r = yield moneyService.getExchangeList(v.page, v.decoded._id);
+                const r = yield moneyService.getExchangeList(v.page, v.decoded._id);
                 if (r.error) {
                     data.errorTitle = '출금 내역 실패 - 500';
                     res.status(500).json(data);
@@ -452,7 +456,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-출금 요청 로그 ■■■■■■■■■■
-                const rExchangeLog = yield moneyService.setExchangeLog(rSetExchange.data.insertedId, v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bankOwner, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rSubtractUserMoney.data.value.money, v.exchangeAmount);
+                yield moneyService.setExchangeLog(rSetExchange.data.insertedId, v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bankOwner, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rSubtractUserMoney.data.value.money, v.exchangeAmount);
                 //■■■■■■■■■■ DB-출금 요청 로그 ■■■■■■■■■■
                 // ■■■■■■■■■■ DB-출금 알림 ■■■■■■■■■■
                 yield moneyService.exchangeAlarm();
@@ -510,8 +514,8 @@ class MoneyController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-출금 내역 삭제 ■■■■■■■■■■
-                let rDeleteCharge = yield moneyService.deleteExchange(v._id, v.decoded._id);
-                if (rDeleteCharge.error) {
+                const rDeleteExchange = yield moneyService.deleteExchange(v._id, v.decoded._id);
+                if (rDeleteExchange.error) {
                     v.errorTitle = '출금 내역 삭제 validate 실패 - 500';
                     res.status(500).json(v);
                     return;
@@ -533,8 +537,8 @@ class MoneyController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-출금 내역 삭제 ■■■■■■■■■■
-                let rDeleteCharge = yield moneyService.deleteExchangeAll(v.decoded._id);
-                if (rDeleteCharge.error) {
+                const rDeleteExchange = yield moneyService.deleteExchangeAll(v.decoded._id);
+                if (rDeleteExchange.error) {
                     v.errorTitle = '출금 내역 삭제 validate 실패 - 500';
                     res.status(500).json(v);
                     return;
@@ -545,6 +549,184 @@ class MoneyController {
             catch (e) {
                 modules_1.logger.error(e);
                 data.errorTitle = '출금 내역 삭제 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        // 포인트
+        this.getPointList = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                page: {
+                    value: req.query.page,
+                    rule: {
+                        required: true,
+                        number: true,
+                        gte: 1
+                    },
+                    message: {
+                        required: '파라메터 오류, 관리자에게 문의하세요.',
+                        number: '파라메터 오류, 관리자에게 문의하세요.',
+                        gte: '파라메터 오류, 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = '포인트 내역 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = '포인트 내역 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = '포인트 내역 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-포인트 내역 가져오기 ■■■■■■■■■■
+                const r = yield moneyService.getPointList(v.page, v.decoded._id);
+                if (r.error) {
+                    data.errorTitle = '포인트 내역 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-포인트 내역 가져오기 ■■■■■■■■■■
+                res.json({
+                    recordSet: r.data,
+                    recordCount: r.count
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '포인트 내역 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.exchangePoint = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-포인트 전환 ■■■■■■■■■■
+                const rPoint = yield moneyService.exchangePoint(v.decoded._id);
+                if (rPoint.error) {
+                    data.errorTitle = '포인트 전환 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-포인트 전환 ■■■■■■■■■■
+                if (rPoint.data.value) {
+                    // ■■■■■■■■■■ DB-포인트 전환 로그 ■■■■■■■■■■
+                    const rPointLog = yield moneyService.exchangePointLog(v.decoded._id, rPoint.data.value.id, rPoint.data.value.nick, rPoint.data.value.grade, rPoint.data.value.bankOwner, rPoint.data.value.isAgent, rPoint.data.value.isTest, rPoint.data.value.recommendTree, rPoint.data.value.money, rPoint.data.value.point);
+                    if (rPointLog.error) {
+                        data.errorTitle = '포인트 전환 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-포인트 전환 로그 ■■■■■■■■■■
+                }
+                res.end();
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '입금 신청 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.deletePoint = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                _id: {
+                    value: req.query._id,
+                    rule: {
+                        required: true,
+                        alphaNumber: true,
+                        min: 24,
+                        max: 24
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요.',
+                        alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                        min: '파라메터 오류. 관리자에게 문의하세요.',
+                        max: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = '포인트 내역 삭제 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = '포인트 내역 삭제 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = '포인트 내역 삭제 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+                const rDeletePoint = yield moneyService.deletePoint(v._id, v.decoded._id);
+                if (rDeletePoint.error) {
+                    v.errorTitle = '포인트 내역 삭제 validate 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+                res.end();
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '포인트 내역 삭제 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.deletePointAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+                const rDeletePoint = yield moneyService.deletePointAll(v.decoded._id);
+                if (rDeletePoint.error) {
+                    v.errorTitle = '포인트 내역 삭제 validate 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+                res.end();
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '포인트 내역 삭제 실패 - 500';
                 res.status(500).json(data);
                 return;
             }

@@ -17,6 +17,7 @@ const db_1 = require("../lib/db");
 const config_1 = __importDefault(require("../config"));
 class MoneyService {
     constructor() {
+        // 입금
         this.getChargeList = (page, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -192,6 +193,36 @@ class MoneyService {
                 }
             }));
         };
+        this.chargeInformation = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        status: {
+                            $ne: 0
+                        },
+                        type: 'C',
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').updateMany(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > chargeInformation');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        // 출금
         this.getExchangeList = (page, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -371,6 +402,174 @@ class MoneyService {
                 }
                 catch (err) {
                     modules_1.logger.error('MoneyService > deleteExchangeAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        // 포인트
+        this.getPointList = (page, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        deleteStatus: false,
+                        sortation: 'PointChange'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            before: 1,
+                            process: 1,
+                            after: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const skip = (page - 1) * config_1.default.pageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config_1.default.pageSize).toArray();
+                    r.count = yield pool.collection('moneyLog').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > getPointList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.exchangePoint = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID),
+                        point: {
+                            $gt: 0
+                        }
+                    };
+                    const setQuery = [
+                        {
+                            $set: {
+                                money: {
+                                    $sum: ['$money', '$point']
+                                },
+                                point: 0
+                            }
+                        }
+                    ];
+                    const optionsQuery = {
+                        projection: {
+                            id: 1,
+                            nick: 1,
+                            grade: 1,
+                            bankOwner: 1,
+                            recommendTree: 1,
+                            isAgent: 1,
+                            isTest: 1,
+                            money: 1,
+                            point: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > exchangePoint');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.exchangePointLog = (userOID, userID, userNick, userGrade, userBankOwner, isAgent, isTest, userRecommendTree, money, point) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        moneyOID: null,
+                        userOID: new db_1.ObjectID(userOID),
+                        userID: userID,
+                        userNick: userNick,
+                        userGrade: userGrade,
+                        bankOwner: userBankOwner,
+                        recommendTree: userRecommendTree,
+                        before: money,
+                        process: point,
+                        after: money + point,
+                        sortation: 'PointChange',
+                        reason: '포인트 전환',
+                        adminOID: null,
+                        adminID: null,
+                        adminNick: null,
+                        adminGrade: null,
+                        regDateTime: new Date(),
+                        deleteStatus: false,
+                        isAgent,
+                        isTest
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > exchangePointLog');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deletePoint = (_id, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(_id),
+                        userOID: new db_1.ObjectID(userOID),
+                        sortation: 'PointChange',
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > deletePoint');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deletePointAll = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        sortation: 'PointChange',
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').updateMany(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > deletePointAll');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

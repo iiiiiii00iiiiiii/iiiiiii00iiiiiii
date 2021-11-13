@@ -1,4 +1,3 @@
-import { Request as req, Response as res } from 'express'
 import { logger, crypto, mongoSanitize, moment } from "../lib/modules"
 import { mongoDB, ObjectID } from '../lib/db'
 import config from '../config'
@@ -231,6 +230,7 @@ export default class UserService implements IUserService {
                     totalCharge: 0,
                     totalExchange: 0,
                     memo: null,
+                    memoShort: null,
                     walletID : null,
                     sportsConfig : {
                         bet1FolderStatus : true,
@@ -553,6 +553,42 @@ export default class UserService implements IUserService {
     }
 
     public subtractUserMoney = (userOID: string, exchangeAmount: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID),
+                    money: {
+                        $gte: Math.trunc(mongoSanitize(exchangeAmount))
+                    }
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        money: -Math.trunc(mongoSanitize(exchangeAmount))
+                    }
+                }
+
+                const optionsQuery: any = {
+                    projection: {
+                        money: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > subtractUserMoney')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public pointLog = (userOID: string, exchangeAmount: number): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 

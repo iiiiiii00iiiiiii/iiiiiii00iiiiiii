@@ -159,7 +159,7 @@ export default class UserController implements IUserController {
             res.set('duplicate', duplicateToken)
 
             // ■■■■■■■■■■ DB-중복접속 방지용 token 업데이트 ■■■■■■■■■■
-            let rUpdateToken: TService = await userService.updateToken(v.id, duplicateToken)
+            const rUpdateToken: TService = await userService.updateToken(v.id, duplicateToken)
             if(rUpdateToken.error) {
                 res.set('access-token', '')
                 res.set('duplicate', '')

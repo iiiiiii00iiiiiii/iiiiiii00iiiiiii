@@ -15,6 +15,9 @@ const moneyService: MoneyService = new MoneyService()
 import UserService from '../services/userService'
 const userService: UserService = new UserService()
 
+import BoardService from '../services/boardService'
+const boardService: BoardService = new BoardService()
+
 interface IMoneyController {
 }
 
@@ -22,6 +25,7 @@ export default class MoneyController implements IMoneyController {
     constructor() {
     }
 
+    // 입금
     public getChargeList = async (req: req, res: res): Promise<void> => {
         const validateData: any = {
             page: {
@@ -66,7 +70,7 @@ export default class MoneyController implements IMoneyController {
 
         try {
             // ■■■■■■■■■■ DB-입금 내역 가져오기 ■■■■■■■■■■
-            let r: TService = await moneyService.getChargeList(v.page, v.decoded._id)
+            const r: TService = await moneyService.getChargeList(v.page, v.decoded._id)
             if(r.error) {
                 data.errorTitle = '입금 내역 실패 - 500'
                 res.status(500).json(data)
@@ -260,7 +264,7 @@ export default class MoneyController implements IMoneyController {
 
         try {
             // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
-            let rDeleteCharge = await moneyService.deleteCharge(v._id, v.decoded._id)
+            const rDeleteCharge = await moneyService.deleteCharge(v._id, v.decoded._id)
             if(rDeleteCharge.error) {
                 v.errorTitle = '입금 내역 삭제 validate 실패 - 500'
                 res.status(500).json(v)
@@ -285,7 +289,7 @@ export default class MoneyController implements IMoneyController {
 
         try {
             // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
-            let rDeleteCharge = await moneyService.deleteChargeAll(v.decoded._id)
+            const rDeleteCharge = await moneyService.deleteChargeAll(v.decoded._id)
             if(rDeleteCharge.error) {
                 v.errorTitle = '입금 내역 삭제 validate 실패 - 500'
                 res.status(500).json(v)
@@ -302,6 +306,7 @@ export default class MoneyController implements IMoneyController {
         }
     }
 
+    // 출금
     public getExchangeList = async (req: req, res: res): Promise<void> => {
         const validateData: any = {
             page: {
@@ -346,7 +351,7 @@ export default class MoneyController implements IMoneyController {
 
         try {
             // ■■■■■■■■■■ DB-출금 내역 가져오기 ■■■■■■■■■■
-            let r: TService = await moneyService.getExchangeList(v.page, v.decoded._id)
+            const r: TService = await moneyService.getExchangeList(v.page, v.decoded._id)
             if(r.error) {
                 data.errorTitle = '출금 내역 실패 - 500'
                 res.status(500).json(data)
@@ -510,7 +515,7 @@ export default class MoneyController implements IMoneyController {
             }
 
             //■■■■■■■■■■ DB-출금 요청 로그 ■■■■■■■■■■
-            const rExchangeLog: TService = await moneyService.setExchangeLog(
+            await moneyService.setExchangeLog(
                 rSetExchange.data.insertedId,
                 v.decoded._id,
                 rUserInfo.data.id,
@@ -584,8 +589,8 @@ export default class MoneyController implements IMoneyController {
 
         try {
             // ■■■■■■■■■■ DB-출금 내역 삭제 ■■■■■■■■■■
-            let rDeleteCharge = await moneyService.deleteExchange(v._id, v.decoded._id)
-            if(rDeleteCharge.error) {
+            const rDeleteExchange = await moneyService.deleteExchange(v._id, v.decoded._id)
+            if(rDeleteExchange.error) {
                 v.errorTitle = '출금 내역 삭제 validate 실패 - 500'
                 res.status(500).json(v)
                 return
@@ -609,8 +614,8 @@ export default class MoneyController implements IMoneyController {
 
         try {
             // ■■■■■■■■■■ DB-출금 내역 삭제 ■■■■■■■■■■
-            let rDeleteCharge = await moneyService.deleteExchangeAll(v.decoded._id)
-            if(rDeleteCharge.error) {
+            const rDeleteExchange = await moneyService.deleteExchangeAll(v.decoded._id)
+            if(rDeleteExchange.error) {
                 v.errorTitle = '출금 내역 삭제 validate 실패 - 500'
                 res.status(500).json(v)
                 return
@@ -621,6 +626,207 @@ export default class MoneyController implements IMoneyController {
         } catch (e) {
             logger.error(e)
             data.errorTitle = '출금 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    // 포인트
+    public getPointList = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            page: {
+                value: req.query.page,
+                rule: {
+                    required: true,
+                    number: true,
+                    gte: 1
+                },
+                message: {
+                    required: '파라메터 오류, 관리자에게 문의하세요.',
+                    number: '파라메터 오류, 관리자에게 문의하세요.',
+                    gte: '파라메터 오류, 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '포인트 내역 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '포인트 내역 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '포인트 내역 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-포인트 내역 가져오기 ■■■■■■■■■■
+            const r: TService = await moneyService.getPointList(v.page, v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '포인트 내역 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-포인트 내역 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data,
+                recordCount: r.count
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '포인트 내역 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public exchangePoint = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-포인트 전환 ■■■■■■■■■■
+            const rPoint = await moneyService.exchangePoint(v.decoded._id)
+            if(rPoint.error) {
+                data.errorTitle = '포인트 전환 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-포인트 전환 ■■■■■■■■■■
+
+            if(rPoint.data.value) {
+                // ■■■■■■■■■■ DB-포인트 전환 로그 ■■■■■■■■■■
+                const rPointLog = await moneyService.exchangePointLog(
+                    v.decoded._id,
+                    rPoint.data.value.id,
+                    rPoint.data.value.nick,
+                    rPoint.data.value.grade,
+                    rPoint.data.value.bankOwner,
+                    rPoint.data.value.isAgent,
+                    rPoint.data.value.isTest,
+                    rPoint.data.value.recommendTree,
+                    rPoint.data.value.money,
+                    rPoint.data.value.point
+                )
+
+                if(rPointLog.error) {
+                    data.errorTitle = '포인트 전환 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-포인트 전환 로그 ■■■■■■■■■■
+            }
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '입금 신청 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public deletePoint = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            _id: {
+                value: req.query._id,
+                rule: {
+                    required: true,
+                    alphaNumber: true,
+                    min: 24,
+                    max: 24
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '포인트 내역 삭제 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '포인트 내역 삭제 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '포인트 내역 삭제 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+            const rDeletePoint = await moneyService.deletePoint(v._id, v.decoded._id)
+            if(rDeletePoint.error) {
+                v.errorTitle = '포인트 내역 삭제 validate 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '포인트 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public deletePointAll = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+            const rDeletePoint = await moneyService.deletePointAll(v.decoded._id)
+            if(rDeletePoint.error) {
+                v.errorTitle = '포인트 내역 삭제 validate 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            // ■■■■■■■■■■ DB-포인트 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '포인트 내역 삭제 실패 - 500'
             res.status(500).json(data)
             return
         }
