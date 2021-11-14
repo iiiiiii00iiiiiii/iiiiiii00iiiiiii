@@ -496,6 +496,38 @@ export default class UserService implements IUserService {
         })
     }
 
+    public editUser = (userOID: string, passwordNow: string, password: string, passwordExchange: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery = {
+                    _id: new ObjectID(userOID),
+                    password: crypto.createHash('sha512').update(passwordNow).digest('base64')
+                }
+
+                let setQuery: any = {
+                    $set: {
+                        password: crypto.createHash('sha512').update(password).digest('base64')
+                    }
+                }
+
+                if(passwordExchange) {
+                    setQuery.$set.passwordExchange = crypto.createHash('sha512').update(passwordExchange).digest('base64')
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > editUser')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public joinAlarm = (): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -623,4 +655,92 @@ export default class UserService implements IUserService {
             }
         })
     }
+
+    public getAttendance = (userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    setDate: {
+                        $gte: moment().startOf('month').toDate(),
+                        $lte: moment().endOf('month').toDate()
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        setDate: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('attendance').find(findQuery, whatQuery).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > getAttendance')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getAttendanceTodayCount = (userOID: string, setDate: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    setDate: new Date(setDate)
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('attendance').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > getAttendanceTodayCount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public chargeToday = (userOID: string, setDate: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    type: 'C',
+                    status: 1,
+                    regDateTime: {
+                        $gte: moment(setDate).startOf('day').toDate(),
+                        $lte: moment(setDate).endOf('day').toDate()
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('money').aggregate([
+                    { $match: findQuery },
+                    { $group: {
+                        _id: null,
+                        totalMoney: { $sum: '$money' }
+                    }}
+                ]).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > chargeToday')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+
 }

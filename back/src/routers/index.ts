@@ -60,6 +60,7 @@ const router = express.Router()
 // User
 router.get('/login', userCtr.login)
 router.post('/join', userCtr.join)
+router.put('/edit-user', auth.checkLogin(), userCtr.editUser)
 router.get('/get-user-info', auth.checkLogin(), userCtr.getUserInfo)
 
 // Charge
@@ -98,12 +99,20 @@ router.post('/charge-information', auth.checkLogin(), boardCtr.chargeInformation
 router.delete('/delete-help', auth.checkLogin(), boardCtr.deleteHelp)
 router.delete('/delete-help-all', auth.checkLogin(), boardCtr.deleteHelpAll)
 
+
 // Message
 router.get('/get-message-list', auth.checkLogin(), messageCtr.getMessageList)
 router.get('/get-message-detail', auth.checkLogin(), messageCtr.getMessageDetail)
 router.put('/check-message-all', auth.checkLogin(), messageCtr.checkMessageAll)
 router.delete('/delete-message', auth.checkLogin(), messageCtr.deleteMessage)
 router.delete('/delete-message-all', auth.checkLogin(), messageCtr.deleteMessageAll)
+
+
+// Attendance
+router.get('/get-attendance', auth.checkLogin(), userCtr.getAttendance)
+router.post('/set-attendance', auth.checkLogin(), userCtr.setAttendance)
+
+
 
 
 

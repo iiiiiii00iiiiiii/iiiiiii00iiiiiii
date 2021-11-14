@@ -576,6 +576,74 @@ class MoneyService {
                 }
             }));
         };
+        // 출석
+        this.addPointForAttendance = (userOID, point) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID)
+                    };
+                    const setQuery = {
+                        $inc: {
+                            point
+                        }
+                    };
+                    const optionsQuery = {
+                        projection: {
+                            point: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > addPointForAttendance');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.addMoneyForAttendanceLog = (userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, process, point, isTest, isAgent, daily) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        moneyOID: null,
+                        userOID: new db_1.ObjectID(userOID),
+                        userID,
+                        userNick,
+                        userGrade,
+                        userBankOwner,
+                        userRecommendTree,
+                        before: point,
+                        process,
+                        after: point + process,
+                        sortation: 'daily',
+                        reason: `출석 포인트-${daily}일`,
+                        adminOID: null,
+                        adminID: null,
+                        adminNick: null,
+                        adminGrade: null,
+                        deleteStatus: false,
+                        regDateTime: new Date(),
+                        isTest,
+                        isAgent
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > addMoneyForAttendanceLog');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = MoneyService;

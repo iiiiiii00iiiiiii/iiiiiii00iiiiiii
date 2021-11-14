@@ -44,6 +44,7 @@ const router = express_1.default.Router();
 // User
 router.get('/login', userCtr.login);
 router.post('/join', userCtr.join);
+router.put('/edit-user', auth.checkLogin(), userCtr.editUser);
 router.get('/get-user-info', auth.checkLogin(), userCtr.getUserInfo);
 // Charge
 router.get('/get-charge-list', auth.checkLogin(), moneyCtr.getChargeList);
@@ -78,4 +79,7 @@ router.get('/get-message-detail', auth.checkLogin(), messageCtr.getMessageDetail
 router.put('/check-message-all', auth.checkLogin(), messageCtr.checkMessageAll);
 router.delete('/delete-message', auth.checkLogin(), messageCtr.deleteMessage);
 router.delete('/delete-message-all', auth.checkLogin(), messageCtr.deleteMessageAll);
+// Attendance
+router.get('/get-attendance', auth.checkLogin(), userCtr.getAttendance);
+router.post('/set-attendance', auth.checkLogin(), userCtr.setAttendance);
 exports.default = router;

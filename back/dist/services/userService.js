@@ -475,6 +475,34 @@ class UserService {
                 }
             }));
         };
+        this.editUser = (userOID, passwordNow, password, passwordExchange) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID),
+                        password: modules_1.crypto.createHash('sha512').update(passwordNow).digest('base64')
+                    };
+                    let setQuery = {
+                        $set: {
+                            password: modules_1.crypto.createHash('sha512').update(password).digest('base64')
+                        }
+                    };
+                    if (passwordExchange) {
+                        setQuery.$set.passwordExchange = modules_1.crypto.createHash('sha512').update(passwordExchange).digest('base64');
+                    }
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > editUser');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.joinAlarm = () => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -582,6 +610,85 @@ class UserService {
                 }
                 catch (err) {
                     modules_1.logger.error('UserService > subtractUserMoney');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getAttendance = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        setDate: {
+                            $gte: (0, modules_1.moment)().startOf('month').toDate(),
+                            $lte: (0, modules_1.moment)().endOf('month').toDate()
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            setDate: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('attendance').find(findQuery, whatQuery).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > getAttendance');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getAttendanceTodayCount = (userOID, setDate) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        setDate: new Date(setDate)
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('attendance').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > getAttendanceTodayCount');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.chargeToday = (userOID, setDate) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        type: 'C',
+                        status: 1,
+                        regDateTime: {
+                            $gte: (0, modules_1.moment)(setDate).startOf('day').toDate(),
+                            $lte: (0, modules_1.moment)(setDate).endOf('day').toDate()
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').aggregate([
+                        { $match: findQuery },
+                        { $group: {
+                                _id: null,
+                                totalMoney: { $sum: '$money' }
+                            } }
+                    ]).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > chargeToday');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

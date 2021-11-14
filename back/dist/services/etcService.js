@@ -43,6 +43,74 @@ class EtcService {
                 }
             }));
         };
+        this.getConfigAttendance = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {};
+                    let whatQuery = {
+                        projection: {}
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('daily').find(findQuery).sort({ category: -1 }).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getConfigAttendance');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setAttendance = (userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, setDate) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        userID,
+                        userNick,
+                        userGrade,
+                        userBankOwner,
+                        userRecommendTree,
+                        setDate: new Date(setDate),
+                        regDateTime: new Date()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('attendance').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > setAttendance');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getBeforeAttendanceCount = (userOID, startDate) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        regDateTime: {
+                            $gte: (0, modules_1.moment)(startDate).startOf('day').toDate()
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('attendance').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > getBeforeAttendanceCount');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = EtcService;

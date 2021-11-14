@@ -672,4 +672,90 @@ export default class MoneyService implements IMoneyService {
             }
         })
     }
+
+    // 출석
+    public addPointForAttendance = (userOID: string, point: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID)
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        point
+                    }
+                }
+
+                const optionsQuery: any = {
+                    projection: {
+                        point: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > addPointForAttendance')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public addMoneyForAttendanceLog = (
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBankOwner: string,
+        userRecommendTree: Array<any>,
+        process: number,
+        point: number,
+        isTest: boolean,
+        isAgent: boolean,
+        daily: number
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    moneyOID: null,
+                    userOID: new ObjectID(userOID),
+                    userID,
+                    userNick,
+                    userGrade,
+                    userBankOwner,
+                    userRecommendTree,
+                    before: point,
+                    process,
+                    after: point + process,
+                    sortation: 'daily',
+                    reason: `출석 포인트-${daily}일`,
+                    adminOID: null,
+                    adminID: null,
+                    adminNick: null,
+                    adminGrade: null,
+                    deleteStatus: false,
+                    regDateTime: new Date(),
+                    isTest,
+                    isAgent
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > addMoneyForAttendanceLog')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

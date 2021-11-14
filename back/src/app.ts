@@ -7,6 +7,8 @@ import helmet from 'helmet'
 import noCache from 'nocache'
 import { mongoDB } from './lib/db'
 
+import { moment } from './lib/modules'
+
 const app = express()
 app.use(helmet({
     contentSecurityPolicy: false,

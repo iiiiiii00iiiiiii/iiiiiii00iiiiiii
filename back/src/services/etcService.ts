@@ -45,4 +45,87 @@ export default class EtcService implements IEtcService {
             }
         })
     }
+
+    public getConfigAttendance = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {}
+
+                let whatQuery: any = {
+                    projection: {}
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('daily').find(findQuery).sort({ category: -1 }).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > getConfigAttendance')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public setAttendance = (
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBankOwner: string,
+        userRecommendTree: Array<any>,
+        setDate: string
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    userID,
+                    userNick,
+                    userGrade,
+                    userBankOwner,
+                    userRecommendTree,
+                    setDate: new Date(setDate),
+                    regDateTime: new Date()
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('attendance').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > setAttendance')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getBeforeAttendanceCount = (userOID: string, startDate: Date): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    regDateTime: {
+                        $gte: moment(startDate).startOf('day').toDate()
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('attendance').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > getBeforeAttendanceCount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

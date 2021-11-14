@@ -15,6 +15,12 @@ import type { TService } from '../models'
 import UserService from '../services/userService'
 const userService: UserService = new UserService()
 
+import MoneyService from '../services/moneyService'
+const moneyService: MoneyService = new MoneyService()
+
+import EtcService from '../services/etcService'
+const etcService: EtcService = new EtcService()
+
 interface IUserController {
 }
 
@@ -431,6 +437,117 @@ export default class UserController implements IUserController {
         }
     }
 
+    public editUser = async (req: req, res: res): Promise<void> => {
+        const validateData = {
+            passwordNow: {
+                value: req.body.passwordNow,
+                rule: {
+                    required: true,
+                    min: 4,
+                    max: 50
+                },
+                message: {
+                    required: '현재 비밀번호는 4~50자리로 입력하세요.',
+                    min: '현재 비밀번호는 4~50자리로 입력하세요.',
+                    max: '현재 비밀번호는 4~50자리로 입력하세요.'
+                }
+            },
+            password: {
+                value: req.body.password,
+                rule: {
+                    required: true,
+                    min: 4,
+                    max: 50
+                },
+                message: {
+                    required: '비밀번호는 4~50자리로 입력하세요.',
+                    min: '비밀번호는 4~50자리로 입력하세요.',
+                    max: '비밀번호는 4~50자리로 입력하세요.'
+                }
+            },
+            passwordRe: {
+                value: req.body.passwordRe,
+                rule: {
+                    required: true,
+                    min: 4,
+                    max: 50,
+                    confirmed: req.body.password
+                },
+                message: {
+                    required: '비밀번호 확인은 4~50자리로 입력하세요.',
+                    min: '비밀번호 확인은 4~50자리로 입력하세요.',
+                    max: '비밀번호 확인은 4~50자리로 입력하세요.',
+                    confirmed: '비밀번호가 일치하지 않습니다.'
+                }
+            },
+            passwordExchange: {
+                value: req.body.passwordExchange,
+                rule: {
+                },
+                message: {
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '회원 정보 수정 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '회원 정보 수정 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '회원 정보 수정 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            if(v.passwordExchange) {
+                if(v.passwordExchange.length < 4 || v.passwordExchange.length > 50) {
+                    data = tools.denyValidate(data, 'validate', '환전 비밀번호는 4~50자리로 입력하세요.')
+                    res.status(400).json(data)
+                    return
+                }
+            }
+
+            // ■■■■■■■■■■ DB-회원 정보 수정 ■■■■■■■■■■
+            const rEditUser: TService = await userService.editUser(v.decoded._id, v.passwordNow, v.password, v.passwordExchange)
+            if(rEditUser.error) {
+                data.errorTitle = '회원 정보 수정 실패 - 500'
+                res.status(500).end()
+                return
+            }
+            // ■■■■■■■■■■ DB-회원 정보 수정 ■■■■■■■■■■
+
+            if(rEditUser.data.matchedCount === 0) {
+                data.errorTitle = '회원 정보 수정 실패 - 400'
+                data = tools.denyValidate(data, 'not same', '현재 비밀번호가 일치하지 않습니다.')
+                res.status(400).json(data)
+                return
+            }
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '회원 정보 수정 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
     public getUserInfo = async (req: req, res: res): Promise<void> => {
         // validate start
         let v: any = tools.generateReqValue({}, req)
@@ -449,6 +566,232 @@ export default class UserController implements IUserController {
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
 
             res.json(r.data)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = null
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getAttendance = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        const firstDayMonth: string = moment().date(1).format('YYYY-MM-DD')
+
+        let calendar: Array<Array<string>> = []
+        let week: Array<string> = []
+
+        for(let w: number = 0; w < 6; w++) {
+            week = []
+            for(let d: number = 0; d < 7; d++) {
+                let firstDay = moment(firstDayMonth).add(w, 'week').day(d).format('YYYY-MM-DD')
+                week.push(firstDay)
+            }
+            calendar.push(week)
+        }
+
+        try {
+            // ■■■■■■■■■■ DB-출석 내역 가져오기 ■■■■■■■■■■
+            const r: TService = await userService.getAttendance(v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '출석 내역 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-출석 내역 가져오기 ■■■■■■■■■■
+
+            let attendance: any = []
+            let monthlyCount: number = 0
+
+            for(let i: number = 0; i < r.data.length; i++) {
+                attendance.push(moment(r.data[i].setDate).format('YYYY-MM-DD'))
+                if(moment(r.data[i].setDate).format('YYYY-MM') === moment().format('YYYY-MM')) {
+                    monthlyCount++
+                }
+            }
+
+            res.json({
+                calendar,
+                attendance,
+                monthlyCount,
+                today: moment().format('YYYY-MM-DD')
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = null
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public setAttendance = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            setDate: {
+                value: req.body.setDate,
+                rule: {
+                    date: true,
+                    max: 10,
+                    min: 10,
+                    confirmed: moment().format('YYYY-MM-DD')
+                },
+                message: {
+                    date: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.',
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    confirmed: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '출석 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '출석 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '출석 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-오늘날짜 있는지 가져오기 ■■■■■■■■■■
+            const rAttendanceTodayCount: TService = await userService.getAttendanceTodayCount(v.decoded._id, v.setDate)
+            if(rAttendanceTodayCount.error) {
+                data.errorTitle = '출석 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-오늘날짜 있는지 가져오기 ■■■■■■■■■■
+
+            if(rAttendanceTodayCount.data > 0) {
+                data = tools.denyValidate(data, 'setDate', '이미 출석 하셨습니다.')
+                res.status(400).json(data)
+                return
+            }
+
+            // ■■■■■■■■■■ DB-금일 입금 금액 가져오기 ■■■■■■■■■■
+            const rChargeToday = await userService.chargeToday(v.decoded._id, v.setDate)
+            if(rChargeToday.error) {
+                data.errorTitle = '출석 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-금일 입금 금액 가져오기 ■■■■■■■■■■
+
+            let chargeToday: number = 0
+            if(rChargeToday.data.length > 0) {
+                chargeToday = 0
+            }
+
+            // ■■■■■■■■■■ DB-출석 환경 설정 가져오기 ■■■■■■■■■■
+            const rConfigAttendance = await etcService.getConfigAttendance()
+            if(rConfigAttendance.error) {
+                data.errorTitle = '출석 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-출석 환경 설정 가져오기 ■■■■■■■■■■
+
+            const needCharge = rConfigAttendance.data[0].amount
+            rConfigAttendance.data.shift()
+
+            if(rChargeToday < needCharge) {
+                data = tools.denyValidate(data, 'chargeMoney', `금일 ${numeral(needCharge).format('0,0')}이상 충전시 출석 가능 합니다.`)
+                res.status(400).json(data)
+                return
+            }
+
+            const getKeys: Array<string> = ['recommendTree', 'isTest', 'isAgent']
+            // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
+            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys)
+            if(rUserInfo.error) {
+                data.errorTitle = '출석 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
+
+            // ■■■■■■■■■■ DB-출석 ■■■■■■■■■■
+            const rSetAttendance: TService = await etcService.setAttendance(
+                v.decoded._id,
+                v.decoded.id,
+                v.decoded.nick,
+                v.decoded.grade,
+                v.decoded.bankOwner,
+                rUserInfo.data.recommendTree,
+                v.setDate
+            )
+            if(rSetAttendance.error) {
+                data.errorTitle = '출석 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-출석 ■■■■■■■■■■
+
+            if(rConfigAttendance.data.length === 0) {
+                res.end()
+                return
+            }
+
+            for(let i: number = 0; i < rConfigAttendance.data.length; i++) {
+                const startDate: Date = moment().subtract(rConfigAttendance.data[i].date - 1, 'day').toDate()
+
+                // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 갯수 가져오기 ■■■■■■■■■■
+                const rBeforeCount: TService = await etcService.getBeforeAttendanceCount(v.decoded._id, startDate)
+                if(rBeforeCount.error) {
+                    console.log(rBeforeCount.error)
+                    res.status(500).end()
+                    return
+                }
+                // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 갯수 가져오기 ■■■■■■■■■■
+
+                if(rBeforeCount.data === rConfigAttendance.data[i].date) {
+                    if(rConfigAttendance.data[i].amount === 0) {
+                        continue
+                    }
+
+                    // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+                    const rAddPoint: TService = await moneyService.addPointForAttendance(v.decoded._id, rConfigAttendance.data[i].amount)
+                    // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+
+                    // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+                    await moneyService.addMoneyForAttendanceLog(
+                        v.decoded._id,
+                        v.decoded.id,
+                        v.decoded.nick,
+                        v.decoded.grade,
+                        v.decoded.bankOwner,
+                        rUserInfo.data.recommendTree,
+                        rConfigAttendance.data[i].amount,
+                        rAddPoint.data.value.point,
+                        rUserInfo.data.isTest,
+                        rUserInfo.data.isAgent,
+                        rConfigAttendance.data[i].date
+                    )
+                    // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+                }
+            }
+
+            res.end()
         } catch (e) {
             logger.error(e)
             data.errorTitle = null
