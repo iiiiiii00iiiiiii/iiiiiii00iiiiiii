@@ -15,6 +15,9 @@ const boardCtr: BoardController = new BoardController()
 import MessageController from '../controllers/messageController'
 const messageCtr: MessageController = new MessageController()
 
+import EtcController from '../controllers/etcController'
+const etcCtr: EtcController = new EtcController()
+
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
 
@@ -115,6 +118,10 @@ router.delete('/delete-message-all', auth.checkLogin(), messageCtr.deleteMessage
 // Attendance
 router.get('/get-attendance', auth.checkLogin(), userCtr.getAttendance)
 router.post('/set-attendance', auth.checkLogin(), userCtr.setAttendance)
+
+
+// Popup
+router.get('/get-popups', etcCtr.getPopups)
 
 
 

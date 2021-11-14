@@ -121,7 +121,42 @@ export default class EtcService implements IEtcService {
                 r.data = await pool.collection('attendance').countDocuments(findQuery)
                 resolve(r)
             } catch (err) {
-                logger.error('UserService > getBeforeAttendanceCount')
+                logger.error('EtcService > getBeforeAttendanceCount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getPopups = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    status: true,
+                    startDateTime: {
+                        $lte: new Date()
+                    },
+                    endDateTime: {
+                        $gte: new Date()
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        images: 1,
+                        location: 1,
+                        popupSize: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('popup').find(findQuery, whatQuery).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > getPopups')
                 logger.error(err)
                 r.error = err
                 resolve(r)

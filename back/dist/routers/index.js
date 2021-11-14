@@ -14,6 +14,8 @@ const boardController_1 = __importDefault(require("../controllers/boardControlle
 const boardCtr = new boardController_1.default();
 const messageController_1 = __importDefault(require("../controllers/messageController"));
 const messageCtr = new messageController_1.default();
+const etcController_1 = __importDefault(require("../controllers/etcController"));
+const etcCtr = new etcController_1.default();
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
 // import NoticeController from '../controllers/boardNoticeController'
@@ -85,4 +87,6 @@ router.delete('/delete-message-all', auth.checkLogin(), messageCtr.deleteMessage
 // Attendance
 router.get('/get-attendance', auth.checkLogin(), userCtr.getAttendance);
 router.post('/set-attendance', auth.checkLogin(), userCtr.setAttendance);
+// Popup
+router.get('/get-popups', etcCtr.getPopups);
 exports.default = router;

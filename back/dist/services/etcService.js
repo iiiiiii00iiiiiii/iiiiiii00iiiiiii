@@ -104,7 +104,39 @@ class EtcService {
                     resolve(r);
                 }
                 catch (err) {
-                    modules_1.logger.error('UserService > getBeforeAttendanceCount');
+                    modules_1.logger.error('EtcService > getBeforeAttendanceCount');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getPopups = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        status: true,
+                        startDateTime: {
+                            $lte: new Date()
+                        },
+                        endDateTime: {
+                            $gte: new Date()
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            images: 1,
+                            location: 1,
+                            popupSize: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('popup').find(findQuery, whatQuery).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getPopups');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
