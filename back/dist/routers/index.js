@@ -41,6 +41,7 @@ const messageCtr = new messageController_1.default();
 // import BankController from '../controllers/bankController'
 // const bankCtr: BankController = new BankController()
 const router = express_1.default.Router();
+router.get('/get-dashboard', boardCtr.getDashboard);
 // User
 router.get('/login', userCtr.login);
 router.post('/join', userCtr.join);
@@ -64,6 +65,8 @@ router.delete('/delete-point-all', auth.checkLogin(), moneyCtr.deletePointAll);
 // Board
 router.get('/get-notice-list', auth.checkLogin(), boardCtr.getNoticeList);
 router.get('/get-notice-detail', auth.checkLogin(), boardCtr.getNoticeDetail);
+router.get('/get-faq-list', auth.checkLogin(), boardCtr.getFaqList);
+router.get('/get-faq-detail', auth.checkLogin(), boardCtr.getFaqDetail);
 router.get('/get-event-list', auth.checkLogin(), boardCtr.getEventList);
 router.get('/get-event-detail', auth.checkLogin(), boardCtr.getEventDetail);
 // Help

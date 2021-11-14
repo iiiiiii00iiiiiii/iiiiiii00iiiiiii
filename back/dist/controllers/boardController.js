@@ -24,6 +24,68 @@ const etcService_1 = __importDefault(require("../services/etcService"));
 const etcService = new etcService_1.default();
 class MoneyController {
     constructor() {
+        this.getDashboard = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                n: {
+                    value: req.query.n,
+                    rule: {
+                        required: true,
+                        number: true,
+                        gte: 1
+                    },
+                    message: {
+                        required: '파라메터 오류, 관리자에게 문의하세요.',
+                        number: '파라메터 오류, 관리자에게 문의하세요.',
+                        gte: '파라메터 오류, 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = 'Dash board 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = 'Dash board 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = 'Dash board validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                const r = yield boardService.getDashboard(v.n);
+                if (r.error) {
+                    data.errorTitle = 'Dash board 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                res.json({
+                    notice: r.data.notice,
+                    event: r.data.event,
+                    faq: r.data.faq
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = 'Dash board 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
         this.getNoticeList = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const validateData = {
                 page: {
@@ -141,6 +203,127 @@ class MoneyController {
             catch (e) {
                 modules_1.logger.error(e);
                 data.errorTitle = '공지사항 상세 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getFaqList = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                page: {
+                    value: req.query.page,
+                    rule: {
+                        required: true,
+                        number: true,
+                        gte: 1
+                    },
+                    message: {
+                        required: '파라메터 오류, 관리자에게 문의하세요.',
+                        number: '파라메터 오류, 관리자에게 문의하세요.',
+                        gte: '파라메터 오류, 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = 'FAQ 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = 'FAQ 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = 'FAQ validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-FAQ 가져오기 ■■■■■■■■■■
+                const r = yield boardService.getFaqList(v.page);
+                if (r.error) {
+                    data.errorTitle = 'FAQ 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-FAQ 가져오기 ■■■■■■■■■■
+                res.json({
+                    recordSet: r.data,
+                    recordCount: r.count
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = 'FAQ 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getFaqDetail = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                _id: {
+                    value: req.query._id,
+                    rule: {
+                        required: true,
+                        alphaNumber: true,
+                        min: 24,
+                        max: 24
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요.',
+                        alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                        min: '파라메터 오류. 관리자에게 문의하세요.',
+                        max: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = 'FAQ 상세 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = 'FAQ 상세 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = 'FAQ 상세 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-FAQ 가져오기 ■■■■■■■■■■
+                const r = yield boardService.getFaqDetail(v._id);
+                if (r.error) {
+                    data.errorTitle = 'FAQ 상세 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-FAQ 가져오기 ■■■■■■■■■■
+                res.json(r.data.value);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = 'FAQ 상세 실패 - 500';
                 res.status(500).json(data);
                 return;
             }

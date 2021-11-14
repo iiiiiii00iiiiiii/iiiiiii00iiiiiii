@@ -11,6 +11,39 @@ export default class BoardService implements IBoardService {
     constructor() {
     }
 
+    public getDashboard = (n: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: {  }, count: null }
+
+            try {
+                const findQuery: any = {
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        header: 1,
+                        headerColor: 1,
+                        title: 1,
+                        titleColor: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data.notice = await pool.collection('boardNotice').find(findQuery, whatQuery).sort({ _id: -1 }).limit(n).toArray()
+                r.data.event = await pool.collection('boardEvents').find(findQuery, whatQuery).sort({ _id: -1 }).limit(n).toArray()
+                r.data.faq = await pool.collection('boardFAQ').find(findQuery, whatQuery).sort({ _id: -1 }).limit(n).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getDashboard')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public getNoticeList = (page: number): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -77,6 +110,79 @@ export default class BoardService implements IBoardService {
                 resolve(r)
             } catch (err) {
                 logger.error('BoardService > getNoticeDetail')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getFaqList = (page: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        header: 1,
+                        headerColor: 1,
+                        title: 1,
+                        titleColor: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const skip: number = (page - 1) * config.pageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardFAQ').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config.pageSize).toArray()
+                r.count = await pool.collection('boardFAQ').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getFaqList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getFaqDetail = (_id: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(_id),
+                    deleteStatus: false
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        hit: 1
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        header: 1,
+                        headerColor: 1,
+                        title: 1,
+                        titleColor: 1,
+                        content: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardFAQ').findOneAndUpdate(findQuery, setQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getFaqDetail')
                 logger.error(err)
                 r.error = err
                 resolve(r)
