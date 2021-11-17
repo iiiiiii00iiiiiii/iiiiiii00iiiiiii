@@ -95,7 +95,7 @@ class GameService {
                 }
             }));
         };
-        this.getPrematchCrossList = (page, sport, league) => {
+        this.getPrematchCrossList = (page, sport) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -143,6 +143,53 @@ class GameService {
                 }
                 catch (err) {
                     modules_1.logger.error('GameService > getPrematchCrossList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getLiveList = (page, sport) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    let findQuery = {
+                        showStatus: true,
+                        onAir: 'onAir',
+                        resultStatus: false
+                    };
+                    if (sport)
+                        findQuery.sport = sport;
+                    const whatQuery = {
+                        projection: {
+                            sport: 1,
+                            countryOID: 1,
+                            countryKor: 1,
+                            leagueKor: 1,
+                            gameOID: 1,
+                            gameID: 1,
+                            gameDateTime: 1,
+                            homeTeam: 1,
+                            awayTeam: 1,
+                            homeTeamKor: 1,
+                            awayTeamKor: 1,
+                            showConfig: 1,
+                            games: 1,
+                            resultData: 1
+                        }
+                    };
+                    const sortQuery = {
+                        gameDateTime: 1,
+                        leagueKor: 1
+                    };
+                    const skip = (page - 1) * config_1.default.sportPageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
+                    // r.count = await pool.collection('sportsLive').countDocuments(findQuery)
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getLiveList');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

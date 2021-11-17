@@ -699,15 +699,6 @@ export default class GameController implements IGameController {
                     required: '파라메터 오류. 관리자에게 문의하세요.',
                     or: '파라메터 오류. 관리자에게 문의하세요.'
                 }
-            },
-            league: {
-                value: req.query.league,
-                rule: {
-                    required: false
-                },
-                message: {
-                    required: '파라메터 오류. 관리자에게 문의하세요.'
-                }
             }
         }
 
@@ -740,7 +731,7 @@ export default class GameController implements IGameController {
 
         try {
             // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
-            const r: TService = await gameService.getPrematchCrossList(v.page, v.sport, v.league)
+            const r: TService = await gameService.getPrematchCrossList(v.page, v.sport)
             if(r.error) {
                 data.errorTitle = '스포츠 실패 - 500'
                 res.status(500).json(data)
@@ -801,6 +792,94 @@ export default class GameController implements IGameController {
                     r.data[i].games.underOverTotalSet = [r.data[i].games.underOverTotalSet[indexH]]
                 }
             }
+
+            // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+            const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
+            const rConfig: TService = await etcService.getConfigInfo('sportsBet', getKeys)
+            if(rConfig.error) {
+                data.errorTitle = '스포츠 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data,
+                // recordCount: r.count,
+                betInfo: rConfig.data
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '스포츠 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getLiveList = async (req: req, res: res): Promise<void> => {
+        if(!req.query.page) req.query.page = '1'
+
+        const validateData: any = {
+            page: {
+                value: req.query.page,
+                rule: {
+                    required: true,
+                    number: true
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    number: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            },
+            sport: {
+                value: req.query.sport,
+                rule: {
+                    required: req.query.league,
+                    or: ['', 'Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Tennis', 'Table Tennis', 'Darts', 'Boxing', 'MMA', 'Rugby League', 'Rugby Union', 'Golf', 'Handball', 'CS:GO', 'Dota 2', 'LoL', 'FIFA']
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    or: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '스포츠 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '스포츠 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '스포츠 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        v.page = parseInt(v.page)
+
+        try {
+            // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getLiveList(v.page, v.sport)
+            if(r.error) {
+                data.errorTitle = '스포츠 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
 
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
             const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
