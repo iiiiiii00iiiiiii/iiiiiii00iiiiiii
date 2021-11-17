@@ -62,7 +62,7 @@ class MoneyController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-쪽지 가져오기 ■■■■■■■■■■
-                const r = yield messageService.getMessageList(v.decoded._id, v.page);
+                const r = yield messageService.getMessageList(v.page, v.decoded._id);
                 if (r.error) {
                     data.errorTitle = '쪽지 실패 - 500';
                     res.status(500).json(data);

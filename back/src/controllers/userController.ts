@@ -791,7 +791,7 @@ export default class UserController implements IUserController {
                 const startDate: Date = moment().subtract(rConfigAttendance.data[i].date - 1, 'day').toDate()
 
                 // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 갯수 가져오기 ■■■■■■■■■■
-                const rBeforeCount: TService = await etcService.getBeforeAttendanceCount(v.decoded._id, startDate)
+                const rBeforeCount: TService = await etcService.getBeforeAttendanceCount(startDate, v.decoded._id)
                 if(rBeforeCount.error) {
                     console.log(rBeforeCount.error)
                     res.status(500).end()

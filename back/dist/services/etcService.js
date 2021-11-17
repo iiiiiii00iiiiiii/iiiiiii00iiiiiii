@@ -89,7 +89,7 @@ class EtcService {
                 }
             }));
         };
-        this.getBeforeAttendanceCount = (userOID, startDate) => {
+        this.getBeforeAttendanceCount = (startDate, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {

@@ -11,7 +11,7 @@ export default class MessageService implements IMessageService {
     constructor() {
     }
 
-    public getMessageList = (userOID: string, page: number): Promise<TService> => {
+    public getMessageList = (page: number, userOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 

@@ -17,7 +17,7 @@ const db_1 = require("../lib/db");
 const config_1 = __importDefault(require("../config"));
 class MessageService {
     constructor() {
-        this.getMessageList = (userOID, page) => {
+        this.getMessageList = (page, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {

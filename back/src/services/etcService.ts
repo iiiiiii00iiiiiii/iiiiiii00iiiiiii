@@ -105,7 +105,7 @@ export default class EtcService implements IEtcService {
         })
     }
 
-    public getBeforeAttendanceCount = (userOID: string, startDate: Date): Promise<TService> => {
+    public getBeforeAttendanceCount = (startDate: Date, userOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 

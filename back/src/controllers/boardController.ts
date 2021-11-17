@@ -521,7 +521,7 @@ export default class MoneyController implements IMoneyController {
 
         try {
             // ■■■■■■■■■■ DB-고객센터 가져오기 ■■■■■■■■■■
-            const r: TService = await boardService.getHelpList(v.decoded._id, v.page)
+            const r: TService = await boardService.getHelpList(v.page, v.decoded._id)
             if(r.error) {
                 data.errorTitle = '고객센터 실패 - 500'
                 res.status(500).json(data)

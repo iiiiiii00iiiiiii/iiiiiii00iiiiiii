@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const modules_1 = require("../lib/modules");
 const db_1 = require("../lib/db");
+const config_1 = __importDefault(require("../config"));
 class BetService {
     constructor() {
         this.betMinMax = (category, betGameType, betCart, userGrade) => {
@@ -261,6 +265,44 @@ class BetService {
                 }
                 catch (err) {
                     modules_1.logger.error('BetService > setBetMoneyLogSports');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getSportsBetList = (page, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            gameType: 1,
+                            betAmount: 1,
+                            betRate: 1,
+                            betBenefit: 1,
+                            betResult: 1,
+                            betCount: 1,
+                            detail: 1,
+                            regDateTime: 1,
+                            bonusRate: 1
+                        }
+                    };
+                    const sortQuery = {
+                        _id: -1
+                    };
+                    const skip = (page - 1) * config_1.default.sportPageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betSports').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
+                    r.count = yield pool.collection('betSports').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > getSportsBetList');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

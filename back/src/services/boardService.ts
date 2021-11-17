@@ -263,7 +263,7 @@ export default class BoardService implements IBoardService {
         })
     }
 
-    public getHelpList = (userOID: string, page: number): Promise<TService> => {
+    public getHelpList = (page: number, userOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 

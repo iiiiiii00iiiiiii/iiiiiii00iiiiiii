@@ -135,12 +135,22 @@ router.get('/get-popups', etcCtr.getPopups)
 // ETC
 router.get('/check-duplicate-and-event', auth.checkLogin(), etcCtr.checkDuplicateAndEvent)
 
+
 // category
 router.get('/get-category', gameCtr.getCategory)
 
+
 // sports
 router.get('/get-prematch-list', gameCtr.getPrematchList)
+
+
+// bet
 router.post('/bet', auth.checkLogin(), betCtr.bet)
+
+
+// bet list
+router.get('/get-sports-bet-list', auth.checkLogin(), betCtr.getSportsBetList)
+
 
 
 
