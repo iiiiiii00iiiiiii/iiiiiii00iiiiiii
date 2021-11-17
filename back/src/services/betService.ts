@@ -333,4 +333,261 @@ export default class BetService implements IBetService {
             }
         })
     }
+
+    public sportsCart = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v._id),
+                    gameType: {
+                        $ne: 'sportsLive'
+                    },
+                    betResult: 'I',
+                    regDateTime: {
+                        $gt: moment().subtract(10, 'minute').toDate()
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        gameType: 1,
+                        betAmount: 1,
+                        detail: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betSports').findOne(findQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > sportsCart')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public sportsCartCancel = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v._id),
+                    gameType: {
+                        $ne: 'sportsLive'
+                    },
+                    betResult: 'I',
+                    regDateTime: {
+                        $gt: moment().subtract(10, 'minute').toDate()
+                    }
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        betResult: 'C',
+                        'detail.$[elem].betResult': 'C',
+                        calcStatus: true,
+                        calcDateTime: new Date()
+                    }
+                }
+
+                const options: any = {
+                    arrayFilters: [{ 'elem.betResult': { $ne: 'C' } }]
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betSports').updateOne(findQuery, setQuery, options)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > sportsCartCancel')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public subtractBetSports = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            let ids = []
+            for(let i = 0; i < v.resultSportsCart.detail.length; i++) {
+                ids.push(v.resultSportsCart.detail[i]._id)
+            }
+
+            try {
+                const findQuery: any = {
+                    _id: {
+                        $in: ids
+                    }
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        betAmount: -parseInt(v.resultSportsCart.betAmount),
+                        betCount: -1,
+                        totalBetCount: -1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsPrematch').updateMany(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > subtractBetSports')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public sportsCartCancelUpdateUser = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v.decoded._id)
+                }
+
+                let betLimitCount = v.resultSportsCart.detail.length
+                if(betLimitCount > 10) betLimitCount = 10
+
+                let setQuery: any = {
+                    $inc: {
+                        money: v.resultSportsCart.betAmount,
+                        'betHistory.betCount': -1,
+                        'betHistory.betAmount': -v.resultSportsCart.betAmount
+                    }
+                }
+                setQuery.$inc[`sportsBetHistory.folder${betLimitCount}.count`] = -1
+                setQuery.$inc[`sportsBetHistory.folder${betLimitCount}.amount`] = -v.resultSportsCart.betAmount
+
+                const optionsQuery: any = {
+                    projection: {
+                        recommendTree: 1,
+                        money: 1,
+                        topConfig: 1,
+                        isTest: 1,
+                        isAgent: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > sportsCartCancelUpdateUser')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public sportsCartCancelMoneyLog = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    moneyOID: null,
+                    userOID: new ObjectID(v.decoded._id),
+                    userID: v.decoded.id,
+                    userNick: v.decoded.nick,
+                    userGrade: v.decoded.grade,
+                    bankOwner: v.decoded.bankOwner,
+                    recommendTree: v.resultSportsCartCancelUpdateUser.recommendTree,
+                    before: v.resultSportsCartCancelUpdateUser.money,
+                    process: v.resultSportsCart.betAmount,
+                    after: v.resultSportsCartCancelUpdateUser.money + v.resultSportsCart.betAmount,
+                    sortation: 'betCancel',
+                    reason: `배팅취소-${v.resultSportsCart.gameType}`,
+                    adminOID: null,
+                    adminID: null,
+                    adminNick: null,
+                    adminGrade: null,
+                    regDateTime: new Date(),
+                    deleteStatus: false,
+                    cartOID: new ObjectID(v.resultSportsCart._id),
+                    isTest: v.resultSportsCartCancelUpdateUser.isTest,
+                    isAgent: v.resultSportsCartCancelUpdateUser.isAgent
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > sportsCartCancelMoneyLog')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public sportsBetDelete = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v._id),
+                    userOID: new ObjectID(v.decoded._id)
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        deleteStatus: true
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betSports').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > sportsBetDelete')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public deleteSportsBetAll = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(v.decoded._id),
+                    betResult: {
+                        $ne: 'I'
+                    }
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        deleteStatus: true
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betSports').updateMany(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > deleteSportsBetAll')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

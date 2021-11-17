@@ -2365,4 +2365,219 @@ export default class BetController implements IBetController {
             return
         }
     }
+
+    public cancelSportsBet = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            _id: {
+                value: req.body._id,
+                rule: {
+                    required: true,
+                    alphaNumber: true,
+                    min: 24,
+                    max: 24
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '배팅 취소 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '배팅 취소 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '배팅 취소 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅카트 가져오기 ■■■■■■■■■■
+            const resultSportsCart: TService = await betService.sportsCart(v)
+            if(resultSportsCart.error) {
+                data.errorTitle = '배팅 취소 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅카트 가져오기 ■■■■■■■■■■
+            v.resultSportsCart = resultSportsCart.data
+
+            if(!v.resultSportsCart) {
+                data.errorTitle = '배팅 취소 실패 - 400'
+                data = tools.denyValidate(data, 'cancel', '배팅 취소가 불가능 합니다.')
+                res.status(400).json(data)
+                return
+            }
+
+            let result: boolean = true
+            for(let i: number = 0; i < v.resultSportsCart.detail.length; i++) {
+                let now: number = moment().unix()
+                let gameDateTime: number = moment(v.resultSportsCart.detail[i].gameDateTime).unix()
+                if(now >= gameDateTime) {
+                    result = false
+                    break
+                }
+            }
+
+            if(!result) {
+                data.errorTitle = '배팅 취소 실패 - 400'
+                data = tools.denyValidate(data, 'cancel', '배팅 취소가 불가능 합니다.')
+                res.status(400).json(data)
+                return
+            }
+
+            // ■■■■■■■■■■ DB-배팅 카트 취소 ■■■■■■■■■■
+            const resultSportsCartCancel: TService = await betService.sportsCartCancel(v)
+            if(resultSportsCartCancel.error) {
+                data.errorTitle = '배팅 취소 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 카트 취소 ■■■■■■■■■■
+            v.resultSportsCartCancel = resultSportsCartCancel.data
+
+            if(v.resultSportsCartCancel.modifiedCount === 0) {
+                data.errorTitle = '배팅 취소 실패 - 500'
+                res.status(500).end()
+                return
+            }
+
+            // ■■■■■■■■■■ DB-스포츠 경기에 업데이트 ■■■■■■■■■■
+            await betService.subtractBetSports(v)
+            // ■■■■■■■■■■ DB-스포츠 경기에 업데이트 ■■■■■■■■■■
+
+            // ■■■■■■■■■■ DB-회원머니 적립 및 배팅카운트 수정 ■■■■■■■■■■
+            const resultSportsCartCancelUpdateUser: TService = await betService.sportsCartCancelUpdateUser(v)
+            if(resultSportsCartCancelUpdateUser.error) {
+                data.errorTitle = '배팅 취소 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-회원머니 적립 및 배팅카운트 수정 ■■■■■■■■■■
+            v.resultSportsCartCancelUpdateUser = resultSportsCartCancelUpdateUser.data.value
+            if(!v.resultSportsCartCancelUpdateUser) {
+                data.errorTitle = '배팅 취소 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+
+            // ■■■■■■■■■■ DB-배팅취소 로그 ■■■■■■■■■■
+            await betService.sportsCartCancelMoneyLog(v)
+            // ■■■■■■■■■■ DB-배팅취소 로그 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 취소 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public deleteSportsBet = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            _id: {
+                value: req.query._id,
+                rule: {
+                    required: true,
+                    alphaNumber: true,
+                    min: 24,
+                    max: 24
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '배팅 내역 삭제 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+            const r: TService = await betService.sportsBetDelete(v)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public deleteSportsBetAll = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+            const r: TService = await betService.deleteSportsBetAll(v)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
 }
