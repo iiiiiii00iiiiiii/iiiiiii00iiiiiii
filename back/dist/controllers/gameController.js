@@ -633,7 +633,149 @@ class GameController {
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
                 res.json({
                     recordSet: r.data,
-                    recordCount: r.count,
+                    // recordCount: r.count,
+                    betInfo: rConfig.data
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '스포츠 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getPrematchCrossList = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            if (!req.query.page)
+                req.query.page = '1';
+            const validateData = {
+                page: {
+                    value: req.query.page,
+                    rule: {
+                        required: true,
+                        number: true
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요',
+                        number: '파라메터 오류. 관리자에게 문의하세요'
+                    }
+                },
+                sport: {
+                    value: req.query.sport,
+                    rule: {
+                        required: req.query.league,
+                        or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Tennis', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'Table Tennis', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요.',
+                        or: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
+                },
+                league: {
+                    value: req.query.league,
+                    rule: {
+                        required: false
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = '스포츠 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = '스포츠 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            v.page = parseInt(v.page);
+            try {
+                // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
+                const r = yield gameService.getPrematchCrossList(v.page, v.sport, v.league);
+                if (r.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
+                for (let i = 0; i < r.data.length; i++) {
+                    if (r.data[i].games.handicap) {
+                        let h = 1000000;
+                        let indexH = 0;
+                        for (let j = 0; j < r.data[i].games.handicap.length; j++) {
+                            let nh = Math.abs(r.data[i].games.handicap[j].homeRate - r.data[i].games.handicap[j].awayRate);
+                            if (nh < h) {
+                                h = nh;
+                                indexH = j;
+                            }
+                        }
+                        r.data[i].games.handicap = [r.data[i].games.handicap[indexH]];
+                    }
+                    if (r.data[i].games.handicapTotalSet) {
+                        let h = 1000000;
+                        let indexH = 0;
+                        for (let j = 0; j < r.data[i].games.handicapTotalSet.length; j++) {
+                            let nh = Math.abs(r.data[i].games.handicapTotalSet[j].homeRate - r.data[i].games.handicapTotalSet[j].awayRate);
+                            if (nh < h) {
+                                h = nh;
+                                indexH = j;
+                            }
+                        }
+                        r.data[i].games.handicapTotalSet = [r.data[i].games.handicapTotalSet[indexH]];
+                    }
+                    if (r.data[i].games.underOver) {
+                        let h = 1000000;
+                        let indexH = 0;
+                        for (let j = 0; j < r.data[i].games.underOver.length; j++) {
+                            let nh = Math.abs(r.data[i].games.underOver[j].underRate - r.data[i].games.underOver[j].overRate);
+                            if (nh < h) {
+                                h = nh;
+                                indexH = j;
+                            }
+                        }
+                        r.data[i].games.underOver = [r.data[i].games.underOver[indexH]];
+                    }
+                    if (r.data[i].games.underOverTotalSet) {
+                        let h = 1000000;
+                        let indexH = 0;
+                        for (let j = 0; j < r.data[i].games.underOverTotalSet.length; j++) {
+                            let nh = Math.abs(r.data[i].games.underOverTotalSet[j].underRate - r.data[i].games.underOverTotalSet[j].overRate);
+                            if (nh < h) {
+                                h = nh;
+                                indexH = j;
+                            }
+                        }
+                        r.data[i].games.underOverTotalSet = [r.data[i].games.underOverTotalSet[indexH]];
+                    }
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9'];
+                const rConfig = yield etcService.getConfigInfo('sportsBet', getKeys);
+                if (rConfig.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+                res.json({
+                    recordSet: r.data,
+                    // recordCount: r.count,
                     betInfo: rConfig.data
                 });
             }

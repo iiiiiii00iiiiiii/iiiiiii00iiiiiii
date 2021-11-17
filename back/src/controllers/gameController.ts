@@ -61,7 +61,7 @@ export default class GameController implements IGameController {
                 let arrayFIFA: Array<any> = []  //FIFA
                 // let arrayRugbyUsa: Array<any> = []  //미식축구
 
-                for(let i = 0; i < rCategory.data.length; i++) {
+                for(let i: number = 0; i < rCategory.data.length; i++) {
                     if(rCategory.data[i].sport === 'Football') arrayFootball.push(rCategory.data[i])
                     if(rCategory.data[i].sport === 'Basketball') arrayBasketball.push(rCategory.data[i])
                     if(rCategory.data[i].sport === 'Baseball') arrayBaseball.push(rCategory.data[i])
@@ -95,7 +95,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayFootball.length; i++) {
+                for(let i: number = 0; i < arrayFootball.length; i++) {
                     let existCountry = r.Football.hasOwnProperty(arrayFootball[i].countryKor)
                     if(!existCountry) {
                         r.Football[arrayFootball[i].countryKor] = []
@@ -121,7 +121,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayBasketball.length; i++) {
+                for(let i: number = 0; i < arrayBasketball.length; i++) {
                     let existCountry = r.Basketball.hasOwnProperty(arrayBasketball[i].countryKor)
                     if(!existCountry) {
                         r.Basketball[arrayBasketball[i].countryKor] = []
@@ -147,7 +147,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayBaseball.length; i++) {
+                for(let i: number = 0; i < arrayBaseball.length; i++) {
                     let existCountry = r.Baseball.hasOwnProperty(arrayBaseball[i].countryKor)
                     if(!existCountry) {
                         r.Baseball[arrayBaseball[i].countryKor] = []
@@ -173,7 +173,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayIceHockey.length; i++) {
+                for(let i: number = 0; i < arrayIceHockey.length; i++) {
                     let existCountry = r['Ice Hockey'].hasOwnProperty(arrayIceHockey[i].countryKor)
                     if(!existCountry) {
                         r['Ice Hockey'][arrayIceHockey[i].countryKor] = []
@@ -199,7 +199,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayTennis.length; i++) {
+                for(let i: number = 0; i < arrayTennis.length; i++) {
                     let existCountry = r.Tennis.hasOwnProperty(arrayTennis[i].countryKor)
                     if(!existCountry) {
                         r.Tennis[arrayTennis[i].countryKor] = []
@@ -225,7 +225,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayHandball.length; i++) {
+                for(let i: number = 0; i < arrayHandball.length; i++) {
                     let existCountry = r.Handball.hasOwnProperty(arrayHandball[i].countryKor)
                     if(!existCountry) {
                         r.Handball[arrayHandball[i].countryKor] = []
@@ -251,7 +251,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayVolleyball.length; i++) {
+                for(let i: number = 0; i < arrayVolleyball.length; i++) {
                     let existCountry = r.Volleyball.hasOwnProperty(arrayVolleyball[i].countryKor)
                     if(!existCountry) {
                         r.Volleyball[arrayVolleyball[i].countryKor] = []
@@ -277,7 +277,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayRugbyLeague.length; i++) {
+                for(let i: number = 0; i < arrayRugbyLeague.length; i++) {
                     let existCountry = r['Rugby League'].hasOwnProperty(arrayRugbyLeague[i].countryKor)
                     if(!existCountry) {
                         r['Rugby League'][arrayRugbyLeague[i].countryKor] = []
@@ -303,7 +303,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayRugbyUnion.length; i++) {
+                for(let i: number = 0; i < arrayRugbyUnion.length; i++) {
                     let existCountry = r['Rugby Union'].hasOwnProperty(arrayRugbyUnion[i].countryKor)
                     if(!existCountry) {
                         r['Rugby Union'][arrayRugbyUnion[i].countryKor] = []
@@ -329,7 +329,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayBoxing.length; i++) {
+                for(let i: number = 0; i < arrayBoxing.length; i++) {
                     let existCountry = r.Boxing.hasOwnProperty(arrayBoxing[i].countryKor)
                     if(!existCountry) {
                         r.Boxing[arrayBoxing[i].countryKor] = []
@@ -355,7 +355,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayTableTennis.length; i++) {
+                for(let i: number = 0; i < arrayTableTennis.length; i++) {
                     let existCountry = r['Table Tennis'].hasOwnProperty(arrayTableTennis[i].countryKor)
                     if(!existCountry) {
                         r['Table Tennis'][arrayTableTennis[i].countryKor] = []
@@ -381,7 +381,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayMMA.length; i++) {
+                for(let i: number = 0; i < arrayMMA.length; i++) {
                     let existCountry = r.MMA.hasOwnProperty(arrayMMA[i].countryKor)
                     if(!existCountry) {
                         r.MMA[arrayMMA[i].countryKor] = []
@@ -407,7 +407,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayGolf.length; i++) {
+                for(let i: number = 0; i < arrayGolf.length; i++) {
                     let existCountry = r.Golf.hasOwnProperty(arrayGolf[i].countryKor)
                     if(!existCountry) {
                         r.Golf[arrayGolf[i].countryKor] = []
@@ -433,7 +433,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayDarts.length; i++) {
+                for(let i: number = 0; i < arrayDarts.length; i++) {
                     let existCountry = r.Darts.hasOwnProperty(arrayDarts[i].countryKor)
                     if(!existCountry) {
                         r.Darts[arrayDarts[i].countryKor] = []
@@ -459,7 +459,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayLoL.length; i++) {
+                for(let i: number = 0; i < arrayLoL.length; i++) {
                     let existCountry = r.LoL.hasOwnProperty(arrayLoL[i].countryKor)
                     if(!existCountry) {
                         r.LoL[arrayLoL[i].countryKor] = []
@@ -485,7 +485,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayCSGO.length; i++) {
+                for(let i: number = 0; i < arrayCSGO.length; i++) {
                     let existCountry = r['CS:GO'].hasOwnProperty(arrayCSGO[i].countryKor)
                     if(!existCountry) {
                         r['CS:GO'][arrayCSGO[i].countryKor] = []
@@ -511,7 +511,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayDota2.length; i++) {
+                for(let i: number = 0; i < arrayDota2.length; i++) {
                     let existCountry = r['Dota 2'].hasOwnProperty(arrayDota2[i].countryKor)
                     if(!existCountry) {
                         r['Dota 2'][arrayDota2[i].countryKor] = []
@@ -537,7 +537,7 @@ export default class GameController implements IGameController {
                         country: {}
                     }
                 }
-                for(let i = 0; i < arrayFIFA.length; i++) {
+                for(let i: number = 0; i < arrayFIFA.length; i++) {
                     let existCountry = r.FIFA.hasOwnProperty(arrayFIFA[i].countryKor)
                     if(!existCountry) {
                         r.FIFA[arrayFIFA[i].countryKor] = []
@@ -556,7 +556,7 @@ export default class GameController implements IGameController {
                 }
 
                 //국가 및 리그 경기수 넣어주기.
-                for(let i = 0; i < rCategory.data.length; i++) {
+                for(let i: number = 0; i < rCategory.data.length; i++) {
                     rCount[rCategory.data[i].sport].country[rCategory.data[i].countryKor].countOfGame++
                     rCount[rCategory.data[i].sport].country[rCategory.data[i].countryKor].league[rCategory.data[i].leagueKor]++
                 }
@@ -663,7 +663,158 @@ export default class GameController implements IGameController {
 
             res.json({
                 recordSet: r.data,
-                recordCount: r.count,
+                // recordCount: r.count,
+                betInfo: rConfig.data
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '스포츠 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getPrematchCrossList = async (req: req, res: res): Promise<void> => {
+        if(!req.query.page) req.query.page = '1'
+
+        const validateData: any = {
+            page: {
+                value: req.query.page,
+                rule: {
+                    required: true,
+                    number: true
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요',
+                    number: '파라메터 오류. 관리자에게 문의하세요'
+                }
+            },
+            sport: {
+                value: req.query.sport,
+                rule: {
+                    required: req.query.league,
+                    or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Tennis', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'Table Tennis', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    or: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            },
+            league: {
+                value: req.query.league,
+                rule: {
+                    required: false
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '스포츠 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '스포츠 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '스포츠 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        v.page = parseInt(v.page)
+
+        try {
+            // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getPrematchCrossList(v.page, v.sport, v.league)
+            if(r.error) {
+                data.errorTitle = '스포츠 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
+
+            for(let i: number = 0; i < r.data.length; i++) {
+                if(r.data[i].games.handicap) {
+                    let h: number = 1000000
+                    let indexH: number = 0
+                    for(let j: number = 0; j < r.data[i].games.handicap.length; j++) {
+                        let nh: number = Math.abs(r.data[i].games.handicap[j].homeRate - r.data[i].games.handicap[j].awayRate)
+                        if(nh < h) {
+                            h = nh
+                            indexH = j
+                        }
+                    }
+                    r.data[i].games.handicap = [r.data[i].games.handicap[indexH]]
+                }
+
+                if(r.data[i].games.handicapTotalSet) {
+                    let h: number = 1000000
+                    let indexH: number = 0
+                    for(let j: number = 0; j < r.data[i].games.handicapTotalSet.length; j++) {
+                        let nh: number = Math.abs(r.data[i].games.handicapTotalSet[j].homeRate - r.data[i].games.handicapTotalSet[j].awayRate)
+                        if(nh < h) {
+                            h = nh
+                            indexH = j
+                        }
+                    }
+                    r.data[i].games.handicapTotalSet = [r.data[i].games.handicapTotalSet[indexH]]
+                }
+
+                if(r.data[i].games.underOver) {
+                    let h: number = 1000000
+                    let indexH: number = 0
+                    for(let j: number = 0; j < r.data[i].games.underOver.length; j++) {
+                        let nh: number = Math.abs(r.data[i].games.underOver[j].underRate - r.data[i].games.underOver[j].overRate)
+                        if(nh < h) {
+                            h = nh
+                            indexH = j
+                        }
+                    }
+                    r.data[i].games.underOver = [r.data[i].games.underOver[indexH]]
+                }
+
+                if(r.data[i].games.underOverTotalSet) {
+                    let h: number = 1000000
+                    let indexH: number = 0
+                    for(let j: number = 0; j < r.data[i].games.underOverTotalSet.length; j++) {
+                        let nh: number = Math.abs(r.data[i].games.underOverTotalSet[j].underRate - r.data[i].games.underOverTotalSet[j].overRate)
+                        if(nh < h) {
+                            h = nh
+                            indexH = j
+                        }
+                    }
+                    r.data[i].games.underOverTotalSet = [r.data[i].games.underOverTotalSet[indexH]]
+                }
+            }
+
+            // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+            const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
+            const rConfig: TService = await etcService.getConfigInfo('sportsBet', getKeys)
+            if(rConfig.error) {
+                data.errorTitle = '스포츠 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data,
+                // recordCount: r.count,
                 betInfo: rConfig.data
             })
         } catch (e) {

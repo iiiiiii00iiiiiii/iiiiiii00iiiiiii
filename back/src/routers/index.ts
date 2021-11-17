@@ -142,6 +142,8 @@ router.get('/get-category', gameCtr.getCategory)
 
 // sports
 router.get('/get-prematch-list', gameCtr.getPrematchList)
+router.get('/get-prematch-cross-list', gameCtr.getPrematchCrossList)
+
 
 
 // bet
