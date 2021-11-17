@@ -21,9 +21,10 @@ class Auth {
     }
     checkLogin() {
         return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
+            var _a, _b;
             try {
                 let token = ((_a = req.headers['access-token']) === null || _a === void 0 ? void 0 : _a.toString()) || null;
+                let dToken = ((_b = req.headers['duplicate']) === null || _b === void 0 ? void 0 : _b.toString()) || '';
                 if (token) {
                     const decoded = yield this.tokenVerify(token);
                     if (decoded) {
@@ -36,6 +37,9 @@ class Auth {
                             isAgent: decoded.isAgent
                         });
                         res.set('access-token', token);
+                        res.set('duplicate', dToken);
+                        req.token = token;
+                        req.dToken = dToken;
                         req.decoded = {
                             _id: decoded._id,
                             id: decoded.id,

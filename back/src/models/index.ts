@@ -9,7 +9,8 @@ type TService = {
 
 type TReq = req & {
     decoded: any,
-    token: string
+    token: string,
+    dToken: string
 }
 
 type TObjectId = ObjectId

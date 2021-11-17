@@ -15,6 +15,12 @@ const boardCtr: BoardController = new BoardController()
 import MessageController from '../controllers/messageController'
 const messageCtr: MessageController = new MessageController()
 
+import GameController from '../controllers/gameController'
+const gameCtr: GameController = new GameController()
+
+import BetController from '../controllers/betController'
+const betCtr: BetController = new BetController()
+
 import EtcController from '../controllers/etcController'
 const etcCtr: EtcController = new EtcController()
 
@@ -62,11 +68,13 @@ const router = express.Router()
 router.get('/get-dashboard', boardCtr.getDashboard)
 
 
+
 // User
 router.get('/login', userCtr.login)
 router.post('/join', userCtr.join)
 router.put('/edit-user', auth.checkLogin(), userCtr.editUser)
 router.get('/get-user-info', auth.checkLogin(), userCtr.getUserInfo)
+
 
 // Charge
 router.get('/get-charge-list', auth.checkLogin(), moneyCtr.getChargeList)
@@ -122,6 +130,20 @@ router.post('/set-attendance', auth.checkLogin(), userCtr.setAttendance)
 
 // Popup
 router.get('/get-popups', etcCtr.getPopups)
+
+
+// ETC
+router.get('/check-duplicate-and-event', auth.checkLogin(), etcCtr.checkDuplicateAndEvent)
+
+// category
+router.get('/get-category', gameCtr.getCategory)
+
+// sports
+router.get('/get-prematch-list', gameCtr.getPrematchList)
+router.post('/bet', auth.checkLogin(), betCtr.bet)
+
+
+
 
 
 

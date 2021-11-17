@@ -616,15 +616,15 @@ class UserService {
                 }
             }));
         };
-        this.getAttendance = (userOID) => {
+        this.getAttendance = (userOID, month) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
                     const findQuery = {
                         userOID: new db_1.ObjectID(userOID),
                         setDate: {
-                            $gte: (0, modules_1.moment)().startOf('month').toDate(),
-                            $lte: (0, modules_1.moment)().endOf('month').toDate()
+                            $gte: (0, modules_1.moment)(month).startOf('month').toDate(),
+                            $lte: (0, modules_1.moment)(month).endOf('month').toDate()
                         }
                     };
                     const whatQuery = {
@@ -689,6 +689,27 @@ class UserService {
                 }
                 catch (err) {
                     modules_1.logger.error('UserService > chargeToday');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.checkDToken = (userOID, dToken) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID),
+                        token: dToken,
+                        status: 1
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > checkDToken');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

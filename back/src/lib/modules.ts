@@ -8,6 +8,7 @@ import 'winston-daily-rotate-file'
 import util from 'util'
 import mongoSanitize from 'mongo-sanitize'
 import { v4 as uuidv4 } from 'uuid'
+import cache from 'memory-cache'
 
 const sleep = util.promisify(setTimeout)
 
@@ -31,4 +32,4 @@ const logger: any = winston.createLogger({
     ]
 })
 
-export { moment, numeral, request, crypto, _, logger, sleep, mongoSanitize, uuidv4 }
+export { moment, numeral, request, crypto, _, logger, sleep, mongoSanitize, uuidv4, cache }

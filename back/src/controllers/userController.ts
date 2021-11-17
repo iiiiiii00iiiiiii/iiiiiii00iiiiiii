@@ -575,12 +575,47 @@ export default class UserController implements IUserController {
     }
 
     public getAttendance = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            month: {
+                value: req.query.month,
+                rule: {
+                    min: 7,
+                    max: 7
+                },
+                message: {
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.',
+                    confirmed: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
         // validate start
-        let v: any = tools.generateReqValue({}, req)
-        let data: any = v
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '출석 내역 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '출석 내역 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '출석 내역 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
         // validate end
 
-        const firstDayMonth: string = moment().date(1).format('YYYY-MM-DD')
+        const firstDayMonth: string = moment(v.month).date(1).format('YYYY-MM-DD')
 
         let calendar: Array<Array<string>> = []
         let week: Array<string> = []
@@ -596,7 +631,7 @@ export default class UserController implements IUserController {
 
         try {
             // ■■■■■■■■■■ DB-출석 내역 가져오기 ■■■■■■■■■■
-            const r: TService = await userService.getAttendance(v.decoded._id)
+            const r: TService = await userService.getAttendance(v.decoded._id, v.month)
             if(r.error) {
                 data.errorTitle = '출석 내역 실패 - 500'
                 res.status(500).json(data)
@@ -634,14 +669,14 @@ export default class UserController implements IUserController {
                 value: req.body.setDate,
                 rule: {
                     date: true,
-                    max: 10,
                     min: 10,
+                    max: 10,
                     confirmed: moment().format('YYYY-MM-DD')
                 },
                 message: {
                     date: '파라메터 오류. 관리자에게 문의하세요.',
-                    max: '파라메터 오류. 관리자에게 문의하세요.',
                     min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.',
                     confirmed: '파라메터 오류. 관리자에게 문의하세요.'
                 }
             }

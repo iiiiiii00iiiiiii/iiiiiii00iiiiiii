@@ -65,19 +65,24 @@ class MoneyController {
             }
             // validate end
             try {
-                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
-                const r = yield boardService.getDashboard(v.n);
-                if (r.error) {
-                    data.errorTitle = 'Dash board 실패 - 500';
-                    res.status(500).json(data);
-                    return;
+                let dashboard = modules_1.cache.get('dashboard');
+                if (!modules_1.cache.get('dashboard')) {
+                    // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                    const r = yield boardService.getDashboard(v.n);
+                    if (r.error) {
+                        data.errorTitle = 'Dash board 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                    modules_1.cache.put('dashboard', {
+                        notice: r.data.notice,
+                        event: r.data.event,
+                        faq: r.data.faq
+                    }, 300000);
                 }
-                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
-                res.json({
-                    notice: r.data.notice,
-                    event: r.data.event,
-                    faq: r.data.faq
-                });
+                dashboard = modules_1.cache.get('dashboard');
+                res.json(dashboard);
             }
             catch (e) {
                 modules_1.logger.error(e);

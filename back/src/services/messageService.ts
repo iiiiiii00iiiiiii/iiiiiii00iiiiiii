@@ -177,4 +177,27 @@ export default class MessageService implements IMessageService {
             }
         })
     }
+
+    public messageCount = (userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    checkStatus: false,
+                    deleteStatus: false
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('messages').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MessageService > messageCount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

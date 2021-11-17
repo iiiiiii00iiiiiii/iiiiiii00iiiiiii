@@ -656,7 +656,7 @@ export default class UserService implements IUserService {
         })
     }
 
-    public getAttendance = (userOID: string): Promise<TService> => {
+    public getAttendance = (userOID: string, month: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -664,8 +664,8 @@ export default class UserService implements IUserService {
                 const findQuery: any = {
                     userOID: new ObjectID(userOID),
                     setDate: {
-                        $gte: moment().startOf('month').toDate(),
-                        $lte: moment().endOf('month').toDate()
+                        $gte: moment(month).startOf('month').toDate(),
+                        $lte: moment(month).endOf('month').toDate()
                     }
                 }
 
@@ -742,5 +742,26 @@ export default class UserService implements IUserService {
         })
     }
 
+    public checkDToken = (userOID: string, dToken: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
 
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID),
+                    token: dToken,
+                    status: 1
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > checkDToken')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

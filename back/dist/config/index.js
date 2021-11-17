@@ -20,6 +20,8 @@ const config = {
     // },
     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
     expiresIn: 60 * 60 * 1,
-    pageSize: 30
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 200
 };
 exports.default = config;

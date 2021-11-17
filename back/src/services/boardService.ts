@@ -605,4 +605,28 @@ export default class BoardService implements IBoardService {
             }
         })
     }
+
+    public helpCount = (userOID: string,): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    writerOID: new ObjectID(userOID),
+                    answerStatus: true,
+                    readAnswerStatus: false,
+                    deleteStatus: false
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardHelp').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > helpCount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

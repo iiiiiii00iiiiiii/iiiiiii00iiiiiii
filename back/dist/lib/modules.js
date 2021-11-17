@@ -22,7 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uuidv4 = exports.mongoSanitize = exports.sleep = exports.logger = exports._ = exports.crypto = exports.request = exports.numeral = exports.moment = void 0;
+exports.cache = exports.uuidv4 = exports.mongoSanitize = exports.sleep = exports.logger = exports._ = exports.crypto = exports.request = exports.numeral = exports.moment = void 0;
 const moment_1 = __importDefault(require("moment"));
 exports.moment = moment_1.default;
 const numeral_1 = __importDefault(require("numeral"));
@@ -40,6 +40,8 @@ const mongo_sanitize_1 = __importDefault(require("mongo-sanitize"));
 exports.mongoSanitize = mongo_sanitize_1.default;
 const uuid_1 = require("uuid");
 Object.defineProperty(exports, "uuidv4", { enumerable: true, get: function () { return uuid_1.v4; } });
+const memory_cache_1 = __importDefault(require("memory-cache"));
+exports.cache = memory_cache_1.default;
 const sleep = util_1.default.promisify(setTimeout);
 exports.sleep = sleep;
 const transport = new (winston_1.default.transports.DailyRotateFile)({

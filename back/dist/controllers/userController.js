@@ -540,11 +540,45 @@ class UserController {
             }
         });
         this.getAttendance = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                month: {
+                    value: req.query.month,
+                    rule: {
+                        min: 7,
+                        max: 7
+                    },
+                    message: {
+                        min: '파라메터 오류. 관리자에게 문의하세요.',
+                        max: '파라메터 오류. 관리자에게 문의하세요.',
+                        confirmed: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
+                }
+            };
             // validate start
-            let v = tools_1.default.generateReqValue({}, req);
-            let data = v;
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = '출석 내역 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = '출석 내역 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = '출석 내역 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
             // validate end
-            const firstDayMonth = (0, modules_1.moment)().date(1).format('YYYY-MM-DD');
+            const firstDayMonth = (0, modules_1.moment)(v.month).date(1).format('YYYY-MM-DD');
             let calendar = [];
             let week = [];
             for (let w = 0; w < 6; w++) {
@@ -557,7 +591,7 @@ class UserController {
             }
             try {
                 // ■■■■■■■■■■ DB-출석 내역 가져오기 ■■■■■■■■■■
-                const r = yield userService.getAttendance(v.decoded._id);
+                const r = yield userService.getAttendance(v.decoded._id, v.month);
                 if (r.error) {
                     data.errorTitle = '출석 내역 실패 - 500';
                     res.status(500).json(data);
@@ -592,14 +626,14 @@ class UserController {
                     value: req.body.setDate,
                     rule: {
                         date: true,
-                        max: 10,
                         min: 10,
+                        max: 10,
                         confirmed: (0, modules_1.moment)().format('YYYY-MM-DD')
                     },
                     message: {
                         date: '파라메터 오류. 관리자에게 문의하세요.',
-                        max: '파라메터 오류. 관리자에게 문의하세요.',
                         min: '파라메터 오류. 관리자에게 문의하세요.',
+                        max: '파라메터 오류. 관리자에게 문의하세요.',
                         confirmed: '파라메터 오류. 관리자에게 문의하세요.'
                     }
                 }

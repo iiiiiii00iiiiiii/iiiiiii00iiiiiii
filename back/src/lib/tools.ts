@@ -77,6 +77,7 @@ const tools: any = {
         v.reqIpaddress = tools.ipaddress(req)
         v.decoded = req.decoded || null
         v.token = req.token || null
+        v.dToken = req.dToken
 
         return v
     },

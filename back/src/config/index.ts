@@ -22,7 +22,9 @@ type TConfig = {
     // },
     jwtSecret: string,
     expiresIn: number,
-    pageSize: number
+    pageSize: number,
+    sportPageSize: number,
+    sportsMaxRate: number
 }
 
 const config: TConfig = {
@@ -45,7 +47,9 @@ const config: TConfig = {
     // },
     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
     expiresIn: 60 * 60 * 1,
-    pageSize: 30
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 200
 }
 
 export default config

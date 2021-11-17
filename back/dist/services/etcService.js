@@ -143,6 +143,32 @@ class EtcService {
                 }
             }));
         };
+        this.maintenance = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: 'maintenance'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            startDateTime: 1,
+                            endDateTime: 1,
+                            content: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').findOne(findQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getPopups');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = EtcService;

@@ -167,6 +167,27 @@ class MessageService {
                 }
             }));
         };
+        this.messageCount = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        checkStatus: false,
+                        deleteStatus: false
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('messages').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MessageService > messageCount');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = MessageService;

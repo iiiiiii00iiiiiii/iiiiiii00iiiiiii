@@ -536,6 +536,28 @@ class BoardService {
                 }
             }));
         };
+        this.helpCount = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        writerOID: new db_1.ObjectID(userOID),
+                        answerStatus: true,
+                        readAnswerStatus: false,
+                        deleteStatus: false
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('boardHelp').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > helpCount');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = BoardService;

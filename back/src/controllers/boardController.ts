@@ -1,5 +1,5 @@
 import { Request as req, Response as res } from 'express'
-import { logger, crypto, moment, mongoSanitize, numeral, uuidv4 } from '../lib/modules'
+import { logger, crypto, moment, mongoSanitize, numeral, uuidv4, cache } from '../lib/modules'
 import config from '../config'
 import { ObjectID } from '../lib/db'
 import tools from '../lib/tools'
@@ -68,20 +68,26 @@ export default class MoneyController implements IMoneyController {
         // validate end
 
         try {
-            // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
-            const r: TService = await boardService.getDashboard(v.n)
-            if(r.error) {
-                data.errorTitle = 'Dash board 실패 - 500'
-                res.status(500).json(data)
-                return
-            }
-            // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+            let dashboard: any = cache.get('dashboard')
+            if(!cache.get('dashboard')) {
+                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                const r: TService = await boardService.getDashboard(v.n)
+                if(r.error) {
+                    data.errorTitle = 'Dash board 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
 
-            res.json({
-                notice: r.data.notice,
-                event: r.data.event,
-                faq: r.data.faq
-            })
+                cache.put('dashboard', {
+                    notice: r.data.notice,
+                    event: r.data.event,
+                    faq: r.data.faq
+                }, 300000)
+            }
+
+            dashboard = cache.get('dashboard')
+            res.json(dashboard)
         } catch (e) {
             logger.error(e)
             data.errorTitle = 'Dash board 실패 - 500'

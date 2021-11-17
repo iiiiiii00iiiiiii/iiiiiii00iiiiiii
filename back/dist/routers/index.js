@@ -14,6 +14,10 @@ const boardController_1 = __importDefault(require("../controllers/boardControlle
 const boardCtr = new boardController_1.default();
 const messageController_1 = __importDefault(require("../controllers/messageController"));
 const messageCtr = new messageController_1.default();
+const gameController_1 = __importDefault(require("../controllers/gameController"));
+const gameCtr = new gameController_1.default();
+const betController_1 = __importDefault(require("../controllers/betController"));
+const betCtr = new betController_1.default();
 const etcController_1 = __importDefault(require("../controllers/etcController"));
 const etcCtr = new etcController_1.default();
 // import AdminController from '../controllers/adminController'
@@ -89,4 +93,11 @@ router.get('/get-attendance', auth.checkLogin(), userCtr.getAttendance);
 router.post('/set-attendance', auth.checkLogin(), userCtr.setAttendance);
 // Popup
 router.get('/get-popups', etcCtr.getPopups);
+// ETC
+router.get('/check-duplicate-and-event', auth.checkLogin(), etcCtr.checkDuplicateAndEvent);
+// category
+router.get('/get-category', gameCtr.getCategory);
+// sports
+router.get('/get-prematch-list', gameCtr.getPrematchList);
+router.post('/bet', auth.checkLogin(), betCtr.bet);
 exports.default = router;

@@ -19,6 +19,8 @@ export default class Auth implements IAuth {
         return async (req: TReq, res: res, next: next) => {
             try {
                 let token: string | null = req.headers['access-token']?.toString() || null
+                let dToken: string = req.headers['duplicate']?.toString() || ''
+
                 if(token) {
                     const decoded: any = await this.tokenVerify(token)
 
@@ -33,6 +35,10 @@ export default class Auth implements IAuth {
                         })
 
                         res.set('access-token', token)
+                        res.set('duplicate', dToken)
+
+                        req.token = token
+                        req.dToken = dToken
 
                         req.decoded = {
                             _id: decoded._id,
