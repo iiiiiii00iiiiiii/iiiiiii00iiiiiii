@@ -578,7 +578,7 @@ class UserController {
                 return;
             }
             // validate end
-            const firstDayMonth = (0, modules_1.moment)(v.month).date(1).format('YYYY-MM-DD');
+            const firstDayMonth = (0, modules_1.moment)(v.month).startOf('month').format('YYYY-MM-DD');
             let calendar = [];
             let week = [];
             for (let w = 0; w < 6; w++) {

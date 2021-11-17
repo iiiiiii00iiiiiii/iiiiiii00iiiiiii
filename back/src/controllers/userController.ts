@@ -615,7 +615,7 @@ export default class UserController implements IUserController {
         }
         // validate end
 
-        const firstDayMonth: string = moment(v.month).date(1).format('YYYY-MM-DD')
+        const firstDayMonth: string = moment(v.month).startOf('month').format('YYYY-MM-DD')
 
         let calendar: Array<Array<string>> = []
         let week: Array<string> = []
