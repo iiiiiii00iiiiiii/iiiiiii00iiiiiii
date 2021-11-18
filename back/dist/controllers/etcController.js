@@ -66,7 +66,7 @@ class EtcController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-사이트 점검설정 가지고 오기 ■■■■■■■■■■
-                const rMaintenance = yield etcService.maintenance();
+                const rMaintenance = yield etcService.getMaintenance();
                 if (rMaintenance.error) {
                     data.errorTitle = 'EVENT 실패 - 500';
                     res.status(500).json(data);
@@ -103,6 +103,34 @@ class EtcController {
             catch (e) {
                 modules_1.logger.error(e);
                 data.errorTitle = 'EVENT 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getMaintenance = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-사이트 점검설정 가지고 오기 ■■■■■■■■■■
+                const r = yield etcService.getMaintenance();
+                if (r.error) {
+                    data.errorTitle = '점검 상세 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-사이트 점검설정 가지고 오기 ■■■■■■■■■■
+                const dt = new Date();
+                let isMaintenance = dt >= r.data.startDateTime && dt <= r.data.endDateTime;
+                res.json({
+                    isMaintenance,
+                    maintenance: r.data
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '점검 상세 실패 - 500';
                 res.status(500).json(data);
                 return;
             }

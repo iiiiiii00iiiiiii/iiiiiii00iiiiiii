@@ -71,7 +71,7 @@ export default class EtcController implements IEtcController {
             }
 
             // ■■■■■■■■■■ DB-사이트 점검설정 가지고 오기 ■■■■■■■■■■
-            const rMaintenance: TService = await etcService.maintenance()
+            const rMaintenance: TService = await etcService.getMaintenance()
             if(rMaintenance.error) {
                 data.errorTitle = 'EVENT 실패 - 500'
                 res.status(500).json(data)
@@ -111,6 +111,37 @@ export default class EtcController implements IEtcController {
         } catch (e) {
             logger.error(e)
             data.errorTitle = 'EVENT 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getMaintenance = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-사이트 점검설정 가지고 오기 ■■■■■■■■■■
+            const r: TService = await etcService.getMaintenance()
+            if(r.error) {
+                data.errorTitle = '점검 상세 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-사이트 점검설정 가지고 오기 ■■■■■■■■■■
+
+            const dt: Date = new Date()
+            let isMaintenance: boolean = dt >= r.data.startDateTime && dt <= r.data.endDateTime
+
+            res.json({
+                isMaintenance,
+                maintenance: r.data
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '점검 상세 실패 - 500'
             res.status(500).json(data)
             return
         }

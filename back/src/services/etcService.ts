@@ -164,7 +164,7 @@ export default class EtcService implements IEtcService {
         })
     }
 
-    public maintenance = (): Promise<TService> => {
+    public getMaintenance = (): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -185,7 +185,7 @@ export default class EtcService implements IEtcService {
                 r.data = await pool.collection('config').findOne(findQuery, whatQuery)
                 resolve(r)
             } catch (err) {
-                logger.error('EtcService > getPopups')
+                logger.error('EtcService > getMaintenance')
                 logger.error(err)
                 r.error = err
                 resolve(r)

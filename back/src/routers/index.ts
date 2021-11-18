@@ -160,6 +160,8 @@ router.delete('/delete-sports-bet', auth.checkLogin(), betCtr.deleteSportsBet)
 router.delete('/delete-sports-bet-all', auth.checkLogin(), betCtr.deleteSportsBetAll)
 
 
+// maintenance
+router.get('/get-maintenance', etcCtr.getMaintenance)
 
 
 

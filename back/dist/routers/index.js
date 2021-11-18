@@ -109,4 +109,6 @@ router.get('/get-sports-bet-list', auth.checkLogin(), betCtr.getSportsBetList);
 router.put('/cancel-sports-bet', auth.checkLogin(), betCtr.cancelSportsBet);
 router.delete('/delete-sports-bet', auth.checkLogin(), betCtr.deleteSportsBet);
 router.delete('/delete-sports-bet-all', auth.checkLogin(), betCtr.deleteSportsBetAll);
+// maintenance
+router.get('/get-maintenance', etcCtr.getMaintenance);
 exports.default = router;
