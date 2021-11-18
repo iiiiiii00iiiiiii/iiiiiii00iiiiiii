@@ -167,7 +167,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-입금 요청 ■■■■■■■■■■
-                const rSetCharge = yield moneyService.setCharge(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.back, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.chargeAmount, v.reqIpaddress);
+                const rSetCharge = yield moneyService.setCharge(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.chargeAmount, v.reqIpaddress);
                 if (rSetCharge.error) {
                     data.errorTitle = '입금 신청 실패 - 500';
                     res.status(500).json(data);
@@ -443,7 +443,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-출금 요청 ■■■■■■■■■■
-                const rSetExchange = yield moneyService.setExchange(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.back, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.exchangeAmount, v.reqIpaddress);
+                const rSetExchange = yield moneyService.setExchange(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.exchangeAmount, v.reqIpaddress);
                 if (rSetExchange.error) {
                     data.errorTitle = '출금 신청 실패 - 500';
                     res.status(500).json(data);
