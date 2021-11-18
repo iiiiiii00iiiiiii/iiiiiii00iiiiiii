@@ -732,6 +732,7 @@ export default class UserService implements IUserService {
                         totalMoney: { $sum: '$money' }
                     }}
                 ]).toArray()
+
                 resolve(r)
             } catch (err) {
                 logger.error('UserService > chargeToday')

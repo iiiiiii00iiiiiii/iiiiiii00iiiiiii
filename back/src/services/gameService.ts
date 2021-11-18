@@ -209,4 +209,45 @@ export default class GameService implements IGameService {
             }
         })
     }
+
+    public getLiveDetail = (gameOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(gameOID)
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        sport: 1,
+                        countryOID: 1,
+                        countryKor: 1,
+                        leagueKor: 1,
+                        gameOID: 1,
+                        gameID: 1,
+                        gameDateTime: 1,
+                        homeTeam: 1,
+                        awayTeam: 1,
+                        homeTeamKor: 1,
+                        awayTeamKor: 1,
+                        showConfig: 1,
+                        games: 1,
+                        resultData: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsLive').findOne(findQuery, whatQuery)
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getLiveDetail')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

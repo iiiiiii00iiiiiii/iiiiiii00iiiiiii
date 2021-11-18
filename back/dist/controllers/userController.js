@@ -685,8 +685,11 @@ class UserController {
                 }
                 // ■■■■■■■■■■ DB-금일 입금 금액 가져오기 ■■■■■■■■■■
                 let chargeToday = 0;
-                if (rChargeToday.data.length > 0) {
+                if (rChargeToday.data.length === 0) {
                     chargeToday = 0;
+                }
+                else {
+                    chargeToday = rChargeToday.data[0].totalMoney;
                 }
                 // ■■■■■■■■■■ DB-출석 환경 설정 가져오기 ■■■■■■■■■■
                 const rConfigAttendance = yield etcService.getConfigAttendance();
@@ -698,7 +701,8 @@ class UserController {
                 // ■■■■■■■■■■ DB-출석 환경 설정 가져오기 ■■■■■■■■■■
                 const needCharge = rConfigAttendance.data[0].amount;
                 rConfigAttendance.data.shift();
-                if (rChargeToday < needCharge) {
+                if (chargeToday < needCharge) {
+                    data.errorTitle = '출석 실패 - 400';
                     data = tools_1.default.denyValidate(data, 'chargeMoney', `금일 ${(0, modules_1.numeral)(needCharge).format('0,0')}이상 충전시 출석 가능 합니다.`);
                     res.status(400).json(data);
                     return;

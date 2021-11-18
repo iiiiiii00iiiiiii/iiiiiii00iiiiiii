@@ -196,6 +196,43 @@ class GameService {
                 }
             }));
         };
+        this.getLiveDetail = (gameOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(gameOID)
+                    };
+                    const whatQuery = {
+                        projection: {
+                            sport: 1,
+                            countryOID: 1,
+                            countryKor: 1,
+                            leagueKor: 1,
+                            gameOID: 1,
+                            gameID: 1,
+                            gameDateTime: 1,
+                            homeTeam: 1,
+                            awayTeam: 1,
+                            homeTeamKor: 1,
+                            awayTeamKor: 1,
+                            showConfig: 1,
+                            games: 1,
+                            resultData: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('sportsLive').findOne(findQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getLiveDetail');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = GameService;

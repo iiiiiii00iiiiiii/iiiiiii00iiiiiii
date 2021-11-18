@@ -903,4 +903,71 @@ export default class GameController implements IGameController {
             return
         }
     }
+
+    public getLiveDetail = async (req: req, res: res): Promise<void> => {
+        if(!req.query.page) req.query.page = '1'
+
+        const validateData: any = {
+            _id: {
+                value: req.query._id,
+                rule: {
+                    required: true,
+                    alphaNumber: true,
+                    min: 24,
+                    max: 24
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '스포츠 라이브 상세 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '스포츠 라이브 상세 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '스포츠 라이브 상세 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        v.page = parseInt(v.page)
+
+        try {
+            // ■■■■■■■■■■ DB-스포츠 라이브 상세 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getLiveDetail(v._id)
+            if(r.error) {
+                data.errorTitle = '스포츠 라이브 상세 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-스포츠 라이브 상세 가져오기 ■■■■■■■■■■
+
+            res.json(r.data)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '스포츠 라이브 상세 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
 }
