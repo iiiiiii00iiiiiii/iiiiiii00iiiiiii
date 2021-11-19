@@ -97,7 +97,8 @@ class BetController {
                 }
                 data = v;
                 if (v.firstError) {
-                    console.error(data);
+                    modules_1.logger.error(data);
+                    modules_1.logger.error(v.betAmount);
                     data.errorTitle = '배팅 실패 - 400';
                     res.status(400).json(data);
                     return;

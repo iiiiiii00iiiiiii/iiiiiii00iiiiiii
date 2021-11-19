@@ -50,11 +50,14 @@ export default class GameService implements IGameService {
 
             try {
                 let findQuery: any = {
+                    resultStatus: false,
                     gameDateTime: {
                         $gt: new Date()
                     },
                     showStatus: true,
-                    resultStatus: false
+                    sport: {
+                        $ne: 'Table Tennis'
+                    }
                 }
 
                 if(sport) findQuery.sport = sport
@@ -103,11 +106,14 @@ export default class GameService implements IGameService {
 
             try {
                 let findQuery: any = {
+                    resultStatus: false,
                     gameDateTime: {
                         $gt: new Date()
                     },
                     showStatus: true,
-                    resultStatus: false
+                    sport: {
+                        $ne: 'Table Tennis'
+                    }
                 }
 
                 if(sport) findQuery.sport = sport
@@ -163,9 +169,12 @@ export default class GameService implements IGameService {
 
             try {
                 let findQuery: any = {
+                    resultStatus: false,
                     showStatus: true,
                     onAir: 'onAir',
-                    resultStatus: false
+                    sport: {
+                        $ne: 'Table Tennis'
+                    }
                 }
 
                 if(sport) findQuery.sport = sport

@@ -52,11 +52,14 @@ class GameService {
                 let r = { error: null, data: null, count: null };
                 try {
                     let findQuery = {
+                        resultStatus: false,
                         gameDateTime: {
                             $gt: new Date()
                         },
                         showStatus: true,
-                        resultStatus: false
+                        sport: {
+                            $ne: 'Table Tennis'
+                        }
                     };
                     if (sport)
                         findQuery.sport = sport;
@@ -100,11 +103,14 @@ class GameService {
                 let r = { error: null, data: null, count: null };
                 try {
                     let findQuery = {
+                        resultStatus: false,
                         gameDateTime: {
                             $gt: new Date()
                         },
                         showStatus: true,
-                        resultStatus: false
+                        sport: {
+                            $ne: 'Table Tennis'
+                        }
                     };
                     if (sport)
                         findQuery.sport = sport;
@@ -154,9 +160,12 @@ class GameService {
                 let r = { error: null, data: null, count: null };
                 try {
                     let findQuery = {
+                        resultStatus: false,
                         showStatus: true,
                         onAir: 'onAir',
-                        resultStatus: false
+                        sport: {
+                            $ne: 'Table Tennis'
+                        }
                     };
                     if (sport)
                         findQuery.sport = sport;
