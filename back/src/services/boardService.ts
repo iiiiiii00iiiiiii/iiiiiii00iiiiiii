@@ -117,6 +117,79 @@ export default class BoardService implements IBoardService {
         })
     }
 
+    public getRulesList = (page: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        header: 1,
+                        headerColor: 1,
+                        title: 1,
+                        titleColor: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const skip: number = (page - 1) * config.pageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardGameRule').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config.pageSize).toArray()
+                r.count = await pool.collection('boardGameRule').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getRulesList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getRulesDetail = (_id: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(_id),
+                    deleteStatus: false
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        hit: 1
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        header: 1,
+                        headerColor: 1,
+                        title: 1,
+                        titleColor: 1,
+                        content: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardGameRule').findOneAndUpdate(findQuery, setQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getRulesDetail')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public getFaqList = (page: number): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }

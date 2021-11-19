@@ -212,6 +212,127 @@ class MoneyController {
                 return;
             }
         });
+        this.getRulesList = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                page: {
+                    value: req.query.page,
+                    rule: {
+                        required: true,
+                        number: true,
+                        gte: 1
+                    },
+                    message: {
+                        required: '파라메터 오류, 관리자에게 문의하세요.',
+                        number: '파라메터 오류, 관리자에게 문의하세요.',
+                        gte: '파라메터 오류, 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = '경기규정 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = '경기규정 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = '경기규정 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-경기규정 가져오기 ■■■■■■■■■■
+                const r = yield boardService.getRulesList(v.page);
+                if (r.error) {
+                    data.errorTitle = '경기규정 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-경기규정 가져오기 ■■■■■■■■■■
+                res.json({
+                    recordSet: r.data,
+                    recordCount: r.count
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '경기규정 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getRulesDetail = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                _id: {
+                    value: req.query._id,
+                    rule: {
+                        required: true,
+                        alphaNumber: true,
+                        min: 24,
+                        max: 24
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요.',
+                        alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                        min: '파라메터 오류. 관리자에게 문의하세요.',
+                        max: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = '경기규정 상세 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = '경기규정 상세 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = '경기규정 상세 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-경기규정 가져오기 ■■■■■■■■■■
+                const r = yield boardService.getRulesDetail(v._id);
+                if (r.error) {
+                    data.errorTitle = '경기규정 상세 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-경기규정 가져오기 ■■■■■■■■■■
+                res.json(r.data.value);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '경기규정 상세 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
         this.getFaqList = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const validateData = {
                 page: {

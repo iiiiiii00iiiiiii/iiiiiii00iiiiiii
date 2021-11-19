@@ -75,6 +75,8 @@ router.get('/get-faq-list', auth.checkLogin(), boardCtr.getFaqList);
 router.get('/get-faq-detail', auth.checkLogin(), boardCtr.getFaqDetail);
 router.get('/get-event-list', auth.checkLogin(), boardCtr.getEventList);
 router.get('/get-event-detail', auth.checkLogin(), boardCtr.getEventDetail);
+router.get('/get-rules-list', auth.checkLogin(), boardCtr.getRulesList);
+router.get('/get-rules-detail', auth.checkLogin(), boardCtr.getRulesDetail);
 // Help
 router.get('/get-help-list', auth.checkLogin(), boardCtr.getHelpList);
 router.get('/get-help-detail', auth.checkLogin(), boardCtr.getHelpDetail);

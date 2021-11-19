@@ -112,6 +112,71 @@ class BoardService {
                 }
             }));
         };
+        this.getRulesList = (page) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            header: 1,
+                            headerColor: 1,
+                            title: 1,
+                            titleColor: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const skip = (page - 1) * config_1.default.pageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('boardGameRule').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config_1.default.pageSize).toArray();
+                    r.count = yield pool.collection('boardGameRule').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getRulesList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getRulesDetail = (_id) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(_id),
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $inc: {
+                            hit: 1
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            header: 1,
+                            headerColor: 1,
+                            title: 1,
+                            titleColor: 1,
+                            content: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('boardGameRule').findOneAndUpdate(findQuery, setQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getRulesDetail');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.getFaqList = (page) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
