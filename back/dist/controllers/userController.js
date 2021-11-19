@@ -164,6 +164,15 @@ class UserController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-중복접속 방지용 token 업데이트 ■■■■■■■■■■
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9'];
+                const rConfig = yield etcService.getConfigInfo('sportsBet', getKeys);
+                if (rConfig.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
                 res.json({
                     _id: rLogin.data.value._id,
                     id: rLogin.data.value.id,
@@ -175,7 +184,8 @@ class UserController {
                     recommendLevel: rLogin.data.value.recommendLevel,
                     money: rLogin.data.value.money,
                     point: rLogin.data.value.point,
-                    isAgent: rLogin.data.value.isAgent
+                    isAgent: rLogin.data.value.isAgent,
+                    betInfo: rConfig.data
                 });
             }
             catch (e) {
