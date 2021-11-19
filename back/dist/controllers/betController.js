@@ -33,8 +33,8 @@ class BetController {
                         or: ['sports', 'sportsCross', 'sportsLive', 'sportsSpecial', 'sportsLiveKor', 'minigames']
                     },
                     message: {
-                        required: '파라메터 오류. 관리자에게 문의하세요.',
-                        or: '파라메터 오류. 관리자에게 문의하세요.'
+                        required: `[betGameType required] 파라메터 오류. 관리자에게 문의하세요.`,
+                        or: '[betGameType or] 파라메터 오류. 관리자에게 문의하세요.'
                     }
                 },
                 betCart: {
@@ -43,7 +43,7 @@ class BetController {
                         array: true
                     },
                     message: {
-                        array: '파라메터 오류. 관리자에게 문의하세요.'
+                        array: '[betCart array] 파라메터 오류. 관리자에게 문의하세요.'
                     }
                 },
                 betAmount: {
@@ -53,8 +53,8 @@ class BetController {
                         number: true
                     },
                     message: {
-                        required: '파라메터 오류. 관리자에게 문의하세요.',
-                        number: '파라메터 오류. 관리자에게 문의하세요.'
+                        required: '[betAmount required] 파라메터 오류. 관리자에게 문의하세요.',
+                        number: '[betAmount number] 파라메터 오류. 관리자에게 문의하세요.'
                     }
                 },
                 betRate: {
@@ -66,9 +66,9 @@ class BetController {
                         outputString: true
                     },
                     message: {
-                        required: '파라메터 오류. 관리자에게 문의하세요.',
-                        number: '파라메터 오류. 관리자에게 문의하세요.',
-                        gt: '파라메터 오류. 관리자에게 문의하세요.'
+                        required: '[betRate required] 파라메터 오류. 관리자에게 문의하세요.',
+                        number: '[betRate number] 파라메터 오류. 관리자에게 문의하세요.',
+                        gt: '[betRate gt] 파라메터 오류. 관리자에게 문의하세요.'
                     }
                 },
                 betCount: {
@@ -79,9 +79,9 @@ class BetController {
                         gt: 0
                     },
                     message: {
-                        required: '파라메터 오류. 관리자에게 문의하세요.',
-                        number: '파라메터 오류. 관리자에게 문의하세요.',
-                        gt: '파라메터 오류. 관리자에게 문의하세요.'
+                        required: '[betCount required] 파라메터 오류. 관리자에게 문의하세요.',
+                        number: '[betCount required] 파라메터 오류. 관리자에게 문의하세요.',
+                        gt: '[betCount required] 파라메터 오류. 관리자에게 문의하세요.'
                     }
                 }
             };
@@ -97,6 +97,7 @@ class BetController {
                 }
                 data = v;
                 if (v.firstError) {
+                    console.error(data);
                     data.errorTitle = '배팅 실패 - 400';
                     res.status(400).json(data);
                     return;
