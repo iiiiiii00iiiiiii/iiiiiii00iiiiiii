@@ -923,6 +923,265 @@ class GameController {
                 return;
             }
         });
+        this.getPowerball = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-파워볼 가져오기 ■■■■■■■■■■
+                const r = yield gameService.getPowerball();
+                if (r.error) {
+                    data.errorTitle = '파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('powerballBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getPowerladder = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-파워 사다리 가져오기 ■■■■■■■■■■
+                const r = yield gameService.getPowerladder();
+                if (r.error) {
+                    data.errorTitle = '파워 사다리 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-파워 사다리 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PLDOE', 'PLDLR', 'PLDTF', 'PLDCOMBO'];
+                    const rConfig = yield etcService.getConfigInfo('powerladderBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워 사다리 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '파워 사다리 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getKenoladder = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-키노 사다리 가져오기 ■■■■■■■■■■
+                const r = yield gameService.getKenoladder();
+                if (r.error) {
+                    data.errorTitle = '키노 사다리 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-키노 사다리 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-키노 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['KLDOE', 'KLDLR', 'KLDTF', 'KLDCOMBO'];
+                    const rConfig = yield etcService.getConfigInfo('kenoladderBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '키노 사다리 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-키노 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '키노 사다리 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getBoglePowerball = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-보글 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getBoglePowerball();
+                if (r.error) {
+                    data.errorTitle = '보글 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-보글 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('boglePowerballBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '보글 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getBogleladder = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-키노 사다리 가져오기 ■■■■■■■■■■
+                const r = yield gameService.getBogleladder();
+                if (r.error) {
+                    data.errorTitle = '보글 사다리 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-보글 사다리 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-보글 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['BLDOE', 'BLDLR', 'BLDTF', 'BLDCOMBO'];
+                    const rConfig = yield etcService.getConfigInfo('bogleladderBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '보글 사다리 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-보글 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '보글 사다리 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getGooglePowerball1 = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-구글 1분 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getGooglePowerball1();
+                if (r.error) {
+                    data.errorTitle = '구글 1분 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-구글 1분 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('googlePowerball1Bet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '구글 1분 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getGooglePowerball3 = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-구글 3분 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getGooglePowerball3();
+                if (r.error) {
+                    data.errorTitle = '구글 3분 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-구글 3분 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('googlePowerball3Bet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '구글 3분 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
     }
 }
 exports.default = GameController;

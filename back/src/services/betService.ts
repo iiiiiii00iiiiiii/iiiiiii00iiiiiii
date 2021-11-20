@@ -25,7 +25,7 @@ export default class BetService implements IBetService {
                 }
 
                 if(betGameType === 'minigames') {
-                    whatQuery.projection[betCart[0].type] = 1
+                    whatQuery.projection[betCart[0].betType] = 1
                 }
                 else {
                     whatQuery.projection[`lv${userGrade}`] = 1
@@ -590,4 +590,336 @@ export default class BetService implements IBetService {
             }
         })
     }
+
+    public getMinigameBetListRecent = (userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    deleteStatus: false,
+                    regDateTime: {
+                        $gte: moment().subtract(7, 'day').toDate()
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        gameKind: 1,
+                        isAuto: 1,
+                        betAmount: 1,
+                        betRate: 1,
+                        betBenefit: 1,
+                        afterBetMoney: 1,
+                        betResult: 1,
+                        rotation: 1,
+                        round: 1,
+                        betType: 1,
+                        betSelect: 1,
+                        regDateTime: 1,
+                        isFollow: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betMinigame').find(findQuery, whatQuery).sort({ _id: -1 }).limit(50).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > getMinigameBetListRecent')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public betSwitch = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    category: v.categorySwitch
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        betStatus: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('config').findOne(findQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > betSwitch')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public minigameInfo = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            let term = 0
+            if(v.betCart[0].gameKind === 'powerball') {
+                term = config.powerballTime
+            }
+            else if(v.betCart[0].gameKind === 'powerladder') {
+                term = config.powerladderTime
+            }
+            else if(v.betCart[0].gameKind === 'kenoladder') {
+                term = config.kenoladderTime
+            }
+            else if(v.betCart[0].gameKind === 'boglePowerball') {
+                term = config.boglePowerballTime
+            }
+            else if(v.betCart[0].gameKind === 'bogleladder') {
+                term = config.bogleladderTime
+            }
+            else if(v.betCart[0].gameKind === 'googlePowerball1') {
+                term = config.googlePowerball1
+            }
+            else if(v.betCart[0].gameKind === 'googlePowerball3') {
+                term = config.googlePowerball3
+            }
+
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v.betCart[0]._id),
+                    gameDateTime: {
+                        $gte: new Date(moment().add(term, "second").format('YYYY-MM-DD HH:mm:ss'))
+                    },
+                    resultStatus: false,
+                    rollbackStatus: false,
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        gameType: 1,
+                        rotation: 1,
+                        round: 1,
+                        gameDateTime: 1,
+                        games: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').findOne(findQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > minigameInfo')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public previousBetAmount = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameOID: new ObjectID(v.resultMinigameInfo._id),
+                    userOID: new ObjectID(v.decoded._id),
+                    betType: v.betCart[0].type
+                }
+
+                const whatQuery: any = {
+                    _id: null,
+                    betAmount: { $sum: '$betAmount' }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betMinigame').aggregate([{
+                        $match: findQuery
+                    },
+                    {
+                        $group: whatQuery
+                    }
+                ]).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > previousBetAmount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public betSubtractMinigame = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v.decoded._id),
+                    money: {
+                        $gte: v.betAmount
+                    },
+                    status: 1,
+                    betStatus: true,
+                    isAgent: false
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        money: -v.betAmount,
+                        'betHistory.betCount': 1,
+                        'betHistory.betAmount': v.betAmount
+                    }
+                }
+
+                setQuery.$inc[`minigamesBetHistory.${v.resultMinigameInfo.gameType}.count`] = 1
+                setQuery.$inc[`minigamesBetHistory.${v.resultMinigameInfo.gameType}.amount`] = v.betAmount
+
+                let optionsQuery: any = {
+                    projection: {
+                        isTest: 1,
+                        isAgent: 1,
+                        recommendTree: 1,
+                        money: 1,
+                        topConfig: 1
+                    }
+                }
+
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > betSubtractMinigame')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public betMinigame = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    userOID: new ObjectID(v.decoded._id),
+                    userID: v.decoded.id,
+                    userNick: v.decoded.nick,
+                    userGrade: v.decoded.grade,
+                    bankOwner: v.decoded.bankOwner,
+                    recommendTree: v.resultBetSubtractMinigame.recommendTree,
+                    gameType: 'minigame',
+                    gameKind: v.gameKind,
+                    isAuto: false,
+                    isTest: v.resultBetSubtractMinigame.isTest,
+                    betAmount: v.betAmount,
+                    betRate: v.betRate,
+                    betBenefit: v.betBenefit,
+                    afterBetMoney: v.resultBetSubtractMinigame.money - v.betAmount,
+                    betResult: 'I',
+                    gameOID: new ObjectID(v.resultMinigameInfo._id),
+                    rotation: v.resultMinigameInfo.rotation,
+                    round: v.resultMinigameInfo.round,
+                    betType: v.betCart[0].betType,
+                    betSelect: v.betCart[0].betSelect,
+                    betTopInfo: v.betTopInfo,
+                    regDateTime: new Date(),
+                    resultDateTime: null,
+                    calcDateTime: null,
+                    deleteStatus: false
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betMinigame').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > betMinigame')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public setBetMinigame = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v.resultMinigameInfo._id)
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        [`bet.${v.betCart[0].type}.amountOf${v.betCart[0].betSelect}`]: v.betAmount,
+                        [`betKill.${v.betCart[0].type}.amountOf${v.betCart[0].betSelect}`]: v.betTopInfo.betKillAmount
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > setBetMinigame')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public setBetMoneyLog = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    moneyOID: null,
+                    userOID: new ObjectID(v.decoded._id),
+                    userID: v.decoded.id,
+                    userNick: v.decoded.nick,
+                    userGrade: v.decoded.grade,
+                    bankOwner: v.decoded.bankOwner,
+                    recommendTree: v.resultBetSubtractMinigame.recommendTree,
+                    before: v.resultBetSubtractMinigame.money,
+                    process: v.betAmount,
+                    after: v.resultBetSubtractMinigame.money - v.betAmount,
+                    sortation: 'bet',
+                    reason: '배팅',
+                    adminOID: null,
+                    adminID: null,
+                    adminNick: null,
+                    adminGrade: null,
+                    regDateTime: new Date(),
+                    deleteStatus: false,
+                    gameOID: new ObjectID(v.resultMinigameInfo._id),
+                    isTest: v.resultBetSubtractMinigame.isTest,
+                    isAgent: v.resultBetSubtractMinigame.isAgent
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > setBetMoneyLog')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+
+
+
 }

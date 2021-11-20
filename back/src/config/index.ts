@@ -24,7 +24,15 @@ type TConfig = {
     expiresIn: number,
     pageSize: number,
     sportPageSize: number,
-    sportsMaxRate: number
+    sportsMaxRate: number,
+
+    powerballTime: number,
+    powerladderTime: number,
+    kenoladderTime: number,
+    boglePowerballTime: number,
+    bogleladderTime: number,
+    googlePowerball1: number,
+    googlePowerball3: number
 }
 
 const config: TConfig = {
@@ -49,7 +57,14 @@ const config: TConfig = {
     expiresIn: 60 * 60 * 1,
     pageSize: 30,
     sportPageSize: 30,
-    sportsMaxRate: 200
+    sportsMaxRate: 200,
+    powerballTime: 30,
+    powerladderTime: 50,
+    kenoladderTime: 50,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30
 }
 
 export default config

@@ -242,6 +242,237 @@ class GameService {
                 }
             }));
         };
+        this.getPowerball = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'powerball',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getPowerball');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getPowerladder = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'powerladder',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getPowerladder');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getKenoladder = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'kenoladder',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getKenoladder');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getBogleladder = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'bogleladder',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getBogleladder');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getBoglePowerball = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'boglePowerball',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getBoglePowerball');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getGooglePowerball1 = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'googlePowerball1',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getGooglePowerball1');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getGooglePowerball3 = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'googlePowerball3',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getGooglePowerball3');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = GameService;

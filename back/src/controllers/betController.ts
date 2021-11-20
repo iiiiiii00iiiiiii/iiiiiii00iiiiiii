@@ -125,6 +125,10 @@ export default class BetController implements IBetController {
             if(gameKind === 'powerball') category = 'powerballBet'
             else if(gameKind === 'powerladder') category = 'powerladderBet'
             else if(gameKind === 'kenoladder') category = 'kenoladderBet'
+            else if(gameKind === 'boglePowerball') category = 'boglePowerballBet'
+            else if(gameKind === 'bogleladder') category = 'bogleladderBet'
+            else if(gameKind === 'googlePowerball1') category = 'googlePowerball1Bet'
+            else if(gameKind === 'googlePowerball3') category = 'googlePowerball3Bet'
         }
 
         v.category = category
@@ -141,7 +145,7 @@ export default class BetController implements IBetController {
             // ■■■■■■■■■■ DB-최소, 최대 배팅, 최대 당첨금 가져오기 ■■■■■■■■■■
 
             if(v.betGameType === 'minigames') {
-                v.resultBetMinMax = resultBetMinMax.data[v.betCart[0].type]
+                v.resultBetMinMax = resultBetMinMax.data[v.betCart[0].betType]
             }
             else {
                 v.resultBetMinMax = resultBetMinMax.data[`lv${v.decoded.grade}`]
@@ -164,9 +168,9 @@ export default class BetController implements IBetController {
             if(v.gameKind === 'sports' || v.gameKind === 'sportsCross' || v.gameKind === 'sportsLive' || v.gameKind === 'sportsSpecial' || v.gameKind === 'sportsLiveKor') {
                 this.betSports(v, res, data)
             }
-            // else if(v.gameKind === 'minigames') {
-            //     controllerBet.betMiniGame(v, res, data)
-            // }
+            else if(v.gameKind === 'minigames') {
+                this.betMiniGame(v, res, data)
+            }
         } catch (e) {
             logger.error(e)
             data.errorTitle = '배팅 실패 - 500'
@@ -182,7 +186,7 @@ export default class BetController implements IBetController {
             let resultFolderInfo = await betService.folderInfo(v.decoded._id)
             if(resultFolderInfo.error) {
                 data.errorTitle = '배팅 실패 - 500'
-                res.status(500).end()
+                res.status(500).json(data)
                 return
             }
             // ■■■■■■■■■■ DB-회원 단폴, 두폴 설정 가져오기 ■■■■■■■■■■
@@ -208,7 +212,7 @@ export default class BetController implements IBetController {
         let resultSportsInfo = await betService.sportsInfo(v.betGameType, v.betCart)
         if(resultSportsInfo.error) {
             data.errorTitle = '배팅 실패 - 500'
-            res.status(500).end()
+            res.status(500).json(data)
             return
         }
         //■■■■■■■■■■ DB-스포츠 게임정보 가져오기 ■■■■■■■■■■
@@ -286,7 +290,7 @@ export default class BetController implements IBetController {
         let resultBetSubtractSports = await betService.betSubtractSports(v)
         if(resultBetSubtractSports.error) {
             data.errorTitle = '배팅 실패 - 500'
-            res.status(500).end()
+            res.status(500).json(data)
             return
         }
         // ■■■■■■■■■■ DB-스포츠 배팅머니 차감, 회원정보 업데이트, 회원정보 가져오기 ■■■■■■■■■■
@@ -306,7 +310,7 @@ export default class BetController implements IBetController {
         let resultBetSports = await betService.betSports(v)
         if(resultBetSports.error) {
             data.errorTitle = '배팅 실패 - 500'
-            res.status(500).end()
+            res.status(500).json(data)
             return
         }
         // ■■■■■■■■■■ DB-스포츠 배팅 ■■■■■■■■■■
@@ -316,7 +320,7 @@ export default class BetController implements IBetController {
         let resultSetBetSports = await betService.setBetSports(v)
         // if(resultSetBetSports.error) {
         //     data.errorTitle = '배팅 실패 - 500'
-        //     res.status(500).end()
+        //     res.status(500).json(data)
         //     return
         // }
         // ■■■■■■■■■■ DB-스포츠 경기에 배팅금액 업데이트 ■■■■■■■■■■
@@ -329,7 +333,7 @@ export default class BetController implements IBetController {
         let resultSetBetMoneyLogSports = await betService.setBetMoneyLogSports(v)
         // if(resultSetBetMoneyLogSports.error) {
         //     data.errorTitle = '배팅 실패 - 500'
-        //     res.status(500).end()
+        //     res.status(500).json(data)
         //     return
         // }
         // ■■■■■■■■■■ DB-스포츠 배팅 로그 남기기 ■■■■■■■■■■
@@ -2304,6 +2308,176 @@ export default class BetController implements IBetController {
         return true
     }
 
+    public betMiniGame = async (v: any, res: res, data: any): Promise<void> => {
+        //해당게임 배팅가능 여부 검사
+        let gameKind: string = v.betCart[0].gameKind
+        v.gameKind = gameKind
+
+        let categorySwitch: string = ''
+        let categoryTop: string = ''
+
+        if(gameKind === 'powerball') {
+            categorySwitch = 'powerballSwitch'
+            categoryTop = 'powerballTop'
+        }
+        else if(gameKind === 'powerladder')
+        {
+            categorySwitch = 'powerladderSwitch'
+            categoryTop = 'powerladderTop'
+        }
+        else if(gameKind === 'kenoladder') {
+            categorySwitch = 'kenoladderSwitch'
+            categoryTop = 'kenoladderTop'
+        }
+        else if(gameKind === 'boglePowerball') {
+            categorySwitch = 'boglePowerballSwitch'
+            categoryTop = 'boglePowerballTop'
+        }
+        else if(gameKind === 'bogleladder') {
+            categorySwitch = 'bogleladderSwitch'
+            categoryTop = 'bogleladderTop'
+        }
+        else if(gameKind === 'googlePowerball1') {
+            categorySwitch = 'googlePowerball1Switch'
+            categoryTop = 'googlePowerball1Top'
+        }
+        else if(gameKind === 'googlePowerball3') {
+            categorySwitch = 'googlePowerball3Switch'
+            categoryTop = 'googlePowerball3Top'
+        }
+        v.categorySwitch = categorySwitch
+        v.categoryTop = categoryTop
+
+        //■■■■■■■■■■ DB-해당게임 배팅가능 여부 가져오기 ■■■■■■■■■■
+        const resultBetSwitch: TService = await betService.betSwitch(v)
+        if(resultBetSwitch.error) {
+            data.errorTitle = '배팅 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-해당게임 배팅가능 여부 가져오기 ■■■■■■■■■■
+        v.resultBetSwitch = resultBetSwitch.data
+
+        if(!v.resultBetSwitch.betStatus) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betCart', '현재 배팅이 불가능한 게임입니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //■■■■■■■■■■ DB-미니게임 게임정보 가져오기 ■■■■■■■■■■
+        const resultMinigameInfo: TService = await betService.minigameInfo(v)
+        if(resultMinigameInfo.error) {
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-미니게임 게임정보 가져오기 ■■■■■■■■■■
+        v.resultMinigameInfo = resultMinigameInfo.data
+
+        if(!v.resultMinigameInfo) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betCart', '진행 중인 경기가 없습니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //최대 당첨금 검사
+        v.betRate = parseFloat(v.resultMinigameInfo.games[v.betCart[0].betType][`rateOf${v.betCart[0].betSelect}`])
+        v.betBenefit = parseInt((v.betRate * v.betAmount).toString())
+        if(v.betBenefit > v.resultBetMinMax.benefit ) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betAmount', '최대 당첨금을 초과하였습니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //회차당 최대 배팅금액 검사
+        //■■■■■■■■■■ DB-현재 배팅되어 있는 금액 가져오기 ■■■■■■■■■■
+        const resultPreviousBetAmount: TService = await betService.previousBetAmount(v)
+        if(resultPreviousBetAmount.error) {
+            data.errorTitle = '배팅 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-현재 배팅되어 있는 금액 가져오기 ■■■■■■■■■■
+        if(resultPreviousBetAmount.data.length === 0) {
+            v.previousBetAmount = 0
+        }
+        else {
+            v.previousBetAmount = resultPreviousBetAmount.data[0].betAmount
+        }
+
+        if(v.previousBetAmount + v.betAmount > v.resultBetMinMax.maxRound) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betAmount', '해당회차 최대 배팅금을 초과 하였습니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //■■■■■■■■■■ DB-미니게임 배팅머니 차감, 회원정보 업데이트, 회원정보 가져오기 ■■■■■■■■■■
+        const resultBetSubtractMinigame: TService = await betService.betSubtractMinigame(v)
+        if(resultBetSubtractMinigame.error) {
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-미니게임 배팅머니 차감, 회원정보 업데이트, 회원정보 가져오기 ■■■■■■■■■■
+        v.resultBetSubtractMinigame = resultBetSubtractMinigame.data.value
+        if(!v.resultBetSubtractMinigame) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betAmount', '현재 배팅이 불가능 합니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        v.betTopInfo = {
+            betTopStatus: false,
+            betTopRate: 0,
+            betTopAmount: 0,
+            betTopWinAmount: 0,
+            betKillAmount: v.betAmount,
+            betKillWinAmount: 0
+        }
+
+        //■■■■■■■■■■ DB-미니게임 배팅 ■■■■■■■■■■
+        const resultBetMinigame: TService = await betService.betMinigame(v)
+        if(resultBetMinigame.error) {
+            data.errorTitle = '배팅 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-미니게임 배팅 ■■■■■■■■■■
+
+        //■■■■■■■■■■ DB-미니게임 경기에 배팅금액 업데이트 ■■■■■■■■■■
+        if(!v.resultBetSubtractMinigame.isTest) {
+            const resultSetBetMinigame: TService = await betService.setBetMinigame(v)
+            if(resultSetBetMinigame.error) {
+                res.status(500).json(data)
+                return
+            }
+
+            v.resultSetBetMinigame = resultSetBetMinigame.data
+
+            if(v.resultSetBetMinigame.modifiedCount === 0) {
+                data.errorTitle = '배팅 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+        }
+        //■■■■■■■■■■ DB-미니게임 경기에 배팅금액 업데이트 ■■■■■■■■■■
+
+
+        //■■■■■■■■■■ DB-미니게임 배팅 로그 남기기 ■■■■■■■■■■
+        let resultSetBetMoneyLog: TService = await betService.setBetMoneyLog(v)
+        // if(resultSetBetMoneyLog.error) {
+        //     data.errorTitle = '배팅 실패 - 500'
+        //     res.status(500).json(data)
+        //     return
+        // }
+        //■■■■■■■■■■ DB-미니게임 배팅 로그 남기기 ■■■■■■■■■■
+
+        res.end()
+    }
+
     public getSportsBetList = async (req: req, res: res): Promise<void> => {
         const validateData: any = {
             page: {
@@ -2459,7 +2633,7 @@ export default class BetController implements IBetController {
 
             if(v.resultSportsCartCancel.modifiedCount === 0) {
                 data.errorTitle = '배팅 취소 실패 - 500'
-                res.status(500).end()
+                res.status(500).json(data)
                 return
             }
 
@@ -2578,6 +2752,31 @@ export default class BetController implements IBetController {
         } catch (e) {
             logger.error(e)
             data.errorTitle = '배팅 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getMinigameBetListRecent = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-미니게임 배팅 내역 ■■■■■■■■■■
+            const r: TService = await betService.getMinigameBetListRecent(v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '미니게임 배팅 내역 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-미니게임 배팅내역 ■■■■■■■■■■
+
+            res.json(r.data)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '미니게임 배팅 내역 실패 - 500'
             res.status(500).json(data)
             return
         }

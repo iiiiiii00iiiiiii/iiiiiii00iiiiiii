@@ -970,4 +970,291 @@ export default class GameController implements IGameController {
             return
         }
     }
+
+    public getPowerball = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-파워볼 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getPowerball()
+            if(r.error) {
+                data.errorTitle = '파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('powerballBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getPowerladder = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-파워 사다리 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getPowerladder()
+            if(r.error) {
+                data.errorTitle = '파워 사다리 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-파워 사다리 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PLDOE', 'PLDLR', 'PLDTF', 'PLDCOMBO']
+                const rConfig: TService = await etcService.getConfigInfo('powerladderBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워 사다리 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '파워 사다리 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getKenoladder = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-키노 사다리 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getKenoladder()
+            if(r.error) {
+                data.errorTitle = '키노 사다리 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-키노 사다리 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-키노 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['KLDOE', 'KLDLR', 'KLDTF', 'KLDCOMBO']
+                const rConfig: TService = await etcService.getConfigInfo('kenoladderBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '키노 사다리 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-키노 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '키노 사다리 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getBoglePowerball = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-보글 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getBoglePowerball()
+            if(r.error) {
+                data.errorTitle = '보글 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-보글 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('boglePowerballBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '보글 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getBogleladder = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-키노 사다리 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getBogleladder()
+            if(r.error) {
+                data.errorTitle = '보글 사다리 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-보글 사다리 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-보글 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['BLDOE', 'BLDLR', 'BLDTF', 'BLDCOMBO']
+                const rConfig: TService = await etcService.getConfigInfo('bogleladderBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '보글 사다리 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-보글 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '보글 사다리 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getGooglePowerball1 = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-구글 1분 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getGooglePowerball1()
+            if(r.error) {
+                data.errorTitle = '구글 1분 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-구글 1분 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('googlePowerball1Bet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '구글 1분 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getGooglePowerball3 = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-구글 3분 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getGooglePowerball3()
+            if(r.error) {
+                data.errorTitle = '구글 3분 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-구글 3분 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('googlePowerball3Bet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '구글 3분 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
 }

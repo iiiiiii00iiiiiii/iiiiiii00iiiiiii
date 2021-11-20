@@ -160,10 +160,23 @@ router.get('/get-sports-bet-list', auth.checkLogin(), betCtr.getSportsBetList)
 router.put('/cancel-sports-bet', auth.checkLogin(), betCtr.cancelSportsBet)
 router.delete('/delete-sports-bet', auth.checkLogin(), betCtr.deleteSportsBet)
 router.delete('/delete-sports-bet-all', auth.checkLogin(), betCtr.deleteSportsBetAll)
+router.get('/get-minigame-bet-list-recent', auth.checkLogin(), betCtr.getMinigameBetListRecent)
+
 
 
 // maintenance
 router.get('/get-maintenance', etcCtr.getMaintenance)
+
+
+// minigames
+router.get('/get-powerball', gameCtr.getPowerball)
+router.get('/get-powerladder', gameCtr.getPowerladder)
+router.get('/get-kenoladder', gameCtr.getKenoladder)
+router.get('/get-boglepowerball', gameCtr.getBoglePowerball)
+router.get('/get-bogleladder', gameCtr.getBogleladder)
+router.get('/get-googlepowerball1', gameCtr.getGooglePowerball1)
+router.get('/get-googlepowerball3', gameCtr.getGooglePowerball3)
+
 
 
 
