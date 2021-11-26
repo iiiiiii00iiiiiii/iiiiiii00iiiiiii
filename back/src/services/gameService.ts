@@ -260,6 +260,168 @@ export default class GameService implements IGameService {
         })
     }
 
+    public getPrematchSpecialList = (page: number, sport: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                let findQuery: any = {
+                    resultStatus: false,
+                    gameDateTime: {
+                        $gt: new Date()
+                    },
+                    showStatus: true
+                }
+
+                if(sport) findQuery.sport = sport
+                else {
+                    findQuery.sport = {
+                        $in: ['Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'LoL']
+                    }
+                }
+
+                findQuery.$or = [
+                    { 'showConfig.first2Points': true, 'specialActiveObject.first2Points': true },
+                    { 'showConfig.first3Points': true, 'specialActiveObject.first3Points': true },
+                    { 'showConfig.firstFreeThrow': true, 'specialActiveObject.firstFreeThrow': true },
+                    { 'showConfig.handicap1stQuarterSpecial': true, 'specialActiveObject.games1stQuarterSpecial': true },
+                    { 'showConfig.underOver1stQuarterSpecial': true, 'specialActiveObject.games1stQuarterSpecial': true },
+                    { 'showConfig.firstWalk': true, 'specialActiveObject.firstWalk': true },
+                    { 'showConfig.handicapFirst5InningsSpecial': true, 'specialActiveObject.gamesFirst5InningsSpecial': true },
+                    { 'showConfig.underOverFirst5InningsSpecial': true, 'specialActiveObject.gamesFirst5InningsSpecial': true },
+                    { 'showConfig.firstPoint': true, 'specialActiveObject.firstPoint': true },
+                    { 'showConfig.handicap1stPeriodSpecial': true, 'specialActiveObject.games1stPeriodSpecial': true },
+                    { 'showConfig.underOver1stPeriodSpecial': true, 'specialActiveObject.games1stPeriodSpecial': true },
+                    { 'showConfig.handicap1stSetSpecial': true, 'specialActiveObject.games1stSetSpecial': true },
+                    { 'showConfig.underOver1stSetSpecial': true, 'specialActiveObject.games1stSetSpecial': true },
+                    { 'showConfig.x1stSetSpecial': true, 'specialActiveObject.x1stSetSpecial': true },
+                    { 'showConfig.handicap1stSetKill': true, 'specialActiveObject.games1stSetKill': true },
+                    { 'showConfig.underOver1stSetKill': true, 'specialActiveObject.games1stSetKill': true },
+                    { 'showConfig.firstTower1stSet': true, 'specialActiveObject.firstTower1stSet': true },
+                    { 'showConfig.firstDragon1stSet': true, 'specialActiveObject.firstDragon1stSet': true },
+                    { 'showConfig.firstBlood1stSet': true, 'specialActiveObject.firstBlood1stSet': true }
+                ]
+
+                const whatQuery: any = {
+                    projection: {
+                        sport: 1,
+                        countryOID: 1,
+                        countryKor: 1,
+                        leagueKor: 1,
+                        gameDateTime: 1,
+                        homeTeam: 1,
+                        awayTeam: 1,
+                        homeTeamKor: 1,
+                        awayTeamKor: 1,
+                        showConfig: 1,
+                        'games.first2Points': 1,
+                        'games.first3Points': 1,
+                        'games.firstFreeThrow': 1,
+                        'games.handicap1stQuarterSpecial': 1,
+                        'games.underOver1stQuarterSpecial': 1,
+                        'games.firstWalk': 1,
+                        'games.handicapFirst5InningsSpecial': 1,
+                        'games.underOverFirst5InningsSpecial': 1,
+                        'games.firstPoint': 1,
+                        'games.handicap1stPeriodSpecial': 1,
+                        'games.underOver1stPeriodSpecial': 1,
+                        'games.handicap1stSetSpecial': 1,
+                        'games.underOver1stSetSpecial': 1,
+                        'games.x1stSetSpecial': 1,
+                        'games.handicap1stSetKill': 1,
+                        'games.underOver1stSetKill': 1,
+                        'games.firstTower1stSet': 1,
+                        'games.firstDragon1stSet': 1,
+                        'games.firstBlood1stSet': 1
+                    }
+                }
+
+                const sortQuery: any = {
+                    gameDateTime: 1,
+                    leagueKor: 1
+                }
+
+                const skip: number = (page - 1) * config.sportPageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
+                // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getPrematchSpecialList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getLiveKorList = (page: number, sport: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                let findQuery: any = {
+                    showStatus: true,
+                    onAir: 'onAir',
+                    resultStatus: false,
+                    $or: [
+                        { 'specialActiveObject.handicap2ndQuarterSpecial': true },
+                        { 'specialActiveObject.underOver2ndQuarterSpecial': true },
+                        { 'specialActiveObject.handicap3rdQuarterSpecial': true },
+                        { 'specialActiveObject.underOver3rdQuarterSpecial': true },
+                        { 'specialActiveObject.handicap4thQuarterSpecial': true },
+                        { 'specialActiveObject.underOver4thQuarterSpecial': true },
+                        { 'specialActiveObject.handicap2ndSetSpecial': true },
+                        { 'specialActiveObject.underOver2ndSetSpecial': true },
+                        { 'specialActiveObject.handicap3rdSetSpecial': true },
+                        { 'specialActiveObject.underOver3rdSetSpecial': true }
+                    ]
+                }
+
+                if(sport) findQuery.sport = sport
+
+                const whatQuery: any = {
+                    projection: {
+                        sport: 1,
+                        countryOID: 1,
+                        countryKor: 1,
+                        leagueKor: 1,
+                        gameOID: 1,
+                        gameID: 1,
+                        gameDateTime: 1,
+                        homeTeam: 1,
+                        awayTeam: 1,
+                        homeTeamKor: 1,
+                        awayTeamKor: 1,
+                        showConfig: 1,
+                        games: 1,
+                        resultData: 1
+                    }
+                }
+
+                const sortQuery: any = {
+                    gameDateTime: 1,
+                    leagueKor: 1
+                }
+
+                const skip: number = (page - 1) * config.sportPageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
+                // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getLiveKorList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public getPowerball = (): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }

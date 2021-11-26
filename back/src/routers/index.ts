@@ -147,6 +147,9 @@ router.get('/get-prematch-list', gameCtr.getPrematchList)
 router.get('/get-prematch-cross-list', gameCtr.getPrematchCrossList)
 router.get('/get-live-list', gameCtr.getLiveList)
 router.get('/get-live-detail', gameCtr.getLiveDetail)
+router.get('/get-prematch-special-list', gameCtr.getPrematchSpecialList)
+router.get('/get-live-kor-list', gameCtr.getLiveKorList)
+
 
 
 
