@@ -58,7 +58,7 @@ class GameService {
                         },
                         showStatus: true,
                         sport: {
-                            $ne: 'Table Tennis'
+                            $nin: ['Table Tennis', 'Tennis']
                         }
                     };
                     if (sport)
@@ -109,7 +109,7 @@ class GameService {
                         },
                         showStatus: true,
                         sport: {
-                            $ne: 'Table Tennis'
+                            $nin: ['Table Tennis', 'Tennis']
                         }
                     };
                     if (sport)
@@ -164,7 +164,7 @@ class GameService {
                         showStatus: true,
                         onAir: 'onAir',
                         sport: {
-                            $ne: 'Table Tennis'
+                            $nin: ['Table Tennis', 'Tennis']
                         }
                     };
                     if (sport)

@@ -56,7 +56,7 @@ export default class GameService implements IGameService {
                     },
                     showStatus: true,
                     sport: {
-                        $ne: 'Table Tennis'
+                        $nin: ['Table Tennis', 'Tennis']
                     }
                 }
 
@@ -112,7 +112,7 @@ export default class GameService implements IGameService {
                     },
                     showStatus: true,
                     sport: {
-                        $ne: 'Table Tennis'
+                        $nin: ['Table Tennis', 'Tennis']
                     }
                 }
 
@@ -173,7 +173,7 @@ export default class GameService implements IGameService {
                     showStatus: true,
                     onAir: 'onAir',
                     sport: {
-                        $ne: 'Table Tennis'
+                        $nin: ['Table Tennis', 'Tennis']
                     }
                 }
 

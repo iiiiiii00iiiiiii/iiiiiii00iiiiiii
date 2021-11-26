@@ -571,7 +571,7 @@ class GameController {
                     value: req.query.sport,
                     rule: {
                         required: req.query.league,
-                        or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Tennis', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'Table Tennis', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
+                        or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
                     },
                     message: {
                         required: '파라메터 오류. 관리자에게 문의하세요.',
@@ -663,7 +663,7 @@ class GameController {
                     value: req.query.sport,
                     rule: {
                         required: req.query.league,
-                        or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Tennis', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'Table Tennis', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
+                        or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
                     },
                     message: {
                         required: '파라메터 오류. 관리자에게 문의하세요.',
@@ -796,7 +796,7 @@ class GameController {
                     value: req.query.sport,
                     rule: {
                         required: req.query.league,
-                        or: ['', 'Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Tennis', 'Table Tennis', 'Darts', 'Boxing', 'MMA', 'Rugby League', 'Rugby Union', 'Golf', 'Handball', 'CS:GO', 'Dota 2', 'LoL', 'FIFA']
+                        or: ['', 'Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Darts', 'Boxing', 'MMA', 'Rugby League', 'Rugby Union', 'Golf', 'Handball', 'CS:GO', 'Dota 2', 'LoL', 'FIFA']
                     },
                     message: {
                         required: '파라메터 오류. 관리자에게 문의하세요.',
