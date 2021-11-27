@@ -9,6 +9,7 @@ import util from 'util'
 import mongoSanitize from 'mongo-sanitize'
 import { v4 as uuidv4 } from 'uuid'
 import cache from 'memory-cache'
+import mobileDetect from 'mobile-detect'
 
 const sleep = util.promisify(setTimeout)
 
@@ -32,4 +33,4 @@ const logger: any = winston.createLogger({
     ]
 })
 
-export { moment, numeral, request, crypto, _, logger, sleep, mongoSanitize, uuidv4, cache }
+export { moment, numeral, request, crypto, _, logger, sleep, mongoSanitize, uuidv4, cache, mobileDetect }

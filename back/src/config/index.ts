@@ -32,7 +32,14 @@ type TConfig = {
     boglePowerballTime: number,
     bogleladderTime: number,
     googlePowerball1: number,
-    googlePowerball3: number
+    googlePowerball3: number,
+    kplay: {
+        code: string,
+        token: string,
+        key: string,
+        endpoint: string,
+        callbackURL: string
+    }
 }
 
 const config: TConfig = {
@@ -64,7 +71,18 @@ const config: TConfig = {
     boglePowerballTime: 30,
     bogleladderTime: 30,
     googlePowerball1: 15,
-    googlePowerball3: 30
+    googlePowerball3: 30,
+    kplay: {
+        code: 'SFT0001',
+        token: 'cVsAlijIaYssmkF5qATyhPfoLRffQ9rR',  // test
+        // token: '',
+        key: 'IVSvfG2FtRdHqmdNciEZGYVzOiCP0GBB',  // test
+        // key: '',
+        endpoint: 'http://uat.kplayone.com',  // test
+        // endpoint: 'http://kplayone.com',
+        callbackURL: 'http://127.0.0.1:2008/api'  // test
+        // callbackURL: 'http://gd-1111.com/api'
+    }
 }
 
 export default config

@@ -20,6 +20,8 @@ const betController_1 = __importDefault(require("../controllers/betController"))
 const betCtr = new betController_1.default();
 const etcController_1 = __importDefault(require("../controllers/etcController"));
 const etcCtr = new etcController_1.default();
+const kplayController_1 = __importDefault(require("../controllers/kplayController"));
+const kplayCtr = new kplayController_1.default();
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
 // import NoticeController from '../controllers/boardNoticeController'
@@ -106,6 +108,8 @@ router.get('/get-live-list', gameCtr.getLiveList);
 router.get('/get-live-detail', gameCtr.getLiveDetail);
 router.get('/get-prematch-special-list', gameCtr.getPrematchSpecialList);
 router.get('/get-live-kor-list', gameCtr.getLiveKorList);
+// casino
+router.get('/kpay-url', auth.checkLogin(), kplayCtr.kplayURL);
 // bet
 router.post('/bet', auth.checkLogin(), betCtr.bet);
 // bet list

@@ -24,6 +24,9 @@ const betCtr: BetController = new BetController()
 import EtcController from '../controllers/etcController'
 const etcCtr: EtcController = new EtcController()
 
+import KplayController from '../controllers/kplayController'
+const kplayCtr: KplayController = new KplayController()
+
 // import AdminController from '../controllers/adminController'
 // const adminCtr: AdminController = new AdminController()
 
@@ -149,6 +152,10 @@ router.get('/get-live-list', gameCtr.getLiveList)
 router.get('/get-live-detail', gameCtr.getLiveDetail)
 router.get('/get-prematch-special-list', gameCtr.getPrematchSpecialList)
 router.get('/get-live-kor-list', gameCtr.getLiveKorList)
+
+// casino
+router.get('/kpay-url', auth.checkLogin(), kplayCtr.kplayURL)
+
 
 
 
