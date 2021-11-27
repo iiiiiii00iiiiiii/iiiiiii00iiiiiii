@@ -50,7 +50,8 @@ class UserService {
                             recommendLevel: 1,
                             money: 1,
                             point: 1,
-                            isAgent: 1
+                            isAgent: 1,
+                            seq: 1
                         },
                         returnDocument: 'before'
                     };
@@ -60,6 +61,62 @@ class UserService {
                 }
                 catch (err) {
                     modules_1.logger.error('UserService > login');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getSeq = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: 'userCounter'
+                    };
+                    const setQuery = {
+                        $inc: {
+                            counter: 1
+                        }
+                    };
+                    const options = {
+                        projection: {
+                            counter: 1
+                        },
+                        returnDocument: 'after'
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').findOneAndUpdate(findQuery, setQuery, options);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > getSeq');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.updateSeq = (userID, counter) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        id: (0, modules_1.mongoSanitize)(userID)
+                    };
+                    const setQuery = {
+                        $set: {
+                            kplayUserID: null,
+                            kplayUserSeq: null,
+                            seq: counter
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > updateSeq');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

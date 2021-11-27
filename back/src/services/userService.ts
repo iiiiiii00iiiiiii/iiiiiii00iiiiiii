@@ -52,7 +52,8 @@ export default class UserService implements IUserService {
                         recommendLevel: 1,
                         money: 1,
                         point: 1,
-                        isAgent: 1
+                        isAgent: 1,
+                        seq: 1
                     },
                     returnDocument: 'before'
                 }
@@ -62,6 +63,69 @@ export default class UserService implements IUserService {
                 resolve(r)
             } catch (err) {
                 logger.error('UserService > login')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getSeq = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    category: 'userCounter'
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        counter: 1
+                    }
+                }
+
+                const options: any = {
+                    projection: {
+                        counter: 1
+                    },
+                    returnDocument: 'after'
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('config').findOneAndUpdate(findQuery, setQuery, options)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > getSeq')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public updateSeq = (userID: string, counter: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    id: mongoSanitize(userID)
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        kplayUserID: null,
+                        kplayUserSeq: null,
+                        seq: counter
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > updateSeq')
                 logger.error(err)
                 r.error = err
                 resolve(r)
