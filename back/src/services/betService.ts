@@ -861,8 +861,8 @@ export default class BetService implements IBetService {
 
                 const setQuery: any = {
                     $inc: {
-                        [`bet.${v.betCart[0].type}.amountOf${v.betCart[0].betSelect}`]: v.betAmount,
-                        [`betKill.${v.betCart[0].type}.amountOf${v.betCart[0].betSelect}`]: v.betTopInfo.betKillAmount
+                        [`bet.${v.betCart[0].betType}.amountOf${v.betCart[0].betSelect}`]: v.betAmount,
+                        [`betKill.${v.betCart[0].betType}.amountOf${v.betCart[0].betSelect}`]: v.betTopInfo.betKillAmount
                     }
                 }
 
