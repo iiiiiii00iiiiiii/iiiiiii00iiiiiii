@@ -74,14 +74,11 @@ const config: TConfig = {
     googlePowerball3: 30,
     kplay: {
         code: 'SFT0001',
-        token: 'cVsAlijIaYssmkF5qATyhPfoLRffQ9rR',  // test
-        // token: '',
-        key: 'IVSvfG2FtRdHqmdNciEZGYVzOiCP0GBB',  // test
-        // key: '',
-        endpoint: 'http://uat.kplayone.com',  // test
-        // endpoint: 'http://kplayone.com',
-        callbackURL: 'http://127.0.0.1:2008/api'  // test
-        // callbackURL: 'http://gd-1111.com/api'
+        token: 'cVsAlijIaYssmkF5qATyhPfoLRffQ9rR',
+        key: 'IVSvfG2FtRdHqmdNciEZGYVzOiCP0GBB',
+        endpoint: 'http://kplayone.com',
+        // callbackURL: 'http://127.0.0.1:2008/api'
+        callbackURL: 'http://gd-1111.com/api'
     }
 }
 

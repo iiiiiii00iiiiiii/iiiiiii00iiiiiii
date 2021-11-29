@@ -33,13 +33,10 @@ const config = {
     kplay: {
         code: 'SFT0001',
         token: 'cVsAlijIaYssmkF5qATyhPfoLRffQ9rR',
-        // token: '',
         key: 'IVSvfG2FtRdHqmdNciEZGYVzOiCP0GBB',
-        // key: '',
-        endpoint: 'http://uat.kplayone.com',
-        // endpoint: 'http://kplayone.com',
-        callbackURL: 'http://127.0.0.1:2008/api' // test
-        // callbackURL: 'http://gd-1111.com/api'
+        endpoint: 'http://kplayone.com',
+        // callbackURL: 'http://127.0.0.1:2008/api'
+        callbackURL: 'http://gd-1111.com/api'
     }
 };
 exports.default = config;
