@@ -78,7 +78,7 @@ const config: TConfig = {
         key: 'IVSvfG2FtRdHqmdNciEZGYVzOiCP0GBB',
         endpoint: 'http://kplayone.com',
         // callbackURL: 'http://127.0.0.1:2008/api'
-        callbackURL: 'http://gd-1111.com/api'
+        callbackURL: 'https://gd-1111.com/api'
     }
 }
 

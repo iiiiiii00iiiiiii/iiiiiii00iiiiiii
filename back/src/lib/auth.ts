@@ -67,6 +67,54 @@ export default class Auth implements IAuth {
         }
     }
 
+    public checkLoginCookie(): any {
+        return async (req: TReq, res: res, next: next) => {
+            try {
+                let token: string = req.signedCookies['access-token'] ? req.signedCookies['access-token'].token : null
+
+                if(token) {
+                    const decoded: any = await this.tokenVerify(token)
+
+                    if(decoded) {
+                        token = this.createToken({
+                            _id: new ObjectID(decoded._id),
+                            id: decoded.id,
+                            nick: decoded.nick,
+                            bankOwner: decoded.bankOwner,
+                            grade: decoded.grade,
+                            isAgent: decoded.isAgent
+                        })
+
+                        res.set('access-token', token)
+                        req.token = token
+
+                        req.decoded = {
+                            _id: decoded._id,
+                            id: decoded.id,
+                            nick: decoded.nick,
+                            bankOwner: decoded.bankOwner,
+                            grade: decoded.grade,
+                            isAgent: decoded.isAgent
+                        }
+                        next()
+                    }
+                    else {
+                        res.set('access-token', '')
+                        res.status(401).end()
+                    }
+                }
+                else {
+                    res.set('access-token', '')
+                    res.status(401).end()
+                }
+            } catch (e) {
+                logger.error(e)
+                res.set('access-token', '')
+                res.status(500).end()
+            }
+        }
+    }
+
     private tokenVerify(token: string): Promise<any> {
         return new Promise((resolve, reject) => {
             jwt.verify(token, config.jwtSecret, (err, decoded) => {

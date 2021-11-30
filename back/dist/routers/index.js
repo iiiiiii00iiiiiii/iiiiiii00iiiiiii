@@ -110,7 +110,7 @@ router.get('/get-prematch-special-list', gameCtr.getPrematchSpecialList);
 router.get('/get-live-kor-list', gameCtr.getLiveKorList);
 // casino
 router.get('/kpay-url', auth.checkLogin(), kplayCtr.kplayURL);
-router.get('/slots/:productID/:gameID', kplayCtr.kplayOpenGames);
+router.get('/slots/:productID/:gameID', auth.checkLoginCookie(), kplayCtr.kplayOpenGames);
 // bet
 router.post('/bet', auth.checkLogin(), betCtr.bet);
 // bet list

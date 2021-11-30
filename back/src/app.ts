@@ -18,19 +18,21 @@ app.use(helmet({
 // app.use(helmet())
 
 // app.use(noCache())
-app.use(history())
+app.set('trust proxy', true)
+
 app.use(express.json({ limit: '2mb' }))
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(__dirname + '/www'))
 app.use(cookieParser(config.jwtSecret))
 
 //라우트 설정
 import apiRouter from './routers'
 app.use('/api', apiRouter)
 
+app.use(history())
+app.use(express.static(__dirname + '/www'))
+
 const server: http.Server = http.createServer(app)
 const port = process.env.PORT || ecosystem.port
-
 {
     (async () => {
         await mongoDB.connect()

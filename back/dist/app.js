@@ -26,14 +26,15 @@ app.use((0, helmet_1.default)({
 }));
 // app.use(helmet())
 // app.use(noCache())
-app.use((0, connect_history_api_fallback_1.default)());
+app.set('trust proxy', true);
 app.use(express_1.default.json({ limit: '2mb' }));
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use(express_1.default.static(__dirname + '/www'));
 app.use((0, cookie_parser_1.default)(config_1.default.jwtSecret));
 //라우트 설정
 const routers_1 = __importDefault(require("./routers"));
 app.use('/api', routers_1.default);
+app.use((0, connect_history_api_fallback_1.default)());
+app.use(express_1.default.static(__dirname + '/www'));
 const server = http_1.default.createServer(app);
 const port = process.env.PORT || ecosystem.port;
 {

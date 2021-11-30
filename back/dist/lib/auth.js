@@ -67,6 +67,50 @@ class Auth {
             }
         });
     }
+    checkLoginCookie() {
+        return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let token = req.signedCookies['access-token'] ? req.signedCookies['access-token'].token : null;
+                if (token) {
+                    const decoded = yield this.tokenVerify(token);
+                    if (decoded) {
+                        token = this.createToken({
+                            _id: new db_1.ObjectID(decoded._id),
+                            id: decoded.id,
+                            nick: decoded.nick,
+                            bankOwner: decoded.bankOwner,
+                            grade: decoded.grade,
+                            isAgent: decoded.isAgent
+                        });
+                        res.set('access-token', token);
+                        req.token = token;
+                        req.decoded = {
+                            _id: decoded._id,
+                            id: decoded.id,
+                            nick: decoded.nick,
+                            bankOwner: decoded.bankOwner,
+                            grade: decoded.grade,
+                            isAgent: decoded.isAgent
+                        };
+                        next();
+                    }
+                    else {
+                        res.set('access-token', '');
+                        res.status(401).end();
+                    }
+                }
+                else {
+                    res.set('access-token', '');
+                    res.status(401).end();
+                }
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                res.set('access-token', '');
+                res.status(500).end();
+            }
+        });
+    }
     tokenVerify(token) {
         return new Promise((resolve, reject) => {
             jsonwebtoken_1.default.verify(token, config_1.default.jwtSecret, (err, decoded) => {
