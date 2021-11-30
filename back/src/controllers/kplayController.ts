@@ -23,6 +23,8 @@ export default class GameController implements IGameController {
     }
 
     public kplayURL = async (req: req, res: res): Promise<void> => {
+        let domain_url: string = `${req.protocol}://${req.get('host')}/api`
+
         const validateData: any = {
             id: {
                 value: req.query.id,
@@ -98,7 +100,7 @@ export default class GameController implements IGameController {
                         name: rUserInfo.data.seq,
                         balance: rUserInfo.data.money,
                         language: 'ko',
-                        domain_url: config.kplay.callbackURL
+                        domain_url
                     },
                     prd: {
                         id: v.id,
@@ -146,6 +148,8 @@ export default class GameController implements IGameController {
     }
 
     public kplayOpenGames = async (req: req, res: res): Promise<void> => {
+        let domain_url: string = `${req.protocol}://${req.get('host')}/api`
+
         // validate start
         let v: any = tools.generateReqValue({}, req)
         let data: any = v
@@ -187,7 +191,7 @@ export default class GameController implements IGameController {
                         name: rUserInfo.data.seq.toString(),
                         balance: rUserInfo.data.money,
                         language: 'ko',
-                        domain_url: config.kplay.callbackURL
+                        domain_url
                     },
                     prd: {
                         id: parseInt(req.params.productID),

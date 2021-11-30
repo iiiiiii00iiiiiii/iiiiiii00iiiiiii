@@ -37,8 +37,7 @@ type TConfig = {
         code: string,
         token: string,
         key: string,
-        endpoint: string,
-        callbackURL: string
+        endpoint: string
     }
 }
 
@@ -76,9 +75,7 @@ const config: TConfig = {
         code: 'SFT0001',
         token: 'cVsAlijIaYssmkF5qATyhPfoLRffQ9rR',
         key: 'IVSvfG2FtRdHqmdNciEZGYVzOiCP0GBB',
-        endpoint: 'http://kplayone.com',
-        // callbackURL: 'http://127.0.0.1:2008/api'
-        callbackURL: 'https://gd-1111.com/api'
+        endpoint: 'http://kplayone.com'
     }
 }
 

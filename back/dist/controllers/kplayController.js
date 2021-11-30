@@ -24,6 +24,7 @@ const validate = new validate_1.default();
 class GameController {
     constructor() {
         this.kplayURL = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            let domain_url = `${req.protocol}://${req.get('host')}/api`;
             const validateData = {
                 id: {
                     value: req.query.id,
@@ -94,7 +95,7 @@ class GameController {
                             name: rUserInfo.data.seq,
                             balance: rUserInfo.data.money,
                             language: 'ko',
-                            domain_url: config_1.default.kplay.callbackURL
+                            domain_url
                         },
                         prd: {
                             id: v.id,
@@ -139,6 +140,7 @@ class GameController {
             }
         });
         this.kplayOpenGames = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            let domain_url = `${req.protocol}://${req.get('host')}/api`;
             // validate start
             let v = tools_1.default.generateReqValue({}, req);
             let data = v;
@@ -176,7 +178,7 @@ class GameController {
                             name: rUserInfo.data.seq.toString(),
                             balance: rUserInfo.data.money,
                             language: 'ko',
-                            domain_url: config_1.default.kplay.callbackURL
+                            domain_url
                         },
                         prd: {
                             id: parseInt(req.params.productID),
