@@ -6,8 +6,10 @@ import history from 'connect-history-api-fallback'
 import helmet from 'helmet'
 import noCache from 'nocache'
 import { mongoDB } from './lib/db'
-
 import { moment } from './lib/modules'
+import cookieParser from 'cookie-parser'
+
+import config from './config'
 
 const app = express()
 app.use(helmet({
@@ -17,9 +19,10 @@ app.use(helmet({
 
 // app.use(noCache())
 app.use(history())
-app.use(express.json({limit: '2mb'}))
-app.use(express.urlencoded({extended: true}))
+app.use(express.json({ limit: '2mb' }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + '/www'))
+app.use(cookieParser(config.jwtSecret))
 
 //라우트 설정
 import apiRouter from './routers'

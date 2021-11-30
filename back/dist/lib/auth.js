@@ -81,5 +81,14 @@ class Auth {
     createToken(tokenObject) {
         return jsonwebtoken_1.default.sign(tokenObject, config_1.default.jwtSecret, { expiresIn: config_1.default.expiresIn });
     }
+    createCookie(cookieName, cookieObject, res) {
+        return new Promise((resolve, reject) => {
+            res.cookie(cookieName, cookieObject, {
+                httpOnly: false,
+                signed: true
+            });
+            resolve(true);
+        });
+    }
 }
 exports.default = Auth;

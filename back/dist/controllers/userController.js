@@ -185,6 +185,10 @@ class UserController {
                 // 헤더 설정
                 res.set('access-token', token);
                 res.set('duplicate', duplicateToken);
+                // 쿠키 굽기
+                yield auth.createCookie('access-token', {
+                    token: token
+                }, res);
                 // ■■■■■■■■■■ DB-중복접속 방지용 token 업데이트 ■■■■■■■■■■
                 const rUpdateToken = yield userService.updateToken(v.id, duplicateToken);
                 if (rUpdateToken.error) {

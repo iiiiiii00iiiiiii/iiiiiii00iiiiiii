@@ -82,4 +82,15 @@ export default class Auth implements IAuth {
     public createToken(tokenObject: TUserToken): string {
         return jwt.sign(tokenObject, config.jwtSecret, { expiresIn: config.expiresIn })
     }
+
+    public createCookie(cookieName: string, cookieObject: any, res: res): Promise<any> {
+        return new Promise((resolve, reject) => {
+            res.cookie(cookieName, cookieObject, {
+                httpOnly: false,
+                signed: true
+            })
+
+            resolve(true)
+        })
+    }
 }

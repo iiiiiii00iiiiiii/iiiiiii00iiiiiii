@@ -197,6 +197,11 @@ export default class UserController implements IUserController {
             res.set('access-token', token)
             res.set('duplicate', duplicateToken)
 
+            // 쿠키 굽기
+            await auth.createCookie('access-token', {
+                token: token
+            }, res)
+
             // ■■■■■■■■■■ DB-중복접속 방지용 token 업데이트 ■■■■■■■■■■
             const rUpdateToken: TService = await userService.updateToken(v.id, duplicateToken)
             if(rUpdateToken.error) {
