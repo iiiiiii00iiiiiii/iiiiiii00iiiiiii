@@ -129,7 +129,7 @@ class UserController {
                     res.status(400).json(data);
                     return;
                 }
-                if (rLogin.data.seq === undefined) {
+                if (rLogin.data.value.seq === undefined) {
                     // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
                     const rSeq = yield userService.getSeq();
                     if (rSeq.error) {

@@ -136,7 +136,7 @@ export default class UserController implements IUserController {
                 return
             }
 
-            if(rLogin.data.seq === undefined) {
+            if(rLogin.data.value.seq === undefined) {
                 // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
                 const rSeq: TService = await userService.getSeq()
                 if(rSeq.error) {
