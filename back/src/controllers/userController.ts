@@ -67,7 +67,7 @@ export default class UserController implements IUserController {
         try {
             v = validate.validate(validateData)
             if(v.error) {
-                v.errorTitle = '로그인 실패 - 500'
+                v.errorTitle = '[1] 로그인 실패 - 500'
                 res.status(500).json(v)
                 return
             }
@@ -79,7 +79,7 @@ export default class UserController implements IUserController {
             }
             v = tools.generateReqValue(data.validates, req)
         } catch (error) {
-            v.errorTitle = '로그인 validate 실패 - 500'
+            v.errorTitle = '[2] 로그인 validate 실패 - 500'
             res.status(500).json(v)
             return
         }
@@ -90,7 +90,7 @@ export default class UserController implements IUserController {
             const rLogin: TService = await userService.login(v.id, v.password, v.reqIpaddress)
             if(rLogin.error) {
                 logger.error(`[UserController > login()] 로그인 실패 - ${rLogin.error}`)
-                data.errorTitle = '로그인 실패 - 500'
+                data.errorTitle = '[3] 로그인 실패 - 500'
                 res.status(500).json(data)
                 return
             }
@@ -141,13 +141,13 @@ export default class UserController implements IUserController {
                 const rSeq: TService = await userService.getSeq()
                 if(rSeq.error) {
                     logger.error('DB 오류')
-                    data.errorTitle = '로그인 오류 - 500'
+                    data.errorTitle = '[4] 로그인 오류 - 500'
                     res.status(500).json(data)
                     return
                 }
                 // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
                 if(rSeq.data.lastErrorObject.n === 0) {
-                    data.errorTitle = '로그인 오류 - 500'
+                    data.errorTitle = '[5] 로그인 오류 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -157,13 +157,13 @@ export default class UserController implements IUserController {
                 let rUpdateSeq = await userService.updateSeq(v.id, rSeq.data.value.counter)
                 if(rUpdateSeq.error) {
                     console.log('DB 오류')
-                    data.errorTitle = '로그인 오류 - 500'
+                    data.errorTitle = '[6] 로그인 오류 - 500'
                     res.status(500).json(data)
                     return
                 }
                 // ■■■■■■■■■■ DB-SEQ 번호 업데이트 ■■■■■■■■■■
                 if(rUpdateSeq.data.modifiedCount === 0) {
-                    data.errorTitle = '로그인 오류 - 500'
+                    data.errorTitle = '[7] 로그인 오류 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -218,7 +218,7 @@ export default class UserController implements IUserController {
             const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
             const rConfig: TService = await etcService.getConfigInfo('sportsBet', getKeys)
             if(rConfig.error) {
-                data.errorTitle = '스포츠 실패 - 500'
+                data.errorTitle = '[8] 스포츠 실패 - 500'
                 res.status(500).json(data)
                 return
             }
@@ -240,7 +240,7 @@ export default class UserController implements IUserController {
             })
         } catch (e) {
             logger.error(e)
-            data.errorTitle = '로그인 실패 - 500'
+            data.errorTitle = '[9] 로그인 실패 - 500'
             res.status(500).json(data)
             return
         }
