@@ -281,8 +281,6 @@ export default class UserService implements IUserService {
                     status: 0,
                     betStatus: true,
                     isTest: false,
-                    firstBonusStatus: true,
-                    everyTimeBonusStatus: true,
                     recommendStatus: true,
                     recommendCount: 0,
                     recommendTree : recommendTree,
@@ -536,6 +534,31 @@ export default class UserService implements IUserService {
                             winAmount: 0
                         }
                     },
+                    avg: {
+                        totalChargeAmount: 0,
+                        totalChargeCount: 0,
+                        avgChargeAmount: 0,
+                        totalExchangeAmount: 0,
+                        totalExchangeCount: 0,
+                        avgExchangeAmount: 0
+                    },
+
+                    isJoinCoin: false,
+                    coinId: '',
+                    coinPassword: '',
+
+                    firstBonusStatus: false,
+                    firstBonusPersonal: false,
+                    firstBonusRate: 0,
+                    firstBonusMin: 0,
+                    firstBonusMax: 0,
+
+                    everyTimeBonusStatus: false,
+                    everyTimeBonusPersonal: false,
+                    everyTimeBonusRate: 0,
+                    everyTimeBonusMin: 0,
+                    everyTimeBonusMax: 0,
+
                     regIpaddress: ipaddress,
                     regDateTime: new Date(),
                     loginCount: 0,
