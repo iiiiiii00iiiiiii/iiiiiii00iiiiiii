@@ -14,12 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const modules_1 = require("../lib/modules");
 const tools_1 = __importDefault(require("../lib/tools"));
+const validate_1 = __importDefault(require("../lib/validate"));
+const validate = new validate_1.default();
 const userService_1 = __importDefault(require("../services/userService"));
 const userService = new userService_1.default();
 const messageService_1 = __importDefault(require("../services/messageService"));
 const messageService = new messageService_1.default();
 const boardService_1 = __importDefault(require("../services/boardService"));
 const boardService = new boardService_1.default();
+const moneyService_1 = __importDefault(require("../services/moneyService"));
+const moneyService = new moneyService_1.default();
 const etcService_1 = __importDefault(require("../services/etcService"));
 const etcService = new etcService_1.default();
 class EtcController {
@@ -131,6 +135,101 @@ class EtcController {
             catch (e) {
                 modules_1.logger.error(e);
                 data.errorTitle = '점검 상세 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getHome = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                n: {
+                    value: req.query.n,
+                    rule: {
+                        required: true,
+                        number: true,
+                        gte: 1
+                    },
+                    message: {
+                        required: '파라메터 오류, 관리자에게 문의하세요.',
+                        number: '파라메터 오류, 관리자에게 문의하세요.',
+                        gte: '파라메터 오류, 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = 'Dash board 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = 'Dash board 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = 'Dash board validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                let dashboard = modules_1.cache.get('dashboard');
+                if (!modules_1.cache.get('dashboard')) {
+                    // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                    const r = yield boardService.getDashboard(v.n);
+                    if (r.error) {
+                        data.errorTitle = 'Dash board 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                    modules_1.cache.put('dashboard', {
+                        notice: r.data.notice,
+                        event: r.data.event,
+                        faq: r.data.faq
+                    }, 300000);
+                }
+                dashboard = modules_1.cache.get('dashboard');
+                let topExchange = modules_1.cache.get('topExchange');
+                if (!modules_1.cache.get('topExchange')) {
+                    // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+                    const rTopExchange = yield moneyService.getTopExchange();
+                    if (rTopExchange.error) {
+                        data.errorTitle = 'Dash board 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+                    modules_1.cache.put('topExchange', rTopExchange.data, 300000);
+                }
+                let fake = modules_1.cache.get('fake');
+                if (!modules_1.cache.get('fake')) {
+                    // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+                    const rFake = yield moneyService.getFake();
+                    if (rFake.error) {
+                        data.errorTitle = 'Dash board 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+                    modules_1.cache.put('fake', rFake.data, 300000);
+                }
+                res.json({
+                    dashboard,
+                    topExchange,
+                    realTimeChargeExchange: fake
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = 'Dash board 실패 - 500';
                 res.status(500).json(data);
                 return;
             }

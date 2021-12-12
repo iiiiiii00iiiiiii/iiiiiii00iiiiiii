@@ -644,6 +644,66 @@ class MoneyService {
                 }
             }));
         };
+        // home
+        this.getTopExchange = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        regDateTime: {
+                            $gte: (0, modules_1.moment)().subtract(30, 'day').toDate()
+                        },
+                        type: 'E'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            type: 1,
+                            id: 1,
+                            amount: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('fake').find(findQuery, whatQuery).sort({ amount: -1 }).limit(30).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > getTopExchange');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getFake = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        regDateTime: {
+                            $gte: (0, modules_1.moment)().subtract(30, 'day').toDate()
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            type: 1,
+                            id: 1,
+                            amount: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('fake').find(findQuery, whatQuery).sort({ _id: -1 }).limit(30).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > getFake');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = MoneyService;
