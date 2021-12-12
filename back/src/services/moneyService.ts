@@ -758,4 +758,70 @@ export default class MoneyService implements IMoneyService {
             }
         })
     }
+
+    // home
+    public getTopExchange = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    regDateTime: {
+                        $gte: moment().subtract(30, 'day').toDate()
+                    },
+                    type: 'E'
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        type: 1,
+                        id: 1,
+                        amount: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('fake').find(findQuery, whatQuery).sort({amount: -1}).limit(30).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > getTopExchange')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getFake = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    regDateTime: {
+                        $gte: moment().subtract(30, 'day').toDate()
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        type: 1,
+                        id: 1,
+                        amount: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('fake').find(findQuery, whatQuery).sort({_id: -1}).limit(30).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > getFake')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

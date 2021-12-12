@@ -1,10 +1,13 @@
 import { Request as req, Response as res } from 'express'
-import { logger, crypto, moment, mongoSanitize, numeral, uuidv4 } from '../lib/modules'
+import { logger, crypto, moment, mongoSanitize, numeral, uuidv4, cache } from '../lib/modules'
 import config from '../config'
 import { ObjectID } from '../lib/db'
 import tools from '../lib/tools'
 
 import type { TService } from '../models'
+
+import Validate from '../lib/validate'
+const validate: Validate = new Validate()
 
 import UserService from '../services/userService'
 const userService: UserService = new UserService()
@@ -14,6 +17,9 @@ const messageService: MessageService = new MessageService()
 
 import BoardService from '../services/boardService'
 const boardService: BoardService = new BoardService()
+
+import MoneyService from '../services/moneyService'
+const moneyService: MoneyService = new MoneyService()
 
 import EtcService from '../services/etcService'
 const etcService: EtcService = new EtcService()
@@ -142,6 +148,109 @@ export default class EtcController implements IEtcController {
         } catch (e) {
             logger.error(e)
             data.errorTitle = '점검 상세 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getHome = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            n: {
+                value: req.query.n,
+                rule: {
+                    required: true,
+                    number: true,
+                    gte: 1
+                },
+                message: {
+                    required: '파라메터 오류, 관리자에게 문의하세요.',
+                    number: '파라메터 오류, 관리자에게 문의하세요.',
+                    gte: '파라메터 오류, 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = 'Dash board 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = 'Dash board 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = 'Dash board validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            let dashboard: any = cache.get('dashboard')
+            if(!cache.get('dashboard')) {
+                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+                const r: TService = await boardService.getDashboard(v.n)
+                if(r.error) {
+                    data.errorTitle = 'Dash board 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-Dash board 가져오기 ■■■■■■■■■■
+
+                cache.put('dashboard', {
+                    notice: r.data.notice,
+                    event: r.data.event,
+                    faq: r.data.faq
+                }, 300000)
+            }
+            dashboard = cache.get('dashboard')
+
+            let topExchange: any = cache.get('topExchange')
+            if(!cache.get('topExchange')) {
+                // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+                const rTopExchange: TService = await moneyService.getTopExchange()
+                if(rTopExchange.error) {
+                    data.errorTitle = 'Dash board 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+
+                cache.put('topExchange', rTopExchange.data, 300000)
+            }
+
+            let fake: any = cache.get('fake')
+            if(!cache.get('fake')) {
+                // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+                const rFake: TService = await moneyService.getFake()
+                if(rFake.error) {
+                    data.errorTitle = 'Dash board 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
+
+                cache.put('fake', rFake.data, 300000)
+            }
+
+            res.json({
+                dashboard,
+                topExchange,
+                realTimeChargeExchange: fake
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = 'Dash board 실패 - 500'
             res.status(500).json(data)
             return
         }

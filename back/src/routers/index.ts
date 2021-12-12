@@ -68,7 +68,8 @@ const kplayCtr: KplayController = new KplayController()
 
 const router = express.Router()
 
-router.get('/get-dashboard', boardCtr.getDashboard)
+// router.get('/get-dashboard', boardCtr.getDashboard)
+router.get('/get-home', etcCtr.getHome)
 
 
 
