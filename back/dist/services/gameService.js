@@ -87,7 +87,7 @@ class GameService {
                     const skip = (page - 1) * config_1.default.sportPageSize;
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
-                    // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                    r.count = yield pool.collection('sportsPrematch').countDocuments(findQuery);
                     resolve(r);
                 }
                 catch (err) {
@@ -144,7 +144,7 @@ class GameService {
                     const skip = (page - 1) * config_1.default.sportPageSize;
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
-                    // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                    r.count = yield pool.collection('sportsPrematch').countDocuments(findQuery);
                     resolve(r);
                 }
                 catch (err) {
@@ -194,7 +194,7 @@ class GameService {
                     const skip = (page - 1) * config_1.default.sportPageSize;
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
-                    // r.count = await pool.collection('sportsLive').countDocuments(findQuery)
+                    r.count = yield pool.collection('sportsLive').countDocuments(findQuery);
                     resolve(r);
                 }
                 catch (err) {
@@ -321,7 +321,7 @@ class GameService {
                     const skip = (page - 1) * config_1.default.sportPageSize;
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
-                    // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                    r.count = yield pool.collection('sportsPrematch').countDocuments(findQuery);
                     resolve(r);
                 }
                 catch (err) {
@@ -380,7 +380,7 @@ class GameService {
                     const skip = (page - 1) * config_1.default.sportPageSize;
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
-                    // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                    r.count = yield pool.collection('sportsPrematch').countDocuments(findQuery);
                     resolve(r);
                 }
                 catch (err) {
