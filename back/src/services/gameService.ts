@@ -88,7 +88,7 @@ export default class GameService implements IGameService {
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
-                // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
 
                 resolve(r)
             } catch (err) {
@@ -151,7 +151,7 @@ export default class GameService implements IGameService {
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
-                // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
 
                 resolve(r)
             } catch (err) {
@@ -207,7 +207,7 @@ export default class GameService implements IGameService {
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
-                // r.count = await pool.collection('sportsLive').countDocuments(findQuery)
+                r.count = await pool.collection('sportsLive').countDocuments(findQuery)
 
                 resolve(r)
             } catch (err) {
@@ -345,7 +345,7 @@ export default class GameService implements IGameService {
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
-                // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
 
                 resolve(r)
             } catch (err) {
@@ -410,7 +410,7 @@ export default class GameService implements IGameService {
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
-                // r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
 
                 resolve(r)
             } catch (err) {
