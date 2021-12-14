@@ -226,7 +226,7 @@ export default class EtcController implements IEtcController {
                 }
                 // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
 
-                cache.put('topExchange', rTopExchange.data, 300000)
+                topExchange = cache.put('topExchange', rTopExchange.data, 300000)
             }
 
             let fake: any = cache.get('fake')
@@ -240,7 +240,7 @@ export default class EtcController implements IEtcController {
                 }
                 // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
 
-                cache.put('fake', rFake.data, 300000)
+                fake = cache.put('fake', rFake.data, 300000)
             }
 
             res.json({
