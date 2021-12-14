@@ -207,7 +207,7 @@ class EtcController {
                         return;
                     }
                     // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
-                    modules_1.cache.put('topExchange', rTopExchange.data, 300000);
+                    topExchange = modules_1.cache.put('topExchange', rTopExchange.data, 300000);
                 }
                 let fake = modules_1.cache.get('fake');
                 if (!modules_1.cache.get('fake')) {
@@ -219,7 +219,7 @@ class EtcController {
                         return;
                     }
                     // ■■■■■■■■■■ DB-Top Exchange 가져오기 ■■■■■■■■■■
-                    modules_1.cache.put('fake', rFake.data, 300000);
+                    fake = modules_1.cache.put('fake', rFake.data, 300000);
                 }
                 res.json({
                     dashboard,
