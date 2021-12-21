@@ -596,7 +596,7 @@ export default class GameController implements IGameController {
                 value: req.query.sport,
                 rule: {
                     required: req.query.league,
-                    or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
+                    or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2', 'FIFA']
                 },
                 message: {
                     required: '파라메터 오류. 관리자에게 문의하세요.',
@@ -693,7 +693,7 @@ export default class GameController implements IGameController {
                 value: req.query.sport,
                 rule: {
                     required: req.query.league,
-                    or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2']
+                    or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2', 'FIFA']
                 },
                 message: {
                     required: '파라메터 오류. 관리자에게 문의하세요.',
