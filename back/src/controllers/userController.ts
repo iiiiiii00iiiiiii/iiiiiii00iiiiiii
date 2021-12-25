@@ -606,7 +606,7 @@ export default class UserController implements IUserController {
         try {
             const getKeys: Array<string> = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'point']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-            const r: TService = await userService.getUserInfo(v.decoded._id, getKeys)
+            const r: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(r.error) {
                 data.errorTitle = null
                 res.status(500).json(data)
@@ -810,7 +810,7 @@ export default class UserController implements IUserController {
 
             const getKeys: Array<string> = ['recommendTree', 'isTest', 'isAgent']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys)
+            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
                 data.errorTitle = '출석 실패 - 500'
                 res.status(500).json(data)

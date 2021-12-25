@@ -642,13 +642,20 @@ export default class UserService implements IUserService {
         })
     }
 
-    public getUserInfo = (userOID: string, getKeys: Array<string>): Promise<TService> => {
+    public getUserInfo = (userOID: string, getKeys: Array<string>, ipaddress: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
             try {
                 const findQuery: any = {
                     _id: new ObjectID(userOID)
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        lastAccessIpaddress: ipaddress,
+                        lastAccessDateTime: new Date()
+                    }
                 }
 
                 let whatQuery: any = {
@@ -660,7 +667,8 @@ export default class UserService implements IUserService {
                 }
 
                 const pool: any = await mongoDB.connect()
-                r.data = await pool.collection('users').findOne(findQuery, whatQuery)
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, whatQuery)
+                r.data = r.data.value
                 resolve(r)
             } catch (err) {
                 logger.error('UserService > getUserInfo')

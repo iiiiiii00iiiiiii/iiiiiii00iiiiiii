@@ -808,7 +808,7 @@ export default class MoneyController implements IMoneyController {
         try {
             const getKeys: Array<string> = ['recommendTree']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys)
+            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
                 data.errorTitle = '문의하기 실패 - 500'
                 res.status(500).json(data)
@@ -880,7 +880,7 @@ export default class MoneyController implements IMoneyController {
 
             getKeys = ['recommendTree']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys)
+            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
                 data.errorTitle = '입금계좌 문의 실패 - 500'
                 res.status(500).json(data)

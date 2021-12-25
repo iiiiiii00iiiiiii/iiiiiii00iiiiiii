@@ -67,7 +67,7 @@ export default class GameController implements IGameController {
         try {
             const getKeys: Array<string> = ['id', 'seq', 'kplayUserSeq', 'money', 'isTest']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys)
+            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
                 data.errorTitle = '카지노 불러오기 실패 - 500'
                 res.status(500).json(data)
@@ -158,7 +158,7 @@ export default class GameController implements IGameController {
         try {
             const getKeys: Array<string> = ['id', 'seq', 'kplayUserSeq', 'money', 'isTest']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys)
+            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
                 data.errorTitle = '카지노 불러오기 실패 - 500'
                 res.status(500).json(data)

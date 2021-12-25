@@ -603,12 +603,18 @@ class UserService {
                 }
             }));
         };
-        this.getUserInfo = (userOID, getKeys) => {
+        this.getUserInfo = (userOID, getKeys, ipaddress) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
                     const findQuery = {
                         _id: new db_1.ObjectID(userOID)
+                    };
+                    const setQuery = {
+                        $set: {
+                            lastAccessIpaddress: ipaddress,
+                            lastAccessDateTime: new Date()
+                        }
                     };
                     let whatQuery = {
                         projection: {}
@@ -617,7 +623,8 @@ class UserService {
                         whatQuery.projection[getKeys[i]] = 1;
                     }
                     const pool = yield db_1.mongoDB.connect();
-                    r.data = yield pool.collection('users').findOne(findQuery, whatQuery);
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, whatQuery);
+                    r.data = r.data.value;
                     resolve(r);
                 }
                 catch (err) {

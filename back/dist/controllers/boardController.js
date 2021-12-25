@@ -768,7 +768,7 @@ class MoneyController {
             try {
                 const getKeys = ['recommendTree'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys);
+                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
                     data.errorTitle = '문의하기 실패 - 500';
                     res.status(500).json(data);
@@ -822,7 +822,7 @@ class MoneyController {
                 }
                 getKeys = ['recommendTree'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys);
+                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
                     data.errorTitle = '입금계좌 문의 실패 - 500';
                     res.status(500).json(data);

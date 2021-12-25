@@ -65,7 +65,7 @@ class GameController {
             try {
                 const getKeys = ['id', 'seq', 'kplayUserSeq', 'money', 'isTest'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys);
+                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
                     data.errorTitle = '카지노 불러오기 실패 - 500';
                     res.status(500).json(data);
@@ -148,7 +148,7 @@ class GameController {
             try {
                 const getKeys = ['id', 'seq', 'kplayUserSeq', 'money', 'isTest'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys);
+                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
                     data.errorTitle = '카지노 불러오기 실패 - 500';
                     res.status(500).json(data);

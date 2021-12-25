@@ -568,7 +568,7 @@ class UserController {
             try {
                 const getKeys = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'point'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                const r = yield userService.getUserInfo(v.decoded._id, getKeys);
+                const r = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (r.error) {
                     data.errorTitle = null;
                     res.status(500).json(data);
@@ -754,7 +754,7 @@ class UserController {
                 }
                 const getKeys = ['recommendTree', 'isTest', 'isAgent'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys);
+                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
                     data.errorTitle = '출석 실패 - 500';
                     res.status(500).json(data);
