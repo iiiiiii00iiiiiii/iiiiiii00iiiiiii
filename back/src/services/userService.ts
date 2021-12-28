@@ -300,7 +300,7 @@ export default class UserService implements IUserService {
                     },
                     isAgent: false,
                     topConfig : {
-                        powerball : {
+                        powerball: {
                             POEStatus : true,
                             POERate : 100,
                             PUOStatus : true,
@@ -322,10 +322,10 @@ export default class UserService implements IUserService {
                             RNCOMBOStatus: true,
                             RNCOMBORate: 100
                         },
-                        powerladder : {
-                            LRStatus : true,
-                            LRRate : 100,
-                            TFStatus : true,
+                        powerladder: {
+                            LRStatus: true,
+                            LRRate: 100,
+                            TFStatus: true,
                             TFRate : 100,
                             OEStatus : true,
                             OERate : 100,
@@ -527,6 +527,16 @@ export default class UserService implements IUserService {
                             RNAPOERate: 100,
                             RNCOMBOStatus: true,
                             RNCOMBORate: 100
+                        },
+                        speedladder: {
+                            LRStatus: true,
+                            LRRate: 100,
+                            TFStatus: true,
+                            TFRate : 100,
+                            OEStatus : true,
+                            OERate : 100,
+                            COMBOStatus: true,
+                            COMBORate: 100
                         }
                     },
                     betHistory: {
@@ -668,6 +678,12 @@ export default class UserService implements IUserService {
                             winAmount: 0
                         },
                         coinPowerball: {
+                            count: 0,
+                            amount: 0,
+                            winCount: 0,
+                            winAmount: 0
+                        },
+                        speedladder: {
                             count: 0,
                             amount: 0,
                             winCount: 0,

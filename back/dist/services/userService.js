@@ -500,6 +500,16 @@ class UserService {
                                 RNAPOERate: 100,
                                 RNCOMBOStatus: true,
                                 RNCOMBORate: 100
+                            },
+                            speedladder: {
+                                LRStatus: true,
+                                LRRate: 100,
+                                TFStatus: true,
+                                TFRate: 100,
+                                OEStatus: true,
+                                OERate: 100,
+                                COMBOStatus: true,
+                                COMBORate: 100
                             }
                         },
                         betHistory: {
@@ -641,6 +651,12 @@ class UserService {
                                 winAmount: 0
                             },
                             coinPowerball: {
+                                count: 0,
+                                amount: 0,
+                                winCount: 0,
+                                winAmount: 0
+                            },
+                            speedladder: {
                                 count: 0,
                                 amount: 0,
                                 winCount: 0,
