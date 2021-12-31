@@ -133,6 +133,18 @@ class BetController {
                     category = 'googlePowerball1Bet';
                 else if (gameKind === 'googlePowerball3')
                     category = 'googlePowerball3Bet';
+                else if (gameKind === 'eosPowerball1')
+                    category = 'eosPowerball1Bet';
+                else if (gameKind === 'eosPowerball3')
+                    category = 'eosPowerball3Bet';
+                else if (gameKind === 'eosPowerball')
+                    category = 'eosPowerballBet';
+                else if (gameKind === 'coinPowerball3')
+                    category = 'coinPowerball3Bet';
+                else if (gameKind === 'coinPowerball')
+                    category = 'coinPowerballBet';
+                else if (gameKind === 'speedladder')
+                    category = 'speedladderBet';
             }
             v.category = category;
             v.gameKind = gameKind;
@@ -2296,6 +2308,30 @@ class BetController {
             else if (gameKind === 'googlePowerball3') {
                 categorySwitch = 'googlePowerball3Switch';
                 categoryTop = 'googlePowerball3Top';
+            }
+            else if (gameKind === 'eosPowerball1') {
+                categorySwitch = 'eosPowerball1Switch';
+                categoryTop = 'eosPowerball1Top';
+            }
+            else if (gameKind === 'eosPowerball3') {
+                categorySwitch = 'eosPowerball3Switch';
+                categoryTop = 'eosPowerball3Top';
+            }
+            else if (gameKind === 'eosPowerball') {
+                categorySwitch = 'eosPowerballSwitch';
+                categoryTop = 'eosPowerballTop';
+            }
+            else if (gameKind === 'coinPowerball3') {
+                categorySwitch = 'coinPowerball3Switch';
+                categoryTop = 'coinPowerball3Top';
+            }
+            else if (gameKind === 'coinPowerball') {
+                categorySwitch = 'coinPowerballSwitch';
+                categoryTop = 'coinPowerballTop';
+            }
+            else if (gameKind === 'speedladder') {
+                categorySwitch = 'speedladderSwitch';
+                categoryTop = 'speedladderTop';
             }
             v.categorySwitch = categorySwitch;
             v.categoryTop = categoryTop;

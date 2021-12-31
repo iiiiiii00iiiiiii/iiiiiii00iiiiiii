@@ -1356,6 +1356,228 @@ class GameController {
                 return;
             }
         });
+        this.getEosPowerball1 = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-이오스 1분 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getEosPowerball1();
+                if (r.error) {
+                    data.errorTitle = '이오스 1분 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-이오스 1분 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('eosPowerball3Bet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '이오스 1분 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getEosPowerball3 = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-이오스 3분 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getEosPowerball3();
+                if (r.error) {
+                    data.errorTitle = '이오스 3분 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-이오스 3분 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('eosPowerball3Bet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '이오스 3분 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getEosPowerball = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-이오스 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getEosPowerball();
+                if (r.error) {
+                    data.errorTitle = '이오스 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-이오스 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('eosPowerballBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '이오스 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getCoinPowerball = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-코인 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getCoinPowerball();
+                if (r.error) {
+                    data.errorTitle = '코인 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-코인 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('eosPowerballBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '코인 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getCoinPowerball3 = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-코인 3분 파워볼 가져오기 ■■■■■■■■■■
+                let r = yield gameService.getCoinPowerball3();
+                if (r.error) {
+                    data.errorTitle = '코인 3분 파워볼 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-코인 3분 파워볼 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
+                    const rConfig = yield etcService.getConfigInfo('eosPowerballBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '파워볼 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '코인 3분 파워볼 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getSpeedladder = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-스피드 사다리 가져오기 ■■■■■■■■■■
+                const r = yield gameService.getSpeedladder();
+                if (r.error) {
+                    data.errorTitle = '스피드 사다리 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-스피드 사다리 가져오기 ■■■■■■■■■■
+                let resultGame = r.data[0];
+                if (resultGame) {
+                    resultGame.serverTime = Date.now();
+                    // ■■■■■■■■■■ DB-스피드 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    const getKeys = ['SLDOE', 'SLDLR', 'SLDTF', 'SLDCOMBO'];
+                    const rConfig = yield etcService.getConfigInfo('speedladderBet', getKeys);
+                    if (rConfig.error) {
+                        data.errorTitle = '스피드 사다리 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-스피드 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                    resultGame.betInfo = rConfig.data;
+                }
+                res.json(resultGame);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '스피드 사다리 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
     }
 }
 exports.default = GameController;

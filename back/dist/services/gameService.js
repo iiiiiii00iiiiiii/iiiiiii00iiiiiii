@@ -622,6 +622,204 @@ class GameService {
                 }
             }));
         };
+        this.getEosPowerball1 = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'eosPowerball1',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getEosPowerball1');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getEosPowerball3 = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'eosPowerball3',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getEosPowerball3');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getEosPowerball = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'eosPowerball',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getEosPowerball');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getCoinPowerball3 = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'coinPowerball3',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getCoinPowerball3');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getCoinPowerball = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'coinPowerball',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getCoinPowerball');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getSpeedladder = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameType: 'speedladder',
+                        gameDateTime: {
+                            $gte: new Date()
+                        },
+                        resultStatus: false,
+                        rollbackStatus: false,
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            rotation: 1,
+                            round: 1,
+                            gameDateTime: 1,
+                            games: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getSpeedladder');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = GameService;
