@@ -1446,4 +1446,250 @@ export default class GameController implements IGameController {
             return
         }
     }
+
+    public getEosPowerball1 = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-이오스 1분 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getEosPowerball1()
+            if(r.error) {
+                data.errorTitle = '이오스 1분 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-이오스 1분 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('eosPowerball3Bet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '이오스 1분 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getEosPowerball3 = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-이오스 3분 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getEosPowerball3()
+            if(r.error) {
+                data.errorTitle = '이오스 3분 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-이오스 3분 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('eosPowerball3Bet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '이오스 3분 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getEosPowerball = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-이오스 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getEosPowerball()
+            if(r.error) {
+                data.errorTitle = '이오스 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-이오스 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('eosPowerballBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '이오스 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getCoinPowerball = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-코인 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getCoinPowerball()
+            if(r.error) {
+                data.errorTitle = '코인 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-코인 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('eosPowerballBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '코인 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getCoinPowerball3 = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-코인 3분 파워볼 가져오기 ■■■■■■■■■■
+            let r: TService = await gameService.getCoinPowerball3()
+            if(r.error) {
+                data.errorTitle = '코인 3분 파워볼 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-코인 3분 파워볼 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
+                const rConfig: TService = await etcService.getConfigInfo('eosPowerballBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '파워볼 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '코인 3분 파워볼 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getSpeedladder = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-스피드 사다리 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getSpeedladder()
+            if(r.error) {
+                data.errorTitle = '스피드 사다리 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-스피드 사다리 가져오기 ■■■■■■■■■■
+            let resultGame: any = r.data[0]
+
+            if(resultGame) {
+                resultGame.serverTime = Date.now()
+
+                // ■■■■■■■■■■ DB-스피드 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                const getKeys: Array<string> = ['SLDOE', 'SLDLR', 'SLDTF', 'SLDCOMBO']
+                const rConfig: TService = await etcService.getConfigInfo('speedladderBet', getKeys)
+                if(rConfig.error) {
+                    data.errorTitle = '스피드 사다리 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-스피드 사다리 환경 설정 가져오기 ■■■■■■■■■■
+                resultGame.betInfo = rConfig.data
+            }
+
+            res.json(resultGame)
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '스피드 사다리 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
 }

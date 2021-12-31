@@ -680,4 +680,226 @@ export default class GameService implements IGameService {
             }
         })
     }
+
+    public getEosPowerball1 = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameType: 'eosPowerball1',
+                    gameDateTime: {
+                        $gte: new Date()
+                    },
+                    resultStatus: false,
+                    rollbackStatus: false,
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        rotation: 1,
+                        round: 1,
+                        gameDateTime: 1,
+                        games: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray()
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getEosPowerball1')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getEosPowerball3 = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameType: 'eosPowerball3',
+                    gameDateTime: {
+                        $gte: new Date()
+                    },
+                    resultStatus: false,
+                    rollbackStatus: false,
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        rotation: 1,
+                        round: 1,
+                        gameDateTime: 1,
+                        games: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray()
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getEosPowerball3')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getEosPowerball = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameType: 'eosPowerball',
+                    gameDateTime: {
+                        $gte: new Date()
+                    },
+                    resultStatus: false,
+                    rollbackStatus: false,
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        rotation: 1,
+                        round: 1,
+                        gameDateTime: 1,
+                        games: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray()
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getEosPowerball')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getCoinPowerball3 = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameType: 'coinPowerball3',
+                    gameDateTime: {
+                        $gte: new Date()
+                    },
+                    resultStatus: false,
+                    rollbackStatus: false,
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        rotation: 1,
+                        round: 1,
+                        gameDateTime: 1,
+                        games: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray()
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getCoinPowerball3')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getCoinPowerball = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameType: 'coinPowerball',
+                    gameDateTime: {
+                        $gte: new Date()
+                    },
+                    resultStatus: false,
+                    rollbackStatus: false,
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        rotation: 1,
+                        round: 1,
+                        gameDateTime: 1,
+                        games: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray()
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getCoinPowerball')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getSpeedladder = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameType: 'speedladder',
+                    gameDateTime: {
+                        $gte: new Date()
+                    },
+                    resultStatus: false,
+                    rollbackStatus: false,
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        rotation: 1,
+                        round: 1,
+                        gameDateTime: 1,
+                        games: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('miniGames').find(findQuery, whatQuery).sort({ _id: -1 }).limit(1).toArray()
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getSpeedladder')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }
