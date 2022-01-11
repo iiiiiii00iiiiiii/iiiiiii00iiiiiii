@@ -46,7 +46,7 @@
 //     versionKey: 'version'
 // }
 
-// GOLD
+// THREE
 module.exports = {
     apps: [
         {
