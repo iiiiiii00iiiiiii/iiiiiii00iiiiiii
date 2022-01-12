@@ -270,7 +270,30 @@ export default class BetController implements IBetController {
             return
         }
 
-        let sumRate: number = 1
+        let gameKindForBonus: string = ''
+        if(v.gameKind === 'sports') gameKindForBonus = 'prematchEurope'
+        else if(v.gameKind === 'sportsCross') gameKindForBonus = 'prematchKor'
+        else if(v.gameKind === 'sportsLive') gameKindForBonus = 'live'
+        else if(v.gameKind === 'sportsSpecial') gameKindForBonus = 'special'
+        else if(v.gameKind === 'sportsLiveKor') gameKindForBonus = 'realtime'
+
+        //■■■■■■■■■■ DB-보너스 배당 정보 가져오기 ■■■■■■■■■■
+        let rBonus: any = await betService.betBonus(gameKindForBonus, v.betCart.length)
+        if(rBonus.error) {
+            res.status(500).end()
+            return
+        }
+        //■■■■■■■■■■ DB-보너스 배당 정보 가져오기 ■■■■■■■■■■
+        v.rBonus = rBonus.data
+
+        let bonusRate = null
+        if(v.rBonus.length > 0) {
+            bonusRate = v.rBonus[0].bonusRate
+        }
+
+        v.bonusRate = bonusRate
+
+        let sumRate: number = bonusRate ? bonusRate : 1
         for(let i: number = 0; i < arrayRate.length; i++) {
             sumRate *= arrayRate[i]
         }

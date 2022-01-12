@@ -119,6 +119,37 @@ export default class BetService implements IBetService {
         })
     }
 
+    public betBonus = (gameKindForBonus: string, betCount: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    type: gameKindForBonus,
+                    folder: {
+                        $lte: betCount
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        allowRate: 1,
+                        bonusRate: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betBonus').find(findQuery, whatQuery).sort({folder: -1}).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > betBonus')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public betSubtractSports = (v: any): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -186,6 +217,7 @@ export default class BetService implements IBetService {
                     isTest: v.resultBetSubtractSports.isTest,
                     betAmount: v.betAmount,
                     betRate: v.betRate,
+                    bonusRate: v.bonusRate,
                     betBenefit: v.betBenefit,
                     afterBetMoney: v.resultBetSubtractSports.money - v.betAmount,
                     betResult: 'I',

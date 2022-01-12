@@ -113,6 +113,34 @@ class BetService {
                 }
             }));
         };
+        this.betBonus = (gameKindForBonus, betCount) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        type: gameKindForBonus,
+                        folder: {
+                            $lte: betCount
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            allowRate: 1,
+                            bonusRate: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betBonus').find(findQuery, whatQuery).sort({ folder: -1 }).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > betBonus');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.betSubtractSports = (v) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -174,6 +202,7 @@ class BetService {
                         isTest: v.resultBetSubtractSports.isTest,
                         betAmount: v.betAmount,
                         betRate: v.betRate,
+                        bonusRate: v.bonusRate,
                         betBenefit: v.betBenefit,
                         afterBetMoney: v.resultBetSubtractSports.money - v.betAmount,
                         betResult: 'I',
