@@ -165,9 +165,15 @@ router.post('/bet', auth.checkLogin(), betCtr.bet)
 
 // bet list
 router.get('/get-sports-bet-list', auth.checkLogin(), betCtr.getSportsBetList)
+router.get('/get-minigmaes-bet-list', auth.checkLogin(), betCtr.getMinigamesBetList)
+router.get('/get-casino-bet-list', auth.checkLogin(), betCtr.getCasinoBetList)
 router.put('/cancel-sports-bet', auth.checkLogin(), betCtr.cancelSportsBet)
 router.delete('/delete-sports-bet', auth.checkLogin(), betCtr.deleteSportsBet)
+router.delete('/delete-minigames-bet', auth.checkLogin(), betCtr.deleteMinigamesBet)
+router.delete('/delete-casino-bet', auth.checkLogin(), betCtr.deleteCasinoBet)
 router.delete('/delete-sports-bet-all', auth.checkLogin(), betCtr.deleteSportsBetAll)
+router.delete('/delete-minigames-bet-all', auth.checkLogin(), betCtr.deleteMinigamesBetAll)
+router.delete('/delete-casino-bet-all', auth.checkLogin(), betCtr.deleteCasinoBetAll)
 router.get('/get-minigame-bet-list-recent', auth.checkLogin(), betCtr.getMinigameBetListRecent)
 
 

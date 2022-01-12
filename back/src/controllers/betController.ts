@@ -2572,6 +2572,134 @@ export default class BetController implements IBetController {
         }
     }
 
+    public getMinigamesBetList = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            page: {
+                value: req.query.page,
+                rule: {
+                    required: true,
+                    number: true,
+                    gte: 1
+                },
+                message: {
+                    required: '파라메터 오류, 관리자에게 문의하세요.',
+                    number: '파라메터 오류, 관리자에게 문의하세요.',
+                    gte: '파라메터 오류, 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '배팅 내역 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '배팅 내역 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '배팅 내역 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+            const r: TService = await betService.getMinigamesBetList(v.page, v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data,
+                recordCount: r.count
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public getCasinoBetList = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            page: {
+                value: req.query.page,
+                rule: {
+                    required: true,
+                    number: true,
+                    gte: 1
+                },
+                message: {
+                    required: '파라메터 오류, 관리자에게 문의하세요.',
+                    number: '파라메터 오류, 관리자에게 문의하세요.',
+                    gte: '파라메터 오류, 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '배팅 내역 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '배팅 내역 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '배팅 내역 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+            const r: TService = await betService.getCasinoBetList(v.page, v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data,
+                recordCount: r.count
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
     public cancelSportsBet = async (req: req, res: res): Promise<void> => {
         const validateData: any = {
             _id: {
@@ -2762,6 +2890,132 @@ export default class BetController implements IBetController {
         }
     }
 
+    public deleteMinigamesBet = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            _id: {
+                value: req.query._id,
+                rule: {
+                    required: true,
+                    alphaNumber: true,
+                    min: 24,
+                    max: 24
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '배팅 내역 삭제 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+            const r: TService = await betService.minigamesBetDelete(v)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public deleteCasinoBet = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            _id: {
+                value: req.query._id,
+                rule: {
+                    required: true,
+                    alphaNumber: true,
+                    min: 24,
+                    max: 24
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                    min: '파라메터 오류. 관리자에게 문의하세요.',
+                    max: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '배팅 내역 삭제 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+            const r: TService = await betService.casinoBetDelete(v)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
     public deleteSportsBetAll = async (req: req, res: res): Promise<void> => {
         // validate start
         let v: any = tools.generateReqValue({}, req)
@@ -2771,6 +3025,56 @@ export default class BetController implements IBetController {
         try {
             // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
             const r: TService = await betService.deleteSportsBetAll(v)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public deleteMinigamesBetAll = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+            const r: TService = await betService.deleteMinigamesBetAll(v)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 삭제 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public deleteCasinoBetAll = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 삭제 ■■■■■■■■■■
+            const r: TService = await betService.deleteCasinoBetAll(v)
             if(r.error) {
                 data.errorTitle = '배팅 내역 삭제 실패 - 500'
                 res.status(500).json(data)

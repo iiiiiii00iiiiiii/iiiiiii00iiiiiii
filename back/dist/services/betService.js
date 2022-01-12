@@ -309,6 +309,84 @@ class BetService {
                 }
             }));
         };
+        this.getMinigamesBetList = (page, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            gameKind: 1,
+                            betAmount: 1,
+                            betRate: 1,
+                            betBenefit: 1,
+                            betResult: 1,
+                            rotation: 1,
+                            round: 1,
+                            betType: 1,
+                            betSelect: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const sortQuery = {
+                        _id: -1
+                    };
+                    const skip = (page - 1) * config_1.default.sportPageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betMinigame').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
+                    r.count = yield pool.collection('betMinigame').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > getMinigamesBetList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getCasinoBetList = (page, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            userOID: 1,
+                            userID: 1,
+                            userNick: 1,
+                            userGrade: 1,
+                            productID: 1,
+                            gameID: 1,
+                            betAmount: 1,
+                            betBenefit: 1,
+                            betResult: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const sortQuery = {
+                        _id: -1
+                    };
+                    const skip = (page - 1) * config_1.default.sportPageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betKplay').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
+                    r.count = yield pool.collection('betKplay').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > getCasinoBetList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.sportsCart = (v) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -516,6 +594,56 @@ class BetService {
                 }
             }));
         };
+        this.minigamesBetDelete = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(v._id),
+                        userOID: new db_1.ObjectID(v.decoded._id)
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betMinigame').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > minigamesBetDelete');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.casinoBetDelete = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(v._id),
+                        userOID: new db_1.ObjectID(v.decoded._id)
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betKplay').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > casinoBetDelete');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.deleteSportsBetAll = (v) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -537,6 +665,60 @@ class BetService {
                 }
                 catch (err) {
                     modules_1.logger.error('BetService > deleteSportsBetAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deleteMinigamesBetAll = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(v.decoded._id),
+                        betResult: {
+                            $ne: 'I'
+                        }
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betMinigame').updateMany(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > deleteMinigamesBetAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.deleteCasinoBetAll = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(v.decoded._id),
+                        betResult: {
+                            $ne: 'I'
+                        }
+                    };
+                    const setQuery = {
+                        $set: {
+                            deleteStatus: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betKplay').updateMany(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > deleteCasinoBetAll');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

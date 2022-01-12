@@ -334,6 +334,94 @@ export default class BetService implements IBetService {
         })
     }
 
+    public getMinigamesBetList = (page: number, userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        gameKind: 1,
+                        betAmount: 1,
+                        betRate: 1,
+                        betBenefit: 1,
+                        betResult: 1,
+                        rotation: 1,
+                        round: 1,
+                        betType: 1,
+                        betSelect: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const sortQuery: any = {
+                    _id: -1
+                }
+
+                const skip: number = (page - 1) * config.sportPageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betMinigame').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
+                r.count = await pool.collection('betMinigame').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > getMinigamesBetList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getCasinoBetList = (page: number, userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        userOID: 1,
+                        userID: 1,
+                        userNick: 1,
+                        userGrade: 1,
+                        productID: 1,
+                        gameID: 1,
+                        betAmount: 1,
+                        betBenefit: 1,
+                        betResult: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const sortQuery: any = {
+                    _id: -1
+                }
+
+                const skip: number = (page - 1) * config.sportPageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betKplay').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
+                r.count = await pool.collection('betKplay').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > getCasinoBetList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public sportsCart = (v: any): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -561,6 +649,62 @@ export default class BetService implements IBetService {
         })
     }
 
+    public minigamesBetDelete = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v._id),
+                    userOID: new ObjectID(v.decoded._id)
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        deleteStatus: true
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betMinigame').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > minigamesBetDelete')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public casinoBetDelete = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(v._id),
+                    userOID: new ObjectID(v.decoded._id)
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        deleteStatus: true
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betKplay').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > casinoBetDelete')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public deleteSportsBetAll = (v: any): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -584,6 +728,66 @@ export default class BetService implements IBetService {
                 resolve(r)
             } catch (err) {
                 logger.error('BetService > deleteSportsBetAll')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public deleteMinigamesBetAll = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(v.decoded._id),
+                    betResult: {
+                        $ne: 'I'
+                    }
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        deleteStatus: true
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betMinigame').updateMany(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > deleteMinigamesBetAll')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public deleteCasinoBetAll = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(v.decoded._id),
+                    betResult: {
+                        $ne: 'I'
+                    }
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        deleteStatus: true
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betKplay').updateMany(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > deleteCasinoBetAll')
                 logger.error(err)
                 r.error = err
                 resolve(r)
