@@ -457,7 +457,7 @@ export default class UserController implements IUserController {
             const rJoin: TService = await userService.join(
                 v.id, v.password, v.passwordExchange, v.nick, v.cell,
                 v.bank, v.bankAccount, v.bankOwner, recommendTree, recommendLevel,
-                v.reqIpaddress
+                v.reqIpaddress, rRecommend.data.value.salary.calcType
             )
             if(rJoin.error) {
                 data.errorTitle = '회원가입 실패 - 500'

@@ -431,7 +431,7 @@ class UserController {
                     nick: rRecommend.data.value.nick
                 });
                 // ■■■■■■■■■■ DB-회원가입 ■■■■■■■■■■
-                const rJoin = yield userService.join(v.id, v.password, v.passwordExchange, v.nick, v.cell, v.bank, v.bankAccount, v.bankOwner, recommendTree, recommendLevel, v.reqIpaddress);
+                const rJoin = yield userService.join(v.id, v.password, v.passwordExchange, v.nick, v.cell, v.bank, v.bankAccount, v.bankOwner, recommendTree, recommendLevel, v.reqIpaddress, rRecommend.data.value.salary.calcType);
                 if (rJoin.error) {
                     data.errorTitle = '회원가입 실패 - 500';
                     res.status(500).end();
