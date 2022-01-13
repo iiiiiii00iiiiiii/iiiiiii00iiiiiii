@@ -410,11 +410,59 @@ export default class GameService implements IGameService {
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
-                r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+                r.count = await pool.collection('sportsLive').countDocuments(findQuery)
 
                 resolve(r)
             } catch (err) {
                 logger.error('GameService > getLiveKorList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getGameResults = (page: number, sport: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                let findQuery: any = {
+                    resultStatus: true
+                }
+
+                if(sport) findQuery.sport = sport
+
+                const whatQuery: any = {
+                    projection: {
+                        sport: 1,
+                        countryOID: 1,
+                        countryKor: 1,
+                        leagueKor: 1,
+                        gameDateTime: 1,
+                        homeTeam: 1,
+                        awayTeam: 1,
+                        homeTeamKor: 1,
+                        awayTeamKor: 1,
+                        resultDraw: 1,
+                        resultData: 1
+                    }
+                }
+
+                const sortQuery: any = {
+                    gameDateTime: -1,
+                    leagueKor: 1
+                }
+
+                const skip: number = (page - 1) * config.sportPageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
+                r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getGameResults')
                 logger.error(err)
                 r.error = err
                 resolve(r)

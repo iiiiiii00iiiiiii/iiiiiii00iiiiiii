@@ -1159,6 +1159,83 @@ export default class GameController implements IGameController {
         }
     }
 
+    public getGameResults = async (req: req, res: res): Promise<void> => {
+        if(!req.query.page) req.query.page = '1'
+
+        const validateData: any = {
+            page: {
+                value: req.query.page,
+                rule: {
+                    required: true,
+                    number: true
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요',
+                    number: '파라메터 오류. 관리자에게 문의하세요'
+                }
+            },
+            sport: {
+                value: req.query.sport,
+                rule: {
+                    required: req.query.league,
+                    or: ['', 'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Handball', 'Volleyball', 'Rugby League', 'Rugby Union', 'Boxing', 'MMA', 'Golf', 'Darts', 'LoL', 'CS:GO', 'Dota 2', 'FIFA']
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.',
+                    or: '파라메터 오류. 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '경기결과 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '경기결과 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '경기결과 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        v.page = parseInt(v.page)
+
+        try {
+            // ■■■■■■■■■■ DB-경기결과 가져오기 ■■■■■■■■■■
+            const r: TService = await gameService.getGameResults(v.page, v.sport)
+            if(r.error) {
+                data.errorTitle = '경기결과 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-경기결과 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data,
+                recordCount: r.count
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '경기결과 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
 
     public getPowerball = async (req: req, res: res): Promise<void> => {
         // validate start
@@ -1692,4 +1769,6 @@ export default class GameController implements IGameController {
             return
         }
     }
+
+
 }

@@ -154,6 +154,9 @@ router.get('/get-live-detail', gameCtr.getLiveDetail)
 router.get('/get-prematch-special-list', gameCtr.getPrematchSpecialList)
 router.get('/get-live-kor-list', gameCtr.getLiveKorList)
 
+router.get('/get-game-results', gameCtr.getGameResults)
+
+
 // casino
 router.get('/kpay-url', auth.checkLogin(), kplayCtr.kplayURL)
 router.get('/slots/:productID/:gameID', auth.checkLoginCookie(), kplayCtr.kplayOpenGames)
