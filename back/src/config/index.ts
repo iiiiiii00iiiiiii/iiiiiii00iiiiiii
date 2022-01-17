@@ -177,10 +177,10 @@ const config: TConfig = {
     googlePowerball1: 15,
     googlePowerball3: 30,
     kplay: {
-        code: '',
+        code: 'SFT0003',
         token: '',
         key: '',
-        endpoint: ''
+        endpoint: 'http://api.kplay.jdm.soft24.io/api'
         // http://api.kplay.jmt.soft24.io/api
     }
 }
