@@ -134,10 +134,10 @@ const config = {
     googlePowerball3: 30,
     kplay: {
         code: 'SFT0003',
-        token: '',
-        key: '',
-        endpoint: 'http://api.kplay.jdm.soft24.io/api'
-        // http://api.kplay.jmt.soft24.io/api
+        token: 'BkqULUffEMm1Zlk3zvCQC1DQ1f25fulo',
+        key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmk.soft24.io/api
     }
 };
 exports.default = config;
