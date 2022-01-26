@@ -293,6 +293,16 @@ export default class BetController implements IBetController {
 
         v.bonusRate = bonusRate
 
+        for(let i: number = 0; i < arrayRate.length; i++) {
+            if(arrayRate[i] < v.rBonus[0].allowRate) {
+                bonusRate = null
+                v.bonusRate = null
+                break
+            }
+        }
+
+        // console.log(bonusRate, v.bonusRate)
+
         let sumRate: number = bonusRate ? bonusRate : 1
         for(let i: number = 0; i < arrayRate.length; i++) {
             sumRate *= arrayRate[i]

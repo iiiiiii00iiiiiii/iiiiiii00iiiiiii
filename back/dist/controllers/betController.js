@@ -316,6 +316,14 @@ class BetController {
                 bonusRate = v.rBonus[0].bonusRate;
             }
             v.bonusRate = bonusRate;
+            for (let i = 0; i < arrayRate.length; i++) {
+                if (arrayRate[i] < v.rBonus[0].allowRate) {
+                    bonusRate = null;
+                    v.bonusRate = null;
+                    break;
+                }
+            }
+            // console.log(bonusRate, v.bonusRate)
             let sumRate = bonusRate ? bonusRate : 1;
             for (let i = 0; i < arrayRate.length; i++) {
                 sumRate *= arrayRate[i];
