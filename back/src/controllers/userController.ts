@@ -842,23 +842,74 @@ export default class UserController implements IUserController {
 
             rConfigAttendance.data = _.sortBy(rConfigAttendance.data, 'date').reverse()
 
-            // const maxDate: number = rConfigAttendance.data[0].date
+            const maxDate: number = rConfigAttendance.data[0].date
+
+            // const startDate: Date = moment().subtract(rConfigAttendance.data[i].date - 1, 'day').toDate()
+            const startDate: Date = moment().subtract(maxDate - 1, 'day').startOf('day').toDate()
+
+            // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 데이터 가져오기 ■■■■■■■■■■
+            const rBefore: TService = await etcService.getBeforeAttendance(startDate, v.decoded._id)
+            if(rBefore.error) {
+                console.log(rBefore.error)
+                res.status(500).end()
+                return
+            }
+            // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 데이터 가져오기 ■■■■■■■■■■
+
+            let chainCount: number = rBefore.data > 0 ? 1 : 0
+            let beforeDate: Date | null = null
+
+            for(let i: number = 0; i < rBefore.data.length; i++) {
+                // console.log(rBefore.data[i].setDate, i > 0 ? moment(rBefore.data[i].setDate).subtract(1, 'day').toDate() : null, beforeDate)
+                if(i > 0) {
+                    if(moment(beforeDate).format('YYYY-MM-DD') === moment(rBefore.data[i].setDate).add(1, 'day').format('YYYY-MM-DD')) {
+                        chainCount++
+                    }
+                    else {
+                        break
+                    }
+                }
+
+                // console.log(moment(rBefore.data[i].setDate).format('YYYY-MM-DD'), moment(beforeDate).format('YYYY-MM-DD'), i ? moment(rBefore.data[i].setDate).add(1, 'day').format('YYYY-MM-DD') : null)
+
+                beforeDate = rBefore.data[i].setDate
+            }
+
+            // console.log(chainCount)
+
 
             for(let i: number = 0; i < rConfigAttendance.data.length; i++) {
-                const startDate: Date = moment().subtract(rConfigAttendance.data[i].date - 1, 'day').toDate()
-
-                // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 갯수 가져오기 ■■■■■■■■■■
-                const rBeforeCount: TService = await etcService.getBeforeAttendanceCount(startDate, v.decoded._id)
-                if(rBeforeCount.error) {
-                    console.log(rBeforeCount.error)
-                    res.status(500).end()
-                    return
-                }
-                // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 갯수 가져오기 ■■■■■■■■■■
-
                 // console.log(rBeforeCount.data, rConfigAttendance.data[i].date)
 
-                if(rBeforeCount.data === rConfigAttendance.data[i].date) {
+                if(chainCount + 1 === rConfigAttendance.data[i].date) {
+                    if(rConfigAttendance.data[i].amount === 0) {
+                        continue
+                    }
+
+                    // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+                    const rAddPoint: TService = await moneyService.addPointForAttendance(v.decoded._id, rConfigAttendance.data[i].amount)
+                    // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+
+                    // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+                    await moneyService.addMoneyForAttendanceLog(
+                        v.decoded._id,
+                        v.decoded.id,
+                        v.decoded.nick,
+                        v.decoded.grade,
+                        v.decoded.bankOwner,
+                        rUserInfo.data.recommendTree,
+                        rConfigAttendance.data[i].amount,
+                        rAddPoint.data.value.point,
+                        rUserInfo.data.isTest,
+                        rUserInfo.data.isAgent,
+                        rConfigAttendance.data[i].date
+                    )
+                    // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+
+                    break
+                }
+
+                if(rConfigAttendance.data[i].date === 1) {
                     if(rConfigAttendance.data[i].amount === 0) {
                         continue
                     }

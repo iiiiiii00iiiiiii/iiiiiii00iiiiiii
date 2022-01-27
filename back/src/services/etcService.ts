@@ -105,7 +105,7 @@ export default class EtcService implements IEtcService {
         })
     }
 
-    public getBeforeAttendanceCount = (startDate: Date, userOID: string): Promise<TService> => {
+    public getBeforeAttendance = (startDate: Date, userOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -118,10 +118,10 @@ export default class EtcService implements IEtcService {
                 }
 
                 const pool: any = await mongoDB.connect()
-                r.data = await pool.collection('attendance').countDocuments(findQuery)
+                r.data = await pool.collection('attendance').find(findQuery).sort({setDate: -1}).toArray()
                 resolve(r)
             } catch (err) {
-                logger.error('EtcService > getBeforeAttendanceCount')
+                logger.error('EtcService > getBeforeAttendance')
                 logger.error(err)
                 r.error = err
                 resolve(r)

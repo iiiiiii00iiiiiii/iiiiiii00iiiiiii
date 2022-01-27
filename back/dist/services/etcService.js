@@ -89,7 +89,7 @@ class EtcService {
                 }
             }));
         };
-        this.getBeforeAttendanceCount = (startDate, userOID) => {
+        this.getBeforeAttendance = (startDate, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -100,11 +100,11 @@ class EtcService {
                         }
                     };
                     const pool = yield db_1.mongoDB.connect();
-                    r.data = yield pool.collection('attendance').countDocuments(findQuery);
+                    r.data = yield pool.collection('attendance').find(findQuery).sort({ setDate: -1 }).toArray();
                     resolve(r);
                 }
                 catch (err) {
-                    modules_1.logger.error('EtcService > getBeforeAttendanceCount');
+                    modules_1.logger.error('EtcService > getBeforeAttendance');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
