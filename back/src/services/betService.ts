@@ -966,7 +966,7 @@ export default class BetService implements IBetService {
                 const findQuery: any = {
                     gameOID: new ObjectID(v.resultMinigameInfo._id),
                     userOID: new ObjectID(v.decoded._id),
-                    betType: v.betCart[0].type
+                    betType: v.betCart[0].betType
                 }
 
                 const whatQuery: any = {
