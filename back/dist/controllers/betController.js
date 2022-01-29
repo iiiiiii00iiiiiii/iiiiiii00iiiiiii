@@ -2424,7 +2424,7 @@ class BetController {
             }
             if (v.previousBetAmount + v.betAmount > v.resultBetMinMax.maxRound) {
                 data.errorTitle = '배팅 실패 - 400';
-                data = tools_1.default.denyValidate(data, 'betAmount', '해당회차 최대 배팅금을 초과 하였습니다.');
+                data = tools_1.default.denyValidate(data, 'betAmount', '해당 회차의 해당 배팅방식에 대한 최대 배팅금을 초과 하였습니다.');
                 res.status(400).json(data);
                 return;
             }

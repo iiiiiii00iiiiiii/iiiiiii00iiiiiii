@@ -881,7 +881,7 @@ class BetService {
                     const findQuery = {
                         gameOID: new db_1.ObjectID(v.resultMinigameInfo._id),
                         userOID: new db_1.ObjectID(v.decoded._id),
-                        betType: v.betCart[0].type
+                        betType: v.betCart[0].betType
                     };
                     const whatQuery = {
                         _id: null,
