@@ -94,50 +94,50 @@
 //     versionKey: 'version'
 // }
 
-// MCLAREN
-module.exports = {
-    apps: [
-        {
-            name: "[MCLAREN]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 2019,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 2019,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 2018,
-    port: 2019,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
-
-// // BACKNUM
+// // MCLAREN
 // module.exports = {
 //     apps: [
 //         {
-//             name: "[BACKNUM]CLIENT",
+//             name: "[MCLAREN]CLIENT",
 //             script: "./dist/app.js",
 //             env: {
-//                 "PORT": 2001,
+//                 "PORT": 2019,
 //                 "NODE_ENV": "development"
 //             },
 //             env_production: {
-//                 "PORT": 2001,
+//                 "PORT": 2019,
 //                 "NODE_ENV": "production"
 //             }
 //         }
 //     ],
-//     frontPort: 2000,
-//     port: 2001,
+//     frontPort: 2018,
+//     port: 2019,
 //     pageSize: 30,
 //     pageLimit: 7,
 //     version: '0.0.0',
 //     versionKey: 'version'
 // }
+
+// BACKNUM
+module.exports = {
+    apps: [
+        {
+            name: "[BACKNUM]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 2001,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 2001,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 2000,
+    port: 2001,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
