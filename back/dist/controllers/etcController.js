@@ -60,7 +60,7 @@ class EtcController {
                 // ■■■■■■■■■■ DB-토큰 검증 ■■■■■■■■■■
                 const rCheckDtoken = yield userService.checkDToken(v.decoded._id, v.dToken);
                 if (rCheckDtoken.error) {
-                    data.errorTitle = 'EVENT 실패 - 500';
+                    data.errorTitle = '실패 - 500';
                     res.status(500).json(data);
                     return;
                 }
@@ -72,7 +72,7 @@ class EtcController {
                 // ■■■■■■■■■■ DB-사이트 점검설정 가지고 오기 ■■■■■■■■■■
                 const rMaintenance = yield etcService.getMaintenance();
                 if (rMaintenance.error) {
-                    data.errorTitle = 'EVENT 실패 - 500';
+                    data.errorTitle = '실패 - 500';
                     res.status(500).json(data);
                     return;
                 }
@@ -86,7 +86,7 @@ class EtcController {
                 // ■■■■■■■■■■ DB-쪽지 갯수 가져오기 ■■■■■■■■■■
                 const rMessageCount = yield messageService.messageCount(v.decoded._id);
                 if (rMessageCount.error) {
-                    data.errorTitle = 'EVENT 실패 - 500';
+                    data.errorTitle = '실패 - 500';
                     res.status(500).json(data);
                     return;
                 }
@@ -94,7 +94,7 @@ class EtcController {
                 // ■■■■■■■■■■ DB-고객센터 미확인 답변 갯수 가져오기 ■■■■■■■■■■
                 const rHelpCount = yield boardService.helpCount(v.decoded._id);
                 if (rHelpCount.error) {
-                    data.errorTitle = 'EVENT 실패 - 500';
+                    data.errorTitle = '실패 - 500';
                     res.status(500).json(data);
                     return;
                 }
@@ -106,7 +106,7 @@ class EtcController {
             }
             catch (e) {
                 modules_1.logger.error(e);
-                data.errorTitle = 'EVENT 실패 - 500';
+                data.errorTitle = '실패 - 500';
                 res.status(500).json(data);
                 return;
             }
@@ -230,6 +230,31 @@ class EtcController {
             catch (e) {
                 modules_1.logger.error(e);
                 data.errorTitle = 'Dash board 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getShortNotice = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-한줄공지 가져오기 ■■■■■■■■■■
+                const rShortNotice = yield etcService.getShortNotice();
+                if (rShortNotice.error) {
+                    data.errorTitle = '한줄 공지 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-한줄공지 가져오기 ■■■■■■■■■■
+                res.json({
+                    shortNotice: rShortNotice.data.content
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '한줄 공지 실패 - 500';
                 res.status(500).json(data);
                 return;
             }

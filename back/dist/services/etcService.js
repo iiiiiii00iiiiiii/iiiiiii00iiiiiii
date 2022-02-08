@@ -169,6 +169,30 @@ class EtcService {
                 }
             }));
         };
+        this.getShortNotice = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: 'notice'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            content: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').findOne(findQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getShortNotice');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = EtcService;

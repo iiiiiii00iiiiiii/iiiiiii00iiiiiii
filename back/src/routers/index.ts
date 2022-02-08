@@ -202,7 +202,8 @@ router.get('/get-speedladder', gameCtr.getSpeedladder)
 
 
 
-
+// short notice
+router.get('/get-short-notice', etcCtr.getShortNotice)
 
 
 

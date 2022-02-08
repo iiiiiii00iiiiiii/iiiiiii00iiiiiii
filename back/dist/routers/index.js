@@ -143,4 +143,6 @@ router.get('/get-eospowerball', gameCtr.getEosPowerball);
 router.get('/get-coinpowerball', gameCtr.getCoinPowerball3);
 router.get('/get-coinpowerball', gameCtr.getCoinPowerball);
 router.get('/get-speedladder', gameCtr.getSpeedladder);
+// short notice
+router.get('/get-short-notice', etcCtr.getShortNotice);
 exports.default = router;

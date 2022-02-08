@@ -192,4 +192,31 @@ export default class EtcService implements IEtcService {
             }
         })
     }
+
+    public getShortNotice = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    category: 'notice'
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        content: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('config').findOne(findQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > getShortNotice')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }
