@@ -115,40 +115,40 @@ type TConfig = {
 //     }
 // }
 
-// THREE
-const config: TConfig = {
-    db: {
-        host: '18.183.255.153',
-        port: 36183,
-        name: 'three',
-        id: 'three',
-        password: 'Qufdl@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 1,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxRate: 200,
-    powerballTime: 30,
-    powerladderTime: 30,
-    kenoladderTime: 30,
-    boglePowerballTime: 30,
-    bogleladderTime: 30,
-    googlePowerball1: 15,
-    googlePowerball3: 30,
-    kplay: {
-        code: '',
-        token: '',
-        key: '',
-        endpoint: ''
-        // http://api.kplay.jmt.soft24.io/api
-    }
-}
+// // THREE
+// const config: TConfig = {
+//     db: {
+//         host: '18.183.255.153',
+//         port: 36183,
+//         name: 'three',
+//         id: 'three',
+//         password: 'Qufdl@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 1,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxRate: 200,
+//     powerballTime: 30,
+//     powerladderTime: 30,
+//     kenoladderTime: 30,
+//     boglePowerballTime: 30,
+//     bogleladderTime: 30,
+//     googlePowerball1: 15,
+//     googlePowerball3: 30,
+//     kplay: {
+//         code: '',
+//         token: '',
+//         key: '',
+//         endpoint: ''
+//         // http://api.kplay.jmt.soft24.io/api
+//     }
+// }
 
 // // DEMARK
 // const config: TConfig = {
@@ -185,40 +185,40 @@ const config: TConfig = {
 //     }
 // }
 
-// // MCLAREN
-// const config: TConfig = {
-//     db: {
-//         host: '18.183.255.153',
-//         port: 36183,
-//         name: 'mclaren',
-//         id: 'mclaren',
-//         password: 'Qufdl@4860'
-//     },
-//     casino: {
-//         apiURL: '',
-//         operator: '',
-//         privateKey: ''
-//     },
-//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-//     expiresIn: 60 * 60 * 3,
-//     pageSize: 30,
-//     sportPageSize: 30,
-//     sportsMaxRate: 200,
-//     powerballTime: 30,
-//     powerladderTime: 50,
-//     kenoladderTime: 50,
-//     boglePowerballTime: 30,
-//     bogleladderTime: 30,
-//     googlePowerball1: 15,
-//     googlePowerball3: 30,
-//     kplay: {
-//         code: '',
-//         token: '',
-//         key: '',
-//         endpoint: 'http://kplayone.com'
-//         // http://api.kplay.jmt.soft24.io/api
-//     }
-// }
+// MCLAREN
+const config: TConfig = {
+    db: {
+        host: '18.183.255.153',
+        port: 36183,
+        name: 'mclaren',
+        id: 'mclaren',
+        password: 'Qufdl@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 3,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 200,
+    powerballTime: 30,
+    powerladderTime: 50,
+    kenoladderTime: 50,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30,
+    kplay: {
+        code: '',
+        token: '',
+        key: '',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmt.soft24.io/api
+    }
+}
 
 // // BACKNUM
 // const config: TConfig = {
