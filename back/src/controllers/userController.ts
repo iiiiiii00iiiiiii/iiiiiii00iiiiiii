@@ -202,7 +202,7 @@ export default class UserController implements IUserController {
                 _id: rLogin.data.value._id,
                 id: rLogin.data.value.id,
                 nick: rLogin.data.value.nick,
-                bankOwner: rLogin.data.value.nick,
+                bankOwner: rLogin.data.value.bankOwner,
                 grade: rLogin.data.value.grade,
                 isAgent: rLogin.data.value.isAgent
             })

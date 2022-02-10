@@ -462,7 +462,7 @@ export default class BoardService implements IBoardService {
                     content: mongoSanitize(content),
                     commentsCount: 0,
                     writerOID: new ObjectID(userOID),
-                    userRecommendTree,
+                    recommendTree: userRecommendTree,
                     writerID: userID,
                     writerNick: userNick,
                     writerGrade: userGrade,

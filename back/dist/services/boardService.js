@@ -410,7 +410,7 @@ class BoardService {
                         content: (0, modules_1.mongoSanitize)(content),
                         commentsCount: 0,
                         writerOID: new db_1.ObjectID(userOID),
-                        userRecommendTree,
+                        recommendTree: userRecommendTree,
                         writerID: userID,
                         writerNick: userNick,
                         writerGrade: userGrade,
