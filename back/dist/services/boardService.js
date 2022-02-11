@@ -469,7 +469,7 @@ class BoardService {
                         content: `${userNick}님 계좌문의 입니다.`,
                         commentsCount: 0,
                         writerOID: new db_1.ObjectID(userOID),
-                        userRecommendTree,
+                        recommendTree: userRecommendTree,
                         writerID: userID,
                         writerNick: userNick,
                         writerGrade: userGrade,

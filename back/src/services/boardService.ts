@@ -535,7 +535,7 @@ export default class BoardService implements IBoardService {
                     content: `${userNick}님 계좌문의 입니다.`,
                     commentsCount: 0,
                     writerOID: new ObjectID(userOID),
-                    userRecommendTree,
+                    recommendTree: userRecommendTree,
                     writerID: userID,
                     writerNick: userNick,
                     writerGrade: userGrade,
