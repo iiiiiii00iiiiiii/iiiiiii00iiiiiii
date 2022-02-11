@@ -22,29 +22,29 @@
 //     versionKey: 'version'
 // }
 
-// // META
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[META]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 2011,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 2011,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 2010,
-//     port: 2011,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// META
+module.exports = {
+    apps: [
+        {
+            name: "[META]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 2011,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 2011,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 2010,
+    port: 2011,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // THREE
 // module.exports = {
@@ -94,29 +94,29 @@
 //     versionKey: 'version'
 // }
 
-// MCLAREN
-module.exports = {
-    apps: [
-        {
-            name: "[MCLAREN]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 2019,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 2019,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 2018,
-    port: 2019,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // MCLAREN
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[MCLAREN]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 2019,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 2019,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 2018,
+//     port: 2019,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
 
 // // BACKNUM
 // module.exports = {

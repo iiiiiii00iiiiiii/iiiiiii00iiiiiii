@@ -629,7 +629,10 @@ class BetService {
                 try {
                     const findQuery = {
                         _id: new db_1.ObjectID(v._id),
-                        userOID: new db_1.ObjectID(v.decoded._id)
+                        userOID: new db_1.ObjectID(v.decoded._id),
+                        betResult: {
+                            $ne: 'I'
+                        }
                     };
                     const setQuery = {
                         $set: {

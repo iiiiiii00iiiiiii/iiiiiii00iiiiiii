@@ -130,15 +130,15 @@ export default class GameService implements IGameService {
                         homeTeamKor: 1,
                         awayTeamKor: 1,
                         showConfig: 1,
-                        'games.x': 1,
-                        'games.handicap': 1,
-                        'games.handicapTotalSet': 1,
-                        'games.underOverTotalSet': 1,
-                        'games.underOver': 1,
-                        'games.first7Points': 1,
-                        'games.run1stInning': 1,
-                        'games.firstHomer': 1,
-                        'games.first5Points': 1
+                        'games.xKor': 1,
+                        'games.handicapKor': 1,
+                        'games.handicapTotalSetKor': 1,
+                        'games.underOverTotalSetKor': 1,
+                        'games.underOverKor': 1,
+                        'games.first7PointsKor': 1,
+                        'games.run1stInningKor': 1,
+                        'games.firstHomerKor': 1,
+                        'games.first5PointsKor': 1
                     }
                 }
 

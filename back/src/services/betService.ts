@@ -688,7 +688,10 @@ export default class BetService implements IBetService {
             try {
                 const findQuery: any = {
                     _id: new ObjectID(v._id),
-                    userOID: new ObjectID(v.decoded._id)
+                    userOID: new ObjectID(v.decoded._id),
+                    betResult: {
+                        $ne: 'I'
+                    }
                 }
 
                 const setQuery: any = {
