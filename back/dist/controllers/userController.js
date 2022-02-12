@@ -143,37 +143,37 @@ class UserController {
                     res.status(400).json(data);
                     return;
                 }
-                // if(rLogin.data.value.seq === undefined) {
-                //     // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
-                //     const rSeq: TService = await userService.getSeq()
-                //     if(rSeq.error) {
-                //         logger.error('DB 오류')
-                //         data.errorTitle = '[4] 로그인 오류 - 500'
-                //         res.status(500).json(data)
-                //         return
-                //     }
-                //     // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
-                //     if(rSeq.data.lastErrorObject.n === 0) {
-                //         data.errorTitle = '[5] 로그인 오류 - 500'
-                //         res.status(500).json(data)
-                //         return
-                //     }
-                //     v.counter = rSeq.data.value.counter
-                //     // ■■■■■■■■■■ DB-SEQ 번호 업데이트 ■■■■■■■■■■
-                //     let rUpdateSeq = await userService.updateSeq(v.id, rSeq.data.value.counter)
-                //     if(rUpdateSeq.error) {
-                //         console.log('DB 오류')
-                //         data.errorTitle = '[6] 로그인 오류 - 500'
-                //         res.status(500).json(data)
-                //         return
-                //     }
-                //     // ■■■■■■■■■■ DB-SEQ 번호 업데이트 ■■■■■■■■■■
-                //     if(rUpdateSeq.data.modifiedCount === 0) {
-                //         data.errorTitle = '[7] 로그인 오류 - 500'
-                //         res.status(500).json(data)
-                //         return
-                //     }
-                // }
+                if (rLogin.data.value.seq === undefined) {
+                    // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
+                    const rSeq = yield userService.getSeq();
+                    if (rSeq.error) {
+                        modules_1.logger.error('DB 오류');
+                        data.errorTitle = '[4] 로그인 오류 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
+                    if (rSeq.data.lastErrorObject.n === 0) {
+                        data.errorTitle = '[5] 로그인 오류 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    v.counter = rSeq.data.value.counter;
+                    // ■■■■■■■■■■ DB-SEQ 번호 업데이트 ■■■■■■■■■■
+                    let rUpdateSeq = yield userService.updateSeq(v.id, rSeq.data.value.counter);
+                    if (rUpdateSeq.error) {
+                        console.log('DB 오류');
+                        data.errorTitle = '[6] 로그인 오류 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-SEQ 번호 업데이트 ■■■■■■■■■■
+                    if (rUpdateSeq.data.modifiedCount === 0) {
+                        data.errorTitle = '[7] 로그인 오류 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                }
                 // ■■■■■■■■■■ DB-유저 로그인 로그 ■■■■■■■■■■
                 const rLoginLog = yield userService.loginLog(v.id, rLogin.data.value.nick, true, '로그인 성공', v.reqIpaddress);
                 // ■■■■■■■■■■ DB-유저 로그인 로그 ■■■■■■■■■■
