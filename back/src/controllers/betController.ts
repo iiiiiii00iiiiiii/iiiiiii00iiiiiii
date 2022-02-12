@@ -402,6 +402,18 @@ export default class BetController implements IBetController {
 
             return r
         }
+        if(game.type === 'xKor') {
+            if(games.games[game.type][0].status !== 'ACTIVE' || !games.games[game.type][0].showStatus) {
+                r.status = false
+                return r
+            }
+
+            if(game.select === 'home') r.rate = games.games[game.type][0].homeRate
+            if(game.select === 'draw') r.rate = games.games[game.type][0].drawRate
+            if(game.select === 'away') r.rate = games.games[game.type][0].awayRate
+
+            return r
+        }
         //  더블찬스
         if(game.type === 'xDouble') {
             if(games.games[game.type][0].status !== 'ACTIVE' || !games.games[game.type][0].showStatus) {
@@ -452,8 +464,44 @@ export default class BetController implements IBetController {
 
             return r
         }
+        //  핸디캡
+        if(game.type === 'handicapKor') {
+            let index = games.games[game.type].findIndex((x: any) => x.homeStandard === game.standard)
+            if(index === -1) {
+                r.status = false
+                return r
+            }
+
+            if(games.games[game.type][index].status !== 'ACTIVE' || !games.games[game.type][index].showStatus) {
+                r.status = false
+                return r
+            }
+
+            if(game.select === 'home') r.rate = games.games[game.type][index].homeRate
+            if(game.select === 'away') r.rate = games.games[game.type][index].awayRate
+
+            return r
+        }
         //  탁구 핸디캡
         if(game.type === 'handicapTotalSet') {
+            let index = games.games[game.type].findIndex((x: any) => x.homeStandard === game.standard)
+            if(index === -1) {
+                r.status = false
+                return r
+            }
+
+            if(games.games[game.type][index].status !== 'ACTIVE' || !games.games[game.type][index].showStatus) {
+                r.status = false
+                return r
+            }
+
+            if(game.select === 'home') r.rate = games.games[game.type][index].homeRate
+            if(game.select === 'away') r.rate = games.games[game.type][index].awayRate
+
+            return r
+        }
+        //  탁구 핸디캡
+        if(game.type === 'handicapTotalSetKor') {
             let index = games.games[game.type].findIndex((x: any) => x.homeStandard === game.standard)
             if(index === -1) {
                 r.status = false
@@ -488,8 +536,42 @@ export default class BetController implements IBetController {
 
             return r
         }
+        if(game.type === 'underOverKor') {
+            let index = games.games[game.type].findIndex((x: any) => x.standard === game.standard)
+            if(index === -1) {
+                r.status = false
+                return r
+            }
+
+            if(games.games[game.type][index].status !== 'ACTIVE' || !games.games[game.type][index].showStatus) {
+                r.status = false
+                return r
+            }
+
+            if(game.select === 'under') r.rate = games.games[game.type][index].underRate
+            if(game.select === 'over') r.rate = games.games[game.type][index].overRate
+
+            return r
+        }
         //  탁구 언더오버
         if(game.type === 'underOverTotalSet') {
+            let index = games.games[game.type].findIndex((x: any) => x.standard === game.standard)
+            if(index === -1) {
+                r.status = false
+                return r
+            }
+
+            if(games.games[game.type][index].status !== 'ACTIVE' || !games.games[game.type][index].showStatus) {
+                r.status = false
+                return r
+            }
+
+            if(game.select === 'under') r.rate = games.games[game.type][index].underRate
+            if(game.select === 'over') r.rate = games.games[game.type][index].overRate
+
+            return r
+        }
+        if(game.type === 'underOverTotalSetKor') {
             let index = games.games[game.type].findIndex((x: any) => x.standard === game.standard)
             if(index === -1) {
                 r.status = false
