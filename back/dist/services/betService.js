@@ -423,12 +423,9 @@ class BetService {
                     const findQuery = {
                         _id: new db_1.ObjectID(v._id),
                         gameType: {
-                            $ne: 'sportsLive'
+                            $nin: ['sportsLive', 'sportsLiveKor']
                         },
-                        betResult: 'I',
-                        regDateTime: {
-                            $gt: (0, modules_1.moment)().subtract(10, 'minute').toDate()
-                        }
+                        betResult: 'I'
                     };
                     const whatQuery = {
                         projection: {
@@ -444,6 +441,30 @@ class BetService {
                 }
                 catch (err) {
                     modules_1.logger.error('BetService > sportsCart');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.countOfCancelToday = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(v.decoded._id),
+                        betResult: 'C',
+                        cancelDateTime: {
+                            $gte: (0, modules_1.moment)().startOf('day').toDate(),
+                            $lte: (0, modules_1.moment)().endOf('day').toDate()
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betSports').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > countOfCancelToday');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
@@ -469,7 +490,8 @@ class BetService {
                             betResult: 'C',
                             'detail.$[elem].betResult': 'C',
                             calcStatus: true,
-                            calcDateTime: new Date()
+                            calcDateTime: new Date(),
+                            cancelDateTime: new Date()
                         }
                     };
                     const options = {

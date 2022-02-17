@@ -70,7 +70,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         key: 'Jgl6qopQoaDUD0HUq9YyiIdLif7tDR0i',
 //         endpoint: 'http://kplayone.com'
 //         // http://api.kplay.jmt.soft24.io/api
-//     }
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 5
 // }
 // // THREE
 // const config: TConfig = {
@@ -104,7 +107,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         key: 'Nvxh3fYlRRdyw3X50I2Db5UsohBDC6Xx',
 //         endpoint: 'http://kplayone.com'
 //         // http://api.kplay.jmt.soft24.io/api
-//     }
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 10
 // }
 // DEMARK
 const config = {
@@ -138,7 +144,10 @@ const config = {
         key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
         endpoint: 'http://kplayone.com'
         // http://api.kplay.jmk.soft24.io/api
-    }
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 2
 };
 // // MCLAREN
 // const config: TConfig = {
@@ -172,7 +181,10 @@ const config = {
 //         key: '',
 //         endpoint: 'http://kplayone.com'
 //         // http://api.kplay.jmt.soft24.io/api
-//     }
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 10
 // }
 // // BACKNUM
 // const config: TConfig = {
@@ -206,6 +218,9 @@ const config = {
 //         key: '',
 //         endpoint: 'http://kplayone.com'
 //         // http://api.kplay.jmt.soft24.io/api
-//     }
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 5
 // }
 exports.default = config;

@@ -2788,6 +2788,20 @@ class BetController {
             }
             // validate end
             try {
+                // ■■■■■■■■■■ DB-배팅취소 횟수 가져오기 ■■■■■■■■■■
+                const resultCancelCount = yield betService.countOfCancelToday(v);
+                if (resultCancelCount.error) {
+                    data.errorTitle = '배팅 취소 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-배팅취소 횟수 가져오기 ■■■■■■■■■■
+                if (resultCancelCount.data >= config_1.default.canCancelBetCount) {
+                    data.errorTitle = '배팅 취소 실패 - 400';
+                    data = tools_1.default.denyValidate(data, 'cancel', `배팅 취소는 1일 ${config_1.default.canCancelBetCount}번 가능 합니다.`);
+                    res.status(400).json(data);
+                    return;
+                }
                 // ■■■■■■■■■■ DB-배팅카트 가져오기 ■■■■■■■■■■
                 const resultSportsCart = yield betService.sportsCart(v);
                 if (resultSportsCart.error) {
@@ -2803,18 +2817,23 @@ class BetController {
                     res.status(400).json(data);
                     return;
                 }
+                if ((0, modules_1.moment)().subtract(config_1.default.canCancelBetTime, 'minute').toDate() > v.resultSportsCart.regDateTime) {
+                    data.errorTitle = '배팅 취소 실패 - 400';
+                    data = tools_1.default.denyValidate(data, 'cancel', `배팅 취소는 배팅 후 ${config_1.default.canCancelBetTime}분 이내에 가능 합니다.`);
+                    res.status(400).json(data);
+                    return;
+                }
                 let result = true;
                 for (let i = 0; i < v.resultSportsCart.detail.length; i++) {
-                    let now = (0, modules_1.moment)().unix();
-                    let gameDateTime = (0, modules_1.moment)(v.resultSportsCart.detail[i].gameDateTime).unix();
-                    if (now >= gameDateTime) {
+                    let gameDateTime = (0, modules_1.moment)(v.resultSportsCart.detail[i].gameDateTime).toDate();
+                    if ((0, modules_1.moment)(gameDateTime).subtract(config_1.default.canCancelBetBeforeGameTime, 'minute').toDate() < (0, modules_1.moment)().toDate()) {
                         result = false;
                         break;
                     }
                 }
                 if (!result) {
                     data.errorTitle = '배팅 취소 실패 - 400';
-                    data = tools_1.default.denyValidate(data, 'cancel', '배팅 취소가 불가능 합니다.');
+                    data = tools_1.default.denyValidate(data, 'cancel', `배팅 취소는 경기 시작 ${config_1.default.canCancelBetBeforeGameTime}분 전까지 가능 합니다.`);
                     res.status(400).json(data);
                     return;
                 }

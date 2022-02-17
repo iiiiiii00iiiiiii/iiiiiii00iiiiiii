@@ -462,12 +462,9 @@ export default class BetService implements IBetService {
                 const findQuery: any = {
                     _id: new ObjectID(v._id),
                     gameType: {
-                        $ne: 'sportsLive'
+                        $nin: ['sportsLive', 'sportsLiveKor']
                     },
-                    betResult: 'I',
-                    regDateTime: {
-                        $gt: moment().subtract(10, 'minute').toDate()
-                    }
+                    betResult: 'I'
                 }
 
                 const whatQuery: any = {
@@ -484,6 +481,32 @@ export default class BetService implements IBetService {
                 resolve(r)
             } catch (err) {
                 logger.error('BetService > sportsCart')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public countOfCancelToday = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(v.decoded._id),
+                    betResult: 'C',
+                    cancelDateTime: {
+                        $gte: moment().startOf('day').toDate(),
+                        $lte: moment().endOf('day').toDate()
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betSports').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > countOfCancelToday')
                 logger.error(err)
                 r.error = err
                 resolve(r)
@@ -512,7 +535,8 @@ export default class BetService implements IBetService {
                         betResult: 'C',
                         'detail.$[elem].betResult': 'C',
                         calcStatus: true,
-                        calcDateTime: new Date()
+                        calcDateTime: new Date(),
+                        cancelDateTime: new Date()
                     }
                 }
 
