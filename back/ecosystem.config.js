@@ -46,29 +46,29 @@
 //     versionKey: 'version'
 // }
 
-// THREE
-module.exports = {
-    apps: [
-        {
-            name: "[THREE]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 2013,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 2013,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 2012,
-    port: 2013,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // THREE
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[THREE]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 2013,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 2013,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 2012,
+//     port: 2013,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
 
 // // DEMARK
 // module.exports = {
@@ -118,26 +118,26 @@ module.exports = {
 //     versionKey: 'version'
 // }
 
-// // BACKNUM
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[BACKNUM]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 2001,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 2001,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 2000,
-//     port: 2001,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// BACKNUM
+module.exports = {
+    apps: [
+        {
+            name: "[BACKNUM]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 2001,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 2001,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 2000,
+    port: 2001,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
