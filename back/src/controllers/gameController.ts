@@ -1384,7 +1384,7 @@ export default class GameController implements IGameController {
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
                 const rConfig: TService = await etcService.getConfigInfo('boglePowerballBet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '보글 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -1466,7 +1466,7 @@ export default class GameController implements IGameController {
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
                 const rConfig: TService = await etcService.getConfigInfo('googlePowerball1Bet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '구글 1분 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -1507,7 +1507,7 @@ export default class GameController implements IGameController {
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
                 const rConfig: TService = await etcService.getConfigInfo('googlePowerball3Bet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '구글 3분 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -1546,9 +1546,9 @@ export default class GameController implements IGameController {
 
                 // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
-                const rConfig: TService = await etcService.getConfigInfo('eosPowerball3Bet', getKeys)
+                const rConfig: TService = await etcService.getConfigInfo('eosPowerball1Bet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '이오스 1분 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -1589,7 +1589,7 @@ export default class GameController implements IGameController {
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
                 const rConfig: TService = await etcService.getConfigInfo('eosPowerball3Bet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '이오스 3분 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -1630,7 +1630,7 @@ export default class GameController implements IGameController {
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
                 const rConfig: TService = await etcService.getConfigInfo('eosPowerballBet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '이오스 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -1669,9 +1669,9 @@ export default class GameController implements IGameController {
 
                 // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
-                const rConfig: TService = await etcService.getConfigInfo('eosPowerballBet', getKeys)
+                const rConfig: TService = await etcService.getConfigInfo('coinPowerballBet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '코인 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }
@@ -1710,9 +1710,9 @@ export default class GameController implements IGameController {
 
                 // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
                 const getKeys: Array<string> = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE']
-                const rConfig: TService = await etcService.getConfigInfo('eosPowerballBet', getKeys)
+                const rConfig: TService = await etcService.getConfigInfo('coinPowerball3Bet', getKeys)
                 if(rConfig.error) {
-                    data.errorTitle = '파워볼 실패 - 500'
+                    data.errorTitle = '코인 3분 파워볼 실패 - 500'
                     res.status(500).json(data)
                     return
                 }

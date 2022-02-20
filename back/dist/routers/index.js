@@ -140,7 +140,7 @@ router.get('/get-googlepowerball3', gameCtr.getGooglePowerball3);
 router.get('/get-eospowerball1', gameCtr.getEosPowerball1);
 router.get('/get-eospowerball3', gameCtr.getEosPowerball3);
 router.get('/get-eospowerball', gameCtr.getEosPowerball);
-router.get('/get-coinpowerball', gameCtr.getCoinPowerball3);
+router.get('/get-coinpowerball3', gameCtr.getCoinPowerball3);
 router.get('/get-coinpowerball', gameCtr.getCoinPowerball);
 router.get('/get-speedladder', gameCtr.getSpeedladder);
 // short notice

@@ -1302,7 +1302,7 @@ class GameController {
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
                     const rConfig = yield etcService.getConfigInfo('boglePowerballBet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '보글 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
@@ -1376,7 +1376,7 @@ class GameController {
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
                     const rConfig = yield etcService.getConfigInfo('googlePowerball1Bet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '구글 1분 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
@@ -1413,7 +1413,7 @@ class GameController {
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
                     const rConfig = yield etcService.getConfigInfo('googlePowerball3Bet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '구글 3분 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
@@ -1448,9 +1448,9 @@ class GameController {
                     resultGame.serverTime = Date.now();
                     // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
-                    const rConfig = yield etcService.getConfigInfo('eosPowerball3Bet', getKeys);
+                    const rConfig = yield etcService.getConfigInfo('eosPowerball1Bet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '이오스 1분 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
@@ -1487,7 +1487,7 @@ class GameController {
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
                     const rConfig = yield etcService.getConfigInfo('eosPowerball3Bet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '이오스 3분 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
@@ -1524,7 +1524,7 @@ class GameController {
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
                     const rConfig = yield etcService.getConfigInfo('eosPowerballBet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '이오스 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
@@ -1559,9 +1559,9 @@ class GameController {
                     resultGame.serverTime = Date.now();
                     // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
-                    const rConfig = yield etcService.getConfigInfo('eosPowerballBet', getKeys);
+                    const rConfig = yield etcService.getConfigInfo('coinPowerballBet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '코인 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
@@ -1596,9 +1596,9 @@ class GameController {
                     resultGame.serverTime = Date.now();
                     // ■■■■■■■■■■ DB-파워볼 환경 설정 가져오기 ■■■■■■■■■■
                     const getKeys = ['PWBPOE', 'PWBPUO', 'PWBNOE', 'PWBNUO', 'PWBPCOMBO', 'PWBNCOMBO', 'PWBBMS', 'PWBBMSCOMBO', 'PWBRNAPOE'];
-                    const rConfig = yield etcService.getConfigInfo('eosPowerballBet', getKeys);
+                    const rConfig = yield etcService.getConfigInfo('coinPowerball3Bet', getKeys);
                     if (rConfig.error) {
-                        data.errorTitle = '파워볼 실패 - 500';
+                        data.errorTitle = '코인 3분 파워볼 실패 - 500';
                         res.status(500).json(data);
                         return;
                     }
