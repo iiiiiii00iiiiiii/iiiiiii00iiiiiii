@@ -339,6 +339,7 @@ class BetController {
             }
             v.betRate = sumRate;
             v.betBenefit = Math.trunc(v.betRate * v.betAmount);
+            // console.log(v.betBenefit, v.resultBetMinMax.benefit)
             if (v.betBenefit > v.resultBetMinMax.benefit) {
                 data.errorTitle = '배팅 실패 - 400';
                 data = tools_1.default.denyValidate(data, 'betAmount', '최대 당첨금을 초과하였습니다.');
