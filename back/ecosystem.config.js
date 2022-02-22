@@ -94,29 +94,29 @@
 //     versionKey: 'version'
 // }
 
-// // MCLAREN
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[MCLAREN]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 2019,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 2019,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 2018,
-//     port: 2019,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// MCLAREN
+module.exports = {
+    apps: [
+        {
+            name: "[MCLAREN]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 2019,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 2019,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 2018,
+    port: 2019,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // BACKNUM
 // module.exports = {
@@ -142,26 +142,26 @@
 //     versionKey: 'version'
 // }
 
-// NAPOLI
-module.exports = {
-    apps: [
-        {
-            name: "[NAPOLI]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 3001,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 3001,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 3000,
-    port: 3001,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // NAPOLI
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[NAPOLI]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 3001,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 3001,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 3000,
+//     port: 3001,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
