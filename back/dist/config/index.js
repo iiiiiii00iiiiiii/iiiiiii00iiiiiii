@@ -149,43 +149,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //     canCancelBetBeforeGameTime: 10,
 //     canCancelBetCount: 2
 // }
-// MCLAREN
-const config = {
-    db: {
-        host: '18.183.255.153',
-        port: 36183,
-        name: 'mclaren',
-        id: 'mclaren',
-        password: 'Qufdl@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 3,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxRate: 100,
-    powerballTime: 30,
-    powerladderTime: 50,
-    kenoladderTime: 50,
-    boglePowerballTime: 30,
-    bogleladderTime: 30,
-    googlePowerball1: 15,
-    googlePowerball3: 30,
-    kplay: {
-        code: '',
-        token: '',
-        key: '',
-        endpoint: 'http://kplayone.com'
-        // http://api.kplay.jmt.soft24.io/api
-    },
-    canCancelBetTime: 10,
-    canCancelBetBeforeGameTime: 10,
-    canCancelBetCount: 10
-};
+// // MCLAREN
+// const config: TConfig = {
+//     db: {
+//         host: '18.183.255.153',
+//         port: 36183,
+//         name: 'mclaren',
+//         id: 'mclaren',
+//         password: 'Qufdl@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 3,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxRate: 100,
+//     powerballTime: 30,
+//     powerladderTime: 50,
+//     kenoladderTime: 50,
+//     boglePowerballTime: 30,
+//     bogleladderTime: 30,
+//     googlePowerball1: 15,
+//     googlePowerball3: 30,
+//     kplay: {
+//         code: '',
+//         token: '',
+//         key: '',
+//         endpoint: 'http://kplayone.com'
+//         // http://api.kplay.jmt.soft24.io/api
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 10
+// }
 // // BACKNUM
 // const config: TConfig = {
 //     db: {
@@ -223,41 +223,41 @@ const config = {
 //     canCancelBetBeforeGameTime: 10,
 //     canCancelBetCount: 5
 // }
-// // NAPOLI
-// const config: TConfig = {
-//     db: {
-//         host: '18.181.237.109',
-//         port: 36186,
-//         name: 'napoli',
-//         id: 'napoli',
-//         password: 'Napoli@4860'
-//     },
-//     casino: {
-//         apiURL: '',
-//         operator: '',
-//         privateKey: ''
-//     },
-//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-//     expiresIn: 60 * 60 * 1,
-//     pageSize: 30,
-//     sportPageSize: 30,
-//     sportsMaxRate: 100,
-//     powerballTime: 30,
-//     powerladderTime: 30,
-//     kenoladderTime: 30,
-//     boglePowerballTime: 30,
-//     bogleladderTime: 30,
-//     googlePowerball1: 15,
-//     googlePowerball3: 30,
-//     kplay: {
-//         code: 'SFT0006',
-//         token: 'IoySI0OF2khy92YQeL2u3gIciy2khz5t',
-//         key: 'Z7STpvXQWxAxriKQ0UHDwHvQcf32a5zd',
-//         endpoint: 'http://kplayone.com'
-//         // http://api.kplay.jmk.soft24.io/api
-//     },
-//     canCancelBetTime: 10,
-//     canCancelBetBeforeGameTime: 10,
-//     canCancelBetCount: 2
-// }
+// NAPOLI
+const config = {
+    db: {
+        host: '18.181.237.109',
+        port: 36186,
+        name: 'napoli',
+        id: 'napoli',
+        password: 'Napoli@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 1,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 100,
+    powerballTime: 30,
+    powerladderTime: 30,
+    kenoladderTime: 30,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30,
+    kplay: {
+        code: 'SFT0006',
+        token: 'IoySI0OF2khy92YQeL2u3gIciy2khz5t',
+        key: 'Z7STpvXQWxAxriKQ0UHDwHvQcf32a5zd',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmk.soft24.io/api
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 2
+};
 exports.default = config;

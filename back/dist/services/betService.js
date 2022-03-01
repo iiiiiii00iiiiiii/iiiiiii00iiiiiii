@@ -154,6 +154,9 @@ class BetService {
                         betStatus: true,
                         isAgent: false
                     };
+                    if (config_1.default.db.id === 'napoli') {
+                        delete findQuery.isAgent;
+                    }
                     let betLimitCount = v.betCount;
                     if (betLimitCount > 10)
                         betLimitCount = 10;
@@ -943,6 +946,9 @@ class BetService {
                         betStatus: true,
                         isAgent: false
                     };
+                    if (config_1.default.db.id === 'napoli') {
+                        delete findQuery.isAgent;
+                    }
                     const setQuery = {
                         $inc: {
                             money: -v.betAmount,

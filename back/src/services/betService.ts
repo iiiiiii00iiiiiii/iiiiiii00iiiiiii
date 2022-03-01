@@ -165,6 +165,10 @@ export default class BetService implements IBetService {
                     isAgent: false
                 }
 
+                if(config.db.id === 'napoli') {
+                    delete findQuery.isAgent
+                }
+
                 let betLimitCount: number = v.betCount
                 if(betLimitCount > 10) betLimitCount = 10
 
@@ -1032,6 +1036,10 @@ export default class BetService implements IBetService {
                     status: 1,
                     betStatus: true,
                     isAgent: false
+                }
+
+                if(config.db.id === 'napoli') {
+                    delete findQuery.isAgent
                 }
 
                 const setQuery: any = {
