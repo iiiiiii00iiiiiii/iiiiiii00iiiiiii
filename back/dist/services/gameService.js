@@ -355,6 +355,11 @@ class GameService {
                     };
                     if (sport)
                         findQuery.sport = sport;
+                    if (config_1.default.db.name === 'mclaren') {
+                        findQuery.country = {
+                            $in: ['USA', 'Korea']
+                        };
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,
@@ -370,7 +375,8 @@ class GameService {
                             awayTeamKor: 1,
                             showConfig: 1,
                             games: 1,
-                            resultData: 1
+                            resultData: 1,
+                            custom: 1
                         }
                     };
                     const sortQuery = {
