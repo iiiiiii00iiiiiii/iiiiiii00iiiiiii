@@ -397,7 +397,8 @@ export default class GameService implements IGameService {
                         awayTeamKor: 1,
                         showConfig: 1,
                         games: 1,
-                        resultData: 1
+                        resultData: 1,
+                        custom: 1
                     }
                 }
 
