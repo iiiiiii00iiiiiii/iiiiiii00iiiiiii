@@ -383,9 +383,11 @@ export default class GameService implements IGameService {
                 if(sport) findQuery.sport = sport
 
                 if(config.db.name === 'mclaren') {
-                    findQuery.country = {
-                        $in: ['USA', 'Korea']
-                    }
+                    delete findQuery.onAir
+                    // findQuery.country = {
+                    //     $in: ['USA', 'Korea']
+                    // }
+                    findQuery.custom = true
                 }
 
                 const whatQuery: any = {
