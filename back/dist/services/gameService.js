@@ -65,6 +65,9 @@ class GameService {
                         findQuery.sport = sport;
                     if (league)
                         findQuery.leagueKor = league;
+                    if (!sport && config_1.default.db.id === 'demark') {
+                        findQuery.sport.$nin.push('LoL');
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,
@@ -114,6 +117,9 @@ class GameService {
                     };
                     if (sport)
                         findQuery.sport = sport;
+                    if (!sport && config_1.default.db.id === 'demark') {
+                        findQuery.sport.$nin.push('LoL');
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,
@@ -169,6 +175,9 @@ class GameService {
                     };
                     if (sport)
                         findQuery.sport = sport;
+                    if (!sport && config_1.default.db.id === 'demark') {
+                        findQuery.sport.$nin.push('LoL');
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,
@@ -259,6 +268,9 @@ class GameService {
                         findQuery.sport = {
                             $in: ['Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'LoL']
                         };
+                    }
+                    if (!sport && config_1.default.db.id === 'demark') {
+                        findQuery.sport.$in.pop();
                     }
                     findQuery.$or = [
                         { 'showConfig.first2Points': true, 'specialActiveObject.first2Points': true },

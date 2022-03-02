@@ -63,6 +63,10 @@ export default class GameService implements IGameService {
                 if(sport) findQuery.sport = sport
                 if(league) findQuery.leagueKor = league
 
+                if(!sport && config.db.id === 'demark') {
+                    findQuery.sport.$nin.push('LoL')
+                }
+
                 const whatQuery: any = {
                     projection: {
                         sport: 1,
@@ -117,6 +121,10 @@ export default class GameService implements IGameService {
                 }
 
                 if(sport) findQuery.sport = sport
+
+                if(!sport && config.db.id === 'demark') {
+                    findQuery.sport.$nin.push('LoL')
+                }
 
                 const whatQuery: any = {
                     projection: {
@@ -178,6 +186,10 @@ export default class GameService implements IGameService {
                 }
 
                 if(sport) findQuery.sport = sport
+
+                if(!sport && config.db.id === 'demark') {
+                    findQuery.sport.$nin.push('LoL')
+                }
 
                 const whatQuery: any = {
                     projection: {
@@ -278,6 +290,10 @@ export default class GameService implements IGameService {
                     findQuery.sport = {
                         $in: ['Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'LoL']
                     }
+                }
+
+                if(!sport && config.db.id === 'demark') {
+                    findQuery.sport.$in.pop()
                 }
 
                 findQuery.$or = [
