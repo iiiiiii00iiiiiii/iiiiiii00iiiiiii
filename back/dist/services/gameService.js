@@ -101,6 +101,57 @@ class GameService {
                 }
             }));
         };
+        this.getPrematchListPent = (page, sport, league) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    let findQuery = {
+                        resultStatus: false,
+                        gameDateTime: {
+                            $gt: new Date()
+                        },
+                        showStatus: true,
+                        sport: {
+                            $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LOL', 'MMA']
+                        }
+                    };
+                    if (sport)
+                        findQuery.sport = sport;
+                    if (league)
+                        findQuery.leagueKor = league;
+                    const whatQuery = {
+                        projection: {
+                            sport: 1,
+                            countryOID: 1,
+                            countryKor: 1,
+                            leagueKor: 1,
+                            gameDateTime: 1,
+                            homeTeam: 1,
+                            awayTeam: 1,
+                            homeTeamKor: 1,
+                            awayTeamKor: 1,
+                            showConfig: 1,
+                            games: 1
+                        }
+                    };
+                    const sortQuery = {
+                        gameDateTime: 1,
+                        leagueKor: 1
+                    };
+                    const skip = (page - 1) * config_1.default.sportPageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
+                    r.count = yield pool.collection('sportsPrematch').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getPrematchListPent');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.getPrematchCrossList = (page, sport) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -161,6 +212,63 @@ class GameService {
                 }
             }));
         };
+        this.getPrematchCrossListPent = (page, sport) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    let findQuery = {
+                        resultStatus: false,
+                        gameDateTime: {
+                            $gt: new Date()
+                        },
+                        showStatus: true,
+                        sport: {
+                            $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LOL', 'MMA']
+                        }
+                    };
+                    if (sport)
+                        findQuery.sport = sport;
+                    const whatQuery = {
+                        projection: {
+                            sport: 1,
+                            countryOID: 1,
+                            countryKor: 1,
+                            leagueKor: 1,
+                            gameDateTime: 1,
+                            homeTeam: 1,
+                            awayTeam: 1,
+                            homeTeamKor: 1,
+                            awayTeamKor: 1,
+                            showConfig: 1,
+                            'games.xKor': 1,
+                            'games.handicapKor': 1,
+                            'games.handicapTotalSetKor': 1,
+                            'games.underOverTotalSetKor': 1,
+                            'games.underOverKor': 1,
+                            'games.first7PointsKor': 1,
+                            'games.run1stInningKor': 1,
+                            'games.firstHomerKor': 1,
+                            'games.first5PointsKor': 1
+                        }
+                    };
+                    const sortQuery = {
+                        gameDateTime: 1,
+                        leagueKor: 1
+                    };
+                    const skip = (page - 1) * config_1.default.sportPageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
+                    r.count = yield pool.collection('sportsPrematch').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getPrematchCrossListPent');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.getLiveList = (page, sport) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -208,6 +316,56 @@ class GameService {
                 }
                 catch (err) {
                     modules_1.logger.error('GameService > getLiveList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getLiveListPent = (page, sport) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    let findQuery = {
+                        resultStatus: false,
+                        showStatus: true,
+                        onAir: 'onAir',
+                        sport: {
+                            $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LOL', 'MMA']
+                        }
+                    };
+                    if (sport)
+                        findQuery.sport = sport;
+                    const whatQuery = {
+                        projection: {
+                            sport: 1,
+                            countryOID: 1,
+                            countryKor: 1,
+                            leagueKor: 1,
+                            gameOID: 1,
+                            gameID: 1,
+                            gameDateTime: 1,
+                            homeTeam: 1,
+                            awayTeam: 1,
+                            homeTeamKor: 1,
+                            awayTeamKor: 1,
+                            showConfig: 1,
+                            games: 1,
+                            resultData: 1
+                        }
+                    };
+                    const sortQuery = {
+                        gameDateTime: 1,
+                        leagueKor: 1
+                    };
+                    const skip = (page - 1) * config_1.default.sportPageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('sportsLive').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config_1.default.sportPageSize).toArray();
+                    r.count = yield pool.collection('sportsLive').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('GameService > getLiveListPent');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
