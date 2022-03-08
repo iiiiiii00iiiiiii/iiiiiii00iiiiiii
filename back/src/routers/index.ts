@@ -95,6 +95,11 @@ router.get('/get-exchange-list', auth.checkLogin(), moneyCtr.getExchangeList)
 router.post('/set-exchange', auth.checkLogin(), moneyCtr.setExchange)
 router.delete('/delete-exchange', auth.checkLogin(), moneyCtr.deleteExchange)
 router.delete('/delete-exchange-all', auth.checkLogin(), moneyCtr.deleteExchangeAll)
+router.post('/set-transfer', auth.checkLogin(), moneyCtr.setTransfer)
+
+
+// Exchange
+router.post('/set-exchange-pent', auth.checkLogin(), moneyCtr.setExchangePent)
 
 
 // Point

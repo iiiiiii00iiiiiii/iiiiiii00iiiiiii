@@ -1094,6 +1094,43 @@ class UserService {
                 }
             }));
         };
+        this.subtractUserMoneyPent = (userOID, exchangeAmount, moneyMethod) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID),
+                        money: {
+                            $gte: Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount))
+                        }
+                    };
+                    let setQuery = {
+                        $inc: {}
+                    };
+                    if (moneyMethod === 'money') {
+                        setQuery.$inc.money = -Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount));
+                    }
+                    else {
+                        setQuery.$inc.minigameMoney = -Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount));
+                    }
+                    const optionsQuery = {
+                        projection: {
+                            money: 1,
+                            minigameMoney: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > subtractUserMoneyPent');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.pointLog = (userOID, exchangeAmount) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };

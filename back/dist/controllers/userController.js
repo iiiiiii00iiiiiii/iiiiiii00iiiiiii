@@ -582,7 +582,7 @@ class UserController {
             let data = v;
             // validate end
             try {
-                const getKeys = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'point'];
+                const getKeys = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'minigameMoney', 'point'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 const r = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (r.error) {

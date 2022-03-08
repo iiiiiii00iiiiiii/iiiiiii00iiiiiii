@@ -1142,6 +1142,48 @@ export default class UserService implements IUserService {
         })
     }
 
+    public subtractUserMoneyPent = (userOID: string, exchangeAmount: number, moneyMethod: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID),
+                    money: {
+                        $gte: Math.trunc(mongoSanitize(exchangeAmount))
+                    }
+                }
+
+                let setQuery: any = {
+                    $inc: {  }
+                }
+
+                if(moneyMethod === 'money') {
+                    setQuery.$inc.money = -Math.trunc(mongoSanitize(exchangeAmount))
+                }
+                else {
+                    setQuery.$inc.minigameMoney = -Math.trunc(mongoSanitize(exchangeAmount))
+                }
+
+                const optionsQuery: any = {
+                    projection: {
+                        money: 1,
+                        minigameMoney: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > subtractUserMoneyPent')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public pointLog = (userOID: string, exchangeAmount: number): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }

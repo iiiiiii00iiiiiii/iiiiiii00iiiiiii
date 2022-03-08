@@ -27,6 +27,7 @@ export default class MoneyService implements IMoneyService {
                     projection: {
                         status: 1,
                         money: 1,
+                        moneyMethod: 1,
                         regDateTime: 1
                     }
                 }
@@ -262,7 +263,7 @@ export default class MoneyService implements IMoneyService {
         isTest: boolean,
         userRecommendTree: Array<any>,
         chargeAmount: number,
-        chargeMethod: string,
+        moneyMethod: string,
         ipaddress: string
     ): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
@@ -283,7 +284,7 @@ export default class MoneyService implements IMoneyService {
                     isTest,
                     recommendTree: userRecommendTree,
                     money: mongoSanitize(chargeAmount),
-                    chargeMethod,
+                    moneyMethod,
                     deleteStatus: false,
                     ipaddress: ipaddress,
                     regDateTime: new Date()
@@ -437,6 +438,60 @@ export default class MoneyService implements IMoneyService {
         })
     }
 
+    public setExchangeLogPent = (
+        _id: string,
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBankOwner: string,
+        isAgent: boolean,
+        isTest: boolean,
+        userRecommendTree: Array<any>,
+        money: number,
+        minigameMoney: number,
+        exchangeAmount: number,
+        moneyMethod: string
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    moneyOID: new ObjectID(_id),
+                    userOID: new ObjectID(userOID),
+                    userID: userID,
+                    userNick: userNick,
+                    userGrade: userGrade,
+                    bankOwner: userBankOwner,
+                    isTest,
+                    isAgent,
+                    recommendTree: userRecommendTree,
+                    before: moneyMethod === 'money' ? Math.trunc(money) : Math.trunc(minigameMoney),
+                    process: Math.trunc(-exchangeAmount),
+                    after: moneyMethod === 'money' ? Math.trunc(money) - Math.trunc(exchangeAmount) : Math.trunc(minigameMoney) - Math.trunc(exchangeAmount),
+                    sortation: 'exchange',
+                    reason: moneyMethod === 'money' ? '환전-스포츠 머니' : '환전-파워볼 머니',
+                    adminOID: null,
+                    adminID: null,
+                    adminNick: null,
+                    adminGrade: null,
+                    deleteStatus: false,
+                    regDateTime: new Date()
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > setExchangeLog')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public exchangeAlarm = (): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -522,6 +577,57 @@ export default class MoneyService implements IMoneyService {
                 resolve(r)
             } catch (err) {
                 logger.error('MoneyService > deleteExchangeAll')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public setExchangePent = (
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBank: string,
+        userBankOwner: string,
+        userBankAccount: string,
+        isAgent: boolean,
+        isTest: boolean,
+        userRecommendTree: Array<any>,
+        exchangeAmount: number,
+        moneyMethod: string,
+        ipaddress: string
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    status: 0,
+                    type: 'E',
+                    userOID: new ObjectID(userOID),
+                    userID,
+                    userNick,
+                    userGrade,
+                    bank: userBank,
+                    bankOwner: userBankOwner,
+                    bankAccount: userBankAccount,
+                    isAgent,
+                    isTest,
+                    recommendTree: userRecommendTree,
+                    money: mongoSanitize(exchangeAmount),
+                    moneyMethod,
+                    deleteStatus: false,
+                    ipaddress: ipaddress,
+                    regDateTime: new Date()
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('money').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > setExchangePent')
                 logger.error(err)
                 r.error = err
                 resolve(r)

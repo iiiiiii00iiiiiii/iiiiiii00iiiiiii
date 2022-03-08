@@ -622,7 +622,7 @@ export default class UserController implements IUserController {
         // validate end
 
         try {
-            const getKeys: Array<string> = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'point']
+            const getKeys: Array<string> = ['id', 'nick', 'name', 'bankOwner', 'grade', 'status', 'recommendCount', 'recommendLevel', 'money', 'minigameMoney', 'point']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
             const r: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(r.error) {

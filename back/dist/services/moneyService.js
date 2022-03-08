@@ -31,6 +31,7 @@ class MoneyService {
                         projection: {
                             status: 1,
                             money: 1,
+                            moneyMethod: 1,
                             regDateTime: 1
                         }
                     };
@@ -222,7 +223,7 @@ class MoneyService {
                 }
             }));
         };
-        this.setChargePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, chargeAmount, chargeMethod, ipaddress) => {
+        this.setChargePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, chargeAmount, moneyMethod, ipaddress) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -240,7 +241,7 @@ class MoneyService {
                         isTest,
                         recommendTree: userRecommendTree,
                         money: (0, modules_1.mongoSanitize)(chargeAmount),
-                        chargeMethod,
+                        moneyMethod,
                         deleteStatus: false,
                         ipaddress: ipaddress,
                         regDateTime: new Date()
@@ -360,6 +361,44 @@ class MoneyService {
                 }
             }));
         };
+        this.setExchangeLogPent = (_id, userOID, userID, userNick, userGrade, userBankOwner, isAgent, isTest, userRecommendTree, money, minigameMoney, exchangeAmount, moneyMethod) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        moneyOID: new db_1.ObjectID(_id),
+                        userOID: new db_1.ObjectID(userOID),
+                        userID: userID,
+                        userNick: userNick,
+                        userGrade: userGrade,
+                        bankOwner: userBankOwner,
+                        isTest,
+                        isAgent,
+                        recommendTree: userRecommendTree,
+                        before: moneyMethod === 'money' ? Math.trunc(money) : Math.trunc(minigameMoney),
+                        process: Math.trunc(-exchangeAmount),
+                        after: moneyMethod === 'money' ? Math.trunc(money) - Math.trunc(exchangeAmount) : Math.trunc(minigameMoney) - Math.trunc(exchangeAmount),
+                        sortation: 'exchange',
+                        reason: moneyMethod === 'money' ? '환전-스포츠 머니' : '환전-파워볼 머니',
+                        adminOID: null,
+                        adminID: null,
+                        adminNick: null,
+                        adminGrade: null,
+                        deleteStatus: false,
+                        regDateTime: new Date()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > setExchangeLog');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.exchangeAlarm = () => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -437,6 +476,41 @@ class MoneyService {
                 }
                 catch (err) {
                     modules_1.logger.error('MoneyService > deleteExchangeAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setExchangePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, exchangeAmount, moneyMethod, ipaddress) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        status: 0,
+                        type: 'E',
+                        userOID: new db_1.ObjectID(userOID),
+                        userID,
+                        userNick,
+                        userGrade,
+                        bank: userBank,
+                        bankOwner: userBankOwner,
+                        bankAccount: userBankAccount,
+                        isAgent,
+                        isTest,
+                        recommendTree: userRecommendTree,
+                        money: (0, modules_1.mongoSanitize)(exchangeAmount),
+                        moneyMethod,
+                        deleteStatus: false,
+                        ipaddress: ipaddress,
+                        regDateTime: new Date()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > setExchangePent');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
