@@ -250,6 +250,57 @@ export default class MoneyService implements IMoneyService {
         })
     }
 
+    public setChargePent = (
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBank: string,
+        userBankOwner: string,
+        userBankAccount: string,
+        isAgent: boolean,
+        isTest: boolean,
+        userRecommendTree: Array<any>,
+        chargeAmount: number,
+        chargeMethod: string,
+        ipaddress: string
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    status: 0,
+                    type: 'C',
+                    userOID: new ObjectID(userOID),
+                    userID,
+                    userNick,
+                    userGrade,
+                    bank: userBank,
+                    bankOwner: userBankOwner,
+                    bankAccount: userBankAccount,
+                    isAgent,
+                    isTest,
+                    recommendTree: userRecommendTree,
+                    money: mongoSanitize(chargeAmount),
+                    chargeMethod,
+                    deleteStatus: false,
+                    ipaddress: ipaddress,
+                    regDateTime: new Date()
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('money').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > setChargePent')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     // 출금
     public getExchangeList = (page: number, userOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {

@@ -287,6 +287,7 @@ export default class UserService implements IUserService {
                     recommendLevel: recommendLevel,
                     availableRecommendCode: mongoSanitize(id),
                     money: 0,
+                    minigameMoney: 0,
                     casinoMoney: 0,
                     point: 0,
                     totalCharge: 0,

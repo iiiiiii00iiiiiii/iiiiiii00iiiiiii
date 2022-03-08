@@ -61,6 +61,8 @@ router.get('/get-charge-list', auth.checkLogin(), moneyCtr.getChargeList);
 router.post('/set-charge', auth.checkLogin(), moneyCtr.setCharge);
 router.delete('/delete-charge', auth.checkLogin(), moneyCtr.deleteCharge);
 router.delete('/delete-charge-all', auth.checkLogin(), moneyCtr.deleteChargeAll);
+// Charge
+router.post('/set-charge-pent', auth.checkLogin(), moneyCtr.setChargePent);
 // Exchange
 router.get('/get-exchange-list', auth.checkLogin(), moneyCtr.getExchangeList);
 router.post('/set-exchange', auth.checkLogin(), moneyCtr.setExchange);

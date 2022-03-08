@@ -260,6 +260,7 @@ class UserService {
                         recommendLevel: recommendLevel,
                         availableRecommendCode: (0, modules_1.mongoSanitize)(id),
                         money: 0,
+                        minigameMoney: 0,
                         casinoMoney: 0,
                         point: 0,
                         totalCharge: 0,

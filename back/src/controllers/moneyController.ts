@@ -25,7 +25,7 @@ export default class MoneyController implements IMoneyController {
     constructor() {
     }
 
-    // 입금
+    // 충전
     public getChargeList = async (req: req, res: res): Promise<void> => {
         const validateData: any = {
             page: {
@@ -50,33 +50,33 @@ export default class MoneyController implements IMoneyController {
         try {
             v = validate.validate(validateData)
             if(v.error) {
-                v.errorTitle = '입금 내역 실패 - 500'
+                v.errorTitle = '충전 내역 실패 - 500'
                 res.status(500).json(v)
                 return
             }
             data = v
             if(v.firstError) {
-                data.errorTitle = '입금 내역 실패 - 400'
+                data.errorTitle = '충전 내역 실패 - 400'
                 res.status(400).json(data)
                 return
             }
             v = tools.generateReqValue(data.validates, req)
         } catch (error) {
-            v.errorTitle = '입금 내역 validate 실패 - 500'
+            v.errorTitle = '충전 내역 validate 실패 - 500'
             res.status(500).json(v)
             return
         }
         // validate end
 
         try {
-            // ■■■■■■■■■■ DB-입금 내역 가져오기 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 내역 가져오기 ■■■■■■■■■■
             const r: TService = await moneyService.getChargeList(v.page, v.decoded._id)
             if(r.error) {
-                data.errorTitle = '입금 내역 실패 - 500'
+                data.errorTitle = '충전 내역 실패 - 500'
                 res.status(500).json(data)
                 return
             }
-            // ■■■■■■■■■■ DB-입금 내역 가져오기 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 내역 가져오기 ■■■■■■■■■■
 
             res.json({
                 recordSet: r.data,
@@ -84,7 +84,7 @@ export default class MoneyController implements IMoneyController {
             })
         } catch (e) {
             logger.error(e)
-            data.errorTitle = '입금 내역 실패 - 500'
+            data.errorTitle = '충전 내역 실패 - 500'
             res.status(500).json(data)
             return
         }
@@ -101,10 +101,10 @@ export default class MoneyController implements IMoneyController {
                     lte: 999999999
                 },
                 message: {
-                    required: '입금 신청은 1만원 이상 가능합니다.',
-                    number: '입금 신청은 1만원 이상 가능합니다.',
-                    gte: '입금 신청은 1만원 이상 가능합니다.',
-                    lte: '입금 신청은 1만원 이상 가능합니다.'
+                    required: '충전 신청은 1만원 이상 가능합니다.',
+                    number: '충전 신청은 1만원 이상 가능합니다.',
+                    gte: '충전 신청은 1만원 이상 가능합니다.',
+                    lte: '충전 신청은 1만원 이상 가능합니다.'
                 }
             }
         }
@@ -116,47 +116,47 @@ export default class MoneyController implements IMoneyController {
         try {
             v = validate.validate(validateData)
             if(v.error) {
-                v.errorTitle = '입금 신청 실패 - 500'
+                v.errorTitle = '충전 신청 실패 - 500'
                 res.status(500).json(v)
                 return
             }
             data = v
             if(v.firstError) {
-                data.errorTitle = '입금 신청 실패 - 400'
+                data.errorTitle = '충전 신청 실패 - 400'
                 res.status(400).json(data)
                 return
             }
             v = tools.generateReqValue(data.validates, req)
         } catch (error) {
-            v.errorTitle = '입금 신청 validate 실패 - 500'
+            v.errorTitle = '충전 신청 validate 실패 - 500'
             res.status(500).json(v)
             return
         }
         // validate end
 
         try {
-            // 입금 시간 제한
+            // 충전 시간 제한
             const hour: number = moment().hours()
             const minute: number = moment().minute()
             if(hour === 23 && minute >= 55 || hour === 0 && minute <= 5) {
-                data.errorTitle = '입금 신청 실패 - 400'
-                data = tools.denyValidate(data, 'time', '23시 55분 부터 00시 05분 사이에는 입금신청이 불가능 합니다.')
+                data.errorTitle = '충전 신청 실패 - 400'
+                data = tools.denyValidate(data, 'time', '23시 55분 부터 00시 05분 사이에는 충전신청이 불가능 합니다.')
                 res.status(400).json(data)
                 return
             }
 
-            // ■■■■■■■■■■ DB-확인 중인 입금요청 확인 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-확인 중인 충전요청 확인 ■■■■■■■■■■
             const rCheckIngCharge: TService = await moneyService.checkIngCharge(v.decoded._id)
             if(rCheckIngCharge.error) {
-                data.errorTitle = '입금 신청 실패 - 500'
+                data.errorTitle = '충전 신청 실패 - 500'
                 res.status(500).json(data)
                 return
             }
-            // ■■■■■■■■■■ DB-확인 중인 입금요청 확인 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-확인 중인 충전요청 확인 ■■■■■■■■■■
 
             if(rCheckIngCharge.data > 0) {
-                data.errorTitle = '입금 신청 실패 - 400'
-                data = tools.denyValidate(data, 'exist', '이전에 신청하신 입금을 처리 중입니다.')
+                data.errorTitle = '충전 신청 실패 - 400'
+                data = tools.denyValidate(data, 'exist', '이전에 신청하신 충전을 처리 중입니다.')
                 res.status(400).json(data)
                 return
             }
@@ -165,19 +165,19 @@ export default class MoneyController implements IMoneyController {
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
             const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
-                data.errorTitle = '입금 신청 실패 - 500'
+                data.errorTitle = '충전 신청 실패 - 500'
                 res.status(500).json(data)
                 return
             }
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
 
             if(!rUserInfo.data) {
-                data.errorTitle = '입금 신청 실패 - 500'
+                data.errorTitle = '충전 신청 실패 - 500'
                 res.status(500).json(data)
                 return
             }
 
-            //■■■■■■■■■■ DB-입금 요청 ■■■■■■■■■■
+            //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
             const rSetCharge: TService = await moneyService.setCharge(
                 v.decoded._id,
                 rUserInfo.data.id,
@@ -193,26 +193,26 @@ export default class MoneyController implements IMoneyController {
                 v.reqIpaddress
             )
             if(rSetCharge.error) {
-                data.errorTitle = '입금 신청 실패 - 500'
+                data.errorTitle = '충전 신청 실패 - 500'
                 res.status(500).json(data)
                 return
             }
-            //■■■■■■■■■■ DB-입금 요청 ■■■■■■■■■■
+            //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
 
             if(rSetCharge.data.insertedCount === 0) {
-                data.errorTitle = '입금 신청 실패 - 500'
+                data.errorTitle = '충전 신청 실패 - 500'
                 res.status(500).json(data)
                 return
             }
 
-            // ■■■■■■■■■■ DB-입금 알림 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 알림 ■■■■■■■■■■
             await moneyService.chargeAlarm()
-            // ■■■■■■■■■■ DB-입금 알림 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 알림 ■■■■■■■■■■
 
             res.end()
         } catch (e) {
             logger.error(e)
-            data.errorTitle = '입금 신청 실패 - 500'
+            data.errorTitle = '충전 신청 실패 - 500'
             res.status(500).json(data)
             return
         }
@@ -244,38 +244,38 @@ export default class MoneyController implements IMoneyController {
         try {
             v = validate.validate(validateData)
             if(v.error) {
-                v.errorTitle = '입금 내역 삭제 실패 - 500'
+                v.errorTitle = '충전 내역 삭제 실패 - 500'
                 res.status(500).json(v)
                 return
             }
             data = v
             if(v.firstError) {
-                data.errorTitle = '입금 내역 삭제 실패 - 400'
+                data.errorTitle = '충전 내역 삭제 실패 - 400'
                 res.status(400).json(data)
                 return
             }
             v = tools.generateReqValue(data.validates, req)
         } catch (error) {
-            v.errorTitle = '입금 내역 삭제 validate 실패 - 500'
+            v.errorTitle = '충전 내역 삭제 validate 실패 - 500'
             res.status(500).json(v)
             return
         }
         // validate end
 
         try {
-            // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 내역 삭제 ■■■■■■■■■■
             const rDeleteCharge = await moneyService.deleteCharge(v._id, v.decoded._id)
             if(rDeleteCharge.error) {
-                v.errorTitle = '입금 내역 삭제 validate 실패 - 500'
+                v.errorTitle = '충전 내역 삭제 validate 실패 - 500'
                 res.status(500).json(v)
                 return
             }
-            // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 내역 삭제 ■■■■■■■■■■
 
             res.end()
         } catch (e) {
             logger.error(e)
-            data.errorTitle = '입금 내역 삭제 실패 - 500'
+            data.errorTitle = '충전 내역 삭제 실패 - 500'
             res.status(500).json(data)
             return
         }
@@ -288,19 +288,159 @@ export default class MoneyController implements IMoneyController {
         // validate end
 
         try {
-            // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 내역 삭제 ■■■■■■■■■■
             const rDeleteCharge = await moneyService.deleteChargeAll(v.decoded._id)
             if(rDeleteCharge.error) {
-                v.errorTitle = '입금 내역 삭제 validate 실패 - 500'
+                v.errorTitle = '충전 내역 삭제 validate 실패 - 500'
                 res.status(500).json(v)
                 return
             }
-            // ■■■■■■■■■■ DB-입금 내역 삭제 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-충전 내역 삭제 ■■■■■■■■■■
 
             res.end()
         } catch (e) {
             logger.error(e)
-            data.errorTitle = '입금 내역 삭제 실패 - 500'
+            data.errorTitle = '충전 내역 삭제 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+
+    public setChargePent = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            chargeMethod: {
+                value: req.body.chargeMethod,
+                rule: {
+                    required: true,
+                    or: ['money', 'minigameMoney']
+                },
+                message: {
+                    required: '충전 머니를 선택 하세요.',
+                    or: '충전 머니를 선택 하세요.'
+                }
+            },
+            chargeAmount: {
+                value: req.body.chargeAmount,
+                rule: {
+                    required: true,
+                    number: true,
+                    gte: 10000,
+                    lte: 999999999
+                },
+                message: {
+                    required: '충전 신청은 1만원 이상 가능합니다.',
+                    number: '충전 신청은 1만원 이상 가능합니다.',
+                    gte: '충전 신청은 1만원 이상 가능합니다.',
+                    lte: '충전 신청은 1만원 이상 가능합니다.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '충전 신청 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '충전 신청 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '충전 신청 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // 충전 시간 제한
+            const hour: number = moment().hours()
+            const minute: number = moment().minute()
+            if(hour === 23 && minute >= 55 || hour === 0 && minute <= 5) {
+                data.errorTitle = '충전 신청 실패 - 400'
+                data = tools.denyValidate(data, 'time', '23시 55분 부터 00시 05분 사이에는 충전신청이 불가능 합니다.')
+                res.status(400).json(data)
+                return
+            }
+
+            // ■■■■■■■■■■ DB-확인 중인 충전요청 확인 ■■■■■■■■■■
+            const rCheckIngCharge: TService = await moneyService.checkIngCharge(v.decoded._id)
+            if(rCheckIngCharge.error) {
+                data.errorTitle = '충전 신청 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-확인 중인 충전요청 확인 ■■■■■■■■■■
+
+            if(rCheckIngCharge.data > 0) {
+                data.errorTitle = '충전 신청 실패 - 400'
+                data = tools.denyValidate(data, 'exist', '이전에 신청하신 충전을 처리 중입니다.')
+                res.status(400).json(data)
+                return
+            }
+
+            const getKeys: Array<string> = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree']
+            // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
+            const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
+            if(rUserInfo.error) {
+                data.errorTitle = '충전 신청 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
+
+            if(!rUserInfo.data) {
+                data.errorTitle = '충전 신청 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+
+            //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
+            const rSetCharge: TService = await moneyService.setChargePent(
+                v.decoded._id,
+                rUserInfo.data.id,
+                rUserInfo.data.nick,
+                rUserInfo.data.grade,
+                rUserInfo.data.bank,
+                rUserInfo.data.bankOwner,
+                rUserInfo.data.bankAccount,
+                rUserInfo.data.isAgent,
+                rUserInfo.data.isTest,
+                rUserInfo.data.recommendTree,
+                v.chargeAmount,
+                v.chargeMethod,
+                v.reqIpaddress
+            )
+            if(rSetCharge.error) {
+                data.errorTitle = '충전 신청 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
+
+            if(rSetCharge.data.insertedCount === 0) {
+                data.errorTitle = '충전 신청 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+
+            // ■■■■■■■■■■ DB-충전 알림 ■■■■■■■■■■
+            await moneyService.chargeAlarm()
+            // ■■■■■■■■■■ DB-충전 알림 ■■■■■■■■■■
+
+            res.end()
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '충전 신청 실패 - 500'
             res.status(500).json(data)
             return
         }
@@ -429,7 +569,7 @@ export default class MoneyController implements IMoneyController {
         // validate end
 
         try {
-            // 입금 시간 제한
+            // 충전 시간 제한
             const hour: number = moment().hours()
             const minute: number = moment().minute()
             if(hour === 23 && minute >= 30 || hour === 0 && minute <= 30) {
@@ -738,7 +878,7 @@ export default class MoneyController implements IMoneyController {
             res.end()
         } catch (e) {
             logger.error(e)
-            data.errorTitle = '입금 신청 실패 - 500'
+            data.errorTitle = '충전 신청 실패 - 500'
             res.status(500).json(data)
             return
         }

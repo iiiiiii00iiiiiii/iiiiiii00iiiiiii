@@ -222,6 +222,41 @@ class MoneyService {
                 }
             }));
         };
+        this.setChargePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, chargeAmount, chargeMethod, ipaddress) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        status: 0,
+                        type: 'C',
+                        userOID: new db_1.ObjectID(userOID),
+                        userID,
+                        userNick,
+                        userGrade,
+                        bank: userBank,
+                        bankOwner: userBankOwner,
+                        bankAccount: userBankAccount,
+                        isAgent,
+                        isTest,
+                        recommendTree: userRecommendTree,
+                        money: (0, modules_1.mongoSanitize)(chargeAmount),
+                        chargeMethod,
+                        deleteStatus: false,
+                        ipaddress: ipaddress,
+                        regDateTime: new Date()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('money').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > setChargePent');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         // 출금
         this.getExchangeList = (page, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
