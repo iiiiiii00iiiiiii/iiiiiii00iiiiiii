@@ -1149,9 +1149,17 @@ export default class UserService implements IUserService {
             try {
                 const findQuery: any = {
                     _id: new ObjectID(userOID),
-                    money: {
-                        $gte: Math.trunc(mongoSanitize(exchangeAmount))
-                    }
+                    money: {  },
+                    minigameMoney: {  }
+                }
+
+                if(moneyMethod === 'money') {
+                    delete findQuery.minigameMoney
+                    findQuery.money.$gte = Math.trunc(mongoSanitize(exchangeAmount))
+                }
+                else {
+                    delete findQuery.money
+                    findQuery.minigameMoney.$gte = Math.trunc(mongoSanitize(exchangeAmount))
                 }
 
                 let setQuery: any = {

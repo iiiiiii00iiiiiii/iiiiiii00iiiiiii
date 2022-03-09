@@ -1100,10 +1100,17 @@ class UserService {
                 try {
                     const findQuery = {
                         _id: new db_1.ObjectID(userOID),
-                        money: {
-                            $gte: Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount))
-                        }
+                        money: {},
+                        minigameMoney: {}
                     };
+                    if (moneyMethod === 'money') {
+                        delete findQuery.minigameMoney;
+                        findQuery.money.$gte = Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount));
+                    }
+                    else {
+                        delete findQuery.money;
+                        findQuery.minigameMoney.$gte = Math.trunc((0, modules_1.mongoSanitize)(exchangeAmount));
+                    }
                     let setQuery = {
                         $inc: {}
                     };
