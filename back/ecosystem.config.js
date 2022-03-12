@@ -189,3 +189,27 @@ module.exports = {
     version: '0.0.0',
     versionKey: 'version'
 }
+
+// // THREE2
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[THREE2]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 2021,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 2021,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 2020,
+//     port: 2021,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }

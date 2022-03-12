@@ -188,28 +188,57 @@ export default class BetController implements IBetController {
     public betSports = async (v: any, res: res, data: any): Promise<void> => {
         // 단폴, 두폴 배팅가능 여부 검사
         if(v.betCount <= 2) {
-            // ■■■■■■■■■■ DB-회원 단폴, 두폴 설정 가져오기 ■■■■■■■■■■
-            let resultFolderInfo = await betService.folderInfo(v.decoded._id)
-            if(resultFolderInfo.error) {
-                data.errorTitle = '배팅 실패 - 500'
-                res.status(500).json(data)
-                return
-            }
-            // ■■■■■■■■■■ DB-회원 단폴, 두폴 설정 가져오기 ■■■■■■■■■■
-            v.resultFolderInfo = resultFolderInfo.data
+            if(config.db.name === 'pent') {
+                if(v.gameKind !== 'sportsSpecial') {
+                    // ■■■■■■■■■■ DB-회원 단폴, 두폴 설정 가져오기 ■■■■■■■■■■
+                    let resultFolderInfo = await betService.folderInfo(v.decoded._id)
+                    if(resultFolderInfo.error) {
+                        data.errorTitle = '배팅 실패 - 500'
+                        res.status(500).json(data)
+                        return
+                    }
+                    // ■■■■■■■■■■ DB-회원 단폴, 두폴 설정 가져오기 ■■■■■■■■■■
+                    v.resultFolderInfo = resultFolderInfo.data
 
-            if(v.betCount === 1 && !v.resultFolderInfo.sportsConfig.bet1FolderStatus) {
-                data.errorTitle = '배팅 실패 - 400'
-                data = tools.denyValidate(data, 'betCount', '단폴더 배팅이 불가능 합니다.')
-                res.status(400).json(data)
-                return
-            }
+                    if(v.betCount === 1 && !v.resultFolderInfo.sportsConfig.bet1FolderStatus) {
+                        data.errorTitle = '배팅 실패 - 400'
+                        data = tools.denyValidate(data, 'betCount', '단폴더 배팅이 불가능 합니다.')
+                        res.status(400).json(data)
+                        return
+                    }
 
-            if(v.betCount === 2 && !v.resultFolderInfo.sportsConfig.bet2FolderStatus) {
-                data.errorTitle = '배팅 실패 - 400'
-                data = tools.denyValidate(data, 'betCount', '두폴더 배팅이 불가능 합니다.')
-                res.status(400).json(data)
-                return
+                    if(v.betCount === 2 && !v.resultFolderInfo.sportsConfig.bet2FolderStatus) {
+                        data.errorTitle = '배팅 실패 - 400'
+                        data = tools.denyValidate(data, 'betCount', '두폴더 배팅이 불가능 합니다.')
+                        res.status(400).json(data)
+                        return
+                    }
+                }
+            }
+            else {
+                // ■■■■■■■■■■ DB-회원 단폴, 두폴 설정 가져오기 ■■■■■■■■■■
+                let resultFolderInfo = await betService.folderInfo(v.decoded._id)
+                if(resultFolderInfo.error) {
+                    data.errorTitle = '배팅 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-회원 단폴, 두폴 설정 가져오기 ■■■■■■■■■■
+                v.resultFolderInfo = resultFolderInfo.data
+
+                if(v.betCount === 1 && !v.resultFolderInfo.sportsConfig.bet1FolderStatus) {
+                    data.errorTitle = '배팅 실패 - 400'
+                    data = tools.denyValidate(data, 'betCount', '단폴더 배팅이 불가능 합니다.')
+                    res.status(400).json(data)
+                    return
+                }
+
+                if(v.betCount === 2 && !v.resultFolderInfo.sportsConfig.bet2FolderStatus) {
+                    data.errorTitle = '배팅 실패 - 400'
+                    data = tools.denyValidate(data, 'betCount', '두폴더 배팅이 불가능 합니다.')
+                    res.status(400).json(data)
+                    return
+                }
             }
         }
 

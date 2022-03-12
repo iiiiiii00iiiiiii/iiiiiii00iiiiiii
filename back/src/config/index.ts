@@ -349,6 +349,44 @@ const config: TConfig = {
     canCancelBetCount: 10
 }
 
+// // THREE2
+// const config: TConfig = {
+//     db: {
+//         host: '18.183.255.153',
+//         port: 36183,
+//         name: 'three2',
+//         id: 'three2',
+//         password: 'Qufdl@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 1,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxRate: 100,
+//     powerballTime: 30,
+//     powerladderTime: 30,
+//     kenoladderTime: 30,
+//     boglePowerballTime: 30,
+//     bogleladderTime: 30,
+//     googlePowerball1: 15,
+//     googlePowerball3: 30,
+//     kplay: {
+//         code: 'SFT0005',
+//         token: 'A42UoW2OXZl6H7kylAe42sF03Td6t3xE',
+//         key: 'Nvxh3fYlRRdyw3X50I2Db5UsohBDC6Xx',
+//         endpoint: 'http://kplayone.com'
+//         // http://api.kplay.jmt.soft24.io/api
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 10
+// }
+
 
 
 export default config
