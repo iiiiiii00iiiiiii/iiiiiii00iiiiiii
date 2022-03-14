@@ -1090,7 +1090,6 @@ class UserService {
                     }
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('users').findOne(findQuery, whatQuery);
-                    r.data = r.data.value;
                     resolve(r);
                 }
                 catch (err) {

@@ -1136,7 +1136,6 @@ export default class UserService implements IUserService {
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('users').findOne(findQuery, whatQuery)
-                r.data = r.data.value
                 resolve(r)
             } catch (err) {
                 logger.error('UserService > userInfo')
