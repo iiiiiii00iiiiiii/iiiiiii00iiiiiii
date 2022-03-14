@@ -21,6 +21,10 @@ export default class UserService implements IUserService {
                     password: crypto.createHash('sha512').update(password).digest('base64')
                 }
 
+                if(config.db.id === 'pent') {
+                    findQuery.isAgent = false
+                }
+
                 const setQuery: any = {
                     $set: {
                         lastLoginIpaddress: ipaddress,
@@ -52,6 +56,7 @@ export default class UserService implements IUserService {
                         recommendLevel: 1,
                         money: 1,
                         point: 1,
+                        minigameMoney: 1,
                         isAgent: 1,
                         seq: 1
                     },
@@ -1099,6 +1104,42 @@ export default class UserService implements IUserService {
                 resolve(r)
             } catch (err) {
                 logger.error('UserService > getUserInfo')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public userInfo = (userOID: string, getKeys: Array<string>): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            if(getKeys.length === 0) {
+                r.error = 'Empty getKeys'
+                resolve(r)
+                return
+            }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID)
+                }
+
+                let whatQuery: any = {
+                    projection: {}
+                }
+
+                for(let i: number = 0; i < getKeys.length; i++) {
+                    whatQuery.projection[getKeys[i]] = 1
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOne(findQuery, whatQuery)
+                r.data = r.data.value
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > userInfo')
                 logger.error(err)
                 r.error = err
                 resolve(r)

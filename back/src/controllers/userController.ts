@@ -252,6 +252,7 @@ export default class UserController implements IUserController {
                 recommendCount: rLogin.data.value.recommendCount,
                 recommendLevel: rLogin.data.value.recommendLevel,
                 money: rLogin.data.value.money,
+                minigameMoney: rLogin.data.value.minigameMoney,
                 point: rLogin.data.value.point,
                 isAgent: rLogin.data.value.isAgent,
                 betInfo: rConfig.data

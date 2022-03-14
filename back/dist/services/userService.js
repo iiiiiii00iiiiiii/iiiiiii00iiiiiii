@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const modules_1 = require("../lib/modules");
 const db_1 = require("../lib/db");
+const config_1 = __importDefault(require("../config"));
 class UserService {
     constructor() {
         this.login = (id, password, ipaddress) => {
@@ -21,6 +25,9 @@ class UserService {
                         id: (0, modules_1.mongoSanitize)(id),
                         password: modules_1.crypto.createHash('sha512').update(password).digest('base64')
                     };
+                    if (config_1.default.db.id === 'pent') {
+                        findQuery.isAgent = false;
+                    }
                     const setQuery = {
                         $set: {
                             lastLoginIpaddress: ipaddress,
@@ -50,6 +57,7 @@ class UserService {
                             recommendLevel: 1,
                             money: 1,
                             point: 1,
+                            minigameMoney: 1,
                             isAgent: 1,
                             seq: 1
                         },
@@ -1056,6 +1064,37 @@ class UserService {
                 }
                 catch (err) {
                     modules_1.logger.error('UserService > getUserInfo');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.userInfo = (userOID, getKeys) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                if (getKeys.length === 0) {
+                    r.error = 'Empty getKeys';
+                    resolve(r);
+                    return;
+                }
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID)
+                    };
+                    let whatQuery = {
+                        projection: {}
+                    };
+                    for (let i = 0; i < getKeys.length; i++) {
+                        whatQuery.projection[getKeys[i]] = 1;
+                    }
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOne(findQuery, whatQuery);
+                    r.data = r.data.value;
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > userInfo');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

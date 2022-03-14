@@ -9,6 +9,9 @@ import type { TService } from '../models'
 import BetService from '../services/betService'
 const betService: BetService = new BetService()
 
+import UserService from '../services/userService'
+const userService: UserService = new UserService()
+
 // import EtcService from '../services/etcService'
 // const etcService: EtcService = new EtcService()
 
@@ -175,7 +178,13 @@ export default class BetController implements IBetController {
                 this.betSports(v, res, data)
             }
             else if(v.gameKind === 'minigames') {
-                this.betMiniGame(v, res, data)
+                if(config.db.id === 'pent') {
+                    this.betMiniGamePent(v, res, data)
+                }
+                else {
+                    this.betMiniGame(v, res, data)
+                }
+
             }
         } catch (e) {
             logger.error(e)
@@ -2646,6 +2655,272 @@ export default class BetController implements IBetController {
 
         //■■■■■■■■■■ DB-미니게임 배팅 로그 남기기 ■■■■■■■■■■
         let resultSetBetMoneyLog: TService = await betService.setBetMoneyLog(v)
+        // if(resultSetBetMoneyLog.error) {
+        //     data.errorTitle = '배팅 실패 - 500'
+        //     res.status(500).json(data)
+        //     return
+        // }
+        //■■■■■■■■■■ DB-미니게임 배팅 로그 남기기 ■■■■■■■■■■
+
+        res.end()
+    }
+
+    public betMiniGamePent = async (v: any, res: res, data: any): Promise<void> => {
+        //해당게임 배팅가능 여부 검사
+        let gameKind: string = v.betCart[0].gameKind
+        v.gameKind = gameKind
+
+        let categorySwitch: string = ''
+        let categoryTop: string = ''
+
+        if(gameKind === 'powerball') {
+            categorySwitch = 'powerballSwitch'
+            categoryTop = 'powerballTop'
+        }
+        else if(gameKind === 'powerladder')
+        {
+            categorySwitch = 'powerladderSwitch'
+            categoryTop = 'powerladderTop'
+        }
+        else if(gameKind === 'kenoladder') {
+            categorySwitch = 'kenoladderSwitch'
+            categoryTop = 'kenoladderTop'
+        }
+        else if(gameKind === 'boglePowerball') {
+            categorySwitch = 'boglePowerballSwitch'
+            categoryTop = 'boglePowerballTop'
+        }
+        else if(gameKind === 'bogleladder') {
+            categorySwitch = 'bogleladderSwitch'
+            categoryTop = 'bogleladderTop'
+        }
+        else if(gameKind === 'googlePowerball1') {
+            categorySwitch = 'googlePowerball1Switch'
+            categoryTop = 'googlePowerball1Top'
+        }
+        else if(gameKind === 'googlePowerball3') {
+            categorySwitch = 'googlePowerball3Switch'
+            categoryTop = 'googlePowerball3Top'
+        }
+        else if(gameKind === 'eosPowerball1') {
+            categorySwitch = 'eosPowerball1Switch'
+            categoryTop = 'eosPowerball1Top'
+        }
+        else if(gameKind === 'eosPowerball3') {
+            categorySwitch = 'eosPowerball3Switch'
+            categoryTop = 'eosPowerball3Top'
+        }
+        else if(gameKind === 'eosPowerball') {
+            categorySwitch = 'eosPowerballSwitch'
+            categoryTop = 'eosPowerballTop'
+        }
+        else if(gameKind === 'coinPowerball3') {
+            categorySwitch = 'coinPowerball3Switch'
+            categoryTop = 'coinPowerball3Top'
+        }
+        else if(gameKind === 'coinPowerball') {
+            categorySwitch = 'coinPowerballSwitch'
+            categoryTop = 'coinPowerballTop'
+        }
+        else if(gameKind === 'speedladder') {
+            categorySwitch = 'speedladderSwitch'
+            categoryTop = 'speedladderTop'
+        }
+        v.categorySwitch = categorySwitch
+        v.categoryTop = categoryTop
+
+        //■■■■■■■■■■ DB-해당게임 배팅가능 여부 가져오기 ■■■■■■■■■■
+        const resultBetSwitch: TService = await betService.betSwitch(v)
+        if(resultBetSwitch.error) {
+            data.errorTitle = '배팅 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-해당게임 배팅가능 여부 가져오기 ■■■■■■■■■■
+        v.resultBetSwitch = resultBetSwitch.data
+
+        if(!v.resultBetSwitch.betStatus) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betCart', '현재 배팅이 불가능한 게임입니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //■■■■■■■■■■ DB-미니게임 게임정보 가져오기 ■■■■■■■■■■
+        const resultMinigameInfo: TService = await betService.minigameInfo(v)
+        if(resultMinigameInfo.error) {
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-미니게임 게임정보 가져오기 ■■■■■■■■■■
+        v.resultMinigameInfo = resultMinigameInfo.data
+
+        if(!v.resultMinigameInfo) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betCart', '진행 중인 경기가 없습니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //최대 당첨금 검사
+        v.betRate = parseFloat(v.resultMinigameInfo.games[v.betCart[0].betType][`rateOf${v.betCart[0].betSelect}`])
+        v.betBenefit = parseInt((v.betRate * v.betAmount).toString())
+        if(v.betBenefit > v.resultBetMinMax.benefit ) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betAmount', '최대 당첨금을 초과하였습니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //회차당 최대 배팅금액 검사
+        //■■■■■■■■■■ DB-현재 배팅되어 있는 금액 가져오기 ■■■■■■■■■■
+        const resultPreviousBetAmount: TService = await betService.previousBetAmount(v)
+        if(resultPreviousBetAmount.error) {
+            data.errorTitle = '배팅 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-현재 배팅되어 있는 금액 가져오기 ■■■■■■■■■■
+        if(resultPreviousBetAmount.data.length === 0) {
+            v.previousBetAmount = 0
+        }
+        else {
+            v.previousBetAmount = resultPreviousBetAmount.data[0].betAmount
+        }
+
+        if(v.previousBetAmount + v.betAmount > v.resultBetMinMax.maxRound) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betAmount', '해당 회차의 해당 배팅방식에 대한 최대 배팅금을 초과 하였습니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        //■■■■■■■■■■ DB-미니게임 배팅머니 차감, 회원정보 업데이트, 회원정보 가져오기 ■■■■■■■■■■
+        const resultBetSubtractMinigame: TService = await betService.betSubtractMinigamePent(v)
+        if(resultBetSubtractMinigame.error) {
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-미니게임 배팅머니 차감, 회원정보 업데이트, 회원정보 가져오기 ■■■■■■■■■■
+        v.resultBetSubtractMinigame = resultBetSubtractMinigame.data.value
+        if(!v.resultBetSubtractMinigame) {
+            data.errorTitle = '배팅 실패 - 400'
+            data = tools.denyValidate(data, 'betAmount', '현재 배팅이 불가능 합니다.')
+            res.status(400).json(data)
+            return
+        }
+
+        let topOID = null
+        if(v.resultBetSubtractMinigame.recommendTree.length > 1) {
+            topOID = v.resultBetSubtractMinigame.recommendTree[1]._id
+        }
+        else {
+            topOID = v.decoded._id
+        }
+
+        let getKeys = ['salary']
+        // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
+        let rUserInfo: TService = await userService.userInfo(topOID, getKeys)
+        if(rUserInfo.error) {
+            data.errorTitle = '배팅실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
+        v.topSalaryInfo = rUserInfo.data.salary
+        const betTotalRollingRate: number = v.topSalaryInfo[gameKind][`${v.betCart[0].betType.replace(/PWB/gi, '').replace(/PLD/gi, '').replace(/KLD/gi, '').replace(/BLD/gi, '')}Rate`]
+        const betTotalRolling: number = parseInt((v.betAmount * (betTotalRollingRate / 100)).toString())
+
+        //■■■■■■■■■■ DB-전체 상부 상태, 요율 가져오기 ■■■■■■■■■■
+        let resultBetTopInfo: TService = await betService.betTopInfo(v)
+        if(resultBetTopInfo.error) {
+            data.errorTitle = '배팅실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-전체 상부 상태, 요율 가져오기 ■■■■■■■■■■
+        v.resultBetTopInfo = resultBetTopInfo.data
+
+        //상부 설정
+        //상부  올리기 T/F 전체설정
+        let betTopStatusTotal: any = v.resultBetTopInfo[`${v.betCart[0].betType.replace(/PWB/gi, '').replace(/PLD/gi, '').replace(/KLD/gi, '').replace(/BLD/gi, '')}Status`]
+        //상부  올리기 T/F 개인설정
+        let betTopStatusPerson: any = v.resultBetSubtractMinigame.topConfig[v.gameKind][`${v.betCart[0].betType.replace(/PWB/gi, '').replace(/PLD/gi, '').replace(/KLD/gi, '').replace(/BLD/gi, '')}Status`]
+
+        let betTopStatus: boolean = false
+        if(v.resultBetTopInfo.betTopStatus && betTopStatusTotal) {
+            betTopStatus = betTopStatusPerson
+        }
+
+        let betTopRate: number = 0
+        let betTopAmount: number = 0
+        let betKillAmount: number = 0
+
+        if(betTopStatus) {
+            let betTopRateTotal: any = v.resultBetTopInfo[`${v.betCart[0].betType.replace(/PWB/gi, '').replace(/PLD/gi, '').replace(/KLD/gi, '').replace(/BLD/gi, '')}Rate`]
+            let betTopRatePerson: any = v.resultBetSubtractMinigame.topConfig[v.gameKind][`${v.betCart[0].betType.replace(/PWB/gi, '').replace(/PLD/gi, '').replace(/KLD/gi, '').replace(/BLD/gi, '')}Rate`]
+
+            //상부 올릴 %
+            betTopRate = betTopRatePerson > 0 ? betTopRatePerson : betTopRateTotal
+
+            //상부 배팅금액
+            if(betTopRate > 0) {
+                betTopAmount = parseInt((v.betAmount * (betTopRate / 100)).toString())
+            }
+
+            //승부 배팅
+            betKillAmount = v.betAmount
+            if(betTopAmount > 0) {
+                betKillAmount = v.betAmount - betTopAmount
+            }
+        }
+        else {
+            betKillAmount = v.betAmount
+        }
+
+        const betKillTotalRolling = parseInt((betKillAmount * (betTotalRollingRate / 100)).toString())
+
+        v.betTopInfo = {
+            betTopStatus: false,
+            betTopRate: 0,
+            betTopAmount: 0,
+            betTopWinAmount: 0,
+            betTotalRolling,
+            betKillAmount,
+            betKillWinAmount: 0,
+            betKillTotalRolling
+        }
+
+        //■■■■■■■■■■ DB-미니게임 배팅 ■■■■■■■■■■
+        const resultBetMinigame: TService = await betService.betMinigamePent(v)
+        if(resultBetMinigame.error) {
+            data.errorTitle = '배팅 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+        //■■■■■■■■■■ DB-미니게임 배팅 ■■■■■■■■■■
+
+        //■■■■■■■■■■ DB-미니게임 경기에 배팅금액 업데이트 ■■■■■■■■■■
+        if(!v.resultBetSubtractMinigame.isTest) {
+            const resultSetBetMinigame: TService = await betService.setBetMinigame(v)
+            if(resultSetBetMinigame.error) {
+                res.status(500).json(data)
+                return
+            }
+
+            v.resultSetBetMinigame = resultSetBetMinigame.data
+
+            if(v.resultSetBetMinigame.modifiedCount === 0) {
+                data.errorTitle = '배팅 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+        }
+        //■■■■■■■■■■ DB-미니게임 경기에 배팅금액 업데이트 ■■■■■■■■■■
+
+
+        //■■■■■■■■■■ DB-미니게임 배팅 로그 남기기 ■■■■■■■■■■
+        let resultSetBetMoneyLog: TService = await betService.setBetMoneyLogPent(v)
         // if(resultSetBetMoneyLog.error) {
         //     data.errorTitle = '배팅 실패 - 500'
         //     res.status(500).json(data)

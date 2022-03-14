@@ -902,6 +902,35 @@ class BetService {
                 }
             }));
         };
+        this.betTopInfo = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: {
+                            $in: [v.categoryTop, v.categorySwitch]
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').find(findQuery).toArray();
+                    let totalTopData = r.data.find((x) => {
+                        return x.category === v.categorySwitch;
+                    });
+                    let topData = r.data.find((x) => {
+                        return x.category === v.categoryTop;
+                    });
+                    topData.betTopStatus = totalTopData.betTopStatus;
+                    r.data = topData;
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > betTopInfo');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.previousBetAmount = (v) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -979,6 +1008,52 @@ class BetService {
                 }
             }));
         };
+        this.betSubtractMinigamePent = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(v.decoded._id),
+                        minigameMoney: {
+                            $gte: v.betAmount
+                        },
+                        status: 1,
+                        betStatus: true,
+                        isAgent: false
+                    };
+                    if (config_1.default.db.id === 'napoli') {
+                        delete findQuery.isAgent;
+                    }
+                    const setQuery = {
+                        $inc: {
+                            minigameMoney: -v.betAmount,
+                            'betHistory.betCount': 1,
+                            'betHistory.betAmount': v.betAmount
+                        }
+                    };
+                    setQuery.$inc[`minigamesBetHistory.${v.resultMinigameInfo.gameType}.count`] = 1;
+                    setQuery.$inc[`minigamesBetHistory.${v.resultMinigameInfo.gameType}.amount`] = v.betAmount;
+                    let optionsQuery = {
+                        projection: {
+                            isTest: 1,
+                            isAgent: 1,
+                            recommendTree: 1,
+                            minigameMoney: 1,
+                            topConfig: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > betSubtractMinigamePent');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.betMinigame = (v) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -1016,6 +1091,49 @@ class BetService {
                 }
                 catch (err) {
                     modules_1.logger.error('BetService > betMinigame');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.betMinigamePent = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        userOID: new db_1.ObjectID(v.decoded._id),
+                        userID: v.decoded.id,
+                        userNick: v.decoded.nick,
+                        userGrade: v.decoded.grade,
+                        bankOwner: v.decoded.bankOwner,
+                        recommendTree: v.resultBetSubtractMinigame.recommendTree,
+                        gameType: 'minigame',
+                        gameKind: v.gameKind,
+                        isAuto: false,
+                        isTest: v.resultBetSubtractMinigame.isTest,
+                        betAmount: v.betAmount,
+                        betRate: v.betRate,
+                        betBenefit: v.betBenefit,
+                        afterBetMoney: v.resultBetSubtractMinigame.minigameMoney - v.betAmount,
+                        betResult: 'I',
+                        gameOID: new db_1.ObjectID(v.resultMinigameInfo._id),
+                        rotation: v.resultMinigameInfo.rotation,
+                        round: v.resultMinigameInfo.round,
+                        betType: v.betCart[0].betType,
+                        betSelect: v.betCart[0].betSelect,
+                        betTopInfo: v.betTopInfo,
+                        regDateTime: new Date(),
+                        resultDateTime: null,
+                        calcDateTime: null,
+                        deleteStatus: false
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betMinigame').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > betMinigamePent');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
@@ -1080,6 +1198,45 @@ class BetService {
                 }
                 catch (err) {
                     modules_1.logger.error('BetService > setBetMoneyLog');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setBetMoneyLogPent = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        moneyOID: null,
+                        userOID: new db_1.ObjectID(v.decoded._id),
+                        userID: v.decoded.id,
+                        userNick: v.decoded.nick,
+                        userGrade: v.decoded.grade,
+                        bankOwner: v.decoded.bankOwner,
+                        recommendTree: v.resultBetSubtractMinigame.recommendTree,
+                        before: v.resultBetSubtractMinigame.minigameMoney,
+                        process: v.betAmount,
+                        after: v.resultBetSubtractMinigame.minigameMoney - v.betAmount,
+                        sortation: 'bet',
+                        reason: '배팅',
+                        adminOID: null,
+                        adminID: null,
+                        adminNick: null,
+                        adminGrade: null,
+                        regDateTime: new Date(),
+                        deleteStatus: false,
+                        gameOID: new db_1.ObjectID(v.resultMinigameInfo._id),
+                        isTest: v.resultBetSubtractMinigame.isTest,
+                        isAgent: v.resultBetSubtractMinigame.isAgent
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > setBetMoneyLogPent');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
