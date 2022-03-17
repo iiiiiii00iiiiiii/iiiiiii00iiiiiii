@@ -461,10 +461,12 @@ export default class UserController implements IUserController {
             let recommendTree: any = rRecommend.data.value.recommendTree
             let recommendLevel: number = rRecommend.data.value.recommendLevel + 1
 
-            // if(!rRecommend.data.value.isAgent) {
-            //     recommendTree.length = 1
-            //     recommendLevel = 2
-            // }
+            if(!rRecommend.data.value.isAgent) {
+                if(config.db.id === 'pent') {
+                    recommendTree.length = 1
+                    recommendLevel = 2
+                }
+            }
 
             recommendTree.push({
                 _id: new ObjectID(rRecommend.data.value._id),

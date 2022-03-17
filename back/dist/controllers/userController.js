@@ -438,10 +438,12 @@ class UserController {
                 }
                 let recommendTree = rRecommend.data.value.recommendTree;
                 let recommendLevel = rRecommend.data.value.recommendLevel + 1;
-                // if(!rRecommend.data.value.isAgent) {
-                //     recommendTree.length = 1
-                //     recommendLevel = 2
-                // }
+                if (!rRecommend.data.value.isAgent) {
+                    if (config_1.default.db.id === 'pent') {
+                        recommendTree.length = 1;
+                        recommendLevel = 2;
+                    }
+                }
                 recommendTree.push({
                     _id: new db_1.ObjectID(rRecommend.data.value._id),
                     id: rRecommend.data.value.id,
