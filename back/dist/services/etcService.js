@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const modules_1 = require("../lib/modules");
 const db_1 = require("../lib/db");
+const config_1 = __importDefault(require("../config"));
 class EtcService {
     constructor() {
         this.getConfigInfo = (category, getKeys) => {
@@ -187,6 +191,37 @@ class EtcService {
                 }
                 catch (err) {
                     modules_1.logger.error('EtcService > getShortNotice');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getFriendsList = (page, _id) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        'recommendTree._id': new db_1.ObjectID(_id),
+                        status: 1
+                    };
+                    const whatQuery = {
+                        projection: {
+                            id: 1,
+                            nick: 1,
+                            totalCharge: 1,
+                            totalExchange: 1,
+                            lastLoginDateTime: 1
+                        }
+                    };
+                    const skip = (page - 1) * config_1.default.pageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config_1.default.pageSize).toArray();
+                    r.count = yield pool.collection('users').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getFriendsList');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);

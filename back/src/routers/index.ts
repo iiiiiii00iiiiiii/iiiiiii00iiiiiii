@@ -220,6 +220,8 @@ router.get('/get-short-notice', etcCtr.getShortNotice)
 
 
 
+// Friends
+router.get('/get-friends-list', auth.checkLogin(), etcCtr.getFriendsList)
 
 
 

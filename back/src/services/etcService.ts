@@ -219,4 +219,39 @@ export default class EtcService implements IEtcService {
             }
         })
     }
+
+    public getFriendsList = (page: number, _id: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    'recommendTree._id': new ObjectID(_id),
+                    status: 1
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        id: 1,
+                        nick: 1,
+                        totalCharge: 1,
+                        totalExchange: 1,
+                        lastLoginDateTime: 1
+                    }
+                }
+
+                const skip: number = (page - 1) * config.pageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config.pageSize).toArray()
+                r.count = await pool.collection('users').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getFriendsList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

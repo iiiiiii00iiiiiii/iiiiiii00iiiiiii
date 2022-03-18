@@ -282,4 +282,68 @@ export default class EtcController implements IEtcController {
             return
         }
     }
+
+    public getFriendsList = async (req: req, res: res): Promise<void> => {
+        const validateData: any = {
+            page: {
+                value: req.query.page,
+                rule: {
+                    required: true,
+                    number: true,
+                    gte: 1
+                },
+                message: {
+                    required: '파라메터 오류, 관리자에게 문의하세요.',
+                    number: '파라메터 오류, 관리자에게 문의하세요.',
+                    gte: '파라메터 오류, 관리자에게 문의하세요.'
+                }
+            }
+        }
+
+        // validate start
+        let v: any = {}
+        let data: any = {}
+
+        try {
+            v = validate.validate(validateData)
+            if(v.error) {
+                v.errorTitle = '추천인 현황 실패 - 500'
+                res.status(500).json(v)
+                return
+            }
+            data = v
+            if(v.firstError) {
+                data.errorTitle = '추천인 현황 실패 - 400'
+                res.status(400).json(data)
+                return
+            }
+            v = tools.generateReqValue(data.validates, req)
+        } catch (error) {
+            v.errorTitle = '추천인 현황 validate 실패 - 500'
+            res.status(500).json(v)
+            return
+        }
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-추천인 현황 가져오기 ■■■■■■■■■■
+            const r: TService = await etcService.getFriendsList(v.page, v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '추천인 현황 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-추천인 현황 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data,
+                recordCount: r.count
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '추천인 현황 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
 }

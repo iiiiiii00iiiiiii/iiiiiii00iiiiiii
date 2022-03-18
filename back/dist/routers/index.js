@@ -153,4 +153,6 @@ router.get('/get-coinpowerball', gameCtr.getCoinPowerball);
 router.get('/get-speedladder', gameCtr.getSpeedladder);
 // short notice
 router.get('/get-short-notice', etcCtr.getShortNotice);
+// Friends
+router.get('/get-friends-list', auth.checkLogin(), etcCtr.getFriendsList);
 exports.default = router;
