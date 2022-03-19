@@ -349,6 +349,25 @@ export default class BetController implements IBetController {
         }
         sumRate = Math.trunc((sumRate * 100)) / 100
 
+        if(config.db.id === 'pent') {
+            if(v.betCount === 0) {
+                sumRate = sumRate - 0.2
+
+                if(sumRate < 1) {
+                    sumRate = 1
+                }
+            }
+            else {
+                if(sumRate < 1.3) {
+                    sumRate = sumRate - 0.2
+
+                    if(sumRate < 1) {
+                        sumRate = 1
+                    }
+                }
+            }
+        }
+
         if(sumRate > config.sportsMaxRate) {
             data.errorTitle = '배팅 실패 - 400'
             data = tools.denyValidate(data, 'betRate', `최대 ${numeral(config.sportsMaxRate).format('0,0')}배 까지 배팅 가능 합니다.`)

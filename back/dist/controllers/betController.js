@@ -365,6 +365,22 @@ class BetController {
                 sumRate *= arrayRate[i];
             }
             sumRate = Math.trunc((sumRate * 100)) / 100;
+            if (config_1.default.db.id === 'pent') {
+                if (v.betCount === 0) {
+                    sumRate = sumRate - 0.2;
+                    if (sumRate < 1) {
+                        sumRate = 1;
+                    }
+                }
+                else {
+                    if (sumRate < 1.3) {
+                        sumRate = sumRate - 0.2;
+                        if (sumRate < 1) {
+                            sumRate = 1;
+                        }
+                    }
+                }
+            }
             if (sumRate > config_1.default.sportsMaxRate) {
                 data.errorTitle = '배팅 실패 - 400';
                 data = tools_1.default.denyValidate(data, 'betRate', `최대 ${(0, modules_1.numeral)(config_1.default.sportsMaxRate).format('0,0')}배 까지 배팅 가능 합니다.`);
