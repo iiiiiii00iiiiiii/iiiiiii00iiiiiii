@@ -350,15 +350,15 @@ export default class BetController implements IBetController {
         sumRate = Math.trunc((sumRate * 100)) / 100
 
         if(config.db.id === 'pent') {
-            if(v.betCount === 0) {
+            if(v.betCount === 1) {
                 sumRate = sumRate - 0.2
 
                 if(sumRate < 1) {
                     sumRate = 1
                 }
             }
-            else {
-                if(sumRate < 1.3) {
+            else if(v.betCount > 1) {
+                if(sumRate <= 1.3) {
                     sumRate = sumRate - 0.2
 
                     if(sumRate < 1) {
