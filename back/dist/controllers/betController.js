@@ -361,8 +361,12 @@ class BetController {
             }
             // console.log(bonusRate, v.bonusRate)
             let sumRate = bonusRate ? bonusRate : 1;
+            let overRate = 0;
             for (let i = 0; i < arrayRate.length; i++) {
                 sumRate *= arrayRate[i];
+                if (arrayRate[i] > 1.3) {
+                    overRate++;
+                }
             }
             sumRate = Math.trunc((sumRate * 100)) / 100;
             if (config_1.default.db.id === 'pent') {
@@ -373,7 +377,7 @@ class BetController {
                     }
                 }
                 else if (v.betCount > 1) {
-                    if (sumRate <= 1.3) {
+                    if (overRate < 2) {
                         sumRate = sumRate - 0.2;
                         if (sumRate < 1) {
                             sumRate = 1;

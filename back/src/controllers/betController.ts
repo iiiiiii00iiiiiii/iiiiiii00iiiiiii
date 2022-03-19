@@ -344,8 +344,13 @@ export default class BetController implements IBetController {
         // console.log(bonusRate, v.bonusRate)
 
         let sumRate: number = bonusRate ? bonusRate : 1
+        let overRate: number = 0
+
         for(let i: number = 0; i < arrayRate.length; i++) {
             sumRate *= arrayRate[i]
+            if(arrayRate[i] > 1.3) {
+                overRate++
+            }
         }
         sumRate = Math.trunc((sumRate * 100)) / 100
 
@@ -358,7 +363,7 @@ export default class BetController implements IBetController {
                 }
             }
             else if(v.betCount > 1) {
-                if(sumRate <= 1.3) {
+                if(overRate < 2) {
                     sumRate = sumRate - 0.2
 
                     if(sumRate < 1) {
