@@ -279,6 +279,12 @@ export default class BetController implements IBetController {
         for(let i = 0; i < v.betCart.length; i++) {
             let gameIndex: any = v.resultSportsInfo.findIndex((x: any) => x._id.toString() === v.betCart[i]._id)
 
+            // 경기시간 체크
+            if(v.gameKind !== 'sportsLive' && v.gameKind !== 'sportsLiveKor' && v.resultSportsInfo[gameIndex].gameDateTime <= new Date()) {
+                passAll = false
+                break
+            }
+
             if(v.resultSportsInfo[gameIndex].resultStatus) { passResultStatus = false; passAll = false; console.log(1); break  }
             if(v.resultSportsInfo[gameIndex].rollbackStatus) { passRollbackStatus = false; passAll = false; console.log(2); break }
             if(v.resultSportsInfo[gameIndex].deleteStatus) { passDeleteStatus = false; passAll = false; console.log(3); break }

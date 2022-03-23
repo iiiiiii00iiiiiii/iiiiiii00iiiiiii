@@ -273,6 +273,11 @@ class BetController {
             let arrayRate = [];
             for (let i = 0; i < v.betCart.length; i++) {
                 let gameIndex = v.resultSportsInfo.findIndex((x) => x._id.toString() === v.betCart[i]._id);
+                // 경기시간 체크
+                if (v.gameKind !== 'sportsLive' && v.gameKind !== 'sportsLiveKor' && v.resultSportsInfo[gameIndex].gameDateTime <= new Date()) {
+                    passAll = false;
+                    break;
+                }
                 if (v.resultSportsInfo[gameIndex].resultStatus) {
                     passResultStatus = false;
                     passAll = false;

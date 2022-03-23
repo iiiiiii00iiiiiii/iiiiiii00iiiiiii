@@ -223,7 +223,7 @@ class MoneyService {
                 }
             }));
         };
-        this.setChargePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, chargeAmount, moneyMethod, ipaddress) => {
+        this.setChargePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, chargeAmount, moneyMethod, ipaddress, method) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -244,7 +244,8 @@ class MoneyService {
                         moneyMethod,
                         deleteStatus: false,
                         ipaddress: ipaddress,
-                        regDateTime: new Date()
+                        regDateTime: new Date(),
+                        method
                     };
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('money').insertOne(insertQuery);
@@ -272,7 +273,8 @@ class MoneyService {
                         projection: {
                             status: 1,
                             money: 1,
-                            regDateTime: 1
+                            regDateTime: 1,
+                            moneyMethod: 1
                         }
                     };
                     const skip = (page - 1) * config_1.default.pageSize;
@@ -361,7 +363,7 @@ class MoneyService {
                 }
             }));
         };
-        this.setExchangeLogPent = (_id, userOID, userID, userNick, userGrade, userBankOwner, isAgent, isTest, userRecommendTree, money, minigameMoney, exchangeAmount, moneyMethod) => {
+        this.setExchangeLogPent = (_id, userOID, userID, userNick, userGrade, userBankOwner, isAgent, isTest, userRecommendTree, money, minigameMoney, exchangeAmount, moneyMethod, method) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -385,7 +387,8 @@ class MoneyService {
                         adminNick: null,
                         adminGrade: null,
                         deleteStatus: false,
-                        regDateTime: new Date()
+                        regDateTime: new Date(),
+                        method
                     };
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('moneyLog').insertOne(insertQuery);
@@ -482,7 +485,7 @@ class MoneyService {
                 }
             }));
         };
-        this.setExchangePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, exchangeAmount, moneyMethod, ipaddress) => {
+        this.setExchangePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, exchangeAmount, moneyMethod, ipaddress, method) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -503,7 +506,8 @@ class MoneyService {
                         moneyMethod,
                         deleteStatus: false,
                         ipaddress: ipaddress,
-                        regDateTime: new Date()
+                        regDateTime: new Date(),
+                        method
                     };
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('money').insertOne(insertQuery);

@@ -366,7 +366,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
-                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.chargeAmount, v.moneyMethod, v.reqIpaddress);
+                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.chargeAmount, v.moneyMethod, v.reqIpaddress, 'charge');
                 if (rSetCharge.error) {
                     data.errorTitle = '충전 신청 실패 - 500';
                     res.status(500).json(data);
@@ -787,7 +787,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-환전 요청 ■■■■■■■■■■
-                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.exchangeAmount, v.moneyMethod, v.reqIpaddress);
+                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.exchangeAmount, v.moneyMethod, v.reqIpaddress, 'exchange');
                 if (rSetExchange.error) {
                     data.errorTitle = '환전 신청 실패 - 500';
                     res.status(500).json(data);
@@ -800,7 +800,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-환전 요청 로그 ■■■■■■■■■■
-                yield moneyService.setExchangeLogPent(rSetExchange.data.insertedId, v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bankOwner, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rSubtractUserMoney.data.value.money, rSubtractUserMoney.data.value.minigameMoney, v.exchangeAmount, v.moneyMethod);
+                yield moneyService.setExchangeLogPent(rSetExchange.data.insertedId, v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bankOwner, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rSubtractUserMoney.data.value.money, rSubtractUserMoney.data.value.minigameMoney, v.exchangeAmount, v.moneyMethod, 'exchange');
                 //■■■■■■■■■■ DB-환전 요청 로그 ■■■■■■■■■■
                 // ■■■■■■■■■■ DB-환전 알림 ■■■■■■■■■■
                 yield moneyService.exchangeAlarm();
@@ -951,7 +951,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-환전 요청 ■■■■■■■■■■
-                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.transferAmount, moneyMethod, v.reqIpaddress);
+                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.transferAmount, moneyMethod, v.reqIpaddress, v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney');
                 if (rSetExchange.error) {
                     data.errorTitle = '전환 신청 실패 - 500';
                     res.status(500).json(data);
@@ -964,13 +964,13 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-환전 요청 로그 ■■■■■■■■■■
-                yield moneyService.setExchangeLogPent(rSetExchange.data.insertedId, v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bankOwner, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rSubtractUserMoney.data.value.money, rSubtractUserMoney.data.value.minigameMoney, v.transferAmount, moneyMethod);
+                yield moneyService.setExchangeLogPent(rSetExchange.data.insertedId, v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bankOwner, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rSubtractUserMoney.data.value.money, rSubtractUserMoney.data.value.minigameMoney, v.transferAmount, moneyMethod, v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney');
                 //■■■■■■■■■■ DB-환전 요청 로그 ■■■■■■■■■■
                 // ■■■■■■■■■■ DB-환전 알림 ■■■■■■■■■■
                 yield moneyService.exchangeAlarm();
                 // ■■■■■■■■■■ DB-환전 알림 ■■■■■■■■■■
                 //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
-                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.transferAmount, v.moneyMethod, v.reqIpaddress);
+                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.transferAmount, v.moneyMethod, v.reqIpaddress, v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney');
                 if (rSetCharge.error) {
                     data.errorTitle = '전환 신청 실패 - 500';
                     res.status(500).json(data);

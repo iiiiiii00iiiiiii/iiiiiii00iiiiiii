@@ -418,7 +418,8 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.recommendTree,
                 v.chargeAmount,
                 v.moneyMethod,
-                v.reqIpaddress
+                v.reqIpaddress,
+                'charge'
             )
             if(rSetCharge.error) {
                 data.errorTitle = '충전 신청 실패 - 500'
@@ -911,7 +912,8 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.recommendTree,
                 v.exchangeAmount,
                 v.moneyMethod,
-                v.reqIpaddress
+                v.reqIpaddress,
+                'exchange'
             )
             if(rSetExchange.error) {
                 data.errorTitle = '환전 신청 실패 - 500'
@@ -940,7 +942,8 @@ export default class MoneyController implements IMoneyController {
                 rSubtractUserMoney.data.value.money,
                 rSubtractUserMoney.data.value.minigameMoney,
                 v.exchangeAmount,
-                v.moneyMethod
+                v.moneyMethod,
+                'exchange'
             )
             //■■■■■■■■■■ DB-환전 요청 로그 ■■■■■■■■■■
 
@@ -1118,7 +1121,8 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.recommendTree,
                 v.transferAmount,
                 moneyMethod,
-                v.reqIpaddress
+                v.reqIpaddress,
+                v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney'
             )
             if(rSetExchange.error) {
                 data.errorTitle = '전환 신청 실패 - 500'
@@ -1147,7 +1151,8 @@ export default class MoneyController implements IMoneyController {
                 rSubtractUserMoney.data.value.money,
                 rSubtractUserMoney.data.value.minigameMoney,
                 v.transferAmount,
-                moneyMethod
+                moneyMethod,
+                v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney'
             )
             //■■■■■■■■■■ DB-환전 요청 로그 ■■■■■■■■■■
 
@@ -1170,7 +1175,8 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.recommendTree,
                 v.transferAmount,
                 v.moneyMethod,
-                v.reqIpaddress
+                v.reqIpaddress,
+                v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney'
             )
             if(rSetCharge.error) {
                 data.errorTitle = '전환 신청 실패 - 500'

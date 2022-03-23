@@ -264,7 +264,8 @@ export default class MoneyService implements IMoneyService {
         userRecommendTree: Array<any>,
         chargeAmount: number,
         moneyMethod: string,
-        ipaddress: string
+        ipaddress: string,
+        method: string
     ): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -287,7 +288,8 @@ export default class MoneyService implements IMoneyService {
                     moneyMethod,
                     deleteStatus: false,
                     ipaddress: ipaddress,
-                    regDateTime: new Date()
+                    regDateTime: new Date(),
+                    method
                 }
 
                 const pool: any = await mongoDB.connect()
@@ -318,7 +320,8 @@ export default class MoneyService implements IMoneyService {
                     projection: {
                         status: 1,
                         money: 1,
-                        regDateTime: 1
+                        regDateTime: 1,
+                        moneyMethod: 1
                     }
                 }
 
@@ -451,7 +454,8 @@ export default class MoneyService implements IMoneyService {
         money: number,
         minigameMoney: number,
         exchangeAmount: number,
-        moneyMethod: string
+        moneyMethod: string,
+        method: string
     ): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -477,7 +481,8 @@ export default class MoneyService implements IMoneyService {
                     adminNick: null,
                     adminGrade: null,
                     deleteStatus: false,
-                    regDateTime: new Date()
+                    regDateTime: new Date(),
+                    method
                 }
 
                 const pool: any = await mongoDB.connect()
@@ -597,7 +602,8 @@ export default class MoneyService implements IMoneyService {
         userRecommendTree: Array<any>,
         exchangeAmount: number,
         moneyMethod: string,
-        ipaddress: string
+        ipaddress: string,
+        method: string
     ): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -620,7 +626,8 @@ export default class MoneyService implements IMoneyService {
                     moneyMethod,
                     deleteStatus: false,
                     ipaddress: ipaddress,
-                    regDateTime: new Date()
+                    regDateTime: new Date(),
+                    method
                 }
 
                 const pool: any = await mongoDB.connect()
