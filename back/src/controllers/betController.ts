@@ -1,5 +1,5 @@
 import { Request as req, Response as res } from 'express'
-import { logger, crypto, moment, mongoSanitize, numeral, uuidv4, cache } from '../lib/modules'
+import { logger, crypto, moment, mongoSanitize, numeral, uuidv4, cache, _ } from '../lib/modules'
 import config from '../config'
 import { ObjectID } from '../lib/db'
 import tools from '../lib/tools'
@@ -367,6 +367,14 @@ export default class BetController implements IBetController {
                 if(sumRate < 1) {
                     sumRate = 1
                 }
+
+                let max = _.maxBy(v.betCart, function(o: any) { return o.finalRate })
+                let indexMax = v.betCart.findIndex((x: any) => { return x._id === max._id })
+
+                v.betCart[indexMax].finalRate = v.betCart[indexMax].finalRate - 0.2
+                if(v.betCart[indexMax].finalRate < 1) {
+                    v.betCart[indexMax].finalRate = 1
+                }
             }
             else if(v.betCount > 1) {
                 if(overRate < 2) {
@@ -374,6 +382,28 @@ export default class BetController implements IBetController {
 
                     if(sumRate < 1) {
                         sumRate = 1
+                    }
+
+                    let max = _.maxBy(v.betCart, function(o: any) { return o.finalRate })
+                    let indexMax = v.betCart.findIndex((x: any) => { return x._id === max._id })
+
+                    // console.log(v.betCart[indexMax].selectRate, v.betCart[indexMax].finalRate)
+                    // console.log('=========================')
+                    while (true) {
+                        let sumRateForMax: number = bonusRate ? bonusRate : 1
+                        v.betCart[indexMax].finalRate -= 0.006
+
+                        for(let i: number = 0; i < v.betCart.length; i++) {
+                            sumRateForMax *= v.betCart[i].finalRate
+                        }
+                        sumRateForMax = Math.trunc((sumRateForMax * 100)) / 100
+
+                        // console.log(sumRate, sumRateForMax)
+
+                        if(sumRate === sumRateForMax || sumRate > sumRateForMax) {
+                            // console.log(v.betCart[indexMax].finalRate)
+                            break
+                        }
                     }
                 }
             }
