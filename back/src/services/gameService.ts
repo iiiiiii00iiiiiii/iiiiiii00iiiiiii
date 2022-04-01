@@ -225,7 +225,7 @@ export default class GameService implements IGameService {
             }
         })
     }
-    public getPrematchCrossListPent = (page: number, sport: string): Promise<TService> => {
+    public getPrematchCrossListPent = (page: number, sport: string, league: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -242,6 +242,7 @@ export default class GameService implements IGameService {
                 }
 
                 if(sport) findQuery.sport = sport
+                if(league) findQuery.leagueKor = league
 
                 const whatQuery: any = {
                     projection: {

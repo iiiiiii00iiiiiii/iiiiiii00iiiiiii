@@ -946,6 +946,15 @@ export default class GameController implements IGameController {
                     required: '파라메터 오류. 관리자에게 문의하세요.',
                     or: '파라메터 오류. 관리자에게 문의하세요.'
                 }
+            },
+            league: {
+                value: req.query.league,
+                rule: {
+                    required: false
+                },
+                message: {
+                    required: '파라메터 오류. 관리자에게 문의하세요.'
+                }
             }
         }
 
@@ -978,7 +987,7 @@ export default class GameController implements IGameController {
 
         try {
             // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
-            const r: TService = await gameService.getPrematchCrossListPent(v.page, v.sport)
+            const r: TService = await gameService.getPrematchCrossListPent(v.page, v.sport, v.league)
             if(r.error) {
                 data.errorTitle = '스포츠 실패 - 500'
                 res.status(500).json(data)

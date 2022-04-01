@@ -212,7 +212,7 @@ class GameService {
                 }
             }));
         };
-        this.getPrematchCrossListPent = (page, sport) => {
+        this.getPrematchCrossListPent = (page, sport, league) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -228,6 +228,8 @@ class GameService {
                     };
                     if (sport)
                         findQuery.sport = sport;
+                    if (league)
+                        findQuery.leagueKor = league;
                     const whatQuery = {
                         projection: {
                             sport: 1,
