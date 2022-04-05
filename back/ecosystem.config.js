@@ -22,29 +22,29 @@
 //     versionKey: 'version'
 // }
 
-// // META
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[META]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 2011,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 2011,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 2010,
-//     port: 2011,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// META
+module.exports = {
+    apps: [
+        {
+            name: "[META]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 2011,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 2011,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 2010,
+    port: 2011,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // THREE
 // module.exports = {
@@ -118,29 +118,29 @@
 //     versionKey: 'version'
 // }
 
-// BACKNUM
-module.exports = {
-    apps: [
-        {
-            name: "[BACKNUM]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 2001,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 2001,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 2000,
-    port: 2001,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // BACKNUM
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[BACKNUM]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 2001,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 2001,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 2000,
+//     port: 2001,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
 
 // // NAPOLI
 // module.exports = {
