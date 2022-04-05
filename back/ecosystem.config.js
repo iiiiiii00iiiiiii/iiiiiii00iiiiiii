@@ -94,29 +94,29 @@
 //     versionKey: 'version'
 // }
 
-// MCLAREN
-module.exports = {
-    apps: [
-        {
-            name: "[MCLAREN]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 2019,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 2019,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 2018,
-    port: 2019,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // MCLAREN
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[MCLAREN]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 2019,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 2019,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 2018,
+//     port: 2019,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
 
 // // BACKNUM
 // module.exports = {
@@ -166,29 +166,29 @@ module.exports = {
 //     versionKey: 'version'
 // }
 
-// // PENT
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[PENT]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 3003,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 3003,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 3002,
-//     port: 3003,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// PENT
+module.exports = {
+    apps: [
+        {
+            name: "[PENT]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 3003,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 3003,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 3002,
+    port: 3003,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // NS
 // module.exports = {
