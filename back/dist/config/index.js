@@ -38,43 +38,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         endpoint: 'http://kplayone.com'
 //     }
 // }
-// META
-const config = {
-    db: {
-        host: '18.183.255.153',
-        port: 36183,
-        name: 'meta',
-        id: 'meta',
-        password: 'Qufdl@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 1,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxRate: 100,
-    powerballTime: 30,
-    powerladderTime: 50,
-    kenoladderTime: 50,
-    boglePowerballTime: 30,
-    bogleladderTime: 30,
-    googlePowerball1: 15,
-    googlePowerball3: 30,
-    kplay: {
-        code: 'SFT0002',
-        token: 'imWlwA8BvfhZpCmas6x42Ow0itUGIV7j',
-        key: 'Jgl6qopQoaDUD0HUq9YyiIdLif7tDR0i',
-        endpoint: 'http://kplayone.com'
-        // http://api.kplay.jmt.soft24.io/api
-    },
-    canCancelBetTime: 10,
-    canCancelBetBeforeGameTime: 10,
-    canCancelBetCount: 5
-};
+// // META
+// const config: TConfig = {
+//     db: {
+//         host: '18.183.255.153',
+//         port: 36183,
+//         name: 'meta',
+//         id: 'meta',
+//         password: 'Qufdl@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 1,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxRate: 100,
+//     powerballTime: 30,
+//     powerladderTime: 50,
+//     kenoladderTime: 50,
+//     boglePowerballTime: 30,
+//     bogleladderTime: 30,
+//     googlePowerball1: 15,
+//     googlePowerball3: 30,
+//     kplay: {
+//         code: 'SFT0002',
+//         token: 'imWlwA8BvfhZpCmas6x42Ow0itUGIV7j',
+//         key: 'Jgl6qopQoaDUD0HUq9YyiIdLif7tDR0i',
+//         endpoint: 'http://kplayone.com'
+//         // http://api.kplay.jmt.soft24.io/api
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 5
+// }
 // // THREE
 // const config: TConfig = {
 //     db: {
@@ -112,43 +112,43 @@ const config = {
 //     canCancelBetBeforeGameTime: 10,
 //     canCancelBetCount: 10
 // }
-// // DEMARK
-// const config: TConfig = {
-//     db: {
-//         host: '18.183.255.153',
-//         port: 36183,
-//         name: 'demark',
-//         id: 'demark',
-//         password: 'Qufdl@4860'
-//     },
-//     casino: {
-//         apiURL: '',
-//         operator: '',
-//         privateKey: ''
-//     },
-//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-//     expiresIn: 60 * 60 * 1,
-//     pageSize: 30,
-//     sportPageSize: 30,
-//     sportsMaxRate: 100,
-//     powerballTime: 30,
-//     powerladderTime: 30,
-//     kenoladderTime: 30,
-//     boglePowerballTime: 30,
-//     bogleladderTime: 30,
-//     googlePowerball1: 15,
-//     googlePowerball3: 30,
-//     kplay: {
-//         code: 'SFT0003',
-//         token: 'BkqULUffEMm1Zlk3zvCQC1DQ1f25fulo',
-//         key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
-//         endpoint: 'http://kplayone.com'
-//         // http://api.kplay.jmk.soft24.io/api
-//     },
-//     canCancelBetTime: 10,
-//     canCancelBetBeforeGameTime: 10,
-//     canCancelBetCount: 2
-// }
+// DEMARK
+const config = {
+    db: {
+        host: '18.183.255.153',
+        port: 36183,
+        name: 'demark',
+        id: 'demark',
+        password: 'Qufdl@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 1,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 100,
+    powerballTime: 30,
+    powerladderTime: 30,
+    kenoladderTime: 30,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30,
+    kplay: {
+        code: 'SFT0003',
+        token: 'BkqULUffEMm1Zlk3zvCQC1DQ1f25fulo',
+        key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmk.soft24.io/api
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 2
+};
 // // MCLAREN
 // const config: TConfig = {
 //     db: {
