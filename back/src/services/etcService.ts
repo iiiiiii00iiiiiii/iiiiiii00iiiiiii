@@ -89,7 +89,7 @@ export default class EtcService implements IEtcService {
                     userGrade,
                     userBankOwner,
                     userRecommendTree,
-                    setDate: new Date(setDate),
+                    setDate: moment(setDate).startOf('day').toDate(),
                     regDateTime: new Date()
                 }
 
@@ -122,6 +122,32 @@ export default class EtcService implements IEtcService {
                 resolve(r)
             } catch (err) {
                 logger.error('EtcService > getBeforeAttendance')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getBeforeAttendanceOne = (startDate: Date, userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    regDateTime: {
+                        $gte: moment(startDate).startOf('day').toDate()
+                    }
+                }
+
+                console.log(findQuery)
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('attendance').findOne(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > getBeforeAttendanceOne')
                 logger.error(err)
                 r.error = err
                 resolve(r)

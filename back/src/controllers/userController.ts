@@ -861,6 +861,8 @@ export default class UserController implements IUserController {
                 return
             }
 
+
+
             rConfigAttendance.data = _.sortBy(rConfigAttendance.data, 'date').reverse()
 
             const maxDate: number = rConfigAttendance.data[0].date
@@ -876,6 +878,9 @@ export default class UserController implements IUserController {
                 return
             }
             // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 데이터 가져오기 ■■■■■■■■■■
+
+            // console.log(rBefore.data)
+            // console.log(rBefore.data.length)
 
             let chainCount: number = rBefore.data > 0 ? 1 : 0
             let beforeDate: Date | null = null
@@ -901,33 +906,47 @@ export default class UserController implements IUserController {
 
             for(let i: number = 0; i < rConfigAttendance.data.length; i++) {
                 // console.log(rBeforeCount.data, rConfigAttendance.data[i].date)
+                // console.log(rConfigAttendance.data[i])
 
                 if(chainCount + 1 === rConfigAttendance.data[i].date) {
                     if(rConfigAttendance.data[i].amount === 0) {
                         continue
                     }
 
-                    // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
-                    const rAddPoint: TService = await moneyService.addPointForAttendance(v.decoded._id, rConfigAttendance.data[i].amount)
-                    // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+                    const startDate: Date = moment().subtract(chainCount + 1, 'day').startOf('day').toDate()
 
-                    // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
-                    await moneyService.addMoneyForAttendanceLog(
-                        v.decoded._id,
-                        v.decoded.id,
-                        v.decoded.nick,
-                        v.decoded.grade,
-                        v.decoded.bankOwner,
-                        rUserInfo.data.recommendTree,
-                        rConfigAttendance.data[i].amount,
-                        rAddPoint.data.value.point,
-                        rUserInfo.data.isTest,
-                        rUserInfo.data.isAgent,
-                        rConfigAttendance.data[i].date
-                    )
-                    // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+                    if(chainCount + 1 > 1) {
+                        const rBeforeAttendance: TService = await etcService.getBeforeAttendanceOne(startDate, v.decoded._id)
+                        if(rBeforeAttendance.error) {
+                            console.log(rBefore.error)
+                            res.status(500).end()
+                            return
+                        }
 
-                    break
+                        if(rBeforeAttendance.data === null) {
+                            // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+                            const rAddPoint: TService = await moneyService.addPointForAttendance(v.decoded._id, rConfigAttendance.data[i].amount)
+                            // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+
+                            // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+                            await moneyService.addMoneyForAttendanceLog(
+                                v.decoded._id,
+                                v.decoded.id,
+                                v.decoded.nick,
+                                v.decoded.grade,
+                                v.decoded.bankOwner,
+                                rUserInfo.data.recommendTree,
+                                rConfigAttendance.data[i].amount,
+                                rAddPoint.data.value.point,
+                                rUserInfo.data.isTest,
+                                rUserInfo.data.isAgent,
+                                rConfigAttendance.data[i].date
+                            )
+                            // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+
+                            break
+                        }
+                    }
                 }
 
                 if(rConfigAttendance.data[i].date === 1) {

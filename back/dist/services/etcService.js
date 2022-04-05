@@ -78,7 +78,7 @@ class EtcService {
                         userGrade,
                         userBankOwner,
                         userRecommendTree,
-                        setDate: new Date(setDate),
+                        setDate: (0, modules_1.moment)(setDate).startOf('day').toDate(),
                         regDateTime: new Date()
                     };
                     const pool = yield db_1.mongoDB.connect();
@@ -109,6 +109,29 @@ class EtcService {
                 }
                 catch (err) {
                     modules_1.logger.error('EtcService > getBeforeAttendance');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getBeforeAttendanceOne = (startDate, userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        regDateTime: {
+                            $gte: (0, modules_1.moment)(startDate).startOf('day').toDate()
+                        }
+                    };
+                    console.log(findQuery);
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('attendance').findOne(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getBeforeAttendanceOne');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
