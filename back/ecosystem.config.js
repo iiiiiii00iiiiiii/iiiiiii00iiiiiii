@@ -214,53 +214,53 @@
 //     versionKey: 'version'
 // }
 
-// X1
-module.exports = {
-    apps: [
-        {
-            name: "[X1]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 7501,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 7501,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 7500,
-    port: 7501,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
-
-// // X2
+// // X1
 // module.exports = {
 //     apps: [
 //         {
-//             name: "[X2]CLIENT",
+//             name: "[X1]CLIENT",
 //             script: "./dist/app.js",
 //             env: {
-//                 "PORT": 7503,
+//                 "PORT": 7501,
 //                 "NODE_ENV": "development"
 //             },
 //             env_production: {
-//                 "PORT": 7503,
+//                 "PORT": 7501,
 //                 "NODE_ENV": "production"
 //             }
 //         }
 //     ],
-//     frontPort: 7502,
-//     port: 7503,
+//     frontPort: 7500,
+//     port: 7501,
 //     pageSize: 30,
 //     pageLimit: 7,
 //     version: '0.0.0',
 //     versionKey: 'version'
 // }
+
+// X2
+module.exports = {
+    apps: [
+        {
+            name: "[X2]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 7503,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 7503,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 7502,
+    port: 7503,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // X3
 // module.exports = {
