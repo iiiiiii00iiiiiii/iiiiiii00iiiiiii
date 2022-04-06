@@ -290,7 +290,7 @@
 module.exports = {
     apps: [
         {
-            name: "[X1]CLIENT",
+            name: "[X1-1]CLIENT",
             script: "./dist/app.js",
             env: {
                 "PORT": 7601,
