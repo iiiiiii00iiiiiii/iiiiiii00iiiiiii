@@ -70,29 +70,29 @@
 //     versionKey: 'version'
 // }
 
-// // DEMARK
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[DEMARK]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 2017,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 2017,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 2016,
-//     port: 2017,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// DEMARK
+module.exports = {
+    apps: [
+        {
+            name: "[DEMARK]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 2017,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 2017,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 2016,
+    port: 2017,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // MCLAREN
 // module.exports = {
@@ -262,26 +262,26 @@
 //     versionKey: 'version'
 // }
 
-// X3
-module.exports = {
-    apps: [
-        {
-            name: "[X3]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 7505,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 7505,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 7504,
-    port: 7505,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // X3
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[X3]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 7505,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 7505,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 7504,
+//     port: 7505,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
