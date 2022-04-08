@@ -166,29 +166,29 @@
 //     versionKey: 'version'
 // }
 
-// // PENT
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[PENT]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 3003,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 3003,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 3002,
-//     port: 3003,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// PENT
+module.exports = {
+    apps: [
+        {
+            name: "[PENT]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 3003,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 3003,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 3002,
+    port: 3003,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // NS
 // module.exports = {
@@ -286,26 +286,26 @@
 //     versionKey: 'version'
 // }
 
-// X1-1
-module.exports = {
-    apps: [
-        {
-            name: "[X1-1]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 7601,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 7601,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 7600,
-    port: 7601,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // X1-1
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[X1-1]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 7601,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 7601,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 7600,
+//     port: 7601,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }

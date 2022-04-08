@@ -136,15 +136,18 @@ export default class EtcService implements IEtcService {
             try {
                 const findQuery: any = {
                     userOID: new ObjectID(userOID),
-                    regDateTime: {
-                        $gte: moment(startDate).startOf('day').toDate()
+                    // setDate: moment(startDate).startOf('day').toDate()
+                    setDate: {
+                        $gt: moment(startDate).startOf('day').toDate(),
+                        $lt: moment(startDate).endOf('day').toDate()
                     }
                 }
 
-                console.log(findQuery)
+                // console.log(findQuery)
 
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('attendance').findOne(findQuery)
+                // console.log(r.data)
                 resolve(r)
             } catch (err) {
                 logger.error('EtcService > getBeforeAttendanceOne')

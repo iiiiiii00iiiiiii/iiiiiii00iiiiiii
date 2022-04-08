@@ -121,13 +121,16 @@ class EtcService {
                 try {
                     const findQuery = {
                         userOID: new db_1.ObjectID(userOID),
-                        regDateTime: {
-                            $gte: (0, modules_1.moment)(startDate).startOf('day').toDate()
+                        // setDate: moment(startDate).startOf('day').toDate()
+                        setDate: {
+                            $gt: (0, modules_1.moment)(startDate).startOf('day').toDate(),
+                            $lt: (0, modules_1.moment)(startDate).endOf('day').toDate()
                         }
                     };
-                    console.log(findQuery);
+                    // console.log(findQuery)
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('attendance').findOne(findQuery);
+                    // console.log(r.data)
                     resolve(r);
                 }
                 catch (err) {

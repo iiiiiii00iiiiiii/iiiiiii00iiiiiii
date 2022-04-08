@@ -901,11 +901,13 @@ export default class UserController implements IUserController {
                 beforeDate = rBefore.data[i].setDate
             }
 
+            // console.log(beforeDate)
+            // console.log(moment(beforeDate).format('YYYY-MM-DD'))
             // console.log(chainCount)
 
 
             for(let i: number = 0; i < rConfigAttendance.data.length; i++) {
-                // console.log(rBeforeCount.data, rConfigAttendance.data[i].date)
+                //console.log(rBefore.data, rConfigAttendance.data[i].date)
                 // console.log(rConfigAttendance.data[i])
 
                 if(chainCount + 1 === rConfigAttendance.data[i].date) {
@@ -914,6 +916,9 @@ export default class UserController implements IUserController {
                     }
 
                     const startDate: Date = moment().subtract(chainCount + 1, 'day').startOf('day').toDate()
+                    console.log(moment(startDate).format('YYYY-MM-DD HH:mm:ss'))
+
+                    // console.log(chainCount + 1)
 
                     if(chainCount + 1 > 1) {
                         const rBeforeAttendance: TService = await etcService.getBeforeAttendanceOne(startDate, v.decoded._id)
@@ -922,6 +927,8 @@ export default class UserController implements IUserController {
                             res.status(500).end()
                             return
                         }
+
+                        // console.log(rBeforeAttendance.data)
 
                         if(rBeforeAttendance.data === null) {
                             // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
