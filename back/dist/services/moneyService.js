@@ -223,7 +223,7 @@ class MoneyService {
                 }
             }));
         };
-        this.setChargePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, chargeAmount, moneyMethod, ipaddress, method) => {
+        this.setChargePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, memoShort, chargeAmount, moneyMethod, ipaddress, method) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -242,6 +242,7 @@ class MoneyService {
                         recommendTree: userRecommendTree,
                         money: (0, modules_1.mongoSanitize)(chargeAmount),
                         moneyMethod,
+                        memoShort,
                         deleteStatus: false,
                         ipaddress: ipaddress,
                         regDateTime: new Date(),
@@ -485,7 +486,7 @@ class MoneyService {
                 }
             }));
         };
-        this.setExchangePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, exchangeAmount, moneyMethod, ipaddress, method) => {
+        this.setExchangePent = (userOID, userID, userNick, userGrade, userBank, userBankOwner, userBankAccount, isAgent, isTest, userRecommendTree, memoShort, exchangeAmount, moneyMethod, ipaddress, method) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -504,6 +505,7 @@ class MoneyService {
                         recommendTree: userRecommendTree,
                         money: (0, modules_1.mongoSanitize)(exchangeAmount),
                         moneyMethod,
+                        memoShort,
                         deleteStatus: false,
                         ipaddress: ipaddress,
                         regDateTime: new Date(),

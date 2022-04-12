@@ -388,7 +388,7 @@ export default class MoneyController implements IMoneyController {
                 return
             }
 
-            const getKeys: Array<string> = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree']
+            const getKeys: Array<string> = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'memoShort']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
             const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
@@ -416,6 +416,7 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.isAgent,
                 rUserInfo.data.isTest,
                 rUserInfo.data.recommendTree,
+                rUserInfo.data.memoShort,
                 v.chargeAmount,
                 v.moneyMethod,
                 v.reqIpaddress,
@@ -859,7 +860,7 @@ export default class MoneyController implements IMoneyController {
                 return
             }
 
-            const getKeys: Array<string> = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'passwordExchange']
+            const getKeys: Array<string> = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'passwordExchange', 'memoShort']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
             const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
@@ -910,6 +911,7 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.isAgent,
                 rUserInfo.data.isTest,
                 rUserInfo.data.recommendTree,
+                rUserInfo.data.memoShort,
                 v.exchangeAmount,
                 v.moneyMethod,
                 v.reqIpaddress,
@@ -1034,7 +1036,7 @@ export default class MoneyController implements IMoneyController {
                 return
             }
 
-            const getKeys: Array<string> = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'money', 'minigameMoney']
+            const getKeys: Array<string> = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'money', 'minigameMoney', 'memoShort']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
             const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
@@ -1119,6 +1121,7 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.isAgent,
                 rUserInfo.data.isTest,
                 rUserInfo.data.recommendTree,
+                rUserInfo.data.memoShort,
                 v.transferAmount,
                 moneyMethod,
                 v.reqIpaddress,
@@ -1173,6 +1176,7 @@ export default class MoneyController implements IMoneyController {
                 rUserInfo.data.isAgent,
                 rUserInfo.data.isTest,
                 rUserInfo.data.recommendTree,
+                rUserInfo.data.memoShort,
                 v.transferAmount,
                 v.moneyMethod,
                 v.reqIpaddress,

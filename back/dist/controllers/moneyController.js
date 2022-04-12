@@ -351,7 +351,7 @@ class MoneyController {
                     res.status(400).json(data);
                     return;
                 }
-                const getKeys = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree'];
+                const getKeys = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'memoShort'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
@@ -366,7 +366,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
-                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.chargeAmount, v.moneyMethod, v.reqIpaddress, 'charge');
+                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rUserInfo.data.memoShort, v.chargeAmount, v.moneyMethod, v.reqIpaddress, 'charge');
                 if (rSetCharge.error) {
                     data.errorTitle = '충전 신청 실패 - 500';
                     res.status(500).json(data);
@@ -752,7 +752,7 @@ class MoneyController {
                     res.status(400).json(data);
                     return;
                 }
-                const getKeys = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'passwordExchange'];
+                const getKeys = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'passwordExchange', 'memoShort'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
@@ -787,7 +787,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-환전 요청 ■■■■■■■■■■
-                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.exchangeAmount, v.moneyMethod, v.reqIpaddress, 'exchange');
+                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rUserInfo.data.memoShort, v.exchangeAmount, v.moneyMethod, v.reqIpaddress, 'exchange');
                 if (rSetExchange.error) {
                     data.errorTitle = '환전 신청 실패 - 500';
                     res.status(500).json(data);
@@ -884,7 +884,7 @@ class MoneyController {
                     res.status(400).json(data);
                     return;
                 }
-                const getKeys = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'money', 'minigameMoney'];
+                const getKeys = ['id', 'nick', 'grade', 'bank', 'bankOwner', 'bankAccount', 'isAgent', 'isTest', 'recommendTree', 'money', 'minigameMoney', 'memoShort'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
@@ -951,7 +951,7 @@ class MoneyController {
                     return;
                 }
                 //■■■■■■■■■■ DB-환전 요청 ■■■■■■■■■■
-                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.transferAmount, moneyMethod, v.reqIpaddress, v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney');
+                const rSetExchange = yield moneyService.setExchangePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rUserInfo.data.memoShort, v.transferAmount, moneyMethod, v.reqIpaddress, v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney');
                 if (rSetExchange.error) {
                     data.errorTitle = '전환 신청 실패 - 500';
                     res.status(500).json(data);
@@ -970,7 +970,7 @@ class MoneyController {
                 yield moneyService.exchangeAlarm();
                 // ■■■■■■■■■■ DB-환전 알림 ■■■■■■■■■■
                 //■■■■■■■■■■ DB-충전 요청 ■■■■■■■■■■
-                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, v.transferAmount, v.moneyMethod, v.reqIpaddress, v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney');
+                const rSetCharge = yield moneyService.setChargePent(v.decoded._id, rUserInfo.data.id, rUserInfo.data.nick, rUserInfo.data.grade, rUserInfo.data.bank, rUserInfo.data.bankOwner, rUserInfo.data.bankAccount, rUserInfo.data.isAgent, rUserInfo.data.isTest, rUserInfo.data.recommendTree, rUserInfo.data.memoShort, v.transferAmount, v.moneyMethod, v.reqIpaddress, v.moneyMethod === 'money' ? 'transferMinigameMoneyToMoney' : 'transferMoneyToMinigameMoney');
                 if (rSetCharge.error) {
                     data.errorTitle = '전환 신청 실패 - 500';
                     res.status(500).json(data);
