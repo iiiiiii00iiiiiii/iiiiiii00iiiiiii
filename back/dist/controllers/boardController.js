@@ -766,7 +766,7 @@ class MoneyController {
             }
             // validate end
             try {
-                const getKeys = ['recommendTree'];
+                const getKeys = ['recommendTree', 'memoShort'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
@@ -776,7 +776,7 @@ class MoneyController {
                 }
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 // ■■■■■■■■■■ DB-문의 등록 ■■■■■■■■■■
-                const r = yield boardService.help(v.title, v.content, v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, v.decoded.isAgent, v.reqIpaddress);
+                const r = yield boardService.help(v.title, v.content, v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, v.decoded.isAgent, rUserInfo.data.memoShort, v.reqIpaddress);
                 if (r.error) {
                     data.errorTitle = '문의하기 실패 - 500';
                     res.status(500).json(data);
@@ -820,7 +820,7 @@ class MoneyController {
                     res.status(500).json(data);
                     return;
                 }
-                getKeys = ['recommendTree'];
+                getKeys = ['recommendTree', 'memoShort'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
@@ -835,7 +835,7 @@ class MoneyController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-계좌 문의 가져오기 ■■■■■■■■■■
-                const rChargeInformation = yield boardService.chargeInformation(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, v.decoded.isAgent, v.reqIpaddress);
+                const rChargeInformation = yield boardService.chargeInformation(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, v.decoded.isAgent, rUserInfo.data.memoShort, v.reqIpaddress);
                 if (rChargeInformation.error) {
                     data.errorTitle = '입금계좌 문의 실패 - 500';
                     res.status(500).json(data);

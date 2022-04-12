@@ -401,7 +401,7 @@ class BoardService {
                 }
             }));
         };
-        this.help = (title, content, userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, isAgent, ipaddress) => {
+        this.help = (title, content, userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, isAgent, memoShort, ipaddress) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -421,6 +421,7 @@ class BoardService {
                         readAnswerStatus: false,
                         deleteStatus: false,
                         isAgent,
+                        memoShort,
                         ipaddress,
                         regDateTime: new Date()
                     };
@@ -460,7 +461,7 @@ class BoardService {
                 }
             }));
         };
-        this.chargeInformation = (userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, isAgent, ipaddress) => {
+        this.chargeInformation = (userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, isAgent, memoShort, ipaddress) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -480,6 +481,7 @@ class BoardService {
                         readAnswerStatus: false,
                         deleteStatus: false,
                         isAgent,
+                        memoShort,
                         ipaddress,
                         regDateTime: new Date()
                     };

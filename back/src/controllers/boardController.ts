@@ -806,7 +806,7 @@ export default class MoneyController implements IMoneyController {
         // validate end
 
         try {
-            const getKeys: Array<string> = ['recommendTree']
+            const getKeys: Array<string> = ['recommendTree', 'memoShort']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
             const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
@@ -827,6 +827,7 @@ export default class MoneyController implements IMoneyController {
                 v.decoded.bankOwner,
                 rUserInfo.data.recommendTree,
                 v.decoded.isAgent,
+                rUserInfo.data.memoShort,
                 v.reqIpaddress
             )
             if(r.error) {
@@ -878,7 +879,7 @@ export default class MoneyController implements IMoneyController {
                 return
             }
 
-            getKeys = ['recommendTree']
+            getKeys = ['recommendTree', 'memoShort']
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
             const rUserInfo: TService = await userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress)
             if(rUserInfo.error) {
@@ -903,6 +904,7 @@ export default class MoneyController implements IMoneyController {
                 v.decoded.bankOwner,
                 rUserInfo.data.recommendTree,
                 v.decoded.isAgent,
+                rUserInfo.data.memoShort,
                 v.reqIpaddress
             )
             if(rChargeInformation.error) {

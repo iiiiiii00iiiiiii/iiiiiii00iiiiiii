@@ -451,6 +451,7 @@ export default class BoardService implements IBoardService {
         userBankOwner: string,
         userRecommendTree: Array<any>,
         isAgent: boolean,
+        memoShort: string,
         ipaddress: string
     ): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
@@ -473,6 +474,7 @@ export default class BoardService implements IBoardService {
                     readAnswerStatus: false,
                     deleteStatus: false,
                     isAgent,
+                    memoShort,
                     ipaddress,
                     regDateTime: new Date()
                 }
@@ -524,6 +526,7 @@ export default class BoardService implements IBoardService {
         userBankOwner: string,
         userRecommendTree: Array<any>,
         isAgent: boolean,
+        memoShort: string,
         ipaddress: string
     ): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
@@ -546,6 +549,7 @@ export default class BoardService implements IBoardService {
                     readAnswerStatus: false,
                     deleteStatus: false,
                     isAgent,
+                    memoShort,
                     ipaddress,
                     regDateTime: new Date()
                 }
