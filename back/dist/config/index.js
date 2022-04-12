@@ -803,44 +803,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         new ObjectId("6042a53474df2b206ec41649")
 //     ]
 // }
-// PENT
-const config = {
-    db: {
-        host: '18.181.237.109',
-        port: 36186,
-        name: 'pent',
-        id: 'pent',
-        password: 'Pent@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 1,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxRate: 100,
-    powerballTime: 50,
-    powerladderTime: 50,
-    kenoladderTime: 50,
-    boglePowerballTime: 50,
-    bogleladderTime: 50,
-    googlePowerball1: 15,
-    googlePowerball3: 50,
-    kplay: {
-        code: '',
-        token: '',
-        key: '',
-        endpoint: 'http://kplayone.com'
-        // http://api.kplay.jmk.soft24.io/api
-    },
-    canCancelBetTime: 10,
-    canCancelBetBeforeGameTime: 10,
-    canCancelBetCount: 10,
-    displaySportCross: []
-};
+// // PENT
+// const config: TConfig = {
+//     db: {
+//         host: '18.181.237.109',
+//         port: 36186,
+//         name: 'pent',
+//         id: 'pent',
+//         password: 'Pent@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 1,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxRate: 100,
+//     powerballTime: 50,
+//     powerladderTime: 50,
+//     kenoladderTime: 50,
+//     boglePowerballTime: 50,
+//     bogleladderTime: 50,
+//     googlePowerball1: 15,
+//     googlePowerball3: 50,
+//     kplay: {
+//         code: '',
+//         token: '',
+//         key: '',
+//         endpoint: 'http://kplayone.com'
+//         // http://api.kplay.jmk.soft24.io/api
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 10,
+//     displaySportCross: []
+// }
 // // NS
 // const config: TConfig = {
 //     db: {
@@ -879,41 +879,41 @@ const config = {
 //     canCancelBetCount: 10,
 //     displaySportCross: []
 // }
-// // X
-// const config: TConfig = {
-//     db: {
-//         host: '18.183.255.153',
-//         port: 36183,
-//         name: 'xtest',
-//         id: 'xtest',
-//         password: 'Xtest@4860'
-//     },
-//     casino: {
-//         apiURL: '',
-//         operator: '',
-//         privateKey: ''
-//     },
-//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-//     expiresIn: 60 * 60 * 1,
-//     pageSize: 30,
-//     sportPageSize: 30,
-//     sportsMaxRate: 100,
-//     powerballTime: 50,
-//     powerladderTime: 50,
-//     kenoladderTime: 50,
-//     boglePowerballTime: 50,
-//     bogleladderTime: 50,
-//     googlePowerball1: 15,
-//     googlePowerball3: 50,
-//     kplay: {
-//         code: '',
-//         token: '',
-//         key: '',
-//         endpoint: 'http://kplayone.com'
-//     },
-//     canCancelBetTime: 10,
-//     canCancelBetBeforeGameTime: 10,
-//     canCancelBetCount: 10,
-//     displaySportCross: []
-// }
+// X
+const config = {
+    db: {
+        host: '18.183.255.153',
+        port: 36183,
+        name: 'xtest',
+        id: 'xtest',
+        password: 'Xtest@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 1,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 100,
+    powerballTime: 50,
+    powerladderTime: 50,
+    kenoladderTime: 50,
+    boglePowerballTime: 50,
+    bogleladderTime: 50,
+    googlePowerball1: 15,
+    googlePowerball3: 50,
+    kplay: {
+        code: '',
+        token: '',
+        key: '',
+        endpoint: 'http://kplayone.com'
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 10,
+    displaySportCross: []
+};
 exports.default = config;

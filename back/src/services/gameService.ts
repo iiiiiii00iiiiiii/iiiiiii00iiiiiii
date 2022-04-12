@@ -121,11 +121,67 @@ export default class GameService implements IGameService {
                     },
                     showStatus: true,
                     sport: {
-                        $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LOL', 'MMA']
+                        $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LoL', 'MMA']
                     }
                 }
 
                 if(sport) findQuery.sport = sport
+                if(league) findQuery.leagueKor = league
+
+                const whatQuery: any = {
+                    projection: {
+                        sport: 1,
+                        countryOID: 1,
+                        countryKor: 1,
+                        leagueKor: 1,
+                        gameDateTime: 1,
+                        homeTeam: 1,
+                        awayTeam: 1,
+                        homeTeamKor: 1,
+                        awayTeamKor: 1,
+                        showConfig: 1,
+                        games: 1
+                    }
+                }
+
+                const sortQuery: any = {
+                    gameDateTime: 1,
+                    leagueKor: 1
+                }
+
+                const skip: number = (page - 1) * config.sportPageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsPrematch').find(findQuery, whatQuery).sort(sortQuery).skip(skip).limit(config.sportPageSize).toArray()
+                r.count = await pool.collection('sportsPrematch').countDocuments(findQuery)
+
+                resolve(r)
+            } catch (err) {
+                logger.error('GameService > getPrematchListPent')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+    public getPrematchListModern = (page: number, sport: string, countryKor: string, league: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                let findQuery: any = {
+                    resultStatus: false,
+                    gameDateTime: {
+                        $gt: new Date()
+                    },
+                    showStatus: true,
+                    sport: {
+                        $in: ['Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Volleyball', 'Rugby League', 'LoL', 'Handball', 'MMA']
+                    }
+                }
+
+                if(sport) findQuery.sport = sport
+                if(countryKor) findQuery.countryKor = countryKor
                 if(league) findQuery.leagueKor = league
 
                 const whatQuery: any = {
@@ -249,7 +305,7 @@ export default class GameService implements IGameService {
                     },
                     showStatus: true,
                     sport: {
-                        $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LOL', 'MMA']
+                        $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LoL', 'MMA']
                     }
                 }
 
@@ -370,7 +426,7 @@ export default class GameService implements IGameService {
                     showStatus: true,
                     onAir: 'onAir',
                     sport: {
-                        $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LOL', 'MMA']
+                        $in: ['Football', 'Basketball', 'Baseball', 'Volleyball', 'Ice Hockey', 'Rugby League', 'LoL', 'MMA']
                     }
                 }
 

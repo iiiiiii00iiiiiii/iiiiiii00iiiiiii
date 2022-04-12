@@ -117,6 +117,7 @@ router.get('/get-live-kor-list', gameCtr.getLiveKorList);
 router.get('/get-prematch-list-pent', gameCtr.getPrematchListPent);
 router.get('/get-prematch-cross-list-pent', gameCtr.getPrematchCrossListPent);
 router.get('/get-live-list-pent', gameCtr.getLiveListPent);
+router.get('/get-prematch-list-modern', gameCtr.getPrematchListModern);
 router.get('/get-game-results', gameCtr.getGameResults);
 // casino
 router.get('/kpay-url', auth.checkLogin(), kplayCtr.kplayURL);
