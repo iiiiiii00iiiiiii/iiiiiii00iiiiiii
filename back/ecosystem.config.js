@@ -46,29 +46,29 @@
 //     versionKey: 'version'
 // }
 
-// // THREE
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[THREE]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 2013,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 2013,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 2012,
-//     port: 2013,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// THREE
+module.exports = {
+    apps: [
+        {
+            name: "[THREE]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 2013,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 2013,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 2012,
+    port: 2013,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // DEMARK
 // module.exports = {
@@ -142,29 +142,29 @@
 //     versionKey: 'version'
 // }
 
-// // NAPOLI
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[NAPOLI]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 3001,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 3001,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 3000,
-//     port: 3001,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// NAPOLI
+module.exports = {
+    apps: [
+        {
+            name: "[NAPOLI]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 3001,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 3001,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 3000,
+    port: 3001,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // PENT
 // module.exports = {
@@ -286,26 +286,26 @@
 //     versionKey: 'version'
 // }
 
-// X1-1
-module.exports = {
-    apps: [
-        {
-            name: "[X1-1]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 7601,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 7601,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 7600,
-    port: 7601,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // X1-1
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[X1-1]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 7601,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 7601,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 7600,
+//     port: 7601,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
