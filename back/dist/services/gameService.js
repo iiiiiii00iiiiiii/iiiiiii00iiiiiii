@@ -68,6 +68,11 @@ class GameService {
                     if (!sport && config_1.default.db.id === 'demark') {
                         findQuery.sport.$nin.push('LoL');
                     }
+                    if (config_1.default.displaySportCross.length > 0) {
+                        findQuery.leagueOID = {
+                            $in: config_1.default.displaySportCross
+                        };
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,
@@ -170,6 +175,11 @@ class GameService {
                         findQuery.sport = sport;
                     if (!sport && config_1.default.db.id === 'demark') {
                         findQuery.sport.$nin.push('LoL');
+                    }
+                    if (config_1.default.displaySportCross.length > 0) {
+                        findQuery.leagueOID = {
+                            $in: config_1.default.displaySportCross
+                        };
                     }
                     const whatQuery = {
                         projection: {

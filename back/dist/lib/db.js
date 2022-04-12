@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ObjectID = exports.mongoDB = void 0;
+exports.ObjectId = exports.ObjectID = exports.mongoDB = void 0;
 const mongodb_1 = require("mongodb");
+Object.defineProperty(exports, "ObjectId", { enumerable: true, get: function () { return mongodb_1.ObjectId; } });
 const modules_1 = require("./modules");
 const config_1 = __importDefault(require("../config"));
 const mongoClient = mongodb_1.MongoClient;
