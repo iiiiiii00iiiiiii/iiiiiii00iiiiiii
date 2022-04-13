@@ -70,53 +70,53 @@
 //     versionKey: 'version'
 // }
 
-// // DEMARK
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[DEMARK]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 2017,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 2017,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 2016,
-//     port: 2017,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
-
-// MCLAREN
+// DEMARK
 module.exports = {
     apps: [
         {
-            name: "[MCLAREN]CLIENT",
+            name: "[DEMARK]CLIENT",
             script: "./dist/app.js",
             env: {
-                "PORT": 2019,
+                "PORT": 2017,
                 "NODE_ENV": "development"
             },
             env_production: {
-                "PORT": 2019,
+                "PORT": 2017,
                 "NODE_ENV": "production"
             }
         }
     ],
-    frontPort: 2018,
-    port: 2019,
+    frontPort: 2016,
+    port: 2017,
     pageSize: 30,
     pageLimit: 7,
     version: '0.0.0',
     versionKey: 'version'
 }
+
+// // MCLAREN
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[MCLAREN]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 2019,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 2019,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 2018,
+//     port: 2019,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
 
 // // BACKNUM
 // module.exports = {
