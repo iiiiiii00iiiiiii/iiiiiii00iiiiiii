@@ -871,6 +871,12 @@ class BetService {
                 else if (v.betCart[0].gameKind === 'googlePowerball3') {
                     term = config_1.default.googlePowerball3;
                 }
+                else if (v.betCart[0].gameKind === 'coinPowerball3') {
+                    term = config_1.default.coinPowerball3;
+                }
+                else if (v.betCart[0].gameKind === 'coinPowerball') {
+                    term = config_1.default.coinPowerball;
+                }
                 try {
                     const findQuery = {
                         _id: new db_1.ObjectID(v.betCart[0]._id),

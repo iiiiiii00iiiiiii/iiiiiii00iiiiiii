@@ -954,6 +954,12 @@ export default class BetService implements IBetService {
             else if(v.betCart[0].gameKind === 'googlePowerball3') {
                 term = config.googlePowerball3
             }
+            else if(v.betCart[0].gameKind === 'coinPowerball3') {
+                term = config.coinPowerball3
+            }
+            else if(v.betCart[0].gameKind === 'coinPowerball') {
+                term = config.coinPowerball
+            }
 
 
             try {
