@@ -68,6 +68,19 @@ class GameService {
                     if (!sport && config_1.default.db.id === 'demark') {
                         findQuery.sport.$nin.push('LoL');
                     }
+                    if (!sport && config_1.default.db.id === 'napoli') {
+                        findQuery.sport.$nin.push('Handball');
+                        findQuery.sport.$nin.push('Rugby League');
+                        findQuery.sport.$nin.push('Rugby Union');
+                        findQuery.sport.$nin.push('Boxing');
+                        findQuery.sport.$nin.push('MMA');
+                        findQuery.sport.$nin.push('Golf');
+                        findQuery.sport.$nin.push('Darts');
+                        findQuery.sport.$nin.push('LoL');
+                        findQuery.sport.$nin.push('CS:GO');
+                        findQuery.sport.$nin.push('Dota 2');
+                        findQuery.sport.$nin.push('FIFA');
+                    }
                     if (config_1.default.displaySportCross.length > 0) {
                         findQuery.leagueOID = {
                             $in: config_1.default.displaySportCross
