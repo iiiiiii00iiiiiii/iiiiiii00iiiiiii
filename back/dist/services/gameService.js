@@ -671,10 +671,17 @@ class GameService {
                 let r = { error: null, data: null, count: null };
                 try {
                     let findQuery = {
-                        resultStatus: true
+                        resultStatus: true,
                     };
                     if (sport)
                         findQuery.sport = sport;
+                    if (!sport && config_1.default.db.id === 'napoli') {
+                        findQuery.sport = {
+                            $in: [
+                                'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Volleyball'
+                            ]
+                        };
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,

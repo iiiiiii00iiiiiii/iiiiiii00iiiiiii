@@ -727,10 +727,18 @@ export default class GameService implements IGameService {
 
             try {
                 let findQuery: any = {
-                    resultStatus: true
+                    resultStatus: true,
                 }
 
                 if(sport) findQuery.sport = sport
+
+                if(!sport && config.db.id === 'napoli') {
+                    findQuery.sport = {
+                        $in: [
+                            'Football', 'Basketball', 'Baseball', 'Ice Hockey', 'Volleyball'
+                        ]
+                    }
+                }
 
                 const whatQuery: any = {
                     projection: {
