@@ -740,6 +740,12 @@ export default class GameService implements IGameService {
                     }
                 }
 
+                if(config.displaySportCross.length > 0) {
+                    findQuery.leagueOID = {
+                        $in: config.displaySportCross
+                    }
+                }
+
                 const whatQuery: any = {
                     projection: {
                         sport: 1,

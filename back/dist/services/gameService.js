@@ -682,6 +682,11 @@ class GameService {
                             ]
                         };
                     }
+                    if (config_1.default.displaySportCross.length > 0) {
+                        findQuery.leagueOID = {
+                            $in: config_1.default.displaySportCross
+                        };
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,
