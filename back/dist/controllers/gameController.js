@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const modules_1 = require("../lib/modules");
+const config_1 = __importDefault(require("../config"));
 const tools_1 = __importDefault(require("../lib/tools"));
 const gameService_1 = __importDefault(require("../services/gameService"));
 const gameService = new gameService_1.default();
@@ -898,64 +899,66 @@ class GameController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
-                // for(let i: number = 0; i < r.data.length; i++) {
-                //     if(r.data[i].games.handicap) {
-                //         r.data[i].games.handicap = _.sortBy(r.data[i].games.handicap, 'homeStandard')
-                //     }
-                //     if(r.data[i].games.underOver) {
-                //         r.data[i].games.underOver = _.sortBy(r.data[i].games.underOver, 'standard')
-                //     }
-                // }
-                // for(let i: number = 0; i < r.data.length; i++) {
-                //     if(r.data[i].games.handicap) {
-                //         let h = 1000000
-                //         let indexH = -1
-                //         for(let j = 0; j < r.data[i].games.handicap.length; j++) {
-                //             let nh = Math.abs(r.data[i].games.handicap[j].homeRate - r.data[i].games.handicap[j].awayRate)
-                //             if(nh <= h) {
-                //                 h = nh
-                //                 indexH = j
-                //             }
-                //         }
-                //         r.data[i].games.handicap = [r.data[i].games.handicap[indexH]]
-                //     }
-                //     if(r.data[i].games.handicapTotalSet) {
-                //         let h = 1000000
-                //         let indexH = -1
-                //         for(let j = 0; j < r.data[i].games.handicapTotalSet.length; j++) {
-                //             let nh = Math.abs(r.data[i].games.handicapTotalSet[j].homeRate - r.data[i].games.handicapTotalSet[j].awayRate)
-                //             if(nh < h) {
-                //                 h = nh
-                //                 indexH = j
-                //             }
-                //         }
-                //         r.data[i].games.handicapTotalSet = [r.data[i].games.handicapTotalSet[indexH]]
-                //     }
-                //     if(r.data[i].games.underOver) {
-                //         let h = 1000000
-                //         let indexH = -1
-                //         for(let j = 0; j < r.data[i].games.underOver.length; j++) {
-                //             let nh = Math.abs(r.data[i].games.underOver[j].underRate - r.data[i].games.underOver[j].overRate)
-                //             if(nh <= h) {
-                //                 h = nh
-                //                 indexH = j
-                //             }
-                //         }
-                //         r.data[i].games.underOver = [r.data[i].games.underOver[indexH]]
-                //     }
-                //     if(r.data[i].games.underOverTotalSet) {
-                //         let h = 1000000
-                //         let indexH = -1
-                //         for(let j = 0; j < r.data[i].games.underOverTotalSet.length; j++) {
-                //             let nh = Math.abs(r.data[i].games.underOverTotalSet[j].underRate - r.data[i].games.underOverTotalSet[j].overRate)
-                //             if(nh < h) {
-                //                 h = nh
-                //                 indexH = j
-                //             }
-                //         }
-                //         r.data[i].games.underOverTotalSet = [r.data[i].games.underOverTotalSet[indexH]]
-                //     }
-                // }
+                if (config_1.default.db.name === 'study') {
+                    for (let i = 0; i < r.data.length; i++) {
+                        if (r.data[i].games.handicap) {
+                            r.data[i].games.handicap = modules_1._.sortBy(r.data[i].games.handicap, 'homeStandard');
+                        }
+                        if (r.data[i].games.underOver) {
+                            r.data[i].games.underOver = modules_1._.sortBy(r.data[i].games.underOver, 'standard');
+                        }
+                    }
+                    // for(let i: number = 0; i < r.data.length; i++) {
+                    //     if(r.data[i].games.handicap) {
+                    //         let h = 1000000
+                    //         let indexH = -1
+                    //         for(let j = 0; j < r.data[i].games.handicap.length; j++) {
+                    //             let nh = Math.abs(r.data[i].games.handicap[j].homeRate - r.data[i].games.handicap[j].awayRate)
+                    //             if(nh <= h) {
+                    //                 h = nh
+                    //                 indexH = j
+                    //             }
+                    //         }
+                    //         r.data[i].games.handicap = [r.data[i].games.handicap[indexH]]
+                    //     }
+                    //     if(r.data[i].games.handicapTotalSet) {
+                    //         let h = 1000000
+                    //         let indexH = -1
+                    //         for(let j = 0; j < r.data[i].games.handicapTotalSet.length; j++) {
+                    //             let nh = Math.abs(r.data[i].games.handicapTotalSet[j].homeRate - r.data[i].games.handicapTotalSet[j].awayRate)
+                    //             if(nh < h) {
+                    //                 h = nh
+                    //                 indexH = j
+                    //             }
+                    //         }
+                    //         r.data[i].games.handicapTotalSet = [r.data[i].games.handicapTotalSet[indexH]]
+                    //     }
+                    //     if(r.data[i].games.underOver) {
+                    //         let h = 1000000
+                    //         let indexH = -1
+                    //         for(let j = 0; j < r.data[i].games.underOver.length; j++) {
+                    //             let nh = Math.abs(r.data[i].games.underOver[j].underRate - r.data[i].games.underOver[j].overRate)
+                    //             if(nh <= h) {
+                    //                 h = nh
+                    //                 indexH = j
+                    //             }
+                    //         }
+                    //         r.data[i].games.underOver = [r.data[i].games.underOver[indexH]]
+                    //     }
+                    //     if(r.data[i].games.underOverTotalSet) {
+                    //         let h = 1000000
+                    //         let indexH = -1
+                    //         for(let j = 0; j < r.data[i].games.underOverTotalSet.length; j++) {
+                    //             let nh = Math.abs(r.data[i].games.underOverTotalSet[j].underRate - r.data[i].games.underOverTotalSet[j].overRate)
+                    //             if(nh < h) {
+                    //                 h = nh
+                    //                 indexH = j
+                    //             }
+                    //         }
+                    //         r.data[i].games.underOverTotalSet = [r.data[i].games.underOverTotalSet[indexH]]
+                    //     }
+                    // }
+                }
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
                 const getKeys = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9'];
                 const rConfig = yield etcService.getConfigInfo('sportsBet', getKeys);

@@ -306,6 +306,11 @@ export default class GameService implements IGameService {
                     }
                 }
 
+                if(config.db.name === 'study') {
+                    whatQuery.projection['games.handicap'] = 1
+                    whatQuery.projection['games.underOver'] = 1
+                }
+
                 const sortQuery: any = {
                     gameDateTime: 1,
                     leagueKor: 1

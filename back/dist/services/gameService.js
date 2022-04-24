@@ -289,6 +289,10 @@ class GameService {
                             'games.first5PointsKor': 1
                         }
                     };
+                    if (config_1.default.db.name === 'study') {
+                        whatQuery.projection['games.handicap'] = 1;
+                        whatQuery.projection['games.underOver'] = 1;
+                    }
                     const sortQuery = {
                         gameDateTime: 1,
                         leagueKor: 1
