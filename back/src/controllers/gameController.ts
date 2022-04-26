@@ -61,6 +61,81 @@ export default class GameController implements IGameController {
                 let arrayFIFA: Array<any> = []  //FIFA
                 // let arrayRugbyUsa: Array<any> = []  //미식축구
 
+                let popularFootball: any = {  // 인기 - 축구
+                    kLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    jLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    pLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    bLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    sLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    pmLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    lLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    }
+                }
+                let popularBaseball: any = {  // 인기 - 야구
+                    MLB: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    NPB: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    KBO: {
+                        count: 0,
+                        leagueKor: ''
+                    }
+                }
+                let popularBasketball: any = {  // 인기 - 농구
+                    NBA: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    KBL: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    WKBL: {
+                        count: 0,
+                        leagueKor: ''
+                    }
+                }
+                let popularHockey: any = {  // 인기 - 아이스 하키
+                    NHL: {
+                        count: 0,
+                        leagueKor: ''
+                    }
+                }
+                let popularVolleyball: any = {  // 인기 - 배구
+                    vLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    wvLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    }
+                }
+
                 for(let i: number = 0; i < rCategory.data.length; i++) {
                     if(rCategory.data[i].sport === 'Football') arrayFootball.push(rCategory.data[i])
                     if(rCategory.data[i].sport === 'Basketball') arrayBasketball.push(rCategory.data[i])
@@ -81,6 +156,71 @@ export default class GameController implements IGameController {
                     if(rCategory.data[i].sport === 'Dota 2') arrayDota2.push(rCategory.data[i])
                     if(rCategory.data[i].sport === 'FIFA') arrayFIFA.push(rCategory.data[i])
                     // if(rCategory.data[i].sport === 'Rugby Usa') arrayRugbyUsa.push(rCategory.data[i])
+
+                    if(rCategory.data[i].leagueOID.toString() === '5f48c8e3b4e1811a747f6d6b') {  // K리그
+                        popularFootball.kLeague.count++
+                        popularFootball.kLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f48c8e4b4e1811a747f6d6c') {  // J리그
+                        popularFootball.Jleague.count++
+                        popularFootball.Jleague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f879327ae5a74101bc41007') {  // 프리미어
+                        popularFootball.pLeague.count++
+                        popularFootball.pLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f63ab58d92cfc6ce06ef6e0') {  // 분데스리가
+                        popularFootball.bLeague.count++
+                        popularFootball.bLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f64c7a77670b52ae55461ab') {  // 세리에A
+                        popularFootball.sLeague.count++
+                        popularFootball.sLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f5b848367fb22444c8b4ef4') {  // 프리메라리가
+                        popularFootball.pmLeague.count++
+                        popularFootball.pmLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f4803d5b4e1811a747f6937') {  // 리그앙
+                        popularFootball.lLeague.count++
+                        popularFootball.lLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f4804edb4e1811a747f693b') {  // MLB
+                        popularBaseball.MLB.count++
+                        popularBaseball.MLB.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f4776c6d9ee2c1ae048ac26') {  // NPB
+                        popularBaseball.NPB.count++
+                        popularBaseball.NPB.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f477cfb88b7430de81e0a75') {  // KBO
+                        popularBaseball.KBO.count++
+                        popularBaseball.KBO.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f4760e92696f30d7872d60e') {  // NBA
+                        popularBasketball.NBA.count++
+                        popularBasketball.NBA.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f7edbe85dbf920fd5a1a168') {  // KBL
+                        popularBasketball.KBL.count++
+                        popularBasketball.KBL.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f80579d5dbf920fd5a1a560') {  // WKBL
+                        popularBasketball.WKBL.count++
+                        popularBasketball.WKBL.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f4760ee2696f30d7872d640') {  // NHL
+                        popularHockey.NHL.count++
+                        popularHockey.NHL.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f8996cb5dbf920fd5a1bfe4') {  // v-League
+                        popularVolleyball.vLeague.count++
+                        popularVolleyball.vLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
+                    else if(rCategory.data[i].leagueOID.toString() === '5f89a7345dbf920fd5a1c0b0') {  // wv-League
+                        popularVolleyball.wvLeague.count++
+                        popularVolleyball.wvLeague.leagueKor = rCategory.data[i].leagueKor
+                    }
                 }
 
                 let r: any = {}
@@ -564,7 +704,12 @@ export default class GameController implements IGameController {
                 cache.put('category', {
                     category: r,
                     countOfCategory: rCount,
-                    countryOID: rCountryOID
+                    countryOID: rCountryOID,
+                    popularFootball,
+                    popularBaseball,
+                    popularBasketball,
+                    popularHockey,
+                    popularVolleyball
                 }, 180000)
             }
             category = cache.get('category')

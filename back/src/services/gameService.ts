@@ -48,6 +48,7 @@ export default class GameService implements IGameService {
                         sport: 1,
                         countryOID: 1,
                         countryKor: 1,
+                        leagueOID: 1,
                         leagueKor: 1
                     }
                 }
