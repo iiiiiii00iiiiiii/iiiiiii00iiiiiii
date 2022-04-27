@@ -175,8 +175,8 @@ class GameController {
                             popularFootball.kLeague.leagueKor = rCategory.data[i].leagueKor;
                         }
                         else if (rCategory.data[i].leagueOID.toString() === '5f48c8e4b4e1811a747f6d6c') { // J리그
-                            popularFootball.Jleague.count++;
-                            popularFootball.Jleague.leagueKor = rCategory.data[i].leagueKor;
+                            popularFootball.jLeague.count++;
+                            popularFootball.jLeague.leagueKor = rCategory.data[i].leagueKor;
                         }
                         else if (rCategory.data[i].leagueOID.toString() === '5f879327ae5a74101bc41007') { // 프리미어
                             popularFootball.pLeague.count++;
