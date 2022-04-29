@@ -513,7 +513,7 @@ class MoneyController {
                 const minute = (0, modules_1.moment)().minute();
                 if (hour === 23 && minute >= 30 || hour === 0 && minute <= 30) {
                     data.errorTitle = '환전 신청 실패 - 400';
-                    data = tools_1.default.denyValidate(data, 'time', '23시 40분 부터 00시 30분 사이에는 환전 신청이 불가능 합니다.');
+                    data = tools_1.default.denyValidate(data, 'time', '23시 30분 부터 00시 30분 사이에는 환전 신청이 불가능 합니다.');
                     res.status(400).json(data);
                     return;
                 }
