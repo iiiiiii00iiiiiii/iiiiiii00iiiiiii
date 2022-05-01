@@ -1216,7 +1216,7 @@ class UserService {
                         userOID: new db_1.ObjectID(userOID),
                         setDate: {
                             $gte: (0, modules_1.moment)(month).startOf('month').toDate(),
-                            $lte: (0, modules_1.moment)(month).endOf('month').toDate()
+                            $lte: (0, modules_1.moment)(month).endOf('month').add(7, 'day').toDate()
                         }
                     };
                     const whatQuery = {
@@ -1242,7 +1242,7 @@ class UserService {
                 try {
                     const findQuery = {
                         userOID: new db_1.ObjectID(userOID),
-                        setDate: new Date(setDate)
+                        setDate: (0, modules_1.moment)(setDate).startOf('day').toDate()
                     };
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('attendance').countDocuments(findQuery);

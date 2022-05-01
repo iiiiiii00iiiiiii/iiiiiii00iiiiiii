@@ -1277,7 +1277,7 @@ export default class UserService implements IUserService {
                     userOID: new ObjectID(userOID),
                     setDate: {
                         $gte: moment(month).startOf('month').toDate(),
-                        $lte: moment(month).endOf('month').toDate()
+                        $lte: moment(month).endOf('month').add(7, 'day').toDate()
                     }
                 }
 
@@ -1306,7 +1306,7 @@ export default class UserService implements IUserService {
             try {
                 const findQuery: any = {
                     userOID: new ObjectID(userOID),
-                    setDate: new Date(setDate)
+                    setDate: moment(setDate).startOf('day').toDate()
                 }
 
                 const pool: any = await mongoDB.connect()

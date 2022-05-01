@@ -788,6 +788,7 @@ export default class UserController implements IUserController {
             // ■■■■■■■■■■ DB-오늘날짜 있는지 가져오기 ■■■■■■■■■■
 
             if(rAttendanceTodayCount.data > 0) {
+                data.errorTitle = '출석 실패 - 400'
                 data = tools.denyValidate(data, 'setDate', '이미 출석 하셨습니다.')
                 res.status(400).json(data)
                 return
