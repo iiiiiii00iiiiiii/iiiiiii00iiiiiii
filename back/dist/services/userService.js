@@ -75,6 +75,56 @@ class UserService {
                 }
             }));
         };
+        this.getPassword = (id) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        id: (0, modules_1.mongoSanitize)(id),
+                    };
+                    const whatQuery = {
+                        projection: {
+                            password: 1,
+                            passwordExchange: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOne(findQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > getPassword');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setPassword = (id, password) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        id: (0, modules_1.mongoSanitize)(id),
+                    };
+                    const setQuery = {
+                        $set: {
+                            password: modules_1.crypto.createHash('sha512').update(password).digest('base64'),
+                            passwordExchange: modules_1.crypto.createHash('sha512').update(password).digest('base64')
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('UserService > setPassword');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.getSeq = () => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
