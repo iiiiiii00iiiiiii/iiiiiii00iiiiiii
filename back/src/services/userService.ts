@@ -75,6 +75,62 @@ export default class UserService implements IUserService {
         })
     }
 
+    public getPassword = (id: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    id: mongoSanitize(id),
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        password: 1,
+                        passwordExchange: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOne(findQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > getPassword')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public setPassword = (id: string, password: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    id: mongoSanitize(id),
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        password: crypto.createHash('sha512').update(password).digest('base64'),
+                        passwordExchange: crypto.createHash('sha512').update(password).digest('base64')
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('UserService > setPassword')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public getSeq = (): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }

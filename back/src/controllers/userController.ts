@@ -102,6 +102,26 @@ export default class UserController implements IUserController {
                 return
             }
 
+            // ■■■■■■■■■■ DB-비밀번호 가지고 오기 ■■■■■■■■■■
+            const rPassword: TService = await userService.getPassword(v.id)
+            if(rPassword.error) {
+                data.errorTitle = '로그인 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-비밀번호 가지고 오기 ■■■■■■■■■■
+
+            if(rPassword.data.password === '') {
+                // ■■■■■■■■■■ DB-비밀번호 설정 가지고 오기 ■■■■■■■■■■
+                const rSetPassword: TService = await userService.setPassword(v.id, v.password)
+                if(rSetPassword.error) {
+                    data.errorTitle = '로그인 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-비밀번호 설정 가지고 오기 ■■■■■■■■■■
+            }
+
             // ■■■■■■■■■■ DB-유저 로그인 ■■■■■■■■■■
             const rLogin: TService = await userService.login(v.id, v.password, v.reqIpaddress)
             if(rLogin.error) {
