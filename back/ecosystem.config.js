@@ -29,17 +29,17 @@ module.exports = {
             name: "[META]CLIENT",
             script: "./dist/app.js",
             env: {
-                "PORT": 3011,
+                "PORT": 3009,
                 "NODE_ENV": "development"
             },
             env_production: {
-                "PORT": 3011,
+                "PORT": 3009,
                 "NODE_ENV": "production"
             }
         }
     ],
-    frontPort: 3010,
-    port: 3011,
+    frontPort: 3008,
+    port: 3009,
     pageSize: 30,
     pageLimit: 7,
     version: '0.0.0',
