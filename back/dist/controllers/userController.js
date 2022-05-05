@@ -162,7 +162,7 @@ class UserController {
                     return;
                 }
                 if (config_1.default.kplay.code !== '') {
-                    if (rLogin.data.value.seq === undefined) {
+                    if (rLogin.data.value.seq === undefined || rLogin.data.value.seq === null) {
                         // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
                         const rSeq = yield userService.getSeq();
                         if (rSeq.error) {

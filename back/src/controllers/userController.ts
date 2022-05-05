@@ -173,7 +173,7 @@ export default class UserController implements IUserController {
             }
 
             if(config.kplay.code !== '') {
-                if(rLogin.data.value.seq === undefined) {
+                if(rLogin.data.value.seq === undefined || rLogin.data.value.seq === null) {
                     // ■■■■■■■■■■ DB-SEQ 번호 획득 ■■■■■■■■■■
                     const rSeq: TService = await userService.getSeq()
                     if(rSeq.error) {
