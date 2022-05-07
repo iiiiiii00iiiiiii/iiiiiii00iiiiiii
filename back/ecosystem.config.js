@@ -46,6 +46,30 @@
 //     versionKey: 'version'
 // }
 
+// META TEST
+module.exports = {
+    apps: [
+        {
+            name: "[META-TEST]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 3031,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 3031,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 3030,
+    port: 3031,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
+
 // // THREE
 // module.exports = {
 //     apps: [
@@ -94,29 +118,29 @@
 //     versionKey: 'version'
 // }
 
-// STUDY
-module.exports = {
-    apps: [
-        {
-            name: "[STUDY]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 3013,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 3013,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 3012,
-    port: 3013,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // STUDY
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[STUDY]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 3013,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 3013,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 3012,
+//     port: 3013,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
 
 // // MCLAREN
 // module.exports = {
