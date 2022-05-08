@@ -1500,6 +1500,20 @@ body {
     transform: scale(1.0);
     transform-origin: 0 0;
 }
+#frame-wrap-dream {
+    width: 789px;
+    height: 609px;
+    margin-left:auto;
+    margin-right:auto;
+    overflow: hidden;
+}
+.iframe-game-dream {
+    width: 789px;
+    height: 609px;
+    border: 0;
+    transform: scale(1.0);
+    transform-origin: 0 0;
+}
 .minigame-info {
     padding: 10px 5px;
     background: linear-gradient(180deg, #2d353c, #222);

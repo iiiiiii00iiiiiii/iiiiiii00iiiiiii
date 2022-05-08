@@ -307,6 +307,13 @@ const routes = [
         beforeEnter: getInformationWithout()
     },
     {
+        path: '/speedladder',
+        name: 'Speedladder',
+        component: () => import(/* webpackChunkName: "speedladder" */ '../views/Speedladder.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
         path: '/bogleladder',
         name: 'Bogleladder',
         component: () => import(/* webpackChunkName: "bogleladder" */ '../views/Bogleladder.vue'),
@@ -331,6 +338,41 @@ const routes = [
         path: '/googlepowerball3',
         name: 'GooglePowerball3',
         component: () => import(/* webpackChunkName: "googlepowerball3" */ '../views/GooglePowerball3.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
+        path: '/coinpowerball3',
+        name: 'CoinPowerball3',
+        component: () => import(/* webpackChunkName: "coinpowerball3" */ '../views/CoinPowerball3.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
+        path: '/coinpowerball',
+        name: 'CoinPowerball',
+        component: () => import(/* webpackChunkName: "coinpowerball" */ '../views/CoinPowerball.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
+        path: '/eospowerball1',
+        name: 'EosPowerball1',
+        component: () => import(/* webpackChunkName: "eospowerball1" */ '../views/EosPowerball1.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
+        path: '/eospowerball3',
+        name: 'EosPowerball3',
+        component: () => import(/* webpackChunkName: "eospowerball3" */ '../views/EosPowerball3.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
+        path: '/eospowerball',
+        name: 'EosPowerball',
+        component: () => import(/* webpackChunkName: "eospowerball" */ '../views/EosPowerball.vue'),
         meta: { layout: 'Default' },
         beforeEnter: getInformationWithout()
     },
