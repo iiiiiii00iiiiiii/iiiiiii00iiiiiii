@@ -22,48 +22,24 @@
 //     versionKey: 'version'
 // }
 
-// // META
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[META]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 3009,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 3009,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 3008,
-//     port: 3009,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
-
-// META TEST
+// META
 module.exports = {
     apps: [
         {
-            name: "[META-TEST]CLIENT",
+            name: "[META]CLIENT",
             script: "./dist/app.js",
             env: {
-                "PORT": 3031,
+                "PORT": 3009,
                 "NODE_ENV": "development"
             },
             env_production: {
-                "PORT": 3031,
+                "PORT": 3009,
                 "NODE_ENV": "production"
             }
         }
     ],
-    frontPort: 3030,
-    port: 3031,
+    frontPort: 3008,
+    port: 3009,
     pageSize: 30,
     pageLimit: 7,
     version: '0.0.0',

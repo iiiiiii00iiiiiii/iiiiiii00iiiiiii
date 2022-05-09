@@ -669,7 +669,20 @@ const config: TConfig = {
         new ObjectId("625854a3b5181d27bb12370f"),
         new ObjectId("625951d05c36e2897e008413"),
         new ObjectId("625a21e9b5181d27bb124026"),
-        new ObjectId("6262ef255c36e2897e0088d6")
+        new ObjectId("6262ef255c36e2897e0088d6"),
+        new ObjectId("626408455c36e2897e00897e"),
+        new ObjectId("6265d51a5c36e2897e008a6d"),
+        new ObjectId("6266fa205c36e2897e008a9b"),
+        new ObjectId("6267d8942eace3f1ece3eec0"),
+        new ObjectId("6269c7555c36e2897e008b70"),
+        new ObjectId("6269625d2eace3f1ece3ef8f"),
+        new ObjectId("62693f2e2eace3f1ece3ef70"),
+        new ObjectId("627053125c36e2897e008e5d"),
+        new ObjectId("6270ed942eace3f1ece3f31d"),
+        new ObjectId("62730b3f5c36e2897e008f33"),
+        new ObjectId("627329a15c36e2897e008f47"),
+        new ObjectId("62729cd92eace3f1ece3f3cb"),
+        new ObjectId("6272b1f12eace3f1ece3f3d4")
     ]
 }
 

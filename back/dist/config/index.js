@@ -620,7 +620,20 @@ const config = {
         new db_1.ObjectId("625854a3b5181d27bb12370f"),
         new db_1.ObjectId("625951d05c36e2897e008413"),
         new db_1.ObjectId("625a21e9b5181d27bb124026"),
-        new db_1.ObjectId("6262ef255c36e2897e0088d6")
+        new db_1.ObjectId("6262ef255c36e2897e0088d6"),
+        new db_1.ObjectId("626408455c36e2897e00897e"),
+        new db_1.ObjectId("6265d51a5c36e2897e008a6d"),
+        new db_1.ObjectId("6266fa205c36e2897e008a9b"),
+        new db_1.ObjectId("6267d8942eace3f1ece3eec0"),
+        new db_1.ObjectId("6269c7555c36e2897e008b70"),
+        new db_1.ObjectId("6269625d2eace3f1ece3ef8f"),
+        new db_1.ObjectId("62693f2e2eace3f1ece3ef70"),
+        new db_1.ObjectId("627053125c36e2897e008e5d"),
+        new db_1.ObjectId("6270ed942eace3f1ece3f31d"),
+        new db_1.ObjectId("62730b3f5c36e2897e008f33"),
+        new db_1.ObjectId("627329a15c36e2897e008f47"),
+        new db_1.ObjectId("62729cd92eace3f1ece3f3cb"),
+        new db_1.ObjectId("6272b1f12eace3f1ece3f3d4")
     ]
 };
 // // THREE
