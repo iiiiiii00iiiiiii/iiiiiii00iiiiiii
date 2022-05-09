@@ -1392,6 +1392,11 @@ export default class UserService implements IUserService {
                     }
                 }
 
+                if(config.db.id === 'pent') {
+                    findQuery.moneyMethod = 'money'
+                    findQuery.method = 'charge'
+                }
+
                 const pool: any = await mongoDB.connect()
                 r.data = await pool.collection('money').aggregate([
                     { $match: findQuery },

@@ -190,53 +190,53 @@
 //     versionKey: 'version'
 // }
 
-// STUDY
-module.exports = {
-    apps: [
-        {
-            name: "[STUDY]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 2007,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 2007,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 2006,
-    port: 2007,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
-
-// // PENT
+// // STUDY
 // module.exports = {
 //     apps: [
 //         {
-//             name: "[PENT]CLIENT",
+//             name: "[STUDY]CLIENT",
 //             script: "./dist/app.js",
 //             env: {
-//                 "PORT": 3003,
+//                 "PORT": 2007,
 //                 "NODE_ENV": "development"
 //             },
 //             env_production: {
-//                 "PORT": 3003,
+//                 "PORT": 2007,
 //                 "NODE_ENV": "production"
 //             }
 //         }
 //     ],
-//     frontPort: 3002,
-//     port: 3003,
+//     frontPort: 2006,
+//     port: 2007,
 //     pageSize: 30,
 //     pageLimit: 7,
 //     version: '0.0.0',
 //     versionKey: 'version'
 // }
+
+// PENT
+module.exports = {
+    apps: [
+        {
+            name: "[PENT]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 3003,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 3003,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 3002,
+    port: 3003,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // NS
 // module.exports = {

@@ -1319,6 +1319,10 @@ class UserService {
                             $lte: (0, modules_1.moment)(setDate).endOf('day').toDate()
                         }
                     };
+                    if (config_1.default.db.id === 'pent') {
+                        findQuery.moneyMethod = 'money';
+                        findQuery.method = 'charge';
+                    }
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('money').aggregate([
                         { $match: findQuery },
