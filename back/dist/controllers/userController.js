@@ -782,14 +782,14 @@ class UserController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-출석 환경 설정 가져오기 ■■■■■■■■■■
-                const needCharge = rConfigAttendance.data[0].amount;
-                rConfigAttendance.data.shift();
                 if (rConfigAttendance.data.length === 0) {
                     data.errorTitle = '출석 실패 - 400';
                     data = tools_1.default.denyValidate(data, 'charge', `고객센터에 문의 하세요. - 지급 날짜 없음.`);
                     res.status(400).json(data);
                     return;
                 }
+                const needCharge = rConfigAttendance.data[0].amount;
+                rConfigAttendance.data.shift();
                 if (chargeToday < needCharge) {
                     data.errorTitle = '출석 실패 - 400';
                     data = tools_1.default.denyValidate(data, 'chargeMoney', `금일 ${(0, modules_1.numeral)(needCharge).format('0,0')}이상 충전시 출석 가능 합니다.`);
@@ -834,6 +834,7 @@ class UserController {
                 const rBefore = yield etcService.getBeforeAttendance(startDate, v.decoded._id);
                 if (rBefore.error) {
                     console.log(rBefore.error);
+                    data.errorTitle = '출석 실패 - 500';
                     res.status(500).end();
                     return;
                 }
@@ -883,7 +884,8 @@ class UserController {
                 // ■■■■■■■■■■ DB-전날 내역 가져오기 ■■■■■■■■■■
                 const rYesterday = yield etcService.getYesterdayAttendance(v.decoded._id);
                 if (rYesterday.error) {
-                    console.log(rBefore.error);
+                    console.log(rYesterday.error);
+                    data.errorTitle = '출석 실패 - 500';
                     res.status(500).end();
                     return;
                 }
@@ -913,7 +915,8 @@ class UserController {
                 // ■■■■■■■■■■ DB-Attendance 업데이트 ■■■■■■■■■■
                 const rUpdateAttendance = yield etcService.setUpdateAttendance(insertedId, isLast);
                 if (rUpdateAttendance.error) {
-                    console.log(rBefore.error);
+                    console.log(rUpdateAttendance.error);
+                    data.errorTitle = '출석 실패 - 500';
                     res.status(500).end();
                     return;
                 }
