@@ -110,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2 cursor-pointer-meragames" @click="user.id === 'kplay' ? $tools.pushRouter('/casino', true) : $tools.ready()">
+            <div class="row mt-2 cursor-pointer-meragames" @click="$tools.pushRouter('/casino', true)">
                 <div class="col-3">
                     <div class="game-category-icon">
                         <img src="/images/icon-casino.png">
@@ -128,7 +128,7 @@
                 </div>
             </div>
             <!-- <div class="row mt-2 cursor-pointer-meragames" @click="openKplay(0)"> -->
-            <div class="row mt-2 cursor-pointer-meragames" @click="user.id === 'kplay' ? openKplay(0) : $tools.ready()">
+            <div class="row mt-2 cursor-pointer-meragames" @click="openKplay(0)">
                 <div class="col-3">
                     <div class="game-category-icon">
                         <img src="/images/icon-slots.png">

@@ -190,7 +190,7 @@
                                     코인 3분파워볼
                                 </div>
                             </div>
-                            <div class="col" @click="user.id === 'kplay' ? $tools.pushRouter('/casino', true) : $tools.ready()">
+                            <div class="col" @click="$tools.pushRouter('/casino', true)">
                                 <div class="minigame-main-banner-img">
                                     <img src="/images/banner-casino.jpg">
                                 </div>
@@ -202,7 +202,7 @@
                                 </div>
                             </div>
                             <!-- <div class="col" @click="openKplay(0)"> -->
-                            <div class="col" @click="user.id === 'kplay' ? openKplay(0) : $tools.ready()">
+                            <div class="col" @click="openKplay(0)">
                                 <div class="minigame-main-banner-img">
                                     <img src="/images/banner-slots.jpg">
                                 </div>
@@ -267,10 +267,10 @@
                                             <img src="/images/banner-coinpowerball3.jpg" @click="$tools.pushRouter('/coinpowerball3', false)">
                                         </li>
                                         <li>
-                                            <img src="/images/banner-casino.jpg" @click="user.id === 'kplay' ? $tools.pushRouter('/casino', true) : $tools.ready()">
+                                            <img src="/images/banner-casino.jpg" @click="$tools.pushRouter('/casino', true)">
                                         </li>
                                         <li>
-                                            <img src="/images/banner-slots.jpg" @click="user.id === 'kplay' ? openKplay(0) : $tools.ready()">
+                                            <img src="/images/banner-slots.jpg" @click="openKplay(0)">
                                         </li>
                                     </ul>
                                 </div>

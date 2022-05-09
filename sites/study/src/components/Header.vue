@@ -32,9 +32,9 @@
                             <li @click="$tools.pushRouter('/sportslive', false)">라이브</li>
                             <li @click="$tools.pushRouter('/sportsspecial', false)">스페셜</li>
                             <li @click="$tools.pushRouter('/sportslivekor', false)">실시간</li>
-                            <li @click="$tools.ready('/casino', true)">카지노</li>
-                            <li @click="$tools.ready('/casino', true)">슬롯게임</li>
-                            <!-- <li @click="openKplay(0)">슬롯게임</li> -->
+                            <li @click="$tools.pushRouter('/casino', true)">카지노</li>
+                            <!-- <li @click="$tools.ready('/casino', true)">슬롯게임</li> -->
+                            <li @click="openKplay(0)">슬롯게임</li>
                             <li @click="$tools.pushRouter('/minigamemenu', false)">미니게임</li>
                         </ul>
                     </div>
