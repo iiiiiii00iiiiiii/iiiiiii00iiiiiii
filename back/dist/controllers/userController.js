@@ -784,13 +784,19 @@ class UserController {
                 // ■■■■■■■■■■ DB-출석 환경 설정 가져오기 ■■■■■■■■■■
                 const needCharge = rConfigAttendance.data[0].amount;
                 rConfigAttendance.data.shift();
+                if (rConfigAttendance.data.length === 0) {
+                    data.errorTitle = '출석 실패 - 400';
+                    data = tools_1.default.denyValidate(data, 'charge', `고객센터에 문의 하세요. - 지급 날짜 없음.`);
+                    res.status(400).json(data);
+                    return;
+                }
                 if (chargeToday < needCharge) {
                     data.errorTitle = '출석 실패 - 400';
                     data = tools_1.default.denyValidate(data, 'chargeMoney', `금일 ${(0, modules_1.numeral)(needCharge).format('0,0')}이상 충전시 출석 가능 합니다.`);
                     res.status(400).json(data);
                     return;
                 }
-                const getKeys = ['recommendTree', 'isTest', 'isAgent'];
+                const getKeys = ['recommendTree', 'isTest', 'isAgent', 'attendanceDateTime'];
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
                 const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
                 if (rUserInfo.error) {
@@ -799,6 +805,13 @@ class UserController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
+                let attendanceDateTime = (0, modules_1.moment)().startOf('day').toDate();
+                if (rUserInfo.data.attendanceDateTime) {
+                    attendanceDateTime = rUserInfo.data.attendanceDateTime;
+                }
+                else {
+                    attendanceDateTime = (0, modules_1.moment)().subtract(1, 'day').toDate();
+                }
                 // ■■■■■■■■■■ DB-출석 ■■■■■■■■■■
                 const rSetAttendance = yield etcService.setAttendance(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, v.setDate);
                 if (rSetAttendance.error) {
@@ -814,7 +827,9 @@ class UserController {
                 rConfigAttendance.data = modules_1._.sortBy(rConfigAttendance.data, 'date').reverse();
                 const maxDate = rConfigAttendance.data[0].date;
                 // const startDate: Date = moment().subtract(rConfigAttendance.data[i].date - 1, 'day').toDate()
-                const startDate = (0, modules_1.moment)().subtract(maxDate - 1, 'day').startOf('day').toDate();
+                // const startDate: Date = moment().subtract(maxDate - 1, 'day').startOf('day').toDate()
+                const startDate = attendanceDateTime;
+                // console.log(moment(startDate).format('YYYY-MM-DD'))
                 // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 데이터 가져오기 ■■■■■■■■■■
                 const rBefore = yield etcService.getBeforeAttendance(startDate, v.decoded._id);
                 if (rBefore.error) {
@@ -824,67 +839,85 @@ class UserController {
                 }
                 // ■■■■■■■■■■ DB-설정에 대한 날짜 이후의 데이터 가져오기 ■■■■■■■■■■
                 // console.log(rBefore.data)
-                // console.log(rBefore.data.length)
-                let chainCount = rBefore.data > 0 ? 1 : 0;
-                let beforeDate = null;
+                // // console.log(rBefore.data.length)
+                let chainCount = 0;
+                let beforeDate = (0, modules_1.moment)().startOf('day').toDate();
                 for (let i = 0; i < rBefore.data.length; i++) {
-                    // console.log(rBefore.data[i].setDate, i > 0 ? moment(rBefore.data[i].setDate).subtract(1, 'day').toDate() : null, beforeDate)
-                    if (i > 0) {
-                        if ((0, modules_1.moment)(beforeDate).format('YYYY-MM-DD') === (0, modules_1.moment)(rBefore.data[i].setDate).add(1, 'day').format('YYYY-MM-DD')) {
+                    if (i === 0) {
+                        if ((0, modules_1.moment)(rBefore.data[i].setDate).format('YYYY-MM-DD') === (0, modules_1.moment)(beforeDate).format('YYYY-MM-DD')) {
+                            chainCount++;
+                        }
+                    }
+                    else {
+                        if ((0, modules_1.moment)(rBefore.data[i].setDate).format('YYYY-MM-DD') === (0, modules_1.moment)(beforeDate).subtract(1, 'day').format('YYYY-MM-DD')) {
                             chainCount++;
                         }
                         else {
                             break;
                         }
                     }
-                    // console.log(moment(rBefore.data[i].setDate).format('YYYY-MM-DD'), moment(beforeDate).format('YYYY-MM-DD'), i ? moment(rBefore.data[i].setDate).add(1, 'day').format('YYYY-MM-DD') : null)
                     beforeDate = rBefore.data[i].setDate;
                 }
-                // console.log(beforeDate)
-                // console.log(moment(beforeDate).format('YYYY-MM-DD'))
+                // // console.log(beforeDate)
+                // // console.log(moment(beforeDate).format('YYYY-MM-DD'))
                 // console.log(chainCount)
+                let dateNumber = 1;
+                let attendancePrice = 0;
+                let isLast = false;
                 for (let i = 0; i < rConfigAttendance.data.length; i++) {
-                    //console.log(rBefore.data, rConfigAttendance.data[i].date)
-                    // console.log(rConfigAttendance.data[i])
-                    if (chainCount + 1 === rConfigAttendance.data[i].date) {
-                        if (rConfigAttendance.data[i].amount === 0) {
-                            continue;
+                    if (rConfigAttendance.data[i].date === chainCount) {
+                        dateNumber = chainCount;
+                        attendancePrice = rConfigAttendance.data[i].amount;
+                        if (i === 0) {
+                            isLast = true;
                         }
-                        const startDate = (0, modules_1.moment)().subtract(chainCount + 1, 'day').startOf('day').toDate();
-                        console.log((0, modules_1.moment)(startDate).format('YYYY-MM-DD HH:mm:ss'));
-                        // console.log(chainCount + 1)
-                        if (chainCount + 1 > 1) {
-                            const rBeforeAttendance = yield etcService.getBeforeAttendanceOne(startDate, v.decoded._id);
-                            if (rBeforeAttendance.error) {
-                                console.log(rBefore.error);
-                                res.status(500).end();
-                                return;
-                            }
-                            // console.log(rBeforeAttendance.data)
-                            if (rBeforeAttendance.data === null) {
-                                // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
-                                const rAddPoint = yield moneyService.addPointForAttendance(v.decoded._id, rConfigAttendance.data[i].amount);
-                                // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
-                                // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
-                                yield moneyService.addMoneyForAttendanceLog(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, rConfigAttendance.data[i].amount, rAddPoint.data.value.point, rUserInfo.data.isTest, rUserInfo.data.isAgent, rConfigAttendance.data[i].date);
-                                // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
-                                break;
-                            }
-                        }
-                    }
-                    if (rConfigAttendance.data[i].date === 1) {
-                        if (rConfigAttendance.data[i].amount === 0) {
-                            continue;
-                        }
-                        // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
-                        const rAddPoint = yield moneyService.addPointForAttendance(v.decoded._id, rConfigAttendance.data[i].amount);
-                        // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
-                        // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
-                        yield moneyService.addMoneyForAttendanceLog(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, rConfigAttendance.data[i].amount, rAddPoint.data.value.point, rUserInfo.data.isTest, rUserInfo.data.isAgent, rConfigAttendance.data[i].date);
-                        // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
                         break;
                     }
                 }
+                if (dateNumber === 1) {
+                    let objFirst = rConfigAttendance.data[rConfigAttendance.data.length - 1];
+                    if (objFirst.date === 1 && objFirst.amount > 0) {
+                        attendancePrice = objFirst.amount;
+                    }
+                }
+                // ■■■■■■■■■■ DB-전날 내역 가져오기 ■■■■■■■■■■
+                const rYesterday = yield etcService.getYesterdayAttendance(v.decoded._id);
+                if (rYesterday.error) {
+                    console.log(rBefore.error);
+                    res.status(500).end();
+                    return;
+                }
+                // ■■■■■■■■■■ DB-전날 내역 가져오기 ■■■■■■■■■■
+                if (rYesterday.data === null) {
+                    attendanceDateTime = (0, modules_1.moment)().startOf('day').toDate();
+                }
+                else {
+                    if (rYesterday.data.isLast === true) {
+                        attendanceDateTime = (0, modules_1.moment)().startOf('day').toDate();
+                    }
+                    else {
+                        attendanceDateTime = null;
+                    }
+                }
+                // console.log('===================================')
+                // console.log(rYesterday)
+                // console.log('===================================')
+                // console.log(dateNumber, attendancePrice, isLast)
+                const insertedId = rSetAttendance.data.insertedId;
+                // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+                const rAddPoint = yield moneyService.addPointForAttendance(v.decoded._id, attendancePrice, attendanceDateTime);
+                // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
+                // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+                yield moneyService.addMoneyForAttendanceLog(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, attendancePrice, rAddPoint.data.value.point, rUserInfo.data.isTest, rUserInfo.data.isAgent, dateNumber);
+                // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
+                // ■■■■■■■■■■ DB-Attendance 업데이트 ■■■■■■■■■■
+                const rUpdateAttendance = yield etcService.setUpdateAttendance(insertedId, isLast);
+                if (rUpdateAttendance.error) {
+                    console.log(rBefore.error);
+                    res.status(500).end();
+                    return;
+                }
+                // ■■■■■■■■■■ DB-Attendance 업데이트 ■■■■■■■■■■
                 res.end();
             }
             catch (e) {

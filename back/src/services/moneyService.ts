@@ -842,7 +842,7 @@ export default class MoneyService implements IMoneyService {
     }
 
     // 출석
-    public addPointForAttendance = (userOID: string, point: number): Promise<TService> => {
+    public addPointForAttendance = (userOID: string, point: number, attendanceDateTime: any): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -851,9 +851,15 @@ export default class MoneyService implements IMoneyService {
                     _id: new ObjectID(userOID)
                 }
 
-                const setQuery: any = {
+                let setQuery: any = {
                     $inc: {
                         point
+                    }
+                }
+
+                if(attendanceDateTime !== null) {
+                    setQuery.$set = {
+                        attendanceDateTime
                     }
                 }
 

@@ -112,7 +112,7 @@ export default class EtcService implements IEtcService {
             try {
                 const findQuery: any = {
                     userOID: new ObjectID(userOID),
-                    regDateTime: {
+                    setDate: {
                         $gte: moment(startDate).startOf('day').toDate()
                     }
                 }
@@ -122,6 +122,55 @@ export default class EtcService implements IEtcService {
                 resolve(r)
             } catch (err) {
                 logger.error('EtcService > getBeforeAttendance')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getYesterdayAttendance = (userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    setDate: moment().subtract(1, 'day').startOf('day').toDate()
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('attendance').findOne(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > getYesterdayAttendance')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public setUpdateAttendance = (_id: string, isLast: boolean): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(_id)
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        isLast
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('attendance').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > setUpdateAttendance')
                 logger.error(err)
                 r.error = err
                 resolve(r)

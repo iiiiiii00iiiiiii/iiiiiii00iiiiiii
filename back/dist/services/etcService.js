@@ -99,7 +99,7 @@ class EtcService {
                 try {
                     const findQuery = {
                         userOID: new db_1.ObjectID(userOID),
-                        regDateTime: {
+                        setDate: {
                             $gte: (0, modules_1.moment)(startDate).startOf('day').toDate()
                         }
                     };
@@ -109,6 +109,50 @@ class EtcService {
                 }
                 catch (err) {
                     modules_1.logger.error('EtcService > getBeforeAttendance');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getYesterdayAttendance = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        setDate: (0, modules_1.moment)().subtract(1, 'day').startOf('day').toDate()
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('attendance').findOne(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getYesterdayAttendance');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.setUpdateAttendance = (_id, isLast) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(_id)
+                    };
+                    const setQuery = {
+                        $set: {
+                            isLast
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('attendance').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > setUpdateAttendance');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
