@@ -9,8 +9,8 @@
         <div class="mt-1 text-center">
             <img src="/images/banner-right-powerball.png" class="img-fluid cursor-pointer" alt="파워볼" title="파워볼" @click="$tools.pushRouter('/powerball')">
         </div>
-        <div class="mt-1 text-center">
+        <!-- <div class="mt-1 text-center">
             <img src="/images/banner-right-telegram.png" class="img-fluid cursor-pointer" alt="텔레그램" title="텔레그램">
-        </div>
+        </div> -->
     </div>
 </template>
