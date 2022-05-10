@@ -18,7 +18,7 @@
                         <div class="header-menu">
                             <div class="row">
                                 <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'Sports' ? 'active' : ''" @click="$tools.pushRouter('/sports', false)">
+                                <div class="col menu-item" :class="router === 'Sports' ? 'active' : ''" @click="$tools.ready('/sports', false)">
                                     해외형 스포츠
                                 </div>
                                 <div class="line-vertical"></div>

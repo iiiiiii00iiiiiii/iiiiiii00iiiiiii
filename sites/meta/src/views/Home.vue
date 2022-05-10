@@ -91,7 +91,7 @@
             <!-- <div class="row pt-2 d-none d-xl-flex"> -->
             <div class="row mt-2">
                 <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/sports', false)">
+                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.ready('/sports', false)">
                         <img src="/images/banner-1.png" alt="SPORTS" title="SPORTS">
                     </div>
                 </div>

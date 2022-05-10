@@ -16,7 +16,7 @@
             router === 'CoinPowerball3' ||
             router === 'CoinPowerball'"
         />
-        <LeftCategory v-else/>
+        <!-- <LeftCategory v-else/> -->
         <BannerLeft/>
     </div>
 </template>
@@ -25,7 +25,7 @@
     import { mapGetters } from 'vuex'
 
     import LeftMenu from '../components/LeftMenu.vue'
-    import LeftCategory from '../components/LeftCategory.vue'
+    // import LeftCategory from '../components/LeftCategory.vue'
     import LeftMinigameCategory from '../components/LeftMinigameCategory.vue'
     import BannerLeft from '../components/BannerLeft.vue'
 
@@ -33,7 +33,7 @@
         name: "Left",
         components: {
             LeftMenu,
-            LeftCategory,
+            // LeftCategory,
             LeftMinigameCategory,
             BannerLeft
         },

@@ -18,7 +18,7 @@
         </table>
         <table class="w-100">
             <tr>
-                <td class="py-2 menu-1" @click="$tools.pushRouter('/sports', false)">스포츠</td>
+                <td class="py-2 menu-1" @click="$tools.ready('/sports', false)">스포츠</td>
                 <td class="py-2 menu-2" @click="$tools.pushRouter('/sportscross', false)">크로스</td>
                 <td class="py-2 menu-3" @click="$tools.ready('/sportslive', false)">라이브</td>
                 <td class="py-2 menu-5" @click="$tools.pushRouter('/sportsspecial', false)">스페셜</td>
