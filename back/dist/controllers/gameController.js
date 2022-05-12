@@ -179,7 +179,7 @@ class GameController {
                                 popularFootball.jLeague.count++;
                                 popularFootball.jLeague.leagueKor = rCategory.data[i].leagueKor;
                             }
-                            else if (rCategory.data[i].leagueOID.toString() === '5f879327ae5a74101bc41007') { // 프리미어
+                            else if (rCategory.data[i].leagueOID.toString() === '5f5b613b67fb22444c8b4da3') { // 프리미어
                                 popularFootball.pLeague.count++;
                                 popularFootball.pLeague.leagueKor = rCategory.data[i].leagueKor;
                             }
