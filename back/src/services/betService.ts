@@ -1104,7 +1104,7 @@ export default class BetService implements IBetService {
                 const whatQuery: any = {
                     _id: null,
                     betAmount: { $sum: '$betAmount' },
-                    betBenefit: { $sum: '$betAmount' }
+                    betBenefit: { $sum: '$betBenefit' }
                 }
 
                 const pool: any = await mongoDB.connect()

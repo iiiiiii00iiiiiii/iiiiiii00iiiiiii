@@ -2618,6 +2618,11 @@ class BetController {
                 //■■■■■■■■■■ DB-총 배팅금액, 당첨금액 환경설정 가져오기 ■■■■■■■■■■
                 v.betAmountMaxTotal = rBetMinMaxAll.data.TOTAL.max;
                 v.betBenefitTotal = rBetMinMaxAll.data.TOTAL.benefit;
+                // console.log(v.betAmountMaxTotal, v.betBenefitTotal)
+                // console.log(v.previousBetAmountAll, v.previousBetBenefitAll)
+                // console.log(v.betAmount, v.betBenefit)
+                // console.log(v.previousBetAmountAll + v.betAmount, v.previousBetBenefitAll + v.betBenefit)
+                // console.log('=============================================')
                 if (v.previousBetAmountAll + v.betAmount > v.betAmountMaxTotal) {
                     data.errorTitle = '배팅 실패 - 400';
                     data = tools_1.default.denyValidate(data, 'betAmount', '해당 회차의 최대 배팅금을 초과 하였습니다.');

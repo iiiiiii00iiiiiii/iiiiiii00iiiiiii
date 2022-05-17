@@ -1003,7 +1003,7 @@ class BetService {
                     const whatQuery = {
                         _id: null,
                         betAmount: { $sum: '$betAmount' },
-                        betBenefit: { $sum: '$betAmount' }
+                        betBenefit: { $sum: '$betBenefit' }
                     };
                     const pool = yield db_1.mongoDB.connect();
                     r.data = yield pool.collection('betMinigame').aggregate([{
