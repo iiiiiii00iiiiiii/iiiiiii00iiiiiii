@@ -160,6 +160,7 @@ export default class BetController implements IBetController {
                 v.resultBetMinMax = resultBetMinMax.data[`lv${v.decoded.grade}`]
             }
 
+
             if(parseInt(v.betAmount) < v.resultBetMinMax.min) {
                 data.errorTitle = '배팅 실패 - 400'
                 data = tools.denyValidate(data, 'min', '최소 배팅금액 이상으로 배팅하세요.')
@@ -2659,6 +2660,51 @@ export default class BetController implements IBetController {
             data = tools.denyValidate(data, 'betAmount', '해당 회차의 해당 배팅방식에 대한 최대 배팅금을 초과 하였습니다.')
             res.status(400).json(data)
             return
+        }
+
+        if(config.db.id === 'demark') {
+            //전체 배팅금액 검사
+            //■■■■■■■■■■ DB-현재 배팅되어 있는 금액 가져오기 ■■■■■■■■■■
+            const rPreviousBetAmountAll: TService = await betService.previousBetAmountAll(v)
+            if(rPreviousBetAmountAll.error) {
+                data.errorTitle = '배팅 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            //■■■■■■■■■■ DB-현재 배팅되어 있는 금액 가져오기 ■■■■■■■■■■
+            if(rPreviousBetAmountAll.data.length === 0) {
+                v.previousBetAmountAll = 0
+                v.previousBetBenefitAll = 0
+            }
+            else {
+                v.previousBetAmountAll = rPreviousBetAmountAll.data[0].betAmount
+                v.previousBetBenefitAll = rPreviousBetAmountAll.data[0].betBenefit
+            }
+
+            //■■■■■■■■■■ DB-총 배팅금액, 당첨금액 환경설정 가져오기 ■■■■■■■■■■
+            const rBetMinMaxAll: TService = await betService.betMinMaxAll(v.category)
+            if(rBetMinMaxAll.error) {
+                data.errorTitle = '배팅 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            //■■■■■■■■■■ DB-총 배팅금액, 당첨금액 환경설정 가져오기 ■■■■■■■■■■
+            v.betAmountMaxTotal = rBetMinMaxAll.data.TOTAL.max
+            v.betBenefitTotal = rBetMinMaxAll.data.TOTAL.benefit
+
+            if(v.previousBetAmountAll + v.betAmount > v.betAmountMaxTotal) {
+                data.errorTitle = '배팅 실패 - 400'
+                data = tools.denyValidate(data, 'betAmount', '해당 회차의 최대 배팅금을 초과 하였습니다.')
+                res.status(400).json(data)
+                return
+            }
+
+            if(v.previousBetBenefitAll + v.betBenefit > v.betBenefitTotal) {
+                data.errorTitle = '배팅 실패 - 400'
+                data = tools.denyValidate(data, 'betAmount', '해당 회차의 최대 당첨금을 초과 하였습니다.')
+                res.status(400).json(data)
+                return
+            }
         }
 
         //■■■■■■■■■■ DB-미니게임 배팅머니 차감, 회원정보 업데이트, 회원정보 가져오기 ■■■■■■■■■■

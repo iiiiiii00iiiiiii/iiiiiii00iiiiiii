@@ -43,6 +43,33 @@ export default class BetService implements IBetService {
         })
     }
 
+    public betMinMaxAll = (category: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    category: category,
+                }
+
+                let whatQuery: any = {
+                    projection: {
+                        TOTAL: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('config').findOne(findQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > betMinMaxAll')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public folderInfo = (userOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -1057,6 +1084,40 @@ export default class BetService implements IBetService {
                 resolve(r)
             } catch (err) {
                 logger.error('BetService > previousBetAmount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public previousBetAmountAll = (v: any): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    gameOID: new ObjectID(v.resultMinigameInfo._id),
+                    userOID: new ObjectID(v.decoded._id)
+                }
+
+                const whatQuery: any = {
+                    _id: null,
+                    betAmount: { $sum: '$betAmount' },
+                    betBenefit: { $sum: '$betAmount' }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betMinigame').aggregate([{
+                        $match: findQuery
+                    },
+                    {
+                        $group: whatQuery
+                    }
+                ]).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > previousBetAmountAll')
                 logger.error(err)
                 r.error = err
                 resolve(r)

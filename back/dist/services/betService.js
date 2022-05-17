@@ -45,6 +45,30 @@ class BetService {
                 }
             }));
         };
+        this.betMinMaxAll = (category) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: category,
+                    };
+                    let whatQuery = {
+                        projection: {
+                            TOTAL: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').findOne(findQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > betMinMaxAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.folderInfo = (userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
@@ -962,6 +986,37 @@ class BetService {
                 }
                 catch (err) {
                     modules_1.logger.error('BetService > previousBetAmount');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.previousBetAmountAll = (v) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        gameOID: new db_1.ObjectID(v.resultMinigameInfo._id),
+                        userOID: new db_1.ObjectID(v.decoded._id)
+                    };
+                    const whatQuery = {
+                        _id: null,
+                        betAmount: { $sum: '$betAmount' },
+                        betBenefit: { $sum: '$betAmount' }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betMinigame').aggregate([{
+                            $match: findQuery
+                        },
+                        {
+                            $group: whatQuery
+                        }
+                    ]).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > previousBetAmountAll');
                     modules_1.logger.error(err);
                     r.error = err;
                     resolve(r);
