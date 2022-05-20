@@ -1,0 +1,60 @@
+<template>
+    <div>
+        <div class="header-layout d-none d-xl-block">
+            <Header/>
+        </div>
+        <div class="header-mobile-layout d-xl-none">
+            <HeaderMobile/>
+        </div>
+        <div class="main-wrap">
+            <div class="left-layout d-none d-xl-block">
+                <Left/>
+            </div>
+            <div class="right-layout d-none d-xl-block">
+                <Right/>
+            </div>
+            <div class="main-layout">
+                <div class="container-fluid">
+                    <slot/>
+                </div>
+            </div>
+        </div>
+        <div class="footer-layout">
+            <Footer/>
+        </div>
+        <div class="fixed-bottom footer-mobile-layout d-xl-none">
+            <FooterMobileMenu/>
+        </div>
+        <div class="fixed-bottom d-xl-none">
+            <BetSlipMinigame v-show="betCart.length > 0 && !showSideBars && (this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'Kenoladder' || this.router === 'BoglePowerball' || this.router === 'Bogleladder' || this.router === 'GooglePowerball1' || this.router === 'GooglePowerball3')"/>
+        </div>
+    </div>
+</template>
+
+<script>
+    import { mapGetters } from 'vuex'
+
+    import Header from '../components/Header.vue'
+    import HeaderMobile from '../components/HeaderMobile.vue'
+    import Left from '../components/Left.vue'
+    import Right from '../components/Right.vue'
+    import Footer from '../components/Footer.vue'
+    import FooterMobileMenu from '../components/FooterMobileMenu.vue'
+    import BetSlipMinigame from '../components/BetSlipMinigame.vue'
+
+    export default {
+        name: "Default",
+        components: {
+            Header,
+            HeaderMobile,
+            Left,
+            Right,
+            Footer,
+            FooterMobileMenu,
+            BetSlipMinigame
+        },
+        computed: {
+            ...mapGetters(['router', 'betCart', 'showSideBars'])
+        }
+    }
+</script>
