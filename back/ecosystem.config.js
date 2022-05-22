@@ -94,53 +94,53 @@
 //     versionKey: 'version'
 // }
 
-// DEMARK-NEW
-module.exports = {
-    apps: [
-        {
-            name: "[DEMARK-NEW]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 3017,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 3017,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 3016,
-    port: 3017,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
-
-// // STUDY
+// // DEMARK-NEW
 // module.exports = {
 //     apps: [
 //         {
-//             name: "[STUDY]CLIENT",
+//             name: "[DEMARK-NEW]CLIENT",
 //             script: "./dist/app.js",
 //             env: {
-//                 "PORT": 3013,
+//                 "PORT": 3017,
 //                 "NODE_ENV": "development"
 //             },
 //             env_production: {
-//                 "PORT": 3013,
+//                 "PORT": 3017,
 //                 "NODE_ENV": "production"
 //             }
 //         }
 //     ],
-//     frontPort: 3012,
-//     port: 3013,
+//     frontPort: 3016,
+//     port: 3017,
 //     pageSize: 30,
 //     pageLimit: 7,
 //     version: '0.0.0',
 //     versionKey: 'version'
 // }
+
+// STUDY
+module.exports = {
+    apps: [
+        {
+            name: "[STUDY]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 3013,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 3013,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 3012,
+    port: 3013,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // MCLAREN
 // module.exports = {

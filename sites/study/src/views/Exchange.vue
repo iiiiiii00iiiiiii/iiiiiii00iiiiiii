@@ -142,7 +142,7 @@
                                     최근 출금내역 ( <span>최근 7일이내 / 최대50개</span> )
                                 </div>
                                 <div class="col text-right px-xl-0 d-none d-xl-block pt-xl-2">
-                                    <button type="button" class="btn-board red" :disabled="loading" @click="deleteChargeAll()">
+                                    <button type="button" class="btn-board red" :disabled="loading" @click="deleteExchangeAll()">
                                         전체삭제
                                     </button>
                                 </div>
