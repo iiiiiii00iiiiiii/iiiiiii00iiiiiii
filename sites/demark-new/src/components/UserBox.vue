@@ -105,7 +105,7 @@
                         </td>
                         <td class="w-50" @click="$tools.pushRouter('/event', true)">
                             <span class="user-button-red">
-                                <font-awesome-icon :icon="['fa', 'gift']"/> 아벤트
+                                <font-awesome-icon :icon="['fa', 'gift']"/> 이벤트
                             </span>
                         </td>
                     </tr>

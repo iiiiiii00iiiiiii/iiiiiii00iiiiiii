@@ -1,6 +1,18 @@
 <template>
     <div>
         <div class="betslot-box">
+            <div class="row text-center">
+                <div class="col-6">
+                    <img src="/images/icon-money.png" alt="money" title="money">
+                    <span>보유머니 :</span>
+                    <span class="user-money">{{ $numeral(user.money).format('0,0') }}</span>
+                </div>
+                <div class="col-6">
+                    <img src="/images/icon-point.png" alt="point" title="point">
+                    <span>포인트 :</span>
+                    <span class="user-money point">{{ $numeral(user.point).format('0,0') }}</span>
+                </div>
+            </div>
             <div class="row px-2">
                 <div class="col-12 input-box">
                     <div class="row">

@@ -128,7 +128,7 @@
             </div>
         </div>
         <div class="telegram">
-            <img src="images/telegram.png" alt="텔레그램" title="텔레그램">
+            <img src="images/banner-right-telegram.png" class="img-fluid" alt="텔레그램" title="텔레그램">
         </div>
     </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="sports-minigame d-none d-xl-block">
+    <div class="sports-minigame d-none d-md-block">
         <div class="row">
             <div class="col-12">
                 <div class="row">

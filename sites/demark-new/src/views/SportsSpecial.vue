@@ -24,11 +24,13 @@
                     </div>
                     <div class="sports-event-header">
                         <span class="event-title">Prematch <b>Event</b></span>
-                        <span class="type-time active">
-                            <font-awesome-icon :icon="['fa', 'clock']"/> 시간순정렬
-                        </span>
-                        <span class="type-league">
-                            <font-awesome-icon :icon="['fa', 'flag']"/> 리그순정렬
+                        <span class="sorting-method">
+                            <span class="type-time active">
+                                <font-awesome-icon :icon="['fa', 'clock']"/> 시간순정렬
+                            </span>
+                            <span class="type-league">
+                                <font-awesome-icon :icon="['fa', 'flag']"/> 리그순정렬
+                            </span>
                         </span>
                     </div>
                     <div class="sports-icon">
@@ -65,7 +67,7 @@
             </div>
             <div class="row mt-1 px-1">
                 <div class="col-12 game-info-box d-none d-xl-block">
-                    <div class="row px-3">
+                    <div class="row">
                         <div class="col ">
                             리그/경기일시
                         </div>

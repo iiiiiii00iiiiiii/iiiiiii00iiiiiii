@@ -151,7 +151,7 @@
                                                 </div>
                                             </div>
                                             <div class="col col-xl-2 g-count o">
-                                                <div class="pt-2">
+                                                <div class="pt-2 pt-xl-0">
                                                     {{ v.resultDraw ? '적특' : `${v.resultData.homeScoreTotal}:${v.resultData.awayScoreTotal}` }}
                                                 </div>
                                             </div>

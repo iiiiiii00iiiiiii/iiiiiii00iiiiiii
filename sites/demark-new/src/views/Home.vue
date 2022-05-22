@@ -6,7 +6,6 @@
                     <b-carousel
                         id="carousel-1"
                         :interval="3000"
-                        controls
                         indicators
                         background="#ababab"
                         style="text-shadow: 1px 1px 2px #333;"
@@ -15,7 +14,7 @@
 
                         <b-carousel-slide img-src="images/bg-main02.jpg"></b-carousel-slide>
 
-                        <!-- <b-carousel-slide img-src="images/bg-main03.png"></b-carousel-slide> -->
+                        <b-carousel-slide img-src="images/bg-main03.jpg"></b-carousel-slide>
 
                     </b-carousel>
                 </div>
@@ -25,16 +24,15 @@
                     <b-carousel
                         id="carousel-1"
                         :interval="3000"
-                        controls
                         indicators
                         background="#ababab"
                         style="text-shadow: 1px 1px 2px #333;"
                     >
-                        <b-carousel-slide img-src="images/bg-mobile-main01.png"></b-carousel-slide>
+                        <b-carousel-slide img-src="images/bg-mobile-main01.jpg"></b-carousel-slide>
 
-                        <b-carousel-slide img-src="images/bg-mobile-main02.png"></b-carousel-slide>
+                        <b-carousel-slide img-src="images/bg-mobile-main02.jpg"></b-carousel-slide>
 
-                        <b-carousel-slide img-src="images/bg-mobile-main03.png"></b-carousel-slide>
+                        <b-carousel-slide img-src="images/bg-mobile-main03.jpg"></b-carousel-slide>
 
                     </b-carousel>
                 </div>
@@ -148,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="contents-data d-none d-xl-block">
+                <div class="contents-data d-none d-md-block">
                     <div class="content-header"> 
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-alarm-fill" viewBox="0 0 16 16">

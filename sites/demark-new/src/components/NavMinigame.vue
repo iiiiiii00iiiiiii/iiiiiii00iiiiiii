@@ -59,8 +59,8 @@
                     </div>
                 </div>
                 <div class="col px-0 d-xl-none">
-                    <div class="header-mobile-menu">
-                        <div class="header-mobile-menu-wrap">
+                    <div class="minigame-header-mobile-menu">
+                        <div class="minigame-header-mobile-menu-wrap">
                             <ul>
                                 <li @click="$tools.pushRouter('/powerball', false)">
                                     <img src="/images/icon-nav-minigame-1.png" alt="파워볼">

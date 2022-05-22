@@ -10,7 +10,9 @@
                 </div>
                 <div class="col-2 header-mobile-right-wrap">
                     <img src="/images/icon-mobile-bars.png" class="icon-mobile-sign-in-alt" v-show="!isLogin" @click="$tools.pushRouter('/login', false)">
-                    <span class="cart-count" v-show="isLogin" @click="openRightSide()"> {{ betCart.length }} </span>
+                    <span class="cart-count-box text-center">
+                        <span class="cart-count" v-show="isLogin" @click="openRightSide()"> {{ betCart.length }} </span>
+                    </span>
                     <img src="/images/icon-mobile-bars-2.png" class="icon-mobile-sign-in-alt" v-show="isLogin" @click="openRightSide()">
                 </div>
             </div>
@@ -71,7 +73,7 @@
                 <LoginBox v-show="!isLogin"/>
                 <UserBox v-show="isLogin"/>
                 <LeftLiveInplay/>
-                <LeftMinigameCategory
+                <!-- <LeftMinigameCategory
                     v-if="router === 'Powerball' ||
                     router === 'Powerladder' ||
                     router === 'Kenoladder' ||
@@ -79,8 +81,8 @@
                     router === 'Bogleladder' ||
                     router === 'GooglePowerball1' ||
                     router === 'GooglePowerball3'"
-                />
-                <LeftCategory v-else/>
+                /> -->
+                <LeftCategory/>
             </b-sidebar>
 
             <b-sidebar
@@ -104,7 +106,7 @@
 <script>
     import LeftLiveInplay from '../components/LeftLiveInplay.vue'
     import LeftCategory from '../components/LeftCategory.vue'
-    import LeftMinigameCategory from '../components/LeftMinigameCategory.vue'
+    // import LeftMinigameCategory from '../components/LeftMinigameCategory.vue'
     import LoginBox from '../components/LoginBox.vue'
     import UserBox from '../components/UserBox.vue'
     import BetSlip from '../components/BetSlip.vue'
@@ -117,7 +119,7 @@
         components: {
             LeftLiveInplay,
             LeftCategory,
-            LeftMinigameCategory,
+            // LeftMinigameCategory,
             LoginBox,
             UserBox,
             BetSlip,

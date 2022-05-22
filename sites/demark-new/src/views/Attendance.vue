@@ -6,8 +6,8 @@
                 출석체크 <span>Attendance</span>
             </div>
             <div class="content-notice">
-                <div>하루최소 <span>100,000</span> 충전 시 출석체크를 하실 수 있습니다.</div>
-                <div>출석체크 시 <span>1,000</span> 포인트가 지급됩니다.</div>
+                <div>하루최소 <span>30,000</span> 충전 시 출석체크를 하실 수 있습니다.</div>
+                <div>자세한 내용은 이벤트란 참고하시기 바랍니다.</div>
             </div>
             <div class="attendance-calendar">
                 <div class="row">

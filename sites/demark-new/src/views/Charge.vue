@@ -76,31 +76,15 @@
                             <div class="col-9">
                                 <div class="content">
                                     <div class="row pl-3">
-                                        <div class="col col-xl-1">
+                                        <div class="col-12">
                                             <button type="button" class="btn-money" @click="addMoney(10000)">+10,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(30000)">+30,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(50000)">+50,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(100000)">+100,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(300000)">+300,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(500000)">+500,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(1000000)">+1,000,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(3000000)">+3,000,000</button>
-                                        </div>
-                                        <div class="col col-xl-1">
                                             <button type="button" class="btn-money" @click="addMoney(5000000)">+5,000,000</button>
                                         </div>
                                     </div>

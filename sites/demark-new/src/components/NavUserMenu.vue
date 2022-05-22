@@ -1,9 +1,9 @@
 <template>
-    <div class="sports-minigame">
+    <div class="sports-minigame d-none d-md-block">
         <div class="row">
             <div class="col-12">
                 <div class="row">
-                    <div class="col-12 d-none d-xl-block">
+                    <div class="col-12">
                         <div class="row">
                             <div class="col sports-menu" @click="$tools.pushRouter('/charge', false)">
                                 <img src="/images/footer-mobile-menu-charge.png" alt="충전">
