@@ -176,12 +176,12 @@
         }
     }
     .header-mobile-logo-wrap {
-        padding-top: 5px;
+        padding-top: 8px;
         padding-bottom: 5px;
         text-align: center;
 
         .mobile-logo {
-            height: 40px;
+            height: 30px;
             cursor: pointer;
         }
     }

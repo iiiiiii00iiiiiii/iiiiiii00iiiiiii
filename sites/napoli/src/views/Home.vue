@@ -232,7 +232,7 @@
             <div class="row">
                 <div class="col">
                     <div class="copyright">
-                        Copyright © 믿을 수 있는 나폴리 BET SLUMBERS ALL RIGHTS RESERVE.<br>Solution By SOFT365.
+                        Copyright © 믿을 수 있는 빅토리 BET ALL RIGHTS RESERVE.<br>Solution By SOFT365.
                     </div>
                 </div>
             </div>

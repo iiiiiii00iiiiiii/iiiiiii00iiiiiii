@@ -94,29 +94,29 @@
 //     versionKey: 'version'
 // }
 
-// DEMARK-NEW
-module.exports = {
-    apps: [
-        {
-            name: "[DEMARK-NEW]CLIENT",
-            script: "./dist/app.js",
-            env: {
-                "PORT": 3017,
-                "NODE_ENV": "development"
-            },
-            env_production: {
-                "PORT": 3017,
-                "NODE_ENV": "production"
-            }
-        }
-    ],
-    frontPort: 3016,
-    port: 3017,
-    pageSize: 30,
-    pageLimit: 7,
-    version: '0.0.0',
-    versionKey: 'version'
-}
+// // DEMARK-NEW
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[DEMARK-NEW]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 3017,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 3017,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 3016,
+//     port: 3017,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
 
 // // STUDY
 // module.exports = {
@@ -190,29 +190,29 @@ module.exports = {
 //     versionKey: 'version'
 // }
 
-// // NAPOLI
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[NAPOLI]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 3001,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 3001,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 3000,
-//     port: 3001,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
+// NAPOLI
+module.exports = {
+    apps: [
+        {
+            name: "[NAPOLI]CLIENT",
+            script: "./dist/app.js",
+            env: {
+                "PORT": 3001,
+                "NODE_ENV": "development"
+            },
+            env_production: {
+                "PORT": 3001,
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    frontPort: 3000,
+    port: 3001,
+    pageSize: 30,
+    pageLimit: 7,
+    version: '0.0.0',
+    versionKey: 'version'
+}
 
 // // PENT
 // module.exports = {
