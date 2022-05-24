@@ -981,6 +981,39 @@ body {
             }
         }
     }
+    .mobile-betting-history {
+        text-align: center;
+        color: #c2c2c2;
+        
+        .betting-history-header {
+            background-color: #383838;
+            border-top: 1px solid #111;
+            border-bottom: 2px solid #111;
+            height: 40px;
+            line-height: 40px;
+            
+        }
+        .betting-history-list {
+            border-bottom: 2px solid #111;
+            line-height: 20px;
+        }
+        .league-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            img {
+                width: 17%;
+            }
+        }
+        .team-name {
+            width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+    }
 }
 
 // board
