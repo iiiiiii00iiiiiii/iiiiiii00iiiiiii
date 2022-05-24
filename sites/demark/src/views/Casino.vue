@@ -1,80 +1,60 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col casino-page">
             <div class="row">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'dice']"/>
-                            <span class="ml-2">라이브 카지노 LIVE CASINO</span>
-                        </div>
+                    <div class="casino-page-header">
+                        <font-awesome-icon :icon="['fa', 'dice']"/>
+                        라이브 카지노 <span>LIVE CASINO</span>
                     </div>
                 </div>
             </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="casino">
-                        <div class="row">
-                            <div class="col-6 col-xl-4 text-center">
-                                <img
-                                    src="/images/evolution.png"
-                                    class="img-fluid cursor-pointer"
-                                    ref="evolution"
-                                    @mouseover="overImage('evolution')"
-                                    @mouseout="outImage('evolution')"
-                                    @click="openKplay(1)"
-                                >
-                            </div>
-                            <div class="col-6 col-xl-4 text-center">
-                                <img
-                                    src="/images/asia.png"
-                                    class="img-fluid cursor-pointer"
-                                    ref="asia"
-                                    @mouseover="overImage('asia')"
-                                    @mouseout="outImage('asia')"
-                                    @click="openKplay(5)"
-                                >
-                            </div>
-                            <div class="col-6 col-xl-4 mt-2 mt-xl-0 text-center">
-                                <img
-                                    src="/images/dream.png"
-                                    class="img-fluid cursor-pointer"
-                                    ref="dream"
-                                    @mouseover="overImage('dream')"
-                                    @mouseout="outImage('dream')"
-                                    @click="openKplay(6)"
-                                >
-                            </div>
-                            <div class="col-6 col-xl-4 mt-2 text-center">
-                                <img
-                                    src="/images/sexy.png"
-                                    class="img-fluid cursor-pointer"
-                                    ref="sexy"
-                                    @mouseover="overImage('sexy')"
-                                    @mouseout="outImage('sexy')"
-                                    @click="openKplay(9)"
-                                >
-                            </div>
-                            <div class="col-6 col-xl-4 mt-2 text-center">
-                                <img
-                                    src="images/pragmatic.png"
-                                    class="img-fluid cursor-pointer"
-                                    ref="pragmatic"
-                                    @mouseover="overImage('pragmatic')"
-                                    @mouseout="outImage('pragmatic')"
-                                    @click="openKplay(10)"
-                                >
-                            </div>
-                            <div class="col-6 col-xl-4 mt-2 text-center">
-                                <img
-                                    src="images/big.png"
-                                    class="img-fluid cursor-pointer"
-                                    ref="big"
-                                    @mouseover="overImage('big')"
-                                    @mouseout="outImage('big')"
-                                    @click="openKplay(2)"
-                                >
-                            </div>
+            <div class="row mt-2">
+                <div class="col-12 col-xl-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <img
+                                src="/images/sub-banner-evolution.png" 
+                                class="sub-banner img-fluid" alt="에볼루션" title="에볼루션" 
+                                @click="openKplay(1)">
+                        </div>
+                        <div class="col-12 mt-2">
+                            <img
+                                src="/images/sub-banner-asia.png"
+                                class="sub-banner img-fluid" alt="아시아 게이밍" title="아시아 게이밍"
+                                @click="openKplay(5)">
+                        </div>
+                        <div class="col-12 mt-2">
+                            <img
+                                src="/images/sub-banner-sexy.png"
+                                class="sub-banner img-fluid" alt="섹시 게이밍" title="섹시 게이밍"
+                                @click="openKplay(9)"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-6">
+                    <div class="row">
+                        <div class="col-12 mt-2 mt-xl-0">
+                            <img
+                                src="/images/sub-banner-pragmatic.png"
+                                class="sub-banner img-fluid" alt="프라그마틱 플레이" title="프라그마틱 플레이"
+                                @click="openKplay(10)"
+                            >
+                        </div>
+                        <div class="col-12 mt-2">
+                            <img
+                                src="/images/sub-banner-dream.png"
+                                class="sub-banner img-fluid" alt="드림 게이밍" title="드림 게이밍"
+                                @click="openKplay(6)"
+                            >
+                        </div>
+                        <div class="col-12 mt-2">
+                            <img
+                                src="/images/sub-banner-big.png"
+                                class="sub-banner img-fluid" alt="빅 게이밍" title="빅 게이밍"
+                                @click="openKplay(2)"
+                            >
                         </div>
                     </div>
                 </div>

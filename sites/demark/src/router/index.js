@@ -241,7 +241,22 @@ const routes = [
         meta: { layout: 'Default' },
         beforeEnter: getInformation()
     },
+    //frienddetails
+    {
+        path: '/frienddetails',
+        name: 'FriendDetails',
+        component: () => import(/* webpackChunkName: "frienddetails" */ '../views/FriendDetails.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformation()
+    },
     // sports
+    {
+        path: '/sportsgamemenu',
+        name: 'SportsGameMenu',
+        component: () => import(/* webpackChunkName: "sportsgamemenu" */ '../views/SportsGameMenu.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
     {
         path: '/sports',
         name: 'Sports',
@@ -285,6 +300,13 @@ const routes = [
         beforeEnter: getInformationWithout()
     },
     // minigames
+    {
+        path: '/minigamemenu',
+        name: 'MiniGameMenu',
+        component: () => import(/* webpackChunkName: "minigamemenu" */ '../views/MiniGameMenu.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
     {
         path: '/powerball',
         name: 'Powerball',

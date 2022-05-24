@@ -1,25 +1,16 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'question-circle']"/>
-                            <span class="ml-2">최근 배팅내역</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col page-content">
             <div class="row mt-1">
                 <div class="col">
-                    <div class="board-list">
+                    <div class="list-content ">
                         <div class="row">
+                            <div class="col text-white mt-2">
+                                <font-awesome-icon :icon="['fa', 'question-circle']"/>
+                                <span class="ml-2">최근 배팅내역</span>
+                            </div>
                             <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="getMinigameBetListRecent()">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
-                                </button>
-                                <button type="button" class="btn-board ml-1" :disabled="loading" @click="deleteBetAll()">
+                                <button type="button" class="btn-init-money ml-1 px-0" :disabled="loading" @click="deleteBetAll()">
                                     <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
                                 </button>
                             </div>

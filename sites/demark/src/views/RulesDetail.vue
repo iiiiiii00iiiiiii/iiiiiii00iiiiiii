@@ -1,27 +1,23 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
             <div class="row">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'info']"/>
-                            <span class="ml-2">경기규정 상세 RULES DETAIL</span>
-                        </div>
+                    <div class="page-content-header">
+                        <font-awesome-icon :icon="['fa', 'info']"/>
+                        경기규정 상세 <span>RULES DETAIL</span>
+                        <span class="float-right">
+                            <button type="button" class="btn-money" :disabled="loading" @click="$tools.pushRouter(`/rules/?page=${$route.params.page}`)">
+                                <font-awesome-icon :icon="['fa', 'list']"/> 목록
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="row mt-1">
+            <div class="row">
                 <div class="col">
-                    <div class="board-detail">
+                    <div class="list-content">
                         <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="$tools.pushRouter(`/rules/?page=${$route.params.page}`)">
-                                    <font-awesome-icon :icon="['fa', 'list']"/> 목록
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
                             <div class="col">
                                 <div class="table-responsive">
                                     <table class="table table-borderless table-board text-nowrap">

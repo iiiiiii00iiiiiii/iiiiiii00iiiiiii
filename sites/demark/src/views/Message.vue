@@ -1,91 +1,76 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'envelope']"/>
-                            <span class="ml-2">쪽지 MESSAGE</span>
+        <div class="col page-content">
+            <div class="page-content-header">
+                <font-awesome-icon :icon="['fa', 'envelope']"/>
+                쪽지 <span>MESSAGE</span>
+            </div>
+            <div class="list-content">
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-board text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="w-10">#</th>
+                                        <th class="w-10">일시</th>
+                                        <th>제목</th>
+                                        <th >삭제</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="(item, index) in data" :key="index"
+                                    >
+                                        <td :class="item.checkStatus">
+                                            <font-awesome-icon :icon="['fa', item.checkStatus ? 'envelope-open' : 'envelope']"/>
+                                        </td>
+                                        <td :class="item.checkStatus">
+                                            {{ $moment(item.regDateTime).format('YY.MM.DD HH:mm') }}
+                                        </td>
+                                        <td :class="item.checkStatus">
+                                            <span
+                                                class="cursor-pointer text-white"
+                                                @click="$tools.pushRouter(`/message/detail/${item._id}/${search.page}`)"
+                                            >
+                                                {{ item.title }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-delete" :disabled="loading" v-if="item.checkStatus" @click="deleteMessage(item._id)">삭제</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="board-list">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="checkMessageAll()">
-                                    <font-awesome-icon :icon="['fa', 'check-square']"/> 전체읽기
-                                </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="deleteMessageAll()">
-                                    <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
-                                </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="getList()">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-board text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="w-10">#</th>
-                                                <th class="w-10">일시</th>
-                                                <th>제목</th>
-                                                <th class="w-10">삭제</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr
-                                                v-for="(item, index) in data" :key="index"
-                                            >
-                                                <td :class="item.checkStatus ? '' : 'text-light-brown'">
-                                                    <font-awesome-icon :icon="['fa', item.checkStatus ? 'envelope-open' : 'envelope']"/>
-                                                </td>
-                                                <td :class="item.checkStatus ? '' : 'text-light-brown'">
-                                                    {{ $moment(item.regDateTime).format('YY.MM.DD HH:mm') }}
-                                                </td>
-                                                <td :class="item.checkStatus ? '' : 'text-light-brown'">
-                                                    <span
-                                                        class="cursor-pointer"
-                                                        @click="$tools.pushRouter(`/message/detail/${item._id}/${search.page}`)"
-                                                    >
-                                                        {{ item.title }}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn-delete" :disabled="loading" v-if="item.checkStatus" @click="deleteMessage(item._id)">삭제</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <b-pagination-nav
-                                    first-class="first-class"
-                                    last-class="last-class"
-                                    prev-class="prev-class"
-                                    next-class="next-class"
-                                    ellipsis-class="ellipsis-class"
-                                    page-class="page-class"
-                                    :link-gen="linkGen"
-                                    :number-of-pages="numberOfPages"
-                                    align="center"
-                                    :limit="$config.pageLimit"
-                                    use-router
-                                    v-model="search.page"
-                                    pills
-                                    size="sm"
-                                ></b-pagination-nav>
-                            </div>
-                        </div>
+                <div class="row mt-2">
+                    <div class="col text-right">
+                        <button type="button" class="btn-select-denim" :disabled="loading" @click="checkMessageAll()">
+                            <font-awesome-icon :icon="['fa', 'check-square']"/> 전체읽기
+                        </button>
+                        <button type="button" class="btn-select-cinnabar ml-2" :disabled="loading" @click="deleteMessageAll()">
+                            <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <b-pagination-nav
+                            first-class="first-class"
+                            last-class="last-class"
+                            prev-class="prev-class"
+                            next-class="next-class"
+                            ellipsis-class="ellipsis-class"
+                            page-class="page-class"
+                            :link-gen="linkGen"
+                            :number-of-pages="numberOfPages"
+                            align="center"
+                            :limit="$config.pageLimit"
+                            use-router
+                            v-model="search.page"
+                        ></b-pagination-nav>
                     </div>
                 </div>
             </div>

@@ -1,54 +1,36 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'comments']"/>
-                            <span class="ml-2">고객센터 상세 HELP DETAIL</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="col page-content">
+            <div class="page-content-header">
+                <font-awesome-icon :icon="['fa', 'comments']"/>
+                고객센터 상세 <span>HELP DETAIL</span>
+                <span class="float-right">
+                    <button type="button" class="btn-money" :disabled="loading" @click="$tools.pushRouter(`/help/?page=${$route.params.page}`)">
+                        <font-awesome-icon :icon="['fa', 'list']"/> 목록
+                    </button>
+                </span>
             </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="board-detail">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-delete" :disabled="loading" @click="deleteHelp($route.params._id)">
-                                    <font-awesome-icon :icon="['fa', 'trash-alt']"/> 삭제
-                                </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="getDetail()">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
-                                </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="$tools.pushRouter(`/help/?page=${$route.params.page}`)">
-                                    <font-awesome-icon :icon="['fa', 'list']"/> 목록
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-board text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    {{ title }}
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td v-html="content"></td>
-                                            </tr>
-                                            <tr v-if="answerStatus">
-                                                <td v-html="comment" class="board-content"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+            <div class="list-content">
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-board text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            {{ title }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td v-html="content"></td>
+                                    </tr>
+                                    <tr v-if="answerStatus">
+                                        <td v-html="comment" class="board-content"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

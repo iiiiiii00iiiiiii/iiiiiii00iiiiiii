@@ -1,6 +1,6 @@
 <template>
     <div class="row mb-3" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
             <div class="row">
                 <div class="col-12">
                     <NavMinigame/>
@@ -8,17 +8,15 @@
             </div>
             <div class="row mt-2">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'gamepad']"/>
-                            <span class="ml-2">키노 사다리 KENO LADDER</span>
-                            <span class="float-right">
-                                <button class="btn-minigames" @click="isHide = !isHide">
-                                    <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
-                                    {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
-                                </button>
-                            </span>
-                        </div>
+                    <div class="page-content-header">
+                        <font-awesome-icon :icon="['fa', 'gamepad']"/>
+                        키노 사다리 <span>KENO LADDER</span>
+                        <span class="float-right">
+                            <button class="btn-request-charge" @click="isHide = !isHide">
+                                <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
+                                {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -42,7 +40,7 @@
                             <div class="col-12">
                                 <div class="minigame-info clearfix">
                                     <div class="float-left">
-                                        <font-awesome-icon :icon="['fa', 'star']" class="text-light-brown"/> 키노 사다리-<span class="text-light-brown">{{ round }}</span> (<span class="text-light-brown">{{ rotation }}</span>) 회차
+                                        <font-awesome-icon :icon="['fa', 'star']"/> 키노 사다리-<span>{{ round }}</span> (<span>{{ rotation }}</span>) 회차
                                     </div>
                                     <div class="float-right">
                                         <div class="game-time-box">
@@ -52,6 +50,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 키노사디리 -->
                         <div class="row mt-1">
                             <div class="col">
                                 <div class="minigame-title" id="section1">
@@ -59,14 +58,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'KLDLR' && betSelect === 'Left' ? 'active' : ''"
                                     @click="setBet(id, 'KLDLR', 'Left', games.KLDLR.rateOfLeft)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDLR.rateOfLeft ? '' : 'blue'">
+                                    <div :class="end || !games.KLDLR.rateOfLeft ? '' : ''">
                                         <span>좌</span>
                                     </div>
                                     <div class="rate">
@@ -76,11 +75,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'KLDLR' && betSelect === 'Right' ? 'active' : ''"
                                     @click="setBet(id, 'KLDLR', 'Right', games.KLDLR.rateOfRight)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDLR.rateOfRight ? '' : 'red'">
+                                    <div :class="end || !games.KLDLR.rateOfRight ? '' : ''">
                                         <span>우</span>
                                     </div>
                                     <div class="rate">
@@ -90,11 +89,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'KLDTF' && betSelect === 'Three' ? 'active' : ''"
                                     @click="setBet(id, 'KLDTF', 'Three', games.KLDTF.rateOfThree)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDTF.rateOfThree ? '' : 'blue'">
+                                    <div :class="end || !games.KLDTF.rateOfThree ? '' : ''">
                                         <span>3줄</span>
                                     </div>
                                     <div class="rate">
@@ -104,11 +103,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'KLDTF' && betSelect === 'Four' ? 'active' : ''"
                                     @click="setBet(id, 'KLDTF', 'Four', games.KLDTF.rateOfFour)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDTF.rateOfFour ? '' : 'red'">
+                                    <div :class="end || !games.KLDTF.rateOfFour ? '' : ''">
                                         <span>4줄</span>
                                     </div>
                                     <div class="rate">
@@ -118,11 +117,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'KLDOE' && betSelect === 'Odd' ? 'active' : ''"
                                     @click="setBet(id, 'KLDOE', 'Odd', games.KLDOE.rateOfOdd)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDOE.rateOfOdd ? '' : 'blue'">
+                                    <div :class="end || !games.KLDOE.rateOfOdd ? '' : ''">
                                         <span>홀</span>
                                     </div>
                                     <div class="rate">
@@ -132,11 +131,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'KLDOE' && betSelect === 'Even' ? 'active' : ''"
                                     @click="setBet(id, 'KLDOE', 'Even', games.KLDOE.rateOfEven)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDOE.rateOfEven ? '' : 'red'">
+                                    <div :class="end || !games.KLDOE.rateOfEven ? '' : ''">
                                         <span>짝</span>
                                     </div>
                                     <div class="rate">
@@ -145,21 +144,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <!-- 키노사디리 조합 -->
+                        <div class="row my-2">
                             <div class="col">
                                 <div class="minigame-title" id="section2">
                                     키노 사다리 조합 배팅
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'KLDCOMBO' && betSelect === 'LeftThree' ? 'active' : ''"
                                     @click="setBet(id, 'KLDCOMBO', 'LeftThree', games.KLDCOMBO.rateOfLeftThree)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDCOMBO.rateOfLeftThree ? '' : 'blue'">
+                                    <div :class="end || !games.KLDCOMBO.rateOfLeftThree ? '' : ''">
                                         <span>좌3</span>
                                     </div>
                                     <div class="rate">
@@ -169,11 +169,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'KLDCOMBO' && betSelect === 'LeftFour' ? 'active' : ''"
                                     @click="setBet(id, 'KLDCOMBO', 'LeftFour', games.KLDCOMBO.rateOfLeftFour)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDCOMBO.rateOfLeftFour ? '' : 'blue'">
+                                    <div :class="end || !games.KLDCOMBO.rateOfLeftFour ? '' : ''">
                                         <span>좌4</span>
                                     </div>
                                     <div class="rate">
@@ -183,11 +183,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'KLDCOMBO' && betSelect === 'RightThree' ? 'active' : ''"
                                     @click="setBet(id, 'KLDCOMBO', 'RightThree', games.KLDCOMBO.rateOfRightThree)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDCOMBO.rateOfRightThree ? '' : 'red'">
+                                    <div :class="end || !games.KLDCOMBO.rateOfRightThree ? '' : ''">
                                         <span>우3</span>
                                     </div>
                                     <div class="rate">
@@ -197,11 +197,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'KLDCOMBO' && betSelect === 'RightFour' ? 'active' : ''"
                                     @click="setBet(id, 'KLDCOMBO', 'RightFour', games.KLDCOMBO.rateOfRightFour)"
                                 >
-                                    <div class="bet" :class="end || !games.KLDCOMBO.rateOfRightFour ? '' : 'red'">
+                                    <div :class="end || !games.KLDCOMBO.rateOfRightFour ? '' : ''">
                                         <span>우4</span>
                                     </div>
                                     <div class="rate">

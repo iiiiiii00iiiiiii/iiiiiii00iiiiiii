@@ -1,6 +1,18 @@
 <template>
     <div>
         <div class="betslot-box">
+            <div class="row text-center">
+                <div class="col-6">
+                    <img src="/images/icon-money.png" alt="money" title="money">
+                    <span>보유머니 :</span>
+                    <span class="user-money">{{ $numeral(user.money).format('0,0') }}</span>
+                </div>
+                <div class="col-6">
+                    <img src="/images/icon-point.png" alt="point" title="point">
+                    <span>포인트 :</span>
+                    <span class="user-money point">{{ $numeral(user.point).format('0,0') }}</span>
+                </div>
+            </div>
             <div class="row px-2">
                 <div class="col-12 input-box">
                     <div class="row">
@@ -66,13 +78,11 @@
             <div class="row mt-2">
                 <div class="col-6">
                     <button type="button" class="btn-cancel" @click="init()" :disabled="loading">
-                        <font-awesome-icon :icon="['fa', 'redo']"/>
                         금액취소
                     </button>
                 </div>
                 <div class="col-6">
                     <button type="button" class="btn-cancel" @click="deleteBetAll()" :disabled="loading">
-                        <font-awesome-icon :icon="['fa', 'trash-alt']"/>
                         취소 & 닫기
                     </button>
                 </div>
@@ -80,7 +90,6 @@
             <div class="row mt-2">
                 <div class="col-12">
                     <button type="button" class="btn-bet" @click="bet()" :disabled="loading">
-                        <font-awesome-icon :icon="['fa', 'cogs']"/>
                         베팅하기
                     </button>
                 </div>
@@ -268,78 +277,3 @@
 
     }
 </script>
-
-<style lang="scss" scoped>
-    .betslot-box {
-        border: 1px solid #deb97d;
-        border-radius: 3px;
-        background-color: #30251c;
-        padding: 0.5rem;
-        font-size: 0.75rem;
-        font-weight: 600;
-        position: relative;
-        overflow: hidden;
-
-        .input-box {
-            background-color: #080500;
-            border-radius: 3px;
-            color: #fff;
-            line-height: 40px;
-        }
-        .bet-amount-button-box {
-            text-align: center;
-
-            .btn-addmoney {
-                background-color: #30251c;
-                border: 1px solid #080500;
-                border-radius: 3px;
-                line-height: 30px;
-                color: #c2c2c2;
-                box-shadow: 1px 1px 1px#080500;
-            }
-        }
-    }
-    .input-bet-amount {
-        width: 100%;
-        background-color: #080500;
-        color: #deb97d;
-        border: 0;
-        text-align: right;
-
-        &:focus {
-            outline: 0;
-            box-shadow: none;
-        }
-    }
-    .btn-bet {
-        border-radius: 3px;
-        width: 100%;
-        height: 36px;
-        border: 0;
-
-        transition: 0.2s;
-        background-color: #d2d2d2;
-        color: #111;
-
-        &:hover {
-            transition: 0.2s;
-            background-color: #bbb9b9;
-        }
-    }
-    .btn-cancel {
-        border-radius: 3px;
-        width: 100%;
-        height: 36px;
-        border: 0;
-
-        transition: 0.2s;
-        background-color: #cb9f42;
-        color: #fff;
-        text-shadow: 1px 1px 1px #111;
-
-        &:hover {
-            transition: 0.2s;
-            background-color: #bb943f;
-        }
-    }
-</style>

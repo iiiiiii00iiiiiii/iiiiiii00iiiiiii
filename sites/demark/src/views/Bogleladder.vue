@@ -1,19 +1,22 @@
 <template>
     <div class="row mb-3" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
+            <div class="row">
+                <div class="col-12">
+                    <NavMinigame/>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'gamepad']"/>
-                            <span class="ml-2">보글 사다리 BOGLE LADDER</span>
-                            <span class="float-right">
-                                <button class="btn-minigames" @click="isHide = !isHide">
-                                    <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
-                                    {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
-                                </button>
-                            </span>
-                        </div>
+                    <div class="page-content-header">
+                        <font-awesome-icon :icon="['fa', 'gamepad']"/>
+                        보글 사다리 <span>BOGLE LADDER</span>
+                        <span class="float-right">
+                            <button class="btn-request-charge" @click="isHide = !isHide">
+                                <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
+                                {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -37,7 +40,7 @@
                             <div class="col-12">
                                 <div class="minigame-info clearfix">
                                     <div class="float-left">
-                                        <font-awesome-icon :icon="['fa', 'star']" class="text-light-brown"/> 보글 사다리-<span class="text-light-brown">{{ round }}</span> (<span class="text-light-brown">{{ rotation }}</span>) 회차
+                                        <font-awesome-icon :icon="['fa', 'star']"/> 보글 사다리-<span>{{ round }}</span> (<span>{{ rotation }}</span>) 회차
                                     </div>
                                     <div class="float-right">
                                         <div class="game-time-box">
@@ -47,6 +50,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- 보글 사다리 -->
                         <div class="row mt-1">
                             <div class="col">
                                 <div class="minigame-title" id="section1">
@@ -54,14 +59,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'BLDLR' && betSelect === 'Left' ? 'active' : ''"
                                     @click="setBet(id, 'BLDLR', 'Left', games.BLDLR.rateOfLeft)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDLR.rateOfLeft ? '' : 'blue'">
+                                    <div :class="end || !games.BLDLR.rateOfLeft ? '' : ''">
                                         <span>좌</span>
                                     </div>
                                     <div class="rate">
@@ -71,11 +76,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red "
                                     :class="betType === 'BLDLR' && betSelect === 'Right' ? 'active' : ''"
                                     @click="setBet(id, 'BLDLR', 'Right', games.BLDLR.rateOfRight)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDLR.rateOfRight ? '' : 'red'">
+                                    <div :class="end || !games.BLDLR.rateOfRight ? '' : ''">
                                         <span>우</span>
                                     </div>
                                     <div class="rate">
@@ -85,11 +90,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'BLDTF' && betSelect === 'Three' ? 'active' : ''"
                                     @click="setBet(id, 'BLDTF', 'Three', games.BLDTF.rateOfThree)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDTF.rateOfThree ? '' : 'blue'">
+                                    <div :class="end || !games.BLDTF.rateOfThree ? '' : ''">
                                         <span>3줄</span>
                                     </div>
                                     <div class="rate">
@@ -99,11 +104,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red "
                                     :class="betType === 'BLDTF' && betSelect === 'Four' ? 'active' : ''"
                                     @click="setBet(id, 'BLDTF', 'Four', games.BLDTF.rateOfFour)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDTF.rateOfFour ? '' : 'red'">
+                                    <div :class="end || !games.BLDTF.rateOfFour ? '' : ''">
                                         <span>4줄</span>
                                     </div>
                                     <div class="rate">
@@ -113,11 +118,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'BLDOE' && betSelect === 'Odd' ? 'active' : ''"
                                     @click="setBet(id, 'BLDOE', 'Odd', games.BLDOE.rateOfOdd)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDOE.rateOfOdd ? '' : 'blue'">
+                                    <div :class="end || !games.BLDOE.rateOfOdd ? '' : ''">
                                         <span>홀</span>
                                     </div>
                                     <div class="rate">
@@ -127,11 +132,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'BLDOE' && betSelect === 'Even' ? 'active' : ''"
                                     @click="setBet(id, 'BLDOE', 'Even', games.BLDOE.rateOfEven)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDOE.rateOfEven ? '' : 'blue'">
+                                    <div :class="end || !games.BLDOE.rateOfEven ? '' : ''">
                                         <span>짝</span>
                                     </div>
                                     <div class="rate">
@@ -140,6 +145,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- 보글 사다리 조합 -->
                         <div class="row mt-1">
                             <div class="col">
                                 <div class="minigame-title" id="section2">
@@ -147,14 +154,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'BLDCOMBO' && betSelect === 'LeftThree' ? 'active' : ''"
                                     @click="setBet(id, 'BLDCOMBO', 'LeftThree', games.BLDCOMBO.rateOfLeftThree)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDCOMBO.rateOfLeftThree ? '' : 'blue'">
+                                    <div :class="end || !games.BLDCOMBO.rateOfLeftThree ? '' : ''">
                                         <span>좌3</span>
                                     </div>
                                     <div class="rate">
@@ -164,11 +171,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'BLDCOMBO' && betSelect === 'LeftFour' ? 'active' : ''"
                                     @click="setBet(id, 'BLDCOMBO', 'LeftFour', games.BLDCOMBO.rateOfLeftFour)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDCOMBO.rateOfLeftFour ? '' : 'blue'">
+                                    <div :class="end || !games.BLDCOMBO.rateOfLeftFour ? '' : ''">
                                         <span>좌4</span>
                                     </div>
                                     <div class="rate">
@@ -178,11 +185,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'BLDCOMBO' && betSelect === 'RightThree' ? 'active' : ''"
                                     @click="setBet(id, 'BLDCOMBO', 'RightThree', games.BLDCOMBO.rateOfRightThree)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDCOMBO.rateOfRightThree ? '' : 'red'">
+                                    <div :class="end || !games.BLDCOMBO.rateOfRightThree ? '' : ''">
                                         <span>우3</span>
                                     </div>
                                     <div class="rate">
@@ -192,11 +199,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'BLDCOMBO' && betSelect === 'RightFour' ? 'active' : ''"
                                     @click="setBet(id, 'BLDCOMBO', 'RightFour', games.BLDCOMBO.rateOfRightFour)"
                                 >
-                                    <div class="bet" :class="end || !games.BLDCOMBO.rateOfRightFour ? '' : 'red'">
+                                    <div :class="end || !games.BLDCOMBO.rateOfRightFour ? '' : ''">
                                         <span>우4</span>
                                     </div>
                                     <div class="rate">
@@ -220,12 +227,14 @@
 <script>
     import { mapGetters, mapActions } from 'vuex'
 
+    import NavMinigame from '../components/NavMinigame'
     import MinigameBetListRecent from '../components/MinigameBetListRecent.vue'
 
     export default {
         name: 'Bogleladder',
         components: {
-            MinigameBetListRecent
+            MinigameBetListRecent,
+            NavMinigame
         },
         computed: {
             ...mapGetters(['loading', 'betCart', 'router', 'isLogin']),

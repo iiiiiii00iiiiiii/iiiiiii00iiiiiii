@@ -1,162 +1,135 @@
 <template>
     <div class="betslip">
-        <table class="w-100">
-            <tr height="40">
-                <td class="betslip-title" colspan="5">
-                    BETSLIP
-                </td>
-            </tr>
-            <tr height="35">
-                <td class="bet-amount-title" colspan="2">
+        <div class="betslip-title">
+            <font-awesome-icon :icon="['fa', 'shopping-cart']" style="color: #fff"/> Betting Cart
+        </div>
+        <div class="betslip-info">
+            <ul>
+                <li>
+                    보유머니
+                    <span>
+                        {{ $numeral(user.money).format('0,0') }}
+                    </span>
+                </li>
+                <li>
                     배팅금액
-                </td>
-                <td colspan="3">
-                    <input
-                        type="text"
-                        class="w-100 input-amount text-right"
-                        :id="from === 'mobile' ? 'betAmountMobile' : 'betAmount'"
-                        maxlength="11"
-                        value="0"
-                        autocomplete="off"
-                        @click="initbetAmount($event)"
-                        @blur="checkbetAmount($event)"
-                        @input="setBetAmount($event)"
-                    >
-                </td>
-            </tr>
-            <tr height="35">
-                <td class="btn-bet-amount" @click="addMoney(10000)">
-                    1만
-                </td>
-                <td class="btn-bet-amount" @click="addMoney(50000)">
-                    5만
-                </td>
-                <td class="btn-bet-amount" @click="addMoney(100000)">
-                    10만
-                </td>
-                <td class="btn-bet-amount" @click="addMoney(300000)">
-                    30만
-                </td>
-                <td class="btn-bet-amount" @click="addMoney(500000)">
-                    50만
-                </td>
-            </tr>
-            <tr height="35">
-                <td class="btn-bet-amount" @click="addMoney(1000000)">
-                    100만
-                </td>
-                <td class="btn-bet-amount" @click="addMoney(3000000)">
-                    300만
-                </td>
-                <td class="btn-bet-amount" @click="addMoney(5000000)">
-                    500만
-                </td>
-                <td class="btn-bet-amount" @click="init()">
-                    <font-awesome-icon class="undo" :icon="['fa', 'undo']"/>
-                </td>
-                <td class="btn-bet-amount max" @click="max()">
-                    MAX
-                </td>
-            </tr>
-            <tr height="25">
-                <td class="bet-rate-title" colspan="2">
-                    총 배당
-                </td>
-                <td class="bet-rate-value" colspan="3">
-                    {{ $numeral(betRate).format('0,0.00') }} 배
-                </td>
-            </tr>
-            <tr height="25">
-                <td class="bet-rate-title" colspan="2">
-                    총 배당금액
-                </td>
-                <td class="bet-rate-value" colspan="3">
-                    {{ $numeral(benefit).format('0,0') }} 원
-                </td>
-            </tr>
-            <tr>
-                <td class="btn-bet-function" colspan="5">
-                    <div class="btn-bet-left">
-                        <button type="button" class="btn btn-danger btn-sm" :disabled="loading" @click="deleteBetAll()">
-                            <font-awesome-icon :icon="['fa', 'trash-alt']"/>
-                            전체취소
-                        </button>
-                    </div>
-                    <div class="btn-bet-right">
-                        <button type="button" class="btn btn-primary btn-sm" :disabled="loading" @click="bet()">
-                            <font-awesome-icon :icon="['fa', 'cogs']"/>
-                            배팅하기
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr height="40">
-                <td class="bet-cart" colspan="5">
-                    <div class="bet-cart-box">
-                        <div class="text-center" v-if="betCart.length === 0">배팅할 게임을 선택하세요.</div>
-                        <div class="bet-cart-wrap" :class="index > 0 ? 'mt-2' : ''" v-for="(bet, index) in betCart" :key="index">
-                            <div class="clearfix">
-                                <div class="bet-cart-left">
-                                    <span v-if="bet.gameType === 'sports' || bet.gameType === 'sportsCross' || bet.gameType === 'sportsLive' || bet.gameType === 'sportsSpecial' || bet.gameType === 'sportsLiveKor'">
-                                        {{ bet.homeTeam }} vs {{ bet.awayTeam }}
-                                    </span>
-                                    <span v-else>
-                                        {{ bet.gameInfo }}
-                                    </span>
-                                </div>
-                                <div class="bet-cart-right">
-                                    <font-awesome-icon class="x" :icon="['fa', 'times']" @click="deleteBet(index)"/>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="bet-cart-select-left" v-if="bet.gameType === 'sports' || bet.gameType === 'sportsCross' || bet.gameType === 'sportsLive' || bet.gameType === 'sportsSpecial' || bet.gameType === 'sportsLiveKor'">
-                                    <div>
-                                        <span>{{ $config.convertBetTypeSports[bet.type] }}</span>
-                                        <span v-if="bet.standard || bet.standard === 0">
-                                            [{{
-                                                bet.type === 'bothTeamsGoalWin' || bet.type === 'bothTeamsGoalWinOrDraw' ? $config.convertBetStandard[bet.standard] :
-                                                bet.type === 'xWithUnderOver' ? $config.convertBetStandardXwithUnderOver(bet.standard) : bet.standard
-                                            }}]
-                                        </span>
-                                        <span v-if="bet.type !== 'correctScoreFullTime'"> ({{ $config.convertBetSelectSports[bet.select] }})</span>
-                                    </div>
-                                </div>
-                                <div class="bet-cart-select-left" v-else>
-                                    {{ $config.convertBetSelectMinigames[bet.betType][bet.betSelect] }}
-                                </div>
-                                <div class="bet-cart-select-right">
-                                    {{ $numeral(bet.selectRate).format('0.00') }}
-                                </div>
-                            </div>
+                    <span class="w-40">
+                        <input
+                            type="text"
+                            class="w-100 input-amount text-right"
+                            :id="from === 'mobile' ? 'betAmountMobile' : 'betAmount'"
+                            maxlength="11"
+                            value="0"
+                            autocomplete="off"
+                            @click="initbetAmount($event)"
+                            @blur="checkbetAmount($event)"
+                            @input="setBetAmount($event)"
+                        >
+                    </span>
+                </li>
+                <li>
+                    총 배당률
+                    <span>
+                        {{ $numeral(betRate).format('0,0.00') }} 배
+                    </span>
+                </li>
+                <li>
+                    예상당첨금액
+                    <span>
+                        {{ $numeral(benefit).format('0,0') }} 원
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="cart-money-button">
+            <ul>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(10000)">+10,000</button>
+                </li>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(50000)">+50,000</button>
+                </li>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(100000)">+100,000</button>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(300000)">+300,000</button>
+                </li>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(500000)">+500,000</button>
+                </li>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(1000000)">+1,000,000</button>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(3000000)">+3,000,000</button>
+                </li>
+                <li>
+                    <button type="button" class="btn-bet-amount" @click="addMoney(5000000)">+5,000,000</button>
+                </li>
+                <li>
+                    <button type="button" class="btn-bet-amount reset" @click="init()">정정하기</button>
+                </li>
+            </ul>
+        </div>
+        <div class="cart-max-button">
+            <button type="button" class="maxbet-btn btn-block" @click="max()">MAX Betting</button>
+        </div>
+        <div class="cart-submit">
+            <button type="button" class="betting-btn" :disabled="loading" @click="bet()">
+                배팅하기
+            </button>
+            <button type="button" class="cart-clear-btn" :disabled="loading" @click="deleteBetAll()">
+                전체취소
+            </button>
+        </div>
+        <div class="cart-data">
+            <div class="bet-cart-box">
+                <div class="text-center" v-if="betCart.length === 0">배팅할 게임을 선택하세요.</div>
+                <div class="bet-cart-wrap" :class="index > 0 ? 'mt-2' : ''" v-for="(bet, index) in betCart" :key="index">
+                    <div class="clearfix">
+                        <div class="bet-cart-team-name">
+                            <span v-if="bet.gameType === 'sports' || bet.gameType === 'sportsCross' || bet.gameType === 'sportsLive' || bet.gameType === 'sportsSpecial' || bet.gameType === 'sportsLiveKor'">
+                                {{ bet.homeTeam }} vs {{ bet.awayTeam }}
+                            </span>
+                            <span v-else>
+                                {{ bet.gameInfo }}
+                            </span>
+                        </div>
+                        <div class="bet-cart-x">
+                            <font-awesome-icon class="x" :icon="['fa', 'times']" @click="deleteBet(index)"/>
                         </div>
                     </div>
-                </td>
-            </tr>
-            <tr height="25">
-                <td class="bet-info-title" colspan="2">
-                    최소 배팅금액
-                </td>
-                <td class="bet-info-value" colspan="3">
-                    {{ $numeral(betInfo.min).format('0,0') }} 원
-                </td>
-            </tr>
-            <tr height="25">
-                <td class="bet-info-title" colspan="2">
-                    최대 배팅금액
-                </td>
-                <td class="bet-info-value" colspan="3">
-                    {{ $numeral(betInfo.max).format('0,0') }} 원
-                </td>
-            </tr>
-            <tr height="25">
-                <td class="bet-info-title" colspan="2">
-                    최대 당첨금액
-                </td>
-                <td class="bet-info-value" colspan="3">
-                    {{ $numeral(betInfo.benefit).format('0,0') }} 원
-                </td>
-            </tr>
-        </table>
+                    <div class="clearfix mt-1">
+                        <div class="bet-cart-select-left" v-if="bet.gameType === 'sports' || bet.gameType === 'sportsCross' || bet.gameType === 'sportsLive' || bet.gameType === 'sportsSpecial' || bet.gameType === 'sportsLiveKor'">
+                            <div>
+                                <span>{{ $config.convertBetTypeSports[bet.type] }}</span>
+                                <span v-if="bet.standard || bet.standard === 0">
+                                    [{{
+                                        bet.type === 'bothTeamsGoalWin' || bet.type === 'bothTeamsGoalWinOrDraw' ? $config.convertBetStandard[bet.standard] :
+                                        bet.type === 'xWithUnderOver' ? $config.convertBetStandardXwithUnderOver(bet.standard) : bet.standard
+                                    }}]
+                                </span>
+                                <span v-if="bet.type !== 'correctScoreFullTime'"> ({{ $config.convertBetSelectSports[bet.select] }})</span>
+                            </div>
+                        </div>
+                        <div class="bet-cart-select-left" v-else>
+                            {{ $config.convertBetSelectMinigames[bet.betType][bet.betSelect] }}
+                        </div>
+                        <div class="bet-cart-select-right">
+                            {{ $numeral(bet.selectRate).format('0.00') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="telegram">
+            <img src="images/banner-right-telegram.png" class="img-fluid" alt="텔레그램" title="텔레그램">
+        </div>
     </div>
 </template>
 

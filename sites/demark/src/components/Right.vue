@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="right-category">
         <LoginBox v-show="!isLogin"/>
         <UserBox v-show="isLogin"/>
-        <BetSlip class="mt-1" from="pc"/>
-        <BannerRight/>
+        <BetSlip from="pc"/>
+        <RightEvent/>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
     import LoginBox from '../components/LoginBox.vue'
     import UserBox from '../components/UserBox.vue'
     import BetSlip from '../components/BetSlip.vue'
-    import BannerRight from '../components/BannerRight.vue'
+    import RightEvent from '../components/RightEvent.vue'
 
     import { mapGetters } from 'vuex'
 
@@ -21,7 +21,7 @@
             LoginBox,
             UserBox,
             BetSlip,
-            BannerRight
+            RightEvent
         },
         data() {
             return {

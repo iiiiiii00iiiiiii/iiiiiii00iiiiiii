@@ -2,8 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import { CarouselPlugin } from 'bootstrap-vue'
 
 Vue.config.productionTip = false
+Vue.use(CarouselPlugin)
 
 import { BModal, BPaginationNav, BToast, BOverlay, BTooltip, BSidebar } from 'bootstrap-vue'
 Vue.component('b-modal', BModal)
@@ -57,34 +59,40 @@ import io from 'socket.io-client'
 Vue.prototype.$io = io
 
 // fontAwesome
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library, } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
     faPlusSquare, faMinusSquare, faComments, faEnvelope, faSignInAlt,
-    faRedo, faUndo, faTrashAlt, faCogs, faTimes,
+    faRedo, faUndo, faTrashAlt, faCogs, faTimes,faSignOutAlt,
     faCubes, faPlus, faBars, faShoppingCart, faBan,
     faUserPlus, faWonSign, faCoins, faPowerOff, faCaretRight,
-    faExchangeAlt, faBullhorn, faList, faGift,
+    faExchangeAlt, faBullhorn, faList, faGift,faUsers,
     faPen, faCheckSquare, faEnvelopeOpen, faUser, faCalendarAlt,
     faQuestionCircle, faAngleDoubleLeft, faAngleDoubleRight, faBell, faFutbol,
     faChevronCircleDown, faGlobe, faWindowClose, faArrowUp, faArrowDown,
-    faInfo, faChevronDown, faChevronUp, faStar, faGamepad,
-    faSyncAlt, faDice, faHistory
+    faInfo, faChevronDown, faChevronUp, faStar, faGamepad, faLock,
+    faSyncAlt, faDice, faHistory,faPenSquare,faClipboardCheck,faCog,
+    faBookOpen,faRocket,faClock,faFlag,faChevronLeft,faChevronRight
 } from '@fortawesome/free-solid-svg-icons'
+import { 
+    
+} from '@fortawesome/free-regular-svg-icons'
 import {
-    faBitcoin, faPinterestP
+    faBitcoin, faPinterestP,
 } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 library.add([
     faPlusSquare, faMinusSquare, faComments, faEnvelope, faSignInAlt,
-    faRedo, faUndo, faTrashAlt, faCogs, faTimes,
-    faCubes, faPlus, faBars, faShoppingCart, faBan,
+    faRedo, faUndo, faTrashAlt, faCogs, faTimes,faPenSquare,
+    faCubes, faPlus, faBars, faShoppingCart, faBan,faSignOutAlt,
     faUserPlus, faWonSign, faCoins, faPowerOff, faCaretRight,
     faExchangeAlt, faBullhorn, faList, faGift, faPinterestP,
     faPen, faCheckSquare, faEnvelopeOpen, faUser, faCalendarAlt,
     faQuestionCircle, faAngleDoubleLeft, faAngleDoubleRight, faBell, faFutbol,
     faChevronCircleDown, faGlobe, faWindowClose, faBitcoin, faArrowUp,
     faArrowDown, faInfo, faChevronUp, faChevronDown, faStar,
-    faGamepad, faSyncAlt, faDice, faHistory
+    faGamepad, faSyncAlt, faDice, faHistory,faLock,faUsers,faClipboardCheck,
+    faCog,faBookOpen,faRocket,faClock,faFlag,faChevronLeft,faChevronRight
 ])
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

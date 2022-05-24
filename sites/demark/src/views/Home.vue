@@ -1,238 +1,292 @@
 <template>
     <div class="row">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <div class="home">
-                        <div class="main-banner">
-                            <video class="movie" autoplay loop muted playsinline>
-                                <source src="/videos/bg-video-crop.mp4" type="video/mp4">
-                            </video>
-                            <div class="video-filter"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- PC 버전 START -->
-            <div class="row pt-2 d-none d-xl-flex">
-                <div class="col">
-                    <div class="board" data-aos="zoom-in" data-aos-duration="1500">
-                        <div class="board-title">
-                            <span :class="selectBoard === 'notice' ? 'active' : ''" @click="selectBoard = 'notice'">공지사항</span>
-                            <!-- <span class="ml-3" :class="selectBoard === 'faq' ? 'active' : ''" @click="selectBoard = 'faq'">FAQ</span> -->
-                            <span class="float-right text-white" @click="$tools.pushRouter(`/${selectBoard}`, true)">+more</span>
-                        </div>
-                        <div class="board-content" v-show="selectBoard === 'notice'">
-                            <ul>
-                                <li v-for="(item, index) in notice" :key="index">
-                                    <span v-if="item.header" :style="item.headerColor !== '#000000' ? `color: ${item.headerColor}` : ''">[{{ item.header }}]</span>
-                                    <span
-                                        class="cursor-pointer"
-                                        :class="item.header ? 'ml-2' : ''"
-                                        :style="item.titleColor !== '#000000' ? `color: ${item.titleColor}` : ''"
-                                        @click="$tools.pushRouter(`/notice/detail/${item._id}/1`, true)"
-                                    >
-                                        {{ item.title }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="board-content" v-show="selectBoard === 'faq'">
-                            <ul>
-                                <li v-for="(item, index) in faq" :key="index">
-                                    <span v-if="item.header" :style="item.headerColor !== '#000000' ? `color: ${item.headerColor}` : ''">[{{ item.header }}]</span>
-                                    <span
-                                        class="cursor-pointer"
-                                        :class="item.header ? 'ml-2' : ''"
-                                        :style="item.titleColor !== '#000000' ? `color: ${item.titleColor}` : ''"
-                                        @click="$tools.pushRouter(`/faq/detail/${item._id}/1`, true)"
-                                    >
-                                        {{ item.title }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="board" data-aos="zoom-in" data-aos-duration="1500">
-                        <div class="board-title">
-                            <span class="active">이벤트</span>
-                            <span class="float-right text-white" @click="$tools.pushRouter('/event', true)">+more</span>
-                        </div>
-                        <div class="board-content">
-                            <ul>
-                                <li v-for="(item, index) in event" :key="index">
-                                    <span v-if="item.header" :style="item.headerColor !== '#000000' ? `color: ${item.headerColor}` : ''">[{{ item.header }}]</span>
-                                    <span
-                                        class="cursor-pointer"
-                                        :class="item.header ? 'ml-2' : ''"
-                                        :style="item.titleColor !== '#000000' ? `color: ${item.titleColor}` : ''"
-                                        @click="$tools.pushRouter(`/event/detail/${item._id}/1`, true)"
-                                    >
-                                        {{ item.title }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="col-3">
-                    <div class="community-banner" data-aos="zoom-in" data-aos-duration="1500">
-                        <div>
-                            <img src="/images/banner-main-help.jpg" class="img-fluid cursor-pointer" alt="고객센터" titme="고객센터" @click="$tools.pushRouter('/help', true)">
-                        </div>
-                        <div class="mt-1">
-                            <img src="/images/banner-main-attendance.jpg" class="img-fluid cursor-pointer" alt="출석체크" titme="출석체크" @click="$tools.pushRouter('/attendance', true)">
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-            <!-- <div class="row pt-2 d-none d-xl-flex"> -->
-            <div class="row mt-2">
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/sports', false)">
-                        <img src="/images/banner-1.png" alt="SPORTS" title="SPORTS">
-                    </div>
-                </div>
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/sportscross', false)">
-                        <img src="/images/banner-2.png" alt="CROSS" title="CROSS">
-                    </div>
-                </div>
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/sportsspecial', false)">
-                        <img src="/images/banner-3.png" alt="LIVE" title="SPECIAL">
-                    </div>
-                </div>
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/powerball', false)">
-                        <img src="/images/banner-4.png" alt="LIVE CASINO" title="LIVE CASINO">
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/casino', true)">
-                        <img src="/images/banner-5.png" alt="SPORTS" title="SPORTS">
-                    </div>
-                </div>
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="openKplay(0)">
-                        <img src="/images/banner-6.png" alt="CROSS" title="CROSS">
-                    </div>
-                </div>
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/charge', true)">
-                        <img src="/images/banner-7.png" alt="LIVE" title="LIVE">
-                    </div>
-                </div>
-                <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/exchange', true)">
-                        <img src="/images/banner-8.png" alt="LIVE CASINO" title="LIVE CASINO">
-                    </div>
-                </div>
-            </div>
-            <!-- PC 버전 END -->
+        <div class="col-12 main-content-wrap">
+            <div class="main-view d-none d-md-block">
+                <div>
+                    <b-carousel
+                        id="carousel-1"
+                        :interval="3000"
+                        indicators
+                        background="#ababab"
+                        style="text-shadow: 1px 1px 2px #333;"
+                    >
+                        <b-carousel-slide img-src="images/bg-main01.jpg"></b-carousel-slide>
 
-            <!-- MOBILE 버전 START -->
-            <!-- <div class="row d-xl-none">
-                <div class="col-12 mt-2">
-                    <div class="board" data-aos="zoom-in" data-aos-duration="1500">
-                        <div class="board-title">
-                            <span :class="selectBoard === 'notice' ? 'active' : ''" @click="selectBoard = 'notice'">공지사항</span>
-                            <span class="ml-3" :class="selectBoard === 'faq' ? 'active' : ''" @click="selectBoard = 'faq'">FAQ</span>
-                            <span class="float-right text-light-brown" @click="$tools.pushRouter(`/${selectBoard}`, true)">+more</span>
-                        </div>
-                        <div class="board-content" v-show="selectBoard === 'notice'">
-                            <ul>
-                                <li v-for="(item, index) in notice" :key="index">
-                                    <span v-if="item.header" :style="item.headerColor !== '#000000' ? `color: ${item.headerColor}` : ''">[{{ item.header }}]</span>
-                                    <span
-                                        class="cursor-pointer"
-                                        :class="item.header ? 'ml-2' : ''"
-                                        :style="item.titleColor !== '#000000' ? `color: ${item.titleColor}` : ''"
-                                        @click="$tools.pushRouter(`/notice/detail/${item._id}/1`, true)"
-                                    >
-                                        {{ `${$tools.cut(item.title, 35, '...')}` }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="board-content" v-show="selectBoard === 'faq'">
-                            <ul>
-                                <li v-for="(item, index) in faq" :key="index">
-                                    <span v-if="item.header" :style="item.headerColor !== '#000000' ? `color: ${item.headerColor}` : ''">[{{ item.header }}]</span>
-                                    <span
-                                        class="cursor-pointer"
-                                        :class="item.header ? 'ml-2' : ''"
-                                        :style="item.titleColor !== '#000000' ? `color: ${item.titleColor}` : ''"
-                                        @click="$tools.pushRouter(`/faq/detail/${item._id}/1`, true)"
-                                    >
-                                        {{ `${$tools.cut(item.title, 35, '...')}` }}
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                        <b-carousel-slide img-src="images/bg-main02.jpg"></b-carousel-slide>
+
+                        <b-carousel-slide img-src="images/bg-main03.jpg"></b-carousel-slide>
+
+                    </b-carousel>
                 </div>
-                <div class="col-12 mt-2">
-                    <div class="board" data-aos="zoom-in" data-aos-duration="1500">
-                        <div class="board-title">
-                            <span class="active">이벤트</span>
-                            <span class="float-right text-light-brown" @click="$tools.pushRouter('/event', true)">+more</span>
+            </div>
+            <div class="main-view d-md-none">
+                <div>
+                    <b-carousel
+                        id="carousel-1"
+                        :interval="3000"
+                        indicators
+                        background="#ababab"
+                        style="text-shadow: 1px 1px 2px #333;"
+                    >
+                        <b-carousel-slide img-src="images/bg-mobile-main01.jpg"></b-carousel-slide>
+
+                        <b-carousel-slide img-src="images/bg-mobile-main02.jpg"></b-carousel-slide>
+
+                        <b-carousel-slide img-src="images/bg-mobile-main03.jpg"></b-carousel-slide>
+
+                    </b-carousel>
+                </div>
+            </div>
+            <div class="middle-contents">
+                <div class="contents-data">
+                    <div class="content-header"> 
+                        <span>
+                            <font-awesome-icon :icon="['fa', 'bell']"/> 스포츠매치
+                        </span> 
+                        <span class="entire-btn" @click="$tools.pushRouter('/sports', false)">전체보기</span> 
+                    </div>
+                    <div class="content-game">
+                        <div class="game-header">
+                            <span class="competition-event">
+                                <span>
+                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                </span>
+                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
+                                <b class="competition-league">
+                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                </b>
+                            </span>
                         </div>
-                        <div class="board-content">
+                        <div class="team-name">
                             <ul>
-                                <li v-for="(item, index) in event" :key="index">
-                                    <span v-if="item.header" :style="item.headerColor !== '#000000' ? `color: ${item.headerColor}` : ''">[{{ item.header }}]</span>
-                                    <span
-                                        class="cursor-pointer"
-                                        :class="item.header ? 'ml-2' : ''"
-                                        :style="item.titleColor !== '#000000' ? `color: ${item.titleColor}` : ''"
-                                        @click="$tools.pushRouter(`/event/detail/${item._id}/1`, true)"
-                                    >
-                                        {{ `${$tools.cut(item.title, 35, '...')}` }}
-                                    </span>
+                                <li>
+                                    <span>05-13 22:20</span>
+                                </li>
+                                <li>
+                                    <span class="content-game-home">미국</span>
+                                    <span class="content-game-vs">vs</span>
+                                    <span class="content-game-away">라트비아</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 mt-2">
-                    <div class="community-banner" data-aos="zoom-in" data-aos-duration="1500">
-                        <div>
-                            <img src="/images/banner-main-help.jpg" class="img-fluid cursor-pointer" alt="고객센터" titme="고객센터" @click="$tools.pushRouter('/help', true)">
+                    <div class="content-game">
+                        <div class="game-header">
+                            <span class="competition-event">
+                                <span>
+                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                </span>
+                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
+                                <b class="competition-league">
+                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                </b>
+                            </span>
+                        </div>
+                        <div class="team-name">
+                            <ul>
+                                <li>
+                                    <span>05-13 22:20</span>
+                                </li>
+                                <li>
+                                    <span class="content-game-home">미국</span>
+                                    <span class="content-game-vs">vs</span>
+                                    <span class="content-game-away">라트비아</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content-game">
+                        <div class="game-header">
+                            <span class="competition-event">
+                                <span>
+                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                </span>
+                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
+                                <b class="competition-league">
+                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                </b>
+                            </span>
+                        </div>
+                        <div class="team-name">
+                            <ul>
+                                <li>
+                                    <span>05-13 22:20</span>
+                                </li>
+                                <li>
+                                    <span class="content-game-home">미국</span>
+                                    <span class="content-game-vs">vs</span>
+                                    <span class="content-game-away">라트비아</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content-game">
+                        <div class="game-header">
+                            <span class="competition-event">
+                                <span>
+                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                </span>
+                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
+                                <b class="competition-league">
+                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                </b>
+                            </span>
+                        </div>
+                        <div class="team-name">
+                            <ul>
+                                <li>
+                                    <span>05-13 22:20</span>
+                                </li>
+                                <li>
+                                    <span class="content-game-home">미국</span>
+                                    <span class="content-game-vs">vs</span>
+                                    <span class="content-game-away">라트비아</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mt-2">
-                    <div class="community-banner" data-aos="zoom-in" data-aos-duration="1500">
-                        <div>
-                            <img src="/images/banner-main-attendance.jpg" class="img-fluid cursor-pointer" alt="출석체크" titme="출석체크" @click="$tools.pushRouter('/attendance', true)">
+                <div class="contents-data d-none d-md-block">
+                    <div class="content-header"> 
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-alarm-fill" viewBox="0 0 16 16">
+                                <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z"/>
+                            </svg> 라이브매치
+                        </span> 
+                        <span class="entire-btn" @click="$tools.pushRouter('/sportslive', false)">전체보기</span> 
+                    </div>
+                    <div class="content-game">
+                        <div class="game-header">
+                            <span class="competition-event">
+                                <span>
+                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                </span>
+                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
+                                <b class="competition-league">
+                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                </b>
+                                <span class="time">05-13 22:20</span>
+                            </span>
+                        </div>
+                        <div class="livegame-team-name">
+                            <ul>
+                                <li>
+                                    <p> 알 수 없음 </p>
+                                    <span class="score">
+                                        <span class="content-livegame-home">0</span>
+                                        <span class="content-livegame-vs">vs</span> 
+                                        <span class="content-livegame-away">0</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <img src="/images/usa-img.png" alt="미국">
+                                    <span class="home-team">미국</span>
+                                </li>
+                                <li>
+                                    <span class="content-livegame-vs">vs</span>
+                                </li>
+                                <li>
+                                    <span class="away-team">라트비아</span>
+                                    <img src="/images/lsa-imf.png" alt="라트비아">
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-            </div> -->
-            <!-- MOBILE 버전 END -->
-            <div class="row">
-                <div class="col">
-                    <div class="payment-banner">
-                        <img src="/images/banner-payment.png" class="img-fluid" alt="PAYMENT METHOD" title="PAYMENT METHOD">
+                    <div class="content-game">
+                        <div class="game-header">
+                            <span class="competition-event">
+                                <span>
+                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                </span>
+                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
+                                <b class="competition-league">
+                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                </b>
+                                <span class="time">05-13 22:20</span>
+                            </span>
+                        </div>
+                        <div class="livegame-team-name">
+                            <ul>
+                                <li>
+                                    <p> 알 수 없음 </p>
+                                    <span class="score">
+                                        <span class="content-livegame-home">0</span>
+                                        <span class="content-livegame-vs">vs</span> 
+                                        <span class="content-livegame-away">0</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <img src="/images/usa-img.png" alt="미국">
+                                    <span class="home-team">미국</span>
+                                </li>
+                                <li>
+                                    <span class="content-livegame-vs">vs</span>
+                                </li>
+                                <li>
+                                    <span class="away-team">라트비아</span>
+                                    <img src="/images/lsa-imf.png" alt="라트비아">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content-game">
+                        <div class="game-header">
+                            <span class="competition-event">
+                                <span>
+                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                </span>
+                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
+                                <b class="competition-league">
+                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                </b>
+                                <span class="time">05-13 22:20</span>
+                            </span>
+                        </div>
+                        <div class="livegame-team-name">
+                            <ul>
+                                <li>
+                                    <p> 알 수 없음 </p>
+                                    <span class="score">
+                                        <span class="content-livegame-home">0</span>
+                                        <span class="content-livegame-vs">vs</span> 
+                                        <span class="content-livegame-away">0</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <img src="/images/usa-img.png" alt="미국">
+                                    <span class="home-team">미국</span>
+                                </li>
+                                <li>
+                                    <span class="content-livegame-vs">vs</span>
+                                </li>
+                                <li>
+                                    <span class="away-team">라트비아</span>
+                                    <img src="/images/lsa-imf.png" alt="라트비아">
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="sports-banner">
-                        <img src="/images/banner-sports.png" class="img-fluid" alt="SPORTS" title="SPORTS">
+            <div class="bottom-contents">
+                <div class="row">
+                    <div class="col-4 col-xl-2 cursor-pointer" @click="$tools.pushRouter('/sports', true)">
+                        <img src="/images/banner-1.png" class="img-fluid" alt="SPORTS" title="SPORTS">
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="copyright">
-                        Copyright © 믿을 수 있는 DEMARK BET SLUMBERS ALL RIGHTS RESERVE.<br>Solution By SOFT365.
+                    <div class="col-4 col-xl-2 cursor-pointer" @click="$tools.pushRouter('/sportscross', true)">
+                        <img src="/images/banner-2.png" class="img-fluid" alt="SPORTS CROSS" title="SPORTS CROSS">
+                    </div>
+                    <div class="col-4 col-xl-2 cursor-pointer" @click="$tools.pushRouter('/sportsspecial', true)">
+                        <img src="/images/banner-3.png" class="img-fluid" alt="SPORTS SPECIAL" title="SPORTS SPECIAL">
+                    </div>
+                    <div class="col-4 col-xl-2 cursor-pointer mt-2 mt-xl-0" @click="$tools.pushRouter('/MiniGameMenu', true)">
+                        <img src="/images/banner-4.png" class="img-fluid" alt="MNIGAME" title="MNIGAME">
+                    </div>
+                    <div class="col-4 col-xl-2 cursor-pointer mt-2 mt-xl-0" @click="$tools.pushRouter('/casino', true)">
+                        <img src="/images/banner-5.png" class="img-fluid" alt="CASINO" title="CASINO">
+                    </div>
+                    <div class="col-4 col-xl-2 cursor-pointer mt-2 mt-xl-0"  @click="openKplay(0)">
+                        <img src="/images/banner-6.png" class="img-fluid" alt="SLOT" title="SLOT">
                     </div>
                 </div>
             </div>
@@ -281,33 +335,9 @@
     }
 </script>
 
-<style lang="scss" scope>
-    .home {
-        width: 100%;
-        border: 1px solid #191919;
-        border-radius: 3px;
-        background-color: #191919;
-        padding: 2px;
+<style lang="scss" scoped>
 
-        .main-banner {
-            line-height: 0;
-            max-height: 366.67px;
-            .movie {
-                width: 100%;
-                height: auto;
-            }
-            .video-filter {
-                position: absolute;
-                left: 8px;
-                top: 3px;
-                width: calc(100% - 16px);
-                height: calc(100% - 6px);
-                background: url(/images/video-pattern.png) repeat;
-            }
-        }
-    }
-
-    .board {
+.board {
         border: 1px solid #000;
         border-radius: 3px;
         background-color: #1d2024;
@@ -352,124 +382,5 @@
             }
             color: #c2c2c2;
         }
-    }
-
-    .community-banner {
-        @media (max-width: 1199px) {
-            border: 1px solid #080500;
-            border-radius: 3px;
-            background-color: #271f18;
-            padding: 2px;
-        }
-    }
-
-    .game-banner {
-        border: 1px solid #080500;
-        border-radius: 3px;
-        background-color: #222;
-        padding: 2px;
-
-        img {
-            border-radius: 3px;
-        }
-
-        .game-banner-site-name {
-            position: absolute;
-            z-index: 1020;
-            padding: 10px;
-            color: #7c7c7a;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: 'Verdana', sans-serif;
-        }
-
-        .game-banner-title {
-            position: absolute;
-            z-index: 1020;
-            padding: 10px;
-            padding-top: 35px;
-            color: rgba(233, 233, 233, 0.835);
-            font-size: 0.875rem;
-            font-weight: 600;
-            font-family: 'Verdana', sans-serif;
-        }
-
-        .game-banner-cover {
-            transition: 0.5s;
-            position: absolute;
-            z-index: 1020;
-            background-color: rgba(0, 0, 0, 0.6);
-            width: 100%;
-            height: 100%;
-            border-radius: 3px;
-            color: #fff;
-            text-align: center;
-            cursor: pointer;
-
-            padding-top: 30%;
-            @media (min-width: 1300px) {
-                padding-top: 40%;
-            }
-            opacity: 0;
-
-            &.active {
-                opacity: 1;
-            }
-
-            .game-banner-cover-content {
-                .game-banner-cover-icon {
-                    font-size: 3.5rem;
-                    color: #c2c2c2;
-                    text-align: center;
-                }
-                .game-banner-cover-title {
-                    font-size: 1.25rem;
-                    font-weight: 600;
-                    font-family: 'Verdana', sans-serif;
-                }
-                .game-banner-cover-sub-title {
-                    padding-top: 5px;
-                    font-size: 0.75rem;
-                    font-weight: 600;
-                    font-family: 'Verdana', sans-serif;
-                    color: #c2c2c2;
-                }
-            }
-        }
-
-        img {
-            position: relative;
-            width: 100%;
-            cursor: pointer;
-        }
-    }
-
-    .payment-banner {
-        margin: 0 auto;
-        margin-top: 10px;
-        padding-top: 30px;
-        padding-bottom: 30px;
-        padding-left: 30px;
-        padding-right: 30px;
-        border-top: 2px solid #191919;
-        background-color: #2d343b;
-        text-align: center;
-    }
-
-    .sports-banner {
-        border-top: 2px solid #191919;
-        margin: 0 auto;
-        margin-bottom: 30px;
-        padding: 30px;
-        background-color: #2d343b;
-        border-radius: 3px;
-        text-align: center;
-    }
-
-    .copyright {
-        margin-bottom: 30px;
-        color: #c2c2c2;
-        font-size: 0.75rem;
-        text-align: center;
     }
 </style>

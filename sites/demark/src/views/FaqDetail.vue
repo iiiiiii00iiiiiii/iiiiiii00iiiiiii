@@ -6,21 +6,19 @@
                     <div class="page-title-wrap">
                         <div class="page-title">
                             <font-awesome-icon :icon="['fa', 'question-circle']"/>
-                            <span class="ml-2">자주 묻는 질문 상세 FAQ DETAIL</span>
+                            자주 묻는 질문 상세 <span>FAQ DETAIL</span>
+                            <span class="float-right">
+                                <button type="button" class="btn-money " :disabled="loading" @click="$tools.pushRouter(`/notice/?page=${$route.params.page}`)">
+                                    <font-awesome-icon :icon="['fa', 'list']"/> 목록
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row mt-1">
                 <div class="col">
-                    <div class="board-detail">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="$tools.pushRouter(`/faq/?page=${$route.params.page}`)">
-                                    <font-awesome-icon :icon="['fa', 'list']"/> 목록
-                                </button>
-                            </div>
-                        </div>
+                    <div class="list-content">
                         <div class="row mt-2">
                             <div class="col">
                                 <div class="table-responsive">

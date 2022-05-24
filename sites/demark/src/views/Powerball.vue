@@ -1,24 +1,22 @@
 <template>
     <div class="row mb-3" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
             <div class="row">
                 <div class="col-12">
                     <NavMinigame/>
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-1">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'gamepad']"/>
-                            <span class="ml-2">파워볼 POWERBALL</span>
-                            <span class="float-right">
-                                <button class="btn-minigames" @click="isHide = !isHide">
-                                    <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
-                                    {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
-                                </button>
-                            </span>
-                        </div>
+                    <div class="page-content-header">
+                        <font-awesome-icon :icon="['fa', 'gamepad']"/>
+                        파워볼 <span>POWERBALL</span>
+                        <span class="float-right">
+                            <button class="btn-request-charge" @click="isHide = !isHide">
+                                <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
+                                {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -42,7 +40,7 @@
                             <div class="col-12">
                                 <div class="minigame-info clearfix">
                                     <div class="float-left">
-                                        <font-awesome-icon :icon="['fa', 'star']" class="text-light-brown"/> 파워볼-<span class="text-light-brown">{{ round }}</span> (<span class="text-light-brown">{{ rotation }}</span>) 회차
+                                        <font-awesome-icon :icon="['fa', 'star']"/> 파워볼-<span >{{ round }}</span> (<span>{{ rotation }}</span>) 회차
                                     </div>
                                     <div class="float-right">
                                         <div class="game-time-box">
@@ -52,21 +50,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+
+                        <!-- PC 파워볼 -->
+                        <div class="row mt-1 d-none d-md-flex">
                             <div class="col">
                                 <div class="minigame-title" id="section1">
                                     파워볼 배팅
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1 d-none d-md-flex">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBPOE' && betSelect === 'Odd' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPOE', 'Odd', games.PWBPOE.rateOfOdd)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPOE.rateOfOdd ? '' : 'blue'">
+                                    <div :class="end || !games.PWBPOE.rateOfOdd ? '' : ''">
                                         <span>홀</span>
                                     </div>
                                     <div class="rate">
@@ -76,11 +76,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBPOE' && betSelect === 'Even' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPOE', 'Even', games.PWBPOE.rateOfEven)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPOE.rateOfEven ? '' : 'red'">
+                                    <div :class="end || !games.PWBPOE.rateOfEven ? '' : ''">
                                         <span>짝</span>
                                     </div>
                                     <div class="rate">
@@ -90,11 +90,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBPUO' && betSelect === 'Under' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPUO', 'Under', games.PWBPUO.rateOfUnder)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPUO.rateOfUnder ? '' : 'blue'">
+                                    <div :class="end || !games.PWBPUO.rateOfUnder ? '' : ''">
                                         <span>언더</span>
                                     </div>
                                     <div class="rate">
@@ -104,11 +104,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBPUO' && betSelect === 'Over' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPUO', 'Over', games.PWBPUO.rateOfOver)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPUO.rateOfOver ? '' : 'red'">
+                                    <div :class="end || !games.PWBPUO.rateOfOver ? '' : ''">
                                         <span>오버</span>
                                     </div>
                                     <div class="rate">
@@ -118,11 +118,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBPCOMBO' && betSelect === 'OddUnder' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPCOMBO', 'OddUnder', games.PWBPCOMBO.rateOfOddUnder)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPCOMBO.rateOfOddUnder ? '' : 'blue'">
+                                    <div :class="end || !games.PWBPCOMBO.rateOfOddUnder ? '' : ''">
                                         <span>홀언</span>
                                     </div>
                                     <div class="rate">
@@ -132,11 +132,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBPCOMBO' && betSelect === 'EvenUnder' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPCOMBO', 'EvenUnder', games.PWBPCOMBO.rateOfEvenUnder)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPCOMBO.rateOfEvenUnder ? '' : 'blue'">
+                                    <div :class="end || !games.PWBPCOMBO.rateOfEvenUnder ? '' : ''">
                                         <span>짝언</span>
                                     </div>
                                     <div class="rate">
@@ -146,11 +146,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBPCOMBO' && betSelect === 'OddOver' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPCOMBO', 'OddOver', games.PWBPCOMBO.rateOfOddOver)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPCOMBO.rateOfOddOver ? '' : 'red'">
+                                    <div :class="end || !games.PWBPCOMBO.rateOfOddOver ? '' : ''">
                                         <span>홀오</span>
                                     </div>
                                     <div class="rate">
@@ -160,11 +160,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBPCOMBO' && betSelect === 'EvenOver' ? 'active' : ''"
                                     @click="setBet(id, 'PWBPCOMBO', 'EvenOver', games.PWBPCOMBO.rateOfEvenOver)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBPCOMBO.rateOfEvenOver ? '' : 'red'">
+                                    <div :class="end || !games.PWBPCOMBO.rateOfEvenOver ? '' : ''">
                                         <span>짝오</span>
                                     </div>
                                     <div class="rate">
@@ -173,21 +173,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+
+                        <!-- PC 일반볼 -->
+                        <div class="row mt-1 d-none d-md-flex">
                             <div class="col">
                                 <div class="minigame-title" id="section2">
                                     일반볼 배팅
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1 d-none d-md-flex">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBNOE' && betSelect === 'Odd' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNOE', 'Odd', games.PWBNOE.rateOfOdd)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNOE.rateOfOdd ? '' : 'blue'">
+                                    <div :class="end || !games.PWBNOE.rateOfOdd ? '' : ''">
                                         <span>홀</span>
                                     </div>
                                     <div class="rate">
@@ -197,11 +199,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBNOE' && betSelect === 'Even' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNOE', 'Even', games.PWBNOE.rateOfEven)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNOE.rateOfEven ? '' : 'red'">
+                                    <div :class="end || !games.PWBNOE.rateOfEven ? '' : ''">
                                         <span>짝</span>
                                     </div>
                                     <div class="rate">
@@ -211,11 +213,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBNUO' && betSelect === 'Under' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNUO', 'Under', games.PWBNUO.rateOfUnder)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNUO.rateOfUnder ? '' : 'blue'">
+                                    <div :class="end || !games.PWBNUO.rateOfUnder ? '' : ''">
                                         <span>언더</span>
                                     </div>
                                     <div class="rate">
@@ -225,11 +227,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBNUO' && betSelect === 'Over' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNUO', 'Over', games.PWBNUO.rateOfOver)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNUO.rateOfOver ? '' : 'red'">
+                                    <div :class="end || !games.PWBNUO.rateOfOver ? '' : ''">
                                         <span>오버</span>
                                     </div>
                                     <div class="rate">
@@ -239,11 +241,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBNCOMBO' && betSelect === 'OddUnder' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNCOMBO', 'OddUnder', games.PWBNCOMBO.rateOfOddUnder)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNCOMBO.rateOfOddUnder ? '' : 'blue'">
+                                    <div :class="end || !games.PWBNCOMBO.rateOfOddUnder ? '' : ''">
                                         <span>홀언</span>
                                     </div>
                                     <div class="rate">
@@ -253,11 +255,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBNCOMBO' && betSelect === 'EvenUnder' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNCOMBO', 'EvenUnder', games.PWBNCOMBO.rateOfEvenUnder)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNCOMBO.rateOfEvenUnder ? '' : 'blue'">
+                                    <div :class="end || !games.PWBNCOMBO.rateOfEvenUnder ? '' : ''">
                                         <span>짝언</span>
                                     </div>
                                     <div class="rate">
@@ -267,11 +269,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBNCOMBO' && betSelect === 'OddOver' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNCOMBO', 'OddOver', games.PWBNCOMBO.rateOfOddOver)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNCOMBO.rateOfOddOver ? '' : 'red'">
+                                    <div :class="end || !games.PWBNCOMBO.rateOfOddOver ? '' : ''">
                                         <span>홀오</span>
                                     </div>
                                     <div class="rate">
@@ -281,11 +283,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBNCOMBO' && betSelect === 'EvenOver' ? 'active' : ''"
                                     @click="setBet(id, 'PWBNCOMBO', 'EvenOver', games.PWBNCOMBO.rateOfEvenOver)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBNCOMBO.rateOfEvenOver ? '' : 'red'">
+                                    <div :class="end || !games.PWBNCOMBO.rateOfEvenOver ? '' : ''">
                                         <span>짝오</span>
                                     </div>
                                     <div class="rate">
@@ -294,21 +296,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+
+                        <!-- PC 대중소 -->
+                        <div class="row mt-1 d-none d-md-flex">
                             <div class="col">
                                 <div class="minigame-title" id="section3">
                                     대중소
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1 d-none d-md-flex">
                             <div class="col-4">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBBMS' && betSelect === 'Big' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMS', 'Big', games.PWBBMS.rateOfBig)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMS.rateOfBig ? '' : 'blue'">
+                                    <div :class="end || !games.PWBBMS.rateOfBig ? '' : ''">
                                         <span>대</span>
                                     </div>
                                     <div class="rate">
@@ -318,11 +322,11 @@
                             </div>
                             <div class="col-4">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBBMS' && betSelect === 'Middle' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMS', 'Middle', games.PWBBMS.rateOfMiddle)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMS.rateOfMiddle ? '' : 'red'">
+                                    <div :class="end || !games.PWBBMS.rateOfMiddle ? '' : ''">
                                         <span>중</span>
                                     </div>
                                     <div class="rate">
@@ -332,11 +336,11 @@
                             </div>
                             <div class="col-4">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-green"
                                     :class="betType === 'PWBBMS' && betSelect === 'Small' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMS', 'Small', games.PWBBMS.rateOfSmall)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMS.rateOfSmall ? '' : 'green'">
+                                    <div :class="end || !games.PWBBMS.rateOfSmall ? '' : ''">
                                         <span>소</span>
                                     </div>
                                     <div class="rate">
@@ -345,21 +349,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+
+                        <!-- PC 대중소 조합 -->
+                        <div class="row mt-1 d-none d-md-flex">
                             <div class="col">
                                 <div class="minigame-title" id="section4">
                                     대중소 조합
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1 d-none d-md-flex">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBBMSCOMBO' && betSelect === 'OddBig' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMSCOMBO', 'OddBig', games.PWBBMSCOMBO.rateOfOddBig)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMSCOMBO.rateOfOddBig ? '' : 'blue'">
+                                    <div :class="end || !games.PWBBMSCOMBO.rateOfOddBig ? '' : ''">
                                         <span>홀대</span>
                                     </div>
                                     <div class="rate">
@@ -369,11 +375,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBBMSCOMBO' && betSelect === 'OddMiddle' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMSCOMBO', 'OddMiddle', games.PWBBMSCOMBO.rateOfOddMiddle)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMSCOMBO.rateOfOddMiddle ? '' : 'blue'">
+                                    <div :class="end || !games.PWBBMSCOMBO.rateOfOddMiddle ? '' : ''">
                                         <span>홀중</span>
                                     </div>
                                     <div class="rate">
@@ -383,11 +389,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PWBBMSCOMBO' && betSelect === 'OddSmall' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMSCOMBO', 'OddSmall', games.PWBBMSCOMBO.rateOfOddSmall)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMSCOMBO.rateOfOddSmall ? '' : 'blue'">
+                                    <div :class="end || !games.PWBBMSCOMBO.rateOfOddSmall ? '' : ''">
                                         <span>홀소</span>
                                     </div>
                                     <div class="rate">
@@ -397,11 +403,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBBMSCOMBO' && betSelect === 'EvenBig' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMSCOMBO', 'EvenBig', games.PWBBMSCOMBO.rateOfEvenBig)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMSCOMBO.rateOfEvenBig ? '' : 'red'">
+                                    <div :class="end || !games.PWBBMSCOMBO.rateOfEvenBig ? '' : ''">
                                         <span>짝대</span>
                                     </div>
                                     <div class="rate">
@@ -411,11 +417,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBBMSCOMBO' && betSelect === 'EvenMiddle' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMSCOMBO', 'EvenMiddle', games.PWBBMSCOMBO.rateOfEvenMiddle)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMSCOMBO.rateOfEvenMiddle ? '' : 'red'">
+                                    <div :class="end || !games.PWBBMSCOMBO.rateOfEvenMiddle ? '' : ''">
                                         <span>짝중</span>
                                     </div>
                                     <div class="rate">
@@ -425,13 +431,371 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PWBBMSCOMBO' && betSelect === 'EvenSmall' ? 'active' : ''"
                                     @click="setBet(id, 'PWBBMSCOMBO', 'EvenSmall', games.PWBBMSCOMBO.rateOfEvenSmall)"
                                 >
-                                    <div class="bet" :class="end || !games.PWBBMSCOMBO.rateOfEvenSmall ? '' : 'red'">
+                                    <div :class="end || !games.PWBBMSCOMBO.rateOfEvenSmall ? '' : ''">
                                         <span>짝소</span>
                                     </div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMSCOMBO.rateOfEvenSmall ? $numeral(games.PWBBMSCOMBO.rateOfEvenSmall).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE-파워볼 -->
+                        <div class="row mt-2 d-md-none" id="section1">
+                            <div class="col minigame-title">파워볼 홀/짝</div>
+                            <div class="col minigame-title offset-1">파워볼 언더/오버</div>
+                        </div>
+                        <div class="row mt-1 d-md-none">
+                            <div class="col-3">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBPOE' && betSelect === 'Odd' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPOE', 'Odd', games.PWBPOE.rateOfOdd)"
+                                >
+                                    <div>홀</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPOE.rateOfOdd ? $numeral(games.PWBPOE.rateOfOdd).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBPOE' && betSelect === 'Even' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPOE', 'Even', games.PWBPOE.rateOfEven)"
+                                >
+                                    <div>짝</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPOE.rateOfEven ? $numeral(games.PWBPOE.rateOfEven).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBPUO' && betSelect === 'Under' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPUO', 'Under', games.PWBPUO.rateOfUnder)"
+                                >
+                                    <div>언더</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPUO.rateOfUnder ? $numeral(games.PWBPUO.rateOfUnder).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBPUO' && betSelect === 'Over' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPUO', 'Over', games.PWBPUO.rateOfOver)"
+                                >
+                                    <div>오버</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPUO.rateOfOver ? $numeral(games.PWBPUO.rateOfOver).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE-일반볼 -->
+                        <div class="row mt-2 d-md-none" id="section2">
+                            <div class="col minigame-title">일반볼 홀/짝</div>
+                            <div class="col minigame-title offset-1">일반볼 언더/오버</div>
+                        </div>
+                        <div class="row mt-1 d-md-none">
+                            <div class="col">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBNOE' && betSelect === 'Odd' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNOE', 'Odd', games.PWBNOE.rateOfOdd)"
+                                >
+                                    <div>홀</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNOE.rateOfOdd ? $numeral(games.PWBNOE.rateOfOdd).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBNOE' && betSelect === 'Even' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNOE', 'Even', games.PWBNOE.rateOfEven)"
+                                >
+                                    <div>짝</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNOE.rateOfEven ? $numeral(games.PWBNOE.rateOfEven).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBNUO' && betSelect === 'Under' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNUO', 'Under', games.PWBNUO.rateOfUnder)"
+                                >
+                                    <div>언더</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNUO.rateOfUnder ? $numeral(games.PWBNUO.rateOfUnder).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBNUO' && betSelect === 'Over' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNUO', 'Over', games.PWBNUO.rateOfOver)"
+                                >
+                                    <div>오버</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNUO.rateOfOver ? $numeral(games.PWBNUO.rateOfOver).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE-파워볼 조합 -->
+                        <div class="row mt-2 d-md-none" id="section3">
+                            <div class="col-12 minigame-title text-center">
+                                파워볼 홀/짝 + 언더/오버
+                            </div>
+                        </div>
+                        <div class="row mt-1 d-md-none">
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBPCOMBO' && betSelect === 'OddUnder' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPCOMBO', 'OddUnder', games.PWBPCOMBO.rateOfOddUnder)"
+                                >
+                                    <div>홀언</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPCOMBO.rateOfOddUnder ? $numeral(games.PWBPCOMBO.rateOfOddUnder).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBPCOMBO' && betSelect === 'EvenUnder' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPCOMBO', 'EvenUnder', games.PWBPCOMBO.rateOfEvenUnder)"
+                                >
+                                    <div>짝언</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPCOMBO.rateOfEvenUnder ? $numeral(games.PWBPCOMBO.rateOfEvenUnder).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBPCOMBO' && betSelect === 'OddOver' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPCOMBO', 'OddOver', games.PWBPCOMBO.rateOfOddOver)"
+                                >
+                                    <div>홀오</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPCOMBO.rateOfOddOver ? $numeral(games.PWBPCOMBO.rateOfOddOver).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBPCOMBO' && betSelect === 'EvenOver' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBPCOMBO', 'EvenOver', games.PWBPCOMBO.rateOfEvenOver)"
+                                >
+                                    <div>짝오</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBPCOMBO.rateOfEvenOver ? $numeral(games.PWBPCOMBO.rateOfEvenOver).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE-일반볼 조합 -->
+                        <div class="row mt-2 d-md-none" id="section4">
+                            <div class="col-12 minigame-title text-center">
+                                일반볼 홀/짝 + 언더/오버
+                            </div>
+                        </div>
+                        <div class="row mt-1 d-md-none">
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBNCOMBO' && betSelect === 'OddUnder' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNCOMBO', 'OddUnder', games.PWBNCOMBO.rateOfOddUnder)"
+                                >
+                                    <div>홀언</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNCOMBO.rateOfOddUnder ? $numeral(games.PWBNCOMBO.rateOfOddUnder).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBNCOMBO' && betSelect === 'EvenUnder' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNCOMBO', 'EvenUnder', games.PWBNCOMBO.rateOfEvenUnder)"
+                                >
+                                    <div>짝언</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNCOMBO.rateOfEvenUnder ? $numeral(games.PWBNCOMBO.rateOfEvenUnder).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBNCOMBO' && betSelect === 'OddOver' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNCOMBO', 'OddOver', games.PWBNCOMBO.rateOfOddOver)"
+                                >
+                                    <div>홀오</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNCOMBO.rateOfOddOver ? $numeral(games.PWBNCOMBO.rateOfOddOver).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBNCOMBO' && betSelect === 'EvenOver' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBNCOMBO', 'EvenOver', games.PWBNCOMBO.rateOfEvenOver)"
+                                >
+                                    <div>짝오</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBNCOMBO.rateOfEvenOver ? $numeral(games.PWBNCOMBO.rateOfEvenOver).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--MOBILE-대중소 -->
+                        <div class="row mt-2 d-md-none" id="section5">
+                            <div class="col-12 minigame-title text-center">
+                                대/중/소
+                            </div>
+                        </div>
+                        <div class="row mt-1 d-md-none">
+                            <div class="col-4 col-md">
+                                <div
+                                    class="btn-minigame btn-bet-red py-xl-5"
+                                    :class="betType === 'PWBBMS' && betSelect === 'Big' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMS', 'Big', games.PWBBMS.rateOfBig)"
+                                >
+                                    <div :class="end || !games.PWBBMS.rateOfBig ? '' : ''">
+                                        <span>대</span>
+                                    </div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMS.rateOfBig ? $numeral(games.PWBBMS.rateOfBig).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md">
+                                <div
+                                    class="btn-minigame btn-bet-blue py-xl-5"
+                                    :class="betType === 'PWBBMS' && betSelect === 'Middle' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMS', 'Middle', games.PWBBMS.rateOfMiddle)"
+                                >
+                                    <div :class="end || !games.PWBBMS.rateOfMiddle ? '' : ''">
+                                        <span>중</span>
+                                    </div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMS.rateOfMiddle ? $numeral(games.PWBBMS.rateOfMiddle).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md">
+                                <div
+                                    class="btn-minigame btn-bet-green py-xl-5"
+                                    :class="betType === 'PWBBMS' && betSelect === 'Small' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMS', 'Small', games.PWBBMS.rateOfSmall)"
+                                >
+                                    <div :class="end || !games.PWBBMS.rateOfSmall ? '' : ''">
+                                        <span>소</span>
+                                    </div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMS.rateOfSmall ? $numeral(games.PWBBMS.rateOfSmall).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE-일반볼 대중소 조합 -->
+                        <div class="row mt-2 d-md-none" id="section5">
+                            <div class="col-12 minigame-title text-center">
+                                일반볼 홀/짝 + 대/중/소
+                            </div>
+                        </div>
+                        <div class="row mt-1 d-md-none">
+                            <div class="col-4 col-md">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBBMSCOMBO' && betSelect === 'OddBig' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMSCOMBO', 'OddBig', games.PWBBMSCOMBO.rateOfOddBig)"
+                                >
+                                    <div>홀대</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMSCOMBO.rateOfOddBig ? $numeral(games.PWBBMSCOMBO.rateOfOddBig).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBBMSCOMBO' && betSelect === 'OddMiddle' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMSCOMBO', 'OddMiddle', games.PWBBMSCOMBO.rateOfOddMiddle)"
+                                >
+                                    <div>홀중</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMSCOMBO.rateOfOddMiddle ? $numeral(games.PWBBMSCOMBO.rateOfOddMiddle).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md">
+                                <div
+                                    class="btn-minigame btn-bet-blue"
+                                    :class="betType === 'PWBBMSCOMBO' && betSelect === 'OddSmall' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMSCOMBO', 'OddSmall', games.PWBBMSCOMBO.rateOfOddSmall)"
+                                >
+                                    <div>홀소</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMSCOMBO.rateOfOddSmall ? $numeral(games.PWBBMSCOMBO.rateOfOddSmall).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBBMSCOMBO' && betSelect === 'EvenBig' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMSCOMBO', 'EvenBig', games.PWBBMSCOMBO.rateOfEvenBig)"
+                                >
+                                    <div>짝대</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMSCOMBO.rateOfEvenBig ? $numeral(games.PWBBMSCOMBO.rateOfEvenBig).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBBMSCOMBO' && betSelect === 'EvenMiddle' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMSCOMBO', 'EvenMiddle', games.PWBBMSCOMBO.rateOfEvenMiddle)"
+                                >
+                                    <div>짝중</div>
+                                    <div class="rate">
+                                        {{ this.end ? '--' : games.PWBBMSCOMBO.rateOfEvenMiddle ? $numeral(games.PWBBMSCOMBO.rateOfEvenMiddle).format('0.00') : '--' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md mt-2 mt-md-0">
+                                <div
+                                    class="btn-minigame btn-bet-red"
+                                    :class="betType === 'PWBBMSCOMBO' && betSelect === 'EvenSmall' ? 'active' : ''"
+                                    @click="setBet(id, 'PWBBMSCOMBO', 'EvenSmall', games.PWBBMSCOMBO.rateOfEvenSmall)"
+                                >
+                                    <div>짝소</div>
                                     <div class="rate">
                                         {{ this.end ? '--' : games.PWBBMSCOMBO.rateOfEvenSmall ? $numeral(games.PWBBMSCOMBO.rateOfEvenSmall).format('0.00') : '--' }}
                                     </div>

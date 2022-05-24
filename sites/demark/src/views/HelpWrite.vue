@@ -1,53 +1,43 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'comments']"/>
-                            <span class="ml-2">고객센터 문의 HELP</span>
-                        </div>
+        <div class="col page-content">
+            <div class="page-content-header">
+                <font-awesome-icon :icon="['fa', 'pen']"/>
+                글쓰기 <span>Write</span>
+            </div>
+            <div class="content-board-write-header">
+                <div class="row mt-2">
+                    <div class="col">
+                        <input
+                            type="text"
+                            class="write-board-title"
+                            placeholder="제목을 입력하세요"
+                            maxlength="100"
+                            tabindex="1"
+                            v-model="title"
+                        >
                     </div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="board-write">
-                        <div class="row mt-2">
-                            <div class="col">
-                                <input
-                                    type="text"
-                                    class="form-control form-control-sm board-input"
-                                    placeholder="제목"
-                                    maxlength="100"
-                                    tabindex="1"
-                                    v-model="title"
-                                >
-                            </div>
-                        </div>
-                        <div class="row mt-1">
-                            <div class="col">
-                                <textarea
-                                    class="form-control form-control-sm board-input"
-                                    placeholder="내용"
-                                    rows="10"
-                                    maxlength="500"
-                                    tabindex="2"
-                                    v-model="content"
-                                ></textarea>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board py-2" :disabled="loading" tabindex="4" @click="$tools.pushRouter(`/help/?page=${$route.params.page}`)">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 취소
-                                </button>
-                                <button type="button" class="btn-write ml-2 py-2" :disabled="loading" tabindex="3" @click="submit()">
-                                    <font-awesome-icon :icon="['fa', 'pen']"/> 문의 등록
-                                </button>
-                            </div>
-                        </div>
+                <div class="row">
+                    <div class="col">
+                        <textarea
+                            class="note-codable"
+                            placeholder="내용"
+                            rows="10"
+                            maxlength="500"
+                            tabindex="2"
+                            v-model="content"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col text-center">
+                        <button type="button" class="btn-select-denim py-2" :disabled="loading" tabindex="3" @click="submit()">
+                            <font-awesome-icon :icon="['fa', 'pen']"/> 글쓰기
+                        </button>
+                        <button type="button" class="btn-select-cinnabar ml-2 py-2" :disabled="loading" tabindex="4" @click="$tools.pushRouter(`/help/?page=${$route.params.page}`)">
+                            <font-awesome-icon :icon="['fa', 'ban']"/> 취소하기
+                        </button>
                     </div>
                 </div>
             </div>

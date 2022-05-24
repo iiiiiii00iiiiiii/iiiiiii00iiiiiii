@@ -1,27 +1,18 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
             <div class="row">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'question-circle']"/>
-                            <span class="ml-2">자주 묻는 질문 FAQ</span>
-                        </div>
+                    <div class="page-content-header">
+                        <font-awesome-icon :icon="['fa', 'question-circle']"/>
+                        자주 묻는 질문 <span>FAQ</span>
                     </div>
                 </div>
             </div>
-            <div class="row mt-1">
+            <div class="row">
                 <div class="col">
-                    <div class="board-list">
+                    <div class="list-content">
                         <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="getList()">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
                             <div class="col">
                                 <div class="table-responsive">
                                     <table class="table table-borderless table-board text-nowrap">
@@ -29,6 +20,8 @@
                                             <tr>
                                                 <th class="w-10">종류</th>
                                                 <th>제목</th>
+                                                <th>작성자</th>
+                                                <th class="w-10">작성일자</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -46,6 +39,12 @@
                                                     >
                                                         {{ item.title }}
                                                     </span>
+                                                </td>
+                                                <td>
+                                                    <img src="/images/logo.png" class="admin-logo">
+                                                </td>
+                                                <td>
+                                                    {{ $moment(item.regDateTime).format('YY.MM.DD') }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -68,8 +67,6 @@
                                     :limit="$config.pageLimit"
                                     use-router
                                     v-model="search.page"
-                                    pills
-                                    size="sm"
                                 ></b-pagination-nav>
                             </div>
                         </div>

@@ -62,8 +62,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-12 mt-1 text-light-brown">
-                                        <span class="cursor-pointer" @click="$tools.pushRouter('/join')">아직 회원이 아니세요? 회원가입</span>
+                                    <div class="col-12 mt-1 login-title">
+                                        아직 회원이 아니세요? <span class="text-sky-blue cursor-pointer" @click="$tools.pushRouter('/join')">회원가입</span>
                                     </div>
                                 </form>
                             </div>
@@ -71,7 +71,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>

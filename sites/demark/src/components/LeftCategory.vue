@@ -1,31 +1,38 @@
 <template>
     <div class="left-category">
-        <div class="category-wrap">
-            <div class="category" :class="{'active': showSport === 'Football'}" @click="expandCountry('Football')">
-                <span class="category-icon">
+        <div class="left-live-header">
+            <span>
+                <font-awesome-icon :icon="['fa', 'calendar-alt']"/> 오늘의 경기 Today
+            </span>
+            <span>
+                {{ $moment().format('YYYY-MM-DD')}}
+            </span>
+        </div>
+        <div class="left-game-list">
+            <div class="game-item" :class="{'active': showSport === 'Football'}" @click="expandCountry('Football')">
+                <span class="game-icon ">
                     <img src="/images/icon-football-gray.png" alt="축구" title="축구">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     축구
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Football.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Football"
                 :key="`Football-${country}-${index}`"
                 v-show="showSport === 'Football'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Football', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Football', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Football', country)">
@@ -41,7 +48,6 @@
                     v-show="showCountry.Football.findIndex((x) => x === country) > -1"
                     @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${league}`)"
                 >
-                    <span class="category-league-blank"></span>
                     <span class="category-league-content">
                         {{ $tools.cut(league, 13, '...') }}
                     </span>
@@ -52,31 +58,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Basketball'}" @click="expandCountry('Basketball')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Basketball'}" @click="expandCountry('Basketball')">
+                <span class="game-icon ">
                     <img src="/images/icon-basketball-gray.png" alt="농구" title="농구">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     농구
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Basketball ? $numeral(countOfCategory.Basketball.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Basketball.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Basketball"
                 :key="`Basketball-${country}-${index}`"
                 v-show="showSport === 'Basketball'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Basketball', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Basketball', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Basketball', country)">
@@ -103,31 +108,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Baseball'}" @click="expandCountry('Baseball')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Baseball'}" @click="expandCountry('Baseball')">
+                <span class="game-icon ">
                     <img src="/images/icon-baseball-gray.png" alt="야구" title="야구">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     야구
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Baseball ? $numeral(countOfCategory.Baseball.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Baseball.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Baseball"
                 :key="`Baseball-${country}-${index}`"
                 v-show="showSport === 'Baseball'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Baseball', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Baseball', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Baseball', country)">
@@ -154,31 +158,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Ice Hockey'}" @click="expandCountry('Ice Hockey')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Ice Hockey'}" @click="expandCountry('Ice Hockey')">
+                <span class="game-icon ">
                     <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     아이스하키
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory['Ice Hockey'] ? $numeral(countOfCategory['Ice Hockey'].countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry['Ice Hockey'].findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category['Ice Hockey']"
                 :key="`Ice Hockey-${country}-${index}`"
                 v-show="showSport === 'Ice Hockey'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Ice Hockey', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Ice Hockey', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Ice Hockey', country)">
@@ -205,21 +208,21 @@
                     </span>
                 </div>
             </div>
-            <!-- <div class="category line" :class="{'active': showSport === 'Tennis'}" @click="expandCountry('Tennis')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Tennis'}" @click="expandCountry('Tennis')">
+                <span class="game-icon ">
                     <img src="/images/icon-tennis-gray.png" alt="테니스" title="테니스">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     테니스
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Tennis ? $numeral(countOfCategory.Tennis.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Tennis.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Tennis"
                 :key="`Tennis-${country}-${index}`"
@@ -255,32 +258,31 @@
                         </span>
                     </span>
                 </div>
-            </div> -->
-            <div class="category line" :class="{'active': showSport === 'Handball'}" @click="expandCountry('Handball')">
-                <span class="category-icon">
+            </div>
+            <div class="game-item" :class="{'active': showSport === 'Handball'}" @click="expandCountry('Handball')">
+                <span class="game-icon ">
                     <img src="/images/icon-handball-gray.png" alt="핸드볼" title="핸드볼">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     핸드볼
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Handball ? $numeral(countOfCategory.Handball.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Handball.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Handball"
                 :key="`Handball-${country}-${index}`"
                 v-show="showSport === 'Handball'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Handball', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Handball', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Handball', country)">
@@ -307,31 +309,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Volleyball'}" @click="expandCountry('Volleyball')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Volleyball'}" @click="expandCountry('Volleyball')">
+                <span class="game-icon ">
                     <img src="/images/icon-volleyball-gray.png" alt="배구" title="배구">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     배구
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Volleyball ? $numeral(countOfCategory.Volleyball.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Volleyball.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Volleyball"
                 :key="`Volleyball-${country}-${index}`"
                 v-show="showSport === 'Volleyball'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Volleyball', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Volleyball', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Volleyball', country)">
@@ -358,31 +359,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Rugby League'}" @click="expandCountry('Rugby League')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Rugby League'}" @click="expandCountry('Rugby League')">
+                <span class="game-icon">
                     <img src="/images/icon-rugby-gray.png" alt="럭비" title="럭비">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     럭비
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory['Rugby League'] ? $numeral(countOfCategory['Rugby League'].countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry['Rugby League'].findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category['Rugby League']"
                 :key="`Rugby League-${country}-${index}`"
                 v-show="showSport === 'Rugby League'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Rugby League', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Rugby League', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Rugby League', country)">
@@ -409,31 +409,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Rugby Union'}" @click="expandCountry('Rugby Union')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Rugby Union'}" @click="expandCountry('Rugby Union')">
+                <span class="game-icon">
                     <img src="/images/icon-rugbyunion-gray.png" alt="럭비유니언" title="럭비유니언">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     럭비유니언
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory['Rugby Union'] ? $numeral(countOfCategory['Rugby Union'].countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry['Rugby Union'].findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category['Rugby Union']"
                 :key="`Rugby Union-${country}-${index}`"
                 v-show="showSport === 'Rugby Union'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Rugby Union', country)">
-                    ◎
+                    img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Rugby Union', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Rugby Union', country)">
@@ -460,31 +459,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Boxing'}" @click="expandCountry('Boxing')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Boxing'}" @click="expandCountry('Boxing')">
+                <span class="game-icon">
                     <img src="/images/icon-boxing-gray.png" alt="권투" title="권투">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     권투
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Boxing ? $numeral(countOfCategory.Boxing.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Boxing.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Boxing"
                 :key="`Boxing-${country}-${index}`"
                 v-show="showSport === 'Boxing'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Boxing', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Boxing', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Boxing', country)">
@@ -511,21 +509,21 @@
                     </span>
                 </div>
             </div>
-            <!-- <div class="category line" :class="{'active': showSport === 'Table Tennis'}" @click="expandCountry('Table Tennis')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Table Tennis'}" @click="expandCountry('Table Tennis')">
+                <span class="game-icon">
                     <img src="/images/icon-tabletennis-gray.png" alt="탁구" title="탁구">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     탁구
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory['Table Tennis'] ? $numeral(countOfCategory['Table Tennis'].countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
-            </div> -->
+            </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry['Table Tennis'].findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category['Table Tennis']"
                 :key="`Table Tennis-${country}-${index}`"
@@ -562,31 +560,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'MMA'}" @click="expandCountry('MMA')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'MMA'}" @click="expandCountry('MMA')">
+                <span class="game-icon">
                     <img src="/images/icon-mma-gray.png" alt="이종격투기" title="이종격투기">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     이종격투기
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.MMA ? $numeral(countOfCategory.MMA.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.MMA.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.MMA"
                 :key="`MMA-${country}-${index}`"
                 v-show="showSport === 'MMA'"
             >
                 <span class="category-contry-icon" @click="expandLeague('MMA', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('MMA', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('MMA', country)">
@@ -613,31 +610,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Golf'}" @click="expandCountry('Golf')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Golf'}" @click="expandCountry('Golf')">
+                <span class="game-icon">
                     <img src="/images/icon-golf-gray.png" alt="골프" title="골프">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     골프
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Golf ? $numeral(countOfCategory.Golf.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Golf.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Golf"
                 :key="`Golf-${country}-${index}`"
                 v-show="showSport === 'Golf'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Golf', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Golf', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Golf', country)">
@@ -664,31 +660,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Darts'}" @click="expandCountry('Darts')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Darts'}" @click="expandCountry('Darts')">
+                <span class="game-icon">
                     <img src="/images/icon-darts-gray.png" alt="다트" title="다트">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     다트
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.Darts ? $numeral(countOfCategory.Darts.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.Darts.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.Darts"
                 :key="`Darts-${country}-${index}`"
                 v-show="showSport === 'Darts'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Darts', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Darts', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Darts', country)">
@@ -715,21 +710,21 @@
                     </span>
                 </div>
             </div>
-            <!-- <div class="category line" :class="{'active': showSport === 'LoL'}" @click="expandCountry('LoL')">
-                <span class="category-icon">
+            <!-- <div class="game-item" :class="{'active': showSport === 'LoL'}" @click="expandCountry('LoL')">
+                <span class="game-icon">
                     <img src="/images/icon-lol-gray.png" alt="LoL" title="LoL">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     LoL
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory.LoL ? $numeral(countOfCategory.LoL.countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry.LoL.findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category.LoL"
                 :key="`LoL-${country}-${index}`"
@@ -766,31 +761,30 @@
                     </span>
                 </div>
             </div> -->
-            <div class="category line" :class="{'active': showSport === 'CS:GO'}" @click="expandCountry('CS:GO')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'CS:GO'}" @click="expandCountry('CS:GO')">
+                <span class="game-icon">
                     <img src="/images/icon-csgo-gray.png" alt="CS:GO" title="CS:GO">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     CS:GO
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory['CS:GO'] ? $numeral(countOfCategory['CS:GO'].countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry['CS:GO'].findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category['CS:GO']"
                 :key="`CS:GO-${country}-${index}`"
                 v-show="showSport === 'CS:GO'"
             >
                 <span class="category-contry-icon" @click="expandLeague('CS:GO', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('CS:GO', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('CS:GO', country)">
@@ -817,31 +811,30 @@
                     </span>
                 </div>
             </div>
-            <div class="category line" :class="{'active': showSport === 'Dota 2'}" @click="expandCountry('Dota 2')">
-                <span class="category-icon">
+            <div class="game-item" :class="{'active': showSport === 'Dota 2'}" @click="expandCountry('Dota 2')">
+                <span class="game-icon">
                     <img src="/images/icon-dota2-gray.png" alt="Dota 2" title="Dota 2">
                 </span>
-                <span class="category-name">
+                <span class="game-name">
                     Dota 2
                 </span>
-                <span class="category-count">
+                <span class="game-count">
                     <span class="count">
                         {{ countOfCategory['Dota 2'] ? $numeral(countOfCategory['Dota 2'].countOfGame).format('0,0') : 0 }}
                     </span>
                 </span>
             </div>
             <div
-                class="category-country line-country"
+                class="category-country"
                 :class="showCountry['Dota 2'].findIndex((x) => x === country) > -1 ? 'active' : ''"
                 v-for="(v, country, index) in category['Dota 2']"
                 :key="`Dota 2-${country}-${index}`"
                 v-show="showSport === 'Dota 2'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Dota 2', country)">
-                    ◎
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Dota 2', country)">
-                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                     {{ country }}
                 </span>
                 <span class="category-country-count" @click="expandLeague('Dota 2', country)">
@@ -868,6 +861,56 @@
                     </span>
                 </div>
             </div>
+            <div class="game-item" :class="{'active': showSport === 'FIFA'}" @click="expandCountry('FIFA')">
+                <span class="game-icon">
+                    <img src="/images/icon-fifa-gray.png" alt="FIFA" title="FIFA">
+                </span>
+                <span class="game-name">
+                    FIFA
+                </span>
+                <span class="game-count">
+                    <span class="count">
+                        {{ countOfCategory['FIFA'] ? $numeral(countOfCategory['FIFA'].countOfGame).format('0,0') : 0 }}
+                    </span>
+                </span>
+            </div>
+            <div
+                class="category-country"
+                :class="showCountry['FIFA'].findIndex((x) => x === country) > -1 ? 'active' : ''"
+                v-for="(v, country, index) in category['FIFA']"
+                :key="`FIFA-${country}-${index}`"
+                v-show="showSport === 'FIFA'"
+            >
+                <span class="category-contry-icon" @click="expandLeague('FIFA', country)">
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
+                </span>
+                <span class="category-country-content" @click="expandLeague('FIFA', country)">
+                    {{ country }}
+                </span>
+                <span class="category-country-count" @click="expandLeague('FIFA', country)">
+                    <span class="count">
+                        {{ $numeral(countOfCategory['FIFA'].country[country].countOfGame).format('0,0') }}
+                    </span>
+                </span>
+                <div
+                    class="category-league line-league"
+                    :class="{'mt-5px': j === 0, 'active': $route.query.sport === 'FIFA' && $route.query.league === league}"
+                    v-for="(vv, league, j) in countOfCategory['FIFA'].country[country].league"
+                    :key="`FIFA-${country}-${league}-${j}`"
+                    v-show="showCountry['FIFA'].findIndex((x) => x === country) > -1"
+                    @click="$tools.pushRouter(`/sports?page=1&sport=FIFA&league=${league}`)"
+                >
+                    <span class="category-league-blank"></span>
+                    <span class="category-league-content">
+                        {{ $tools.cut(league, 13, '...') }}
+                    </span>
+                    <span class="category-league-count">
+                        <span class="count">
+                            {{ $numeral(countOfCategory['FIFA'].country[country].league[league]).format('0,0') }}
+                        </span>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -876,7 +919,7 @@
     import { mapGetters, mapActions } from 'vuex'
 
     export default {
-        name: 'LeftCategory',
+        name: 'LeftLiveInplay',
         components: {
         },
         computed: {

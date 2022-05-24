@@ -1,53 +1,35 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'envelope']"/>
-                            <span class="ml-2">쪽지 상세 MESSAGE DETAIL</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="col page-content">
+            <div class="page-content-header">
+                <font-awesome-icon :icon="['fa', 'envelope']"/>
+                쪽지 상세 <span>MESSAGE DETAIL</span>
+                <span class="float-right">
+                    <button type="button" class="btn-money" :disabled="loading" @click="$tools.pushRouter(`/message/?page=${$route.params.page}`)">
+                        <font-awesome-icon :icon="['fa', 'list']"/> 목록
+                    </button>
+                </span>
             </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="board-detail">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-delete" :disabled="loading" @click="deleteMessage($route.params._id)">
-                                    <font-awesome-icon :icon="['fa', 'trash-alt']"/> 삭제
-                                </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="$tools.pushRouter(`/message/?page=${$route.params.page}`)">
-                                    <font-awesome-icon :icon="['fa', 'list']"/> 목록
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-board text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <span>
-                                                        {{ title }}
-                                                    </span>
-                                                    <span class="float-right">
-                                                        {{ $moment(regDateTime).format('YY.MM.DD HH:mm') }}
-                                                    </span>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td v-html="content" class="board-content"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+            <div class="list-content">
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-board">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <span class="text-white">
+                                                {{ title }}
+                                            </span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td v-html="content" class="board-content"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

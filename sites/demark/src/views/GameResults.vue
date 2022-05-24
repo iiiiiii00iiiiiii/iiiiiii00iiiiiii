@@ -1,132 +1,159 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col sports-page">
             <div class="row">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'history']"/>
-                            <span class="ml-2">결기결과 BET HISTORY</span>
-                            <span class="float-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="$tools.pushRouter('/gameresults')">
-                                    <font-awesome-icon :icon="['fa', 'globe']"/> 전체보기
-                                </button>
-                            </span>
-                        </div>
+                    <div class="sports-page-header">
+                        <font-awesome-icon :icon="['fa', 'history']"/>
+                        결기결과 <span>BET HISTORY</span>
                     </div>
                 </div>
             </div>
-            <div class="row mt-1">
+            <div class="row">
                 <div class="col">
                     <div class="sports-icon">
                         <div class="sports-icon-wrap">
                             <ul>
-                                <li>
-                                    <img src="/images/icon-football-gray.png" class="sports-category-icon" id="Football" alt="축구" title="축구" @click="selectCategory('Football')">
-                                    <b-tooltip target="Football" title="축구"></b-tooltip>
+                                <li @click="selectCategory('')">
+                                    <img src="/images/icon-all-gray.png" class="sports-category-icon" alt="전체" title="전체">
+                                    <div class="mt-1">전체</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-basketball-gray.png" class="sports-category-icon" id="Basketball" alt="농구" title="농구" @click="selectCategory('Basketball')">
-                                    <b-tooltip target="Basketball" title="농구"></b-tooltip>
+                                <li @click="selectCategory('Football')">
+                                    <img src="/images/icon-football-gray.png" class="sports-category-icon" id="Football" alt="축구" title="축구">
+                                    <div class="mt-1">축구</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-baseball-gray.png" class="sports-category-icon" id="Baseball" alt="야구" title="야구" @click="selectCategory('Baseball')">
-                                    <b-tooltip target="Baseball" title="야구"></b-tooltip>
+                                <li @click="selectCategory('Basketball')">
+                                    <img src="/images/icon-basketball-gray.png" class="sports-category-icon" id="Basketball" alt="농구" title="농구">
+                                    <div class="mt-1">농구</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-icehockey-gray.png" class="sports-category-icon" id="Ice Hockey" alt="아이스하키" title="아이스하키" @click="selectCategory('Ice Hockey')">
-                                    <b-tooltip target="Ice Hockey" title="아이스하키"></b-tooltip>
+                                <li @click="selectCategory('Baseball')">
+                                    <img src="/images/icon-baseball-gray.png" class="sports-category-icon" id="Baseball" alt="야구" title="야구">
+                                    <div class="mt-1">야구</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-handball-gray.png" class="sports-category-icon" id="Handball" alt="핸드볼" title="핸드볼" @click="selectCategory('Handball')">
-                                    <b-tooltip target="Handball" title="핸드볼"></b-tooltip>
+                                <li  @click="selectCategory('Ice Hockey')">
+                                    <img src="/images/icon-icehockey-gray.png" class="sports-category-icon" id="Ice Hockey" alt="아이스하키" title="아이스하키">
+                                    <div class="mt-1">아이스하키</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-volleyball-gray.png" class="sports-category-icon" id="Volleyball" alt="배구" title="배구" @click="selectCategory('Volleyball')">
-                                    <b-tooltip target="Volleyball" title="배구"></b-tooltip>
+                                <li @click="selectCategory('Tennis')">
+                                    <img src="/images/icon-tennis-gray.png" class="sports-category-icon" id="Tennis" alt="테니스" title="테니스">
+                                    <div class="mt-1">테니스</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-rugby-gray.png" class="sports-category-icon" id="Rugby League" alt="럭비" title="럭비" @click="selectCategory('Rugby League')">
-                                    <b-tooltip target="Rugby League" title="럭비"></b-tooltip>
+                                <li @click="selectCategory('Handball')">
+                                    <img src="/images/icon-handball-gray.png" class="sports-category-icon" id="Handball" alt="핸드볼" title="핸드볼">
+                                    <div class="mt-1">핸드볼</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-rugbyunion-gray.png" class="sports-category-icon" id="Rugby Union" alt="럭비유니언" title="럭비유니언" @click="selectCategory('Rugby Union')">
-                                    <b-tooltip target="Rugby Union" title="럭비유니언"></b-tooltip>
+                                <li @click="selectCategory('Volleyball')">
+                                    <img src="/images/icon-volleyball-gray.png" class="sports-category-icon" id="Volleyball" alt="배구" title="배구">
+                                    <div class="mt-1">배구</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-boxing-gray.png" class="sports-category-icon" id="Boxing" alt="권투" title="권투" @click="selectCategory('Boxing')">
-                                    <b-tooltip target="Boxing" title="권투"></b-tooltip>
+                                <li  @click="selectCategory('Rugby League')">
+                                    <img src="/images/icon-rugby-gray.png" class="sports-category-icon" id="Rugby League" alt="럭비" title="럭비">
+                                    <div class="mt-1">럭비</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-mma-gray.png" class="sports-category-icon" id="MMA" alt="이종격투기" title="이종격투기" @click="selectCategory('MMA')">
-                                    <b-tooltip target="MMA" title="이종격투기"></b-tooltip>
+                                <li @click="selectCategory('Rugby Union')">
+                                    <img src="/images/icon-rugbyunion-gray.png" class="sports-category-icon" id="Rugby Union" alt="럭비유니언" title="럭비유니언">
+                                    <div class="mt-1">럭비유니언</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-golf-gray.png" class="sports-category-icon" id="Golf" alt="골프" title="골프" @click="selectCategory('Golf')">
-                                    <b-tooltip target="Golf" title="골프"></b-tooltip>
+                                <li @click="selectCategory('Boxing')">
+                                    <img src="/images/icon-boxing-gray.png" class="sports-category-icon" id="Boxing" alt="권투" title="권투">
+                                    <div class="mt-1">권투</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-darts-gray.png" class="sports-category-icon" id="Darts" alt="다트" title="다트" @click="selectCategory('Darts')">
-                                    <b-tooltip target="Darts" title="다트"></b-tooltip>
+                                <li @click="selectCategory('Table Tennis')">
+                                    <img src="/images/icon-tabletennis-gray.png" class="sports-category-icon" id="Table Tennis" alt="탁구" title="탁구">
+                                    <div class="mt-1">탁구</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-lol-gray.png" class="sports-category-icon" id="LOL" alt="LOL" title="LOL" @click="selectCategory('LoL')">
-                                    <b-tooltip target="LOL" title="LOL"></b-tooltip>
+                                <li @click="selectCategory('MMA')">
+                                    <img src="/images/icon-mma-gray.png" class="sports-category-icon" id="MMA" alt="이종격투기" title="이종격투기">
+                                    <div class="mt-1">이종격투기</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-csgo-gray.png" class="sports-category-icon" id="CS:GO" alt="CS:GO" title="CS:GO" @click="selectCategory('CS:GO')">
-                                    <b-tooltip target="CS:GO" title="CS:GO"></b-tooltip>
+                                <li @click="selectCategory('Golf')">
+                                    <img src="/images/icon-golf-gray.png" class="sports-category-icon" id="Golf" alt="골프" title="골프">
+                                    <div class="mt-1">골프</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-dota2-gray.png" class="sports-category-icon" id="Dota 2" alt="Dota 2" title="Dota 2" @click="selectCategory('Dota 2')">
-                                    <b-tooltip target="Dota 2" title="Dota 2"></b-tooltip>
+                                <li @click="selectCategory('Darts')">
+                                    <img src="/images/icon-darts-gray.png" class="sports-category-icon" id="Darts" alt="다트" title="다트">
+                                    <div class="mt-1">다트</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-dota2-gray.png" class="sports-category-icon" id="Dota 2" alt="Dota 2" title="Dota 2" @click="selectCategory('Dota 2')">
-                                    <b-tooltip target="Dota 2" title="Dota 2"></b-tooltip>
+                                <!-- <li @click="selectCategory('LoL')">
+                                    <img src="/images/icon-lol-gray.png" class="sports-category-icon" id="LOL" alt="LOL" title="LOL">
+                                    <div class="mt-1">LOL</div>
+                                </li> -->
+                                <li @click="selectCategory('CS:GO')">
+                                    <img src="/images/icon-csgo-gray.png" class="sports-category-icon" id="CS:GO" alt="CS:GO" title="CS:GO">
+                                    <div class="mt-1">CS:GO</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-fifa-gray.png" class="sports-category-icon" id="FIFA" alt="FIFA" title="FIFA" @click="selectCategory('FIFA')">
-                                    <b-tooltip target="FIFA" title="FIFA"></b-tooltip>
+                                <li @click="selectCategory('Dota 2')">
+                                    <img src="/images/icon-dota2-gray.png" class="sports-category-icon" id="Dota 2" alt="Dota 2" title="Dota 2">
+                                    <div class="mt-1">Dota 2</div>
+                                </li>
+                                <li @click="selectCategory('FIFA')">
+                                    <img src="/images/icon-fifa-gray.png" class="sports-category-icon" id="FIFA" alt="FIFA" title="FIFA">
+                                    <div class="mt-1">FIFA</div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row mt-1 px-1">
+                <div class="col-12 game-info-box d-none d-xl-block">
+                    <div class="row">
+                        <div class="col-2">
+                            리그/경기일시
+                        </div>
+                        <div class="col">
+                            승(홈)언더
+                        </div>
+                        <div class="col">
+                            무/핸/합
+                        </div>
+                        <div class="col">
+                            패(원정)언더
+                        </div>
+                        <div class="col-2">
+                            스코어
+                        </div>
+                    </div>
+                </div>
+            </div>
             <b-overlay :show="overlay" variant="white" opacity="0.2" rounded="sm">
-                <div class="row mt-1">
+                <div class="row mt-2">
                     <div class="col">
                         <div class="sports">
-                            <div class="row mb-2" v-for="(v, index) in data" :key="index">
-                                <div class="col-9 col-xl-12 mt-3 g-league-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
+                            <div class="row" v-for="(v, index) in data" :key="index">
+                                <div class="col-9 col-xl-12 g-league-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
                                     <img :src="`/images/${$config.iconSport[v.sport]}`" class="sports-img">
                                     <span class="g-league">
                                         <font-awesome-icon :icon="['fa', 'angle-double-right']" class="ml-1 icon-league"/>
                                         {{ v.leagueKor }}
                                     </span>
                                 </div>
-                                <div class="col-3 d-xl-none mt-3 text-right g-date-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
+                                <div class="col-3 d-xl-none text-right g-date-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
                                     {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
                                 </div>
-                                <div class="col-12 mt-1" :class="{'mb-3': index + 1 === data.length}">
+                                <div class="col-12" :class="{'mb-3': index + 1 === data.length}">
                                     <div class="sports-px">
                                         <div class="row g">
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col col-xl-2 g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
                                             </div>
-                                            <div class="col-5 g-home">
-                                                <div class="float-left pl-2 g-home-team-mobile">
+                                            <div class="col-4 col-xl g-home" :class="v.resultData.homeScoreTotal > v.resultData.awayScoreTotal ? 'selectBet' : ''">
+                                                <div class="float-left g-home-team-mobile pl-1">
                                                     {{ v.homeTeamKor ? v.homeTeamKor : v.homeTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-5 g-away">
-                                                <div class="float-right pr-2 g-away-team-mobile">
+                                            <div class="col-1 col-xl g-x">
+                                                VS
+                                            </div>
+                                            <div class="col-4 col-xl g-away" :class="v.resultData.homeScoreTotal < v.resultData.awayScoreTotal ? 'selectBet' : ''">
+                                                <div class="float-right g-away-team-mobile pr-1">
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col g-count o">
-                                                {{ v.resultDraw ? '적특' : `${v.resultData.homeScoreTotal}:${v.resultData.awayScoreTotal}` }}
+                                            <div class="col col-xl-2 g-count o">
+                                                <div class="pt-2 pt-xl-0">
+                                                    {{ v.resultDraw ? '적특' : `${v.resultData.homeScoreTotal}:${v.resultData.awayScoreTotal}` }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

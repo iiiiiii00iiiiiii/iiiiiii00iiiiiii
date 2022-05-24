@@ -1,48 +1,62 @@
 <template>
-    <div class="login-box">
-        <form @submit.prevent="login()">
-            <table class="w-100">
-                <tr height="30">
-                    <td class="w-70">
-                        <input
-                            type="text"
-                            class="w-100 px-2 input-login"
-                            placeholder="아이디"
-                            tabindex="1"
-                            maxlength="20"
-                            v-model="id"
-                        >
-                    </td>
-                    <td class="w-30" rowspan="2">
-                        <button
-                            type="submit"
-                            class="input-submit"
-                            tabindex="3"
-                            :disabled="loading"
-                        >
-                            <font-awesome-icon :icon="['fa', 'sign-in-alt']" class="text-skyblue"/> 로그인
-                        </button>
-                    </td>
-                </tr>
-                <tr height="30">
-                    <td class="w-70">
-                        <input
-                            type="password"
-                            class="w-100 px-2 input-login"
-                            placeholder="비밀번호"
-                            tabindex="2"
-                            maxlength="50"
-                            v-model="password"
-                        >
-                    </td>
-                </tr>
-                <tr height="30">
-                    <td class="pl-1" colspan="2">
-                       <span class="cursor-pointer" @click="$tools.pushRouter('/join', false)">디마크 회원가입</span>
-                    </td>
-                </tr>
-            </table>
-        </form>
+    <div class="right-login-wrap">
+        <div class="login-header">
+            <font-awesome-icon :icon="['fa', 'user']" style="color: #fff"/> Member Login
+        </div>
+        <div class="login-form">
+            <form @submit.prevent="login()">
+                <table class="w-100">
+                    <tr>
+                        <td class="login-form-icon">
+                            <font-awesome-icon :icon="['fa', 'user']" style="color: #fff"/>
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="w-100 px-2 input-login"
+                                placeholder="아이디"
+                                tabindex="1"
+                                maxlength="20"
+                                v-model="id"
+                            >
+                        </td>
+                        <td rowspan="2">
+                            <button
+                                type="submit"
+                                class="input-submit"
+                                tabindex="3"
+                                :disabled="loading"
+                            >
+                                Login
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <font-awesome-icon :icon="['fa', 'lock']" style="color: #fff"/>
+                        </td>
+                        <td>
+                            <input
+                                type="password"
+                                class="w-100 px-2 input-login"
+                                placeholder="패스워드"
+                                tabindex="2"
+                                maxlength="50"
+                                v-model="password"
+                            >
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="outlogin-button">
+            <span class="register-form" @click="$tools.pushRouter('/join', false)">
+                <font-awesome-icon :icon="['fa', 'user-plus']" style="color: #fff"/> 회원가입
+            </span>
+            <span class="unknown-customer-form" @click="$tools.ready('/', true)">
+                <font-awesome-icon :icon="['fa', 'pen-square']" style="color: #fff"/> 비회원문의
+            </span>
+        </div>
     </div>
 </template>
 
@@ -101,66 +115,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .login-box {
-        padding: 2px;
-        border: 1px solid #080500;
-        border-radius: 3px;
-        background-color: #212121;
-
-        table {
-            border-collapse: collapse;
-
-            tr {
-                td {
-                    background-color: #242a30;
-                    color: #c2c2c2;
-                    font-size: 0.75rem;
-                    border: 1px solid #191919;
-
-                    .input-login {
-                        background-color: #080500;
-                        color: #f3d29c;
-                        border: 0;
-                        height: 30px;
-
-                        &::placeholder {
-                            color: #c2c2c2;
-                        }
-
-                        &:focus {
-                            outline: 0;
-                            box-shadow: none;
-                        }
-                    }
-                    .input-submit {
-                        padding: 0;
-                        width: 100%;
-                        height: 63px;
-                        border: 0;
-                        color: #fff;
-                        font-weight: 800;
-                        background-color: #212121;
-                        transition: 0.3s;
-
-                        &:hover {
-                            color: #f3d29c;
-                            transition: 0.5s;
-                        }
-
-                        &:focus {
-                            outline: 0;
-                            box-shadow: none;
-                        }
-                    }
-                }
-            }
-        }
-
-        .img-level {
-            width: 50px;
-            margin-bottom: 5px;
-        }
-    }
-</style>

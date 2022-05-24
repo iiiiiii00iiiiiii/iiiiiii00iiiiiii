@@ -1,47 +1,87 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col sports-page">
+            <div class="row">
+                <div class="col-12">
+                    <NavSports/>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'futbol']"/>
-                            <span class="ml-2">스페셜 SPECIAL</span>
-                            <span class="float-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="selectCategory('')">
-                                    <font-awesome-icon :icon="['fa', 'globe']"/> 전체보기
-                                </button>
+                    <div class="sports-page-header">
+                        <font-awesome-icon :icon="['fa', 'futbol']"/>
+                        스페셜 <span>SPECIAL</span>
+                    </div>
+                    <div class="sports-header-list">
+                        <div class="search">
+                            <input type="text" name="skeyword" id="search-sports" placeholder="리그, 팀명을 입력해주세요" value="">
+                            <button type="submit" class="search-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="sports-event-header">
+                        <span class="event-title">Prematch <b>Event</b></span>
+                        <span class="sorting-method">
+                            <span class="type-time active">
+                                <font-awesome-icon :icon="['fa', 'clock']"/> 시간순정렬
                             </span>
+                            <span class="type-league">
+                                <font-awesome-icon :icon="['fa', 'flag']"/> 리그순정렬
+                            </span>
+                        </span>
+                    </div>
+                    <div class="sports-icon">
+                        <div class="sports-icon-wrap">
+                            <ul>
+                                <li @click="selectCategory('')">
+                                    <img src="/images/icon-all-gray.png" class="sports-category-icon" alt="전체" title="전체">
+                                    <div class="mt-1">전체</div>
+                                </li>
+                                <li @click="selectCategory('Football')">
+                                    <img src="/images/icon-football-gray.png" class="sports-category-icon" id="Football" alt="축구" title="축구">
+                                    <div class="mt-1">축구</div>
+                                </li>
+                                <li @click="selectCategory('Basketball')">
+                                    <img src="/images/icon-basketball-gray.png" class="sports-category-icon" id="Basketball" alt="농구" title="농구">
+                                    <div class="mt-1">농구</div>
+                                </li>
+                                <li @click="selectCategory('Baseball')">
+                                    <img src="/images/icon-baseball-gray.png" class="sports-category-icon" id="Baseball" alt="야구" title="야구">
+                                    <div class="mt-1">야구</div>
+                                </li>
+                                <li @click="selectCategory('Volleyball')">
+                                    <img src="/images/icon-volleyball-gray.png" class="sports-category-icon" id="Volleyball" alt="배구" title="배구">
+                                    <div class="mt-1">배구</div>
+                                </li>
+                                <li  @click="selectCategory('Ice Hockey')">
+                                    <img src="/images/icon-icehockey-gray.png" class="sports-category-icon" id="Ice Hockey" alt="아이스하키" title="아이스하키">
+                                    <div class="mt-1">아이스하키</div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="sports-icon">
-                        <div class="sports-icon-wrap">
-                            <ul>
-                                <li>
-                                    <img src="/images/icon-basketball-gray.png" class="sports-category-icon" id="Basketball" alt="농구" title="농구" @click="selectCategory('Basketball')">
-                                    <b-tooltip target="Basketball" title="농구"></b-tooltip>
-                                </li>
-                                <li>
-                                    <img src="/images/icon-baseball-gray.png" class="sports-category-icon" id="Baseball" alt="야구" title="야구" @click="selectCategory('Baseball')">
-                                    <b-tooltip target="Baseball" title="야구"></b-tooltip>
-                                </li>
-                                <li>
-                                    <img src="/images/icon-icehockey-gray.png" class="sports-category-icon" id="Ice Hockey" alt="아이스하키" title="아이스하키" @click="selectCategory('Ice Hockey')">
-                                    <b-tooltip target="Ice Hockey" title="아이스하키"></b-tooltip>
-                                </li>
-                                <li>
-                                    <img src="/images/icon-volleyball-gray.png" class="sports-category-icon" id="Volleyball" alt="배구" title="배구" @click="selectCategory('Volleyball')">
-                                    <b-tooltip target="Volleyball" title="배구"></b-tooltip>
-                                </li>
-                                <!-- <li>
-                                    <img src="/images/icon-lol-gray.png" class="sports-category-icon" id="LOL" alt="LOL" title="LOL" @click="selectCategory('LoL')">
-                                    <b-tooltip target="LOL" title="LOL"></b-tooltip>
-                                </li> -->
-                            </ul>
+            <div class="row mt-1 px-1">
+                <div class="col-12 game-info-box d-none d-xl-block">
+                    <div class="row">
+                        <div class="col ">
+                            리그/경기일시
+                        </div>
+                        <div class="col">
+                            구분
+                        </div>
+                        <div class="col-4">
+                            승(홈)언더
+                        </div>
+                        <div class="col">
+                            무/핸/합
+                        </div>
+                        <div class="col-4">
+                            패(원정)언더
                         </div>
                     </div>
                 </div>
@@ -50,27 +90,30 @@
                 <div class="row mt-1">
                     <div class="col">
                         <div class="sports">
-                            <div class="row mb-2" v-for="(v, index) in data" :key="index">
-                                <div class="col-9 col-xl-12 mt-3 g-league-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
+                            <div class="row" v-for="(v, index) in data" :key="index">
+                                <div class="col-9 col-xl-12 g-league-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
                                     <img :src="`/images/${$config.iconSport[v.sport]}`" class="sports-img">
                                     <span class="g-league">
                                         <font-awesome-icon :icon="['fa', 'angle-double-right']" class="ml-1 icon-league"/>
                                         {{ v.leagueKor }}
                                     </span>
                                 </div>
-                                <div class="col-3 d-xl-none mt-3 text-right g-date-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
+                                <div class="col-3 d-xl-none text-right g-date-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
                                     {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
                                 </div>
-                                <div class="col-12 mt-1" :class="{'mb-3': index + 1 === data.length}">
+                                <div class="col-12" :class="{'': index + 1 === data.length}">
                                     <div class="sports-px">
                                         <!-- 1쿼터 핸디캡 [농구]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.handicap1stQuarterSpecial && v.showConfig.handicap1stQuarterSpecial && v.games.handicap1stQuarterSpecial[0].status === 'ACTIVE' && v.games.handicap1stQuarterSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1쿼터 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1쿼터 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1쿼터 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -97,7 +140,7 @@
                                                     {{ $numeral(v.games.handicap1stQuarterSpecial[0].homeRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.handicap1stQuarterSpecial[0].homeStandard }}
                                             </div>
                                             <div
@@ -125,18 +168,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1쿼터 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 1쿼터 오버언더 [농구]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.underOver1stQuarterSpecial && v.showConfig.underOver1stQuarterSpecial && v.games.underOver1stQuarterSpecial[0].status === 'ACTIVE' && v.games.underOver1stQuarterSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1쿼터 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1쿼터 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1쿼터 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -165,7 +208,7 @@
                                                     {{ $numeral(v.games.underOver1stQuarterSpecial[0].overRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.underOver1stQuarterSpecial[0].standard }}
                                             </div>
                                             <div
@@ -195,18 +238,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1쿼터 오버언더
-                                            </div>
                                         </div>
                                         <!-- 첫 2점슛 [농구] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.first2Points && v.showConfig.first2Points && v.games.first2Points[0].status === 'ACTIVE' && v.games.first2Points[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">첫 2점슛</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">첫 2점슛</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                첫 2점슛
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -235,7 +278,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -265,18 +308,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                첫 2점슛
-                                            </div>
                                         </div>
                                         <!-- 첫 3점슛 [농구] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.first3Points && v.showConfig.first3Points && v.games.first3Points[0].status === 'ACTIVE' && v.games.first3Points[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">첫 3점슛</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">첫 3점슛</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                첫 3점슛
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -305,7 +348,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -335,18 +378,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                첫 3점슛
-                                            </div>
                                         </div>
                                         <!-- 첫 자유투 [농구] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.firstFreeThrow && v.showConfig.firstFreeThrow && v.games.firstFreeThrow[0].status === 'ACTIVE' && v.games.firstFreeThrow[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">첫 자유투</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">첫 자유투</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                첫 자유투
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -375,7 +418,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -405,18 +448,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                첫 자유투
-                                            </div>
                                         </div>
                                         <!-- 5이닝 핸디캡 [야구]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.handicapFirst5InningsSpecial && v.showConfig.handicapFirst5InningsSpecial && v.games.handicapFirst5InningsSpecial[0].status === 'ACTIVE' && v.games.handicapFirst5InningsSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">5이닝 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">스페셜 5이닝</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                5이닝 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -443,7 +486,7 @@
                                                     {{ $numeral(v.games.handicapFirst5InningsSpecial[0].homeRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.handicapFirst5InningsSpecial[0].homeStandard }}
                                             </div>
                                             <div
@@ -471,18 +514,17 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                5이닝 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 5이닝 오버언더 [야구]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.underOverFirst5InningsSpecial && v.showConfig.underOverFirst5InningsSpecial && v.games.underOverFirst5InningsSpecial[0].status === 'ACTIVE' && v.games.underOverFirst5InningsSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">5이닝 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                5이닝 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -511,7 +553,7 @@
                                                     {{ $numeral(v.games.underOverFirst5InningsSpecial[0].overRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.underOverFirst5InningsSpecial[0].standard }}
                                             </div>
                                             <div
@@ -541,18 +583,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                5이닝 오버언더
-                                            </div>
                                         </div>
                                         <!-- 첫 볼넷 [야구] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.firstWalk && v.showConfig.firstWalk && v.games.firstWalk[0].status === 'ACTIVE' && v.games.firstWalk[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">첫 볼넷</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">스페셜 첫 볼넷</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                첫 볼넷
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -579,7 +621,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -607,18 +649,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                첫 볼넷
-                                            </div>
                                         </div>
                                         <!-- 1세트 핸디캡 [배구]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.handicap1stSetSpecial && v.showConfig.handicap1stSetSpecial && v.games.handicap1stSetSpecial[0].status === 'ACTIVE' && v.games.handicap1stSetSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -645,7 +687,7 @@
                                                     {{ $numeral(v.games.handicap1stSetSpecial[0].homeRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.handicap1stSetSpecial[0].homeStandard }}
                                             </div>
                                             <div
@@ -673,18 +715,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 1세트 오버언더 [배구]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.underOver1stSetSpecial && v.showConfig.underOver1stSetSpecial && v.games.underOver1stSetSpecial[0].status === 'ACTIVE' && v.games.underOver1stSetSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -713,7 +755,7 @@
                                                     {{ $numeral(v.games.underOver1stSetSpecial[0].overRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.underOver1stSetSpecial[0].standard }}
                                             </div>
                                             <div
@@ -743,18 +785,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 오버언더
-                                            </div>
                                         </div>
                                         <!-- 1P 핸디캡 [아이스하키]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.handicap1stPeriodSpecial && v.showConfig.handicap1stPeriodSpecial && v.games.handicap1stPeriodSpecial[0].status === 'ACTIVE' && v.games.handicap1stPeriodSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1P 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1P 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1P 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -781,7 +823,7 @@
                                                     {{ $numeral(v.games.handicap1stPeriodSpecial[0].homeRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.handicap1stPeriodSpecial[0].homeStandard }}
                                             </div>
                                             <div
@@ -809,18 +851,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1P 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 1P 오버언더 [아이스하키]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.underOver1stPeriodSpecial && v.showConfig.underOver1stPeriodSpecial && v.games.underOver1stPeriodSpecial[0].status === 'ACTIVE' && v.games.underOver1stPeriodSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1P 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1P 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1P 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -849,7 +891,7 @@
                                                     {{ $numeral(v.games.underOver1stPeriodSpecial[0].overRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.underOver1stPeriodSpecial[0].standard }}
                                             </div>
                                             <div
@@ -879,18 +921,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1P 오버언더
-                                            </div>
                                         </div>
                                         <!-- 첫 득점 [아이스 하키] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.firstPoint && v.showConfig.firstPoint && v.games.firstPoint[0].status === 'ACTIVE' && v.games.firstPoint[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">첫 득점</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">첫 득점</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                첫 득점
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -917,7 +959,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -945,18 +987,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                첫 득점
-                                            </div>
                                         </div>
                                         <!-- 1세트 승패 [LoL] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.x1stSetSpecial && v.showConfig.x1stSetSpecial && v.games.x1stSetSpecial[0].status === 'ACTIVE' && v.games.x1stSetSpecial[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 승패</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 승패</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 승패
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -983,7 +1025,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -1011,18 +1053,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 승패
-                                            </div>
                                         </div>
                                         <!-- 1세트 핸디캡 [LoL]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.handicap1stSetKill && v.showConfig.handicap1stSetKill && v.games.handicap1stSetKill[0].status === 'ACTIVE' && v.games.handicap1stSetKill[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -1049,7 +1091,7 @@
                                                     {{ $numeral(v.games.handicap1stSetKill[0].homeRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.handicap1stSetKill[0].homeStandard }}
                                             </div>
                                             <div
@@ -1077,18 +1119,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 1세트 오버언더 [LoL]-->
                                         <div
                                             class="row g"
                                             v-if="v.games.underOver1stSetKill && v.showConfig.underOver1stSetKill && v.games.underOver1stSetKill[0].status === 'ACTIVE' && v.games.underOver1stSetKill[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -1117,7 +1159,7 @@
                                                     {{ $numeral(v.games.underOver1stSetKill[0].overRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col-2 g-x">
+                                            <div class="col g-x">
                                                 {{ v.games.underOver1stSetKill[0].standard }}
                                             </div>
                                             <div
@@ -1147,18 +1189,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 오버언더
-                                            </div>
                                         </div>
                                         <!-- 1세트 첫 타워 [LoL] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.firstTower1stSet && v.showConfig.firstTower1stSet && v.games.firstTower1stSet[0].status === 'ACTIVE' && v.games.firstTower1stSet[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 첫 타워</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 첫 타워</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 첫 타워
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -1185,7 +1227,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -1213,18 +1255,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 첫 타워
-                                            </div>
                                         </div>
                                         <!-- 1세트 첫 용 [LoL] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.firstDragon1stSet && v.showConfig.firstDragon1stSet && v.games.firstDragon1stSet[0].status === 'ACTIVE' && v.games.firstDragon1stSet[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 첫 용</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 첫 용</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 첫 용
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -1251,7 +1293,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -1279,18 +1321,18 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 첫 용
-                                            </div>
                                         </div>
                                         <!-- 1세트 첫 킬 [LoL] -->
                                         <div
                                             class="row g"
                                             v-if="v.games.firstBlood1stSet && v.showConfig.firstBlood1stSet && v.games.firstBlood1stSet[0].status === 'ACTIVE' && v.games.firstBlood1stSet[0].showStatus"
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">1세트 첫 킬</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">1세트 첫 킬</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                1세트 첫 킬
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home can-bet"
@@ -1317,7 +1359,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                             >
                                                 vs
                                             </div>
@@ -1345,9 +1387,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                1세트 첫 킬
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1356,13 +1395,22 @@
                     </div>
                 </div>
             </b-overlay>
-            <div class="row my-3">
-                <div class="col-12">
-                    <div class="card bg-dark">
-                        <div class="card-body pagination-body">
-                            <b-pagination-nav :link-gen="linkGen" :number-of-pages="numberOfPages" align="center" :limit="$config.pageLimit" use-router v-model="search.page"></b-pagination-nav>
-                        </div>
-                    </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <b-pagination-nav
+                        first-class="first-class"
+                        last-class="last-class"
+                        prev-class="prev-class"
+                        next-class="next-class"
+                        ellipsis-class="ellipsis-class"
+                        page-class="page-class"
+                        :link-gen="linkGen"
+                        :number-of-pages="numberOfPages"
+                        align="center"
+                        :limit="$config.pageLimit"
+                        use-router
+                        v-model="search.page"
+                    ></b-pagination-nav>
                 </div>
             </div>
         </div>
@@ -1371,10 +1419,12 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import NavSports from '../components/NavSports'
 
     export default {
         name: 'SportsSpecial',
         components: {
+            NavSports
         },
         computed: {
             ...mapGetters(['loading', 'isLogin', 'user', 'betCart']),

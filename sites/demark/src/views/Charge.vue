@@ -1,99 +1,53 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col-12 page-content">
             <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'plus-square']"/>
-                            <span class="ml-2">입금 CHARGE</span>
-                        </div>
+                <div class="col-12">
+                    <NavUserMenu/>
+                </div>
+            </div>
+            <div class="page-content-header">
+                <div class="row">
+                    <div class="col-12">
+                        <font-awesome-icon :icon="['fa', 'plus-square']"/>
+                        충전신청 <span>Deposit</span>
                     </div>
                 </div>
             </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="money-notice-wrap">
-                        <div class="money-notice-title">
-                            입금시 유의사항
-                        </div>
-                        <ul class="money-notice-content">
-                            <li>
-                                <font-awesome-icon class="icon-caret" :icon="['fa', 'caret-right']"/>
-                                최소 10,000원 부터 입금 가능하며 입금금액과 입금신청 금액이 동일해야 합니다.
-                            </li>
-                            <li>
-                                <font-awesome-icon class="icon-caret" :icon="['fa', 'caret-right']"/>
-                                입금자와 신청자의 이름이 동일해야 하며, 입금하신 금액이 다르면 고객센터에 문의 해주시기 바랍니다.
-                            </li>
-                            <li>
-                                <font-awesome-icon class="icon-caret" :icon="['fa', 'caret-right']"/>
-                                상습적인 허위입금시 차단 되실 수 있습니다.
-                            </li>
-                            <li>
-                                <font-awesome-icon class="icon-caret" :icon="['fa', 'caret-right']"/>
-                                수표로 입금시에는 입금처리가 불가능합니다.
-                            </li>
-                            <li>
-                                <font-awesome-icon class="icon-caret" :icon="['fa', 'caret-right']"/>
-                                빠른입금 처리를 위하여 반드시 선입금 후 입금신청을 해주십시오.
-                            </li>
-                            <li class="imp">
-                                <font-awesome-icon class="icon-caret" :icon="['fa', 'caret-right']"/>
-                                23시 55분 ~ 00시 05분 사이에는 입금신청이 불가능 합니다.
-                            </li>
-                            <li class="pt-2">
-                                <button type="button" class="btn-request-charge" :disabled="loading" @click="requestChargeInformation()">입금계좌 문의</button>
-                            </li>
-                        </ul>
+            <div class="page-content-middle">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="title">현재보유머니</div>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="money-button-wrap">
-                        <div class="row">
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(10000)">1만</button>
-                            </div>
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(30000)">3만</button>
-                            </div>
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(50000)">5만</button>
-                            </div>
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(100000)">10만</button>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(500000)">50만</button>
-                            </div>
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(1000000)">100만</button>
-                            </div>
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(5000000)">500만</button>
-                            </div>
-                            <div class="col-3 px-xl-3">
-                                <button type="button" class="btn btn-block btn-money" @click="addMoney(10000000)">1,000만</button>
-                            </div>
+                    <div class="col-9">
+                        <div class="content">
+                            <span>
+                                {{ $numeral(user.money).format('0,0') }}
+                            </span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="money-wrap">
-                        <div class="row">
-                            <div class="col-12 col-xl-4">
-                                <input type="text" readonly="readonly" class="form-control money-input" :value="`입금자명 : ${user.bankOwner}`">
-                            </div>
-                            <div class="col-12 col-xl-4 pt-1 pt-xl-0">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="title">입금자명</div>
+                    </div>
+                    <div class="col-9">
+                        <div class="content">
+                            <span>{{ user.bankOwner }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="title">입금금액</div>
+                    </div>
+                    <div class="col-9">
+                        <div class="content">
+                            <span>
                                 <input
                                     type="text"
-                                    class="form-control money-input"
+                                    placeholder="입금금액을 입력해주세요."
+                                    require
                                     id="chargeAmount"
                                     v-model.lazy="chargeAmount"
                                     maxlength="11"
@@ -101,94 +55,171 @@
                                     @blur="checkChargeAmount($event)"
                                     @input="setChargeAmount($event)"
                                 >
+                            </span>
+                            <button
+                                type="button"
+                                class="btn-init-money ml-2"
+                                :disabled="loading"
+                                @click="initCharge()"
+                            >
+                                <font-awesome-icon :icon="['fa', 'trash-alt']"/> 지우기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-none d-xl-block">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="title">빠른입력</div>
                             </div>
-                            <div class="col-12 col-xl-4 pt-1 pt-xl-0">
-                                <button
-                                    type="submit"
-                                    class="btn-set-money"
-                                    :disabled="loading"
-                                    @click="charge()"
-                                >
-                                    <font-awesome-icon :icon="['fa', 'plus-square']"/> 입금신청
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn-init-money ml-1"
-                                    :disabled="loading"
-                                    @click="initCharge()"
-                                >
-                                    <font-awesome-icon :icon="['fa', 'undo']"/> 정정
-                                </button>
+                            <div class="col-9">
+                                <div class="content">
+                                    <div class="row pl-3">
+                                        <div class="col-12">
+                                            <button type="button" class="btn-money" @click="addMoney(10000)">+10,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(30000)">+30,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(50000)">+50,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(100000)">+100,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(300000)">+300,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(500000)">+500,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(1000000)">+1,000,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(3000000)">+3,000,000</button>
+                                            <button type="button" class="btn-money" @click="addMoney(5000000)">+5,000,000</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="money-list">
+                <div class="row">
+                    <div class="col-12 d-xl-none">
                         <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="deleteChargeAll()">
-                                    <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
-                                </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="getList()">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
-                                </button>
+                            <div class="col-3">
+                                <div class="title-second">빠른입력</div>
                             </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-money text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>일시</th>
-                                                <th>금액</th>
-                                                <th>상태</th>
-                                                <th>삭제</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(item, index) in data" :key="index">
-                                                <td>
-                                                    {{ $moment(item.regDateTime).format('YY.MM.DD HH:mm') }}
-                                                </td>
-                                                <td>
-                                                    {{ $numeral(item.money).format('0,0') }}
-                                                </td>
-                                                <td :class="$config.statusChargeClass[item.status]">
-                                                    {{ $config.statusCharge[item.status] }}
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn-delete" v-if="item.status !== 0" :disabled="loading" @click="deleteCharge(item._id)">삭제</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="col-9">
+                                <div class="content-second">
+                                    <div class="row pl-2">
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(10000)">+10,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(30000)">+30,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(50000)">+50,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(100000)">+100,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(300000)">+300,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(500000)">+500,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(1000000)">+1,000,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(3000000)">+3,000,000</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn-money" @click="addMoney(5000000)">+5,000,000</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <b-pagination-nav
-                                    first-class="first-class"
-                                    last-class="last-class"
-                                    prev-class="prev-class"
-                                    next-class="next-class"
-                                    ellipsis-class="ellipsis-class"
-                                    page-class="page-class"
-                                    :link-gen="linkGen"
-                                    :number-of-pages="numberOfPages"
-                                    align="center"
-                                    :limit="$config.pageLimit"
-                                    use-router
-                                    v-model="search.page"
-                                    pills
-                                    size="sm"
-                                ></b-pagination-nav>
-                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="title">입금계좌번호</div>
+                    </div>
+                    <div class="col-9">
+                        <div class="content">
+                            <span>
+                                <button type="button" class="btn-request-charge" :disabled="loading" @click="requestChargeInformation()">
+                                    <font-awesome-icon :icon="['fa', 'check-square']"/> 입금계좌확인
+                                </button>
+                            </span>
                         </div>
+                    </div>
+                </div>
+                <div class="set-money">
+                    <button
+                        type="submit"
+                        class="btn-set-money"
+                        :disabled="loading"
+                        @click="charge()"
+                    >
+                        <font-awesome-icon :icon="['fa', 'plus-square']"/> 충전신청
+                    </button>
+                </div>
+            </div>
+            <div class="list-content">
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-money text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>일시</th>
+                                        <th>입금자명</th>
+                                        <th>충전금액</th>
+                                        <th>처리현황</th>
+                                        <th>삭제</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in data" :key="index">
+                                        <td>
+                                            {{ $moment(item.regDateTime).format('YY.MM.DD HH:mm') }}
+                                        </td>
+                                        <td>
+                                            {{ user.bankOwner }}
+                                        </td>
+                                        <td>
+                                            {{ $numeral(item.money).format('0,0') }}
+                                        </td>
+                                        <td :class="$config.statusChargeClass[item.status]">
+                                            {{ $config.statusCharge[item.status] }}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-delete" v-if="item.status !== 0" :disabled="loading" @click="deleteCharge(item._id)">삭제</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col text-right pr-2">
+                        <button type="button" class="btn-select-cinnabar" :disabled="loading" @click="deleteChargeAll()">
+                            <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <b-pagination-nav
+                            first-class="first-class"
+                            last-class="last-class"
+                            prev-class="prev-class"
+                            next-class="next-class"
+                            ellipsis-class="ellipsis-class"
+                            page-class="page-class"
+                            :link-gen="linkGen"
+                            :number-of-pages="numberOfPages"
+                            align="center"
+                            :limit="$config.pageLimit"
+                            use-router
+                            v-model="search.page"
+                        ></b-pagination-nav>
                     </div>
                 </div>
             </div>
@@ -198,10 +229,13 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import NavUserMenu from '../components/NavUserMenu'
+
 
     export default {
         name: 'Charge',
         components: {
+            NavUserMenu
         },
         computed: {
             ...mapGetters(['loading', 'user']),

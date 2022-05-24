@@ -1,78 +1,71 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
             <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'gift']"/>
-                            <span class="ml-2">이벤트 EVENT</span>
+                <div class="col-12">
+                    <NavUserMenu/>
+                </div>
+            </div>
+            <div class="page-content-header">
+                <font-awesome-icon :icon="['fa', 'gift']"/>
+                이벤트 <span>EVENT</span>
+            </div>
+            <div class="list-content">
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-board text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="w-10">종류</th>
+                                        <th>제목</th>
+                                        <th>작성자</th>
+                                        <th>일시</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in data" :key="index">
+                                        <td class="en">
+                                            이벤트
+                                        </td>
+                                        <td>
+                                            <span class="text-white" v-if="item.header">[{{ item.header }}]</span>
+                                            <span
+                                                class="cursor-pointer text-white"
+                                                :class="item.header ? 'ml-2' : ''"
+                                                @click="$tools.pushRouter(`/event/detail/${item._id}/${search.page}`)"
+                                            >
+                                                {{ item.title }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <img src="/images/logo.png" class="admin-logo">
+                                        </td>
+                                        <td>
+                                            {{ $moment(item.regDateTime).format('YY.MM.DD') }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="board-list">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="getList()">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-board text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="w-10">종류</th>
-                                                <th>제목</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(item, index) in data" :key="index">
-                                                <td class="en">
-                                                    이벤트
-                                                </td>
-                                                <td>
-                                                    <span v-if="item.header" :style="item.headerColor !== '#000000' ? `color: ${item.headerColor}` : ''">[{{ item.header }}]</span>
-                                                    <span
-                                                        class="cursor-pointer"
-                                                        :class="item.header ? 'ml-2' : ''"
-                                                        :style="item.titleColor !== '#000000' ? `color: ${item.titleColor}` : ''"
-                                                        @click="$tools.pushRouter(`/event/detail/${item._id}/${search.page}`)"
-                                                    >
-                                                        {{ item.title }}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <b-pagination-nav
-                                    first-class="first-class"
-                                    last-class="last-class"
-                                    prev-class="prev-class"
-                                    next-class="next-class"
-                                    ellipsis-class="ellipsis-class"
-                                    page-class="page-class"
-                                    :link-gen="linkGen"
-                                    :number-of-pages="numberOfPages"
-                                    align="center"
-                                    :limit="$config.pageLimit"
-                                    use-router
-                                    v-model="search.page"
-                                    pills
-                                    size="sm"
-                                ></b-pagination-nav>
-                            </div>
-                        </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <b-pagination-nav
+                            first-class="first-class"
+                            last-class="last-class"
+                            prev-class="prev-class"
+                            next-class="next-class"
+                            ellipsis-class="ellipsis-class"
+                            page-class="page-class"
+                            :link-gen="linkGen"
+                            :number-of-pages="numberOfPages"
+                            align="center"
+                            :limit="$config.pageLimit"
+                            use-router
+                            v-model="search.page"
+                        ></b-pagination-nav>
                     </div>
                 </div>
             </div>
@@ -82,10 +75,12 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import NavUserMenu from '../components/NavUserMenu'
 
     export default {
         name: 'Event',
         components: {
+            NavUserMenu
         },
         computed: {
             ...mapGetters(['loading']),

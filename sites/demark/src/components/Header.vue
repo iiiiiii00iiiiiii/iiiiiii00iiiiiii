@@ -2,59 +2,40 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="row">
-                    <div class="col px-0">
-                        <div class="header-top">
+                <div class="header-top">
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="/images/logo.png" class="logo" alt="로고" title="로고" data-aos="flip-up" data-aos-duration="1500" @click="$tools.pushRouter('/', false)">
+                        </div>
+                        <div class="col-8 header-menu">
                             <div class="row">
-                                <div class="col">
-                                    <img src="/images/logo.png" class="logo" alt="로고" title="로고" data-aos="flip-up" data-aos-duration="1500" @click="$tools.pushRouter('/', false)">
+                                <div class="col-12 menu-box">
+                                    <ul>
+                                        <li @click="$tools.pushRouter('/sportsgamemenu', true)">
+                                            스포츠
+                                        </li>
+                                        <li @click="$tools.pushRouter('/minigamemenu', true)">
+                                            미니게임
+                                        </li>
+                                        <li @click="$tools.pushRouter('/casino', true)">
+                                            카지노
+                                        </li>
+                                        <li @click="openKplay(0)">
+                                            슬롯
+                                        </li>
+                                        <li @click="$tools.pushRouter('/notice', true)">
+                                            공지사항
+                                        </li>
+                                        <li @click="$tools.pushRouter('/gameresults', true)">
+                                            경기결과
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 px-0">
-                        <div class="header-menu">
-                            <div class="row">
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'Sports' ? 'active' : ''" @click="$tools.pushRouter('/sports', false)">
-                                    해외형 스포츠
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'SportsCross' ? 'active' : ''" @click="$tools.pushRouter('/sportscross', false)">
-                                    국내형 스포츠
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'SportsLive' ? 'active' : ''" @click="$tools.ready('/sportslive', false)">
-                                    라이브 스포츠
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'SportsSpecial' ? 'active' : ''" @click="$tools.pushRouter('/sportsspecial', false)">
-                                    스페셜
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'SportsLiveKor' ? 'active' : ''" @click="$tools.ready('/sportslivekor', false)">
-                                    실시간
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'Casino' ? 'active' : ''" @click="$tools.pushRouter('/casino', true)">
-                                    카지노
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" @click="openKplay(0)">
-                                    슬롯
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'Powerball' || router === 'Powerladder' || router === 'Kenoladder' ? 'active' : ''" @click="$tools.pushRouter('/powerball'), false">
-                                    미니게임
-                                </div>
-                                <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'Rules' ? 'active' : ''" @click="$tools.pushRouter('/rules'), true">
-                                    이용규정
-                                </div>
-                                <div class="line-vertical"></div>
-                            </div>
+                        <div class="col-2 header-time">
+                            {{ $moment().format('YYYY-MM-DD HH:mm:ss')}}
+                            <span><img src="/images/kor-flag.png" alt="깃발" class="header-flag"></span>
                         </div>
                     </div>
                 </div>
@@ -70,6 +51,11 @@
         name: 'Header',
         computed: {
             ...mapGetters(['user', 'router'])
+        },
+        data() {
+            return {
+
+            }
         },
         methods: {
             async openKplay(id) {

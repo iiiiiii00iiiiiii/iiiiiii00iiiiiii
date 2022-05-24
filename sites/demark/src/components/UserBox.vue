@@ -1,40 +1,117 @@
 <template>
-    <div class="user-box">
-        <table class="w-100">
-            <tr>
-                <td class="top w-30" rowspan="3">
-                    <div class="text-center">
-                        <img class="img-level" :src="`/images/icon-lv${user.grade}.png`">
-                    </div>
-                    <div class="text-center">
-                        <img class="img" :src="`/images/lv${user.grade}.jpg`">
-                    </div>
-                </td>
-                <td class="top w-70 text-left pl-2 py-5px">
-                    <span class="user-nick" @click="$tools.pushRouter('/mypage')">{{ user.nick }} 님</span>
-
-                    <button type="button" class="btn-logout float-right mr-2" :disabled="loading" @click="$tools.pushRouter('/logout', false)">
-                        <font-awesome-icon :icon="['fa', 'power-off']"/> 로그아웃
-                    </button>
-                </td>
-            </tr>
-            <tr height="25">
-                <td class="top w-70 text-left pl-2 py-5px">
-                    <font-awesome-icon :icon="['fa', 'won-sign']"/>
-                    <span class="user-info"> 보유머니 <span class="user-money">{{ $numeral(user.money).format('0,0') }}</span> 원</span>
-                </td>
-            </tr>
-            <tr height="25">
-                <td class="top w-70 text-left pl-2 py-5px">
-                    <font-awesome-icon :icon="['fa', 'coins']"/>
-                    <span class="user-info"> 포인트 <span class="user-money">{{ $numeral(user.point).format('0,0') }}</span> 점</span>
-                    <button type="button" class="btn-exchange-point float-right mr-2" :disabled="loading" @click="$tools.pushRouter('/point', true)">
-                        <font-awesome-icon :icon="['fa', 'exchange-alt']"/>
-                        전환
-                    </button>
-                </td>
-            </tr>
-        </table>
+    <div class="right-login-wrap">
+        <div class="login-header">
+            <font-awesome-icon :icon="['fa', 'user']" style="color: #fff"/> Member Info
+        </div>
+        <div class="user-box">
+            <div class="user-info">
+                <table class="w-100 mt-1">
+                    <tr>
+                        <td class="w-25 level-image-wrap">
+                            <img class="img-level" :src="`/images/icon-lv${user.grade}.png`">
+                        </td>
+                        <td class="w-40 text-center cursor-pointer">
+                            <span @click="$tools.pushRouter('/mypage')">{{ user.nick }} 님</span>
+                        </td>
+                        <td class="w-35 text-right pr-1">
+                            <span class="login-out" :disabled="loading" @click="$tools.pushRouter('/logout', false)">
+                                <font-awesome-icon :icon="['fa', 'sign-out-alt']"/> 로그아웃
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <table class="w-100">
+                    <tr>
+                        <td class="w-40 text-left">
+                            <img src="/images/icon-money.png" alt="money" title="money">
+                            <span>보유머니</span>
+                        </td>
+                        <td class="w-50 text-right pr-2">
+                            <span class="user-money">{{ $numeral(user.money).format('0,0') }}</span>
+                        </td>
+                        <td class="w-10 cursor-pointer" @click="$tools.pushRouter('/charge', true)">
+                            <img src="/images/icon-add-money.png" alt="money" title="money">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-40 text-left">
+                            <img src="/images/icon-point.png" alt="point" title="point">
+                            <span>포인트</span>
+                        </td>
+                        <td class="w-50 text-right pr-2"
+                            @click="$tools.pushRouter('/point', true)"
+                        >
+                            <span class="user-money point">{{ $numeral(user.point).format('0,0') }}</span>
+                        </td>
+                        <td class="w-10 cursor-pointer" @click="$tools.pushRouter('/point', true)">
+                            <img src="/images/icon-add-point.png" alt="point" title="point">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="user-quick-menu">
+                <table class="w-100">
+                    <tr>
+                        <td class="cursor-pointer" @click="$tools.pushRouter('/charge', true)">
+                            <img src="/images/right-quick-menu-icon.png">
+                            <div>충전</div>
+                        </td>
+                        <td class="cursor-pointer" @click="$tools.pushRouter('/exchange', true)">
+                            <img src="/images/right-quick-menu-icon-1.png">
+                            <div>환전</div>
+                        </td>
+                        <td class="cursor-pointer" @click="$tools.pushRouter('/help', true)">
+                            <img src="/images/right-quick-menu-icon-2.png">
+                            <div>문의</div>
+                        </td>
+                        <td class="cursor-pointer" @click="$tools.pushRouter('/message', true)">
+                            <img src="/images/right-quick-menu-icon-3.png">
+                            <div>쪽지</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="user-button-box">
+                <table class="w-100 my-1">
+                    <tr>
+                        <td class="w-50" @click="$tools.pushRouter('/mypage', true)">
+                            <span class="user-button-blue">
+                                <font-awesome-icon :icon="['fa', 'user']"/> 마이페이지
+                            </span>
+                        </td>
+                        <td class="w-50" @click="$tools.pushRouter('/frienddetails', true)">
+                            <span class="user-button-red">
+                                <font-awesome-icon :icon="['fa', 'users']"/> 추천인내역
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-50" @click="$tools.pushRouter('/betlist', true)">
+                            <span class="user-button-blue">
+                                <font-awesome-icon :icon="['fa', 'bars']"/> 베팅내역
+                            </span>
+                        </td>
+                        <td class="w-50" @click="$tools.pushRouter('/attendance', true)">
+                            <span class="user-button-red">
+                                <font-awesome-icon :icon="['fa', 'clipboard-check']"/> 출석체크
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-50" @click="$tools.pushRouter('/notice', true)">
+                            <span class="user-button-blue">
+                                <font-awesome-icon :icon="['fa', 'bullhorn']"/> 공지사항
+                            </span>
+                        </td>
+                        <td class="w-50" @click="$tools.pushRouter('/event', true)">
+                            <span class="user-button-red">
+                                <font-awesome-icon :icon="['fa', 'gift']"/> 이벤트
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -58,41 +135,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .user-box {
-        padding: 2px;
-        border: 1px solid #191919;
-        border-radius: 3px;
-        background-color: #2d343b;
-
-        table {
-            border-collapse: collapse;
-
-            tr {
-                td {
-                    background-color: #212121;
-                    color: #c2c2c2;
-                    font-size: 0.75rem;
-                    border: 1px solid #000;
-
-                    .user-nick {
-                        color: #ffcb5d;
-                        cursor: pointer;
-                    }
-                    .user-info {
-                        color: #17a2b8;
-                    }
-                    .user-money {
-                        color: #c2c2c2;
-                    }
-                }
-            }
-        }
-
-        .img-level {
-            width: 50px;
-            margin-bottom: 5px;
-        }
-    }
-</style>

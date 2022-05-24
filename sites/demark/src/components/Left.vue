@@ -1,35 +1,21 @@
 <template>
     <div>
-        <LeftMenu/>
-        <!-- <LeftMinigameCategory
-            v-if="router === 'Powerball' ||
-            router === 'Powerladder' ||
-            router === 'Kenoladder' ||
-            router === 'BoglePowerball' ||
-            router === 'Bogleladder' ||
-            router === 'GooglePowerball1' ||
-            router === 'GooglePowerball3'"
-        /> -->
+        <LeftLiveInplay/>
         <LeftCategory/>
-        <BannerLeft/>
     </div>
 </template>
 
 <script>
     import { mapGetters } from 'vuex'
 
-    import LeftMenu from '../components/LeftMenu.vue'
+    import LeftLiveInplay from '../components/LeftLiveInplay.vue'
     import LeftCategory from '../components/LeftCategory.vue'
-    // import LeftMinigameCategory from '../components/LeftMinigameCategory.vue'
-    import BannerLeft from '../components/BannerLeft.vue'
 
     export default {
         name: "Left",
         components: {
-            LeftMenu,
+            LeftLiveInplay,
             LeftCategory,
-            // LeftMinigameCategory,
-            BannerLeft
         },
         computed: {
             ...mapGetters(['router'])

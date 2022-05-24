@@ -1,92 +1,82 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
             <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'comments']"/>
-                            <span class="ml-2">고객센터 HELP</span>
+                <div class="col-12">
+                    <NavUserMenu/>
+                </div>
+            </div>
+            <div class="page-content-header">
+                <font-awesome-icon :icon="['fa', 'comments']"/>
+                고객센터 <span>HELP</span>
+            </div>
+            <div class="list-content">
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-board text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="w-10">일시</th>
+                                        <th>제목</th>
+                                        <th>상태</th>
+                                        <th>삭제</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in data" :key="index">
+                                        <td>
+                                            {{ $moment(item.regDateTime).format('YY.MM.DD HH:mm') }}
+                                        </td>
+                                        <td>
+                                            <span
+                                                class="cursor-pointer"
+                                                @click="$tools.pushRouter(`/help/detail/${item._id}/${search.page}`)"
+                                            >
+                                                {{ item.title }}
+                                            </span>
+                                        </td>
+                                        <td :class="$config.helpStatusClass[item.answerStatus]">
+                                            {{ $config.helpStatus[item.answerStatus] }}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-delete" :disabled="loading" @click="deleteHelp(item._id)">삭제</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <div class="board-list">
-                        <div class="row">
-                            <div class="col text-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="deleteHelpAll()">
-                                    <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
-                                </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="getList()">
-                                    <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
-                                </button>
-                                <button type="button" class="btn-write ml-2" :disabled="loading" @click="requestChargeInformation()">
-                                    <font-awesome-icon :icon="['fa', 'comments']"/> 입금계좌 문의
-                                </button>
-                                <button type="button" class="btn-write ml-2" :disabled="loading" @click="$tools.pushRouter(`/help-write/${search.page}`)">
-                                    <font-awesome-icon :icon="['fa', 'comments']"/> 문의하기
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-board text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="w-10">일시</th>
-                                                <th>제목</th>
-                                                <th class="w-10">상태</th>
-                                                <th class="w-10">삭제</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(item, index) in data" :key="index">
-                                                <td>
-                                                    {{ $moment(item.regDateTime).format('YY.MM.DD HH:mm') }}
-                                                </td>
-                                                <td>
-                                                    <span
-                                                        class="cursor-pointer"
-                                                        @click="$tools.pushRouter(`/help/detail/${item._id}/${search.page}`)"
-                                                    >
-                                                        {{ item.title }}
-                                                    </span>
-                                                </td>
-                                                <td :class="$config.helpStatusClass[item.answerStatus]">
-                                                    {{ $config.helpStatus[item.answerStatus] }}
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn-delete" :disabled="loading" @click="deleteHelp(item._id)">삭제</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <b-pagination-nav
-                                    first-class="first-class"
-                                    last-class="last-class"
-                                    prev-class="prev-class"
-                                    next-class="next-class"
-                                    ellipsis-class="ellipsis-class"
-                                    page-class="page-class"
-                                    :link-gen="linkGen"
-                                    :number-of-pages="numberOfPages"
-                                    align="center"
-                                    :limit="$config.pageLimit"
-                                    use-router
-                                    v-model="search.page"
-                                    pills
-                                    size="sm"
-                                ></b-pagination-nav>
-                            </div>
-                        </div>
+                <div class="row mt-2">
+                    <div class="col text-right">
+                        <button type="button" class="btn-select-cinnabar " :disabled="loading" @click="deleteHelpAll()">
+                            <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
+                        </button>
+                        <button type="button" class="btn-select-mango-tango ml-2" :disabled="loading" @click="requestChargeInformation()">
+                            <font-awesome-icon :icon="['fa', 'comments']"/> 입금계좌 문의
+                        </button>
+                        <button type="button" class="btn-select-denim ml-2" :disabled="loading" @click="$tools.pushRouter(`/help-write/${search.page}`)">
+                            <font-awesome-icon :icon="['fa', 'comments']"/> 글쓰기
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <b-pagination-nav
+                            first-class="first-class"
+                            last-class="last-class"
+                            prev-class="prev-class"
+                            next-class="next-class"
+                            ellipsis-class="ellipsis-class"
+                            page-class="page-class"
+                            :link-gen="linkGen"
+                            :number-of-pages="numberOfPages"
+                            align="center"
+                            :limit="$config.pageLimit"
+                            use-router
+                            v-model="search.page"
+                        ></b-pagination-nav>
                     </div>
                 </div>
             </div>
@@ -96,10 +86,12 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import NavUserMenu from '../components/NavUserMenu'
 
     export default {
         name: 'Help',
         components: {
+            NavUserMenu
         },
         computed: {
             ...mapGetters(['loading', 'helpReplace']),

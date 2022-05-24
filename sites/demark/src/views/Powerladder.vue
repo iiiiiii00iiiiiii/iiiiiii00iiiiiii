@@ -1,6 +1,6 @@
 <template>
     <div class="row mb-3" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col page-content">
             <div class="row">
                 <div class="col-12">
                     <NavMinigame/>
@@ -8,17 +8,15 @@
             </div>
             <div class="row mt-2">
                 <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'gamepad']"/>
-                            <span class="ml-2">파워 사다리 POWER LADDER</span>
-                            <span class="float-right">
-                                <button class="btn-minigames" @click="isHide = !isHide">
-                                    <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
-                                    {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
-                                </button>
-                            </span>
-                        </div>
+                    <div class="page-content-header">
+                        <font-awesome-icon :icon="['fa', 'gamepad']"/>
+                        파워 사다리 <span>POWER LADDER</span>
+                        <span class="float-right">
+                            <button class="btn-request-charge" @click="isHide = !isHide">
+                                <font-awesome-icon :icon="['fa', isHide ? 'chevron-down' : 'chevron-up']"/>
+                                {{ isHide ? '중계화면 열기' : '중계화면 닫기' }}
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -42,7 +40,7 @@
                             <div class="col-12">
                                 <div class="minigame-info clearfix">
                                     <div class="float-left">
-                                        <font-awesome-icon :icon="['fa', 'star']" class="text-light-brown"/> 파워 사다리-<span class="text-light-brown">{{ round }}</span> (<span class="text-light-brown">{{ rotation }}</span>) 회차
+                                        <font-awesome-icon :icon="['fa', 'star']"/> 파워 사다리-<span>{{ round }}</span> (<span>{{ rotation }}</span>) 회차
                                     </div>
                                     <div class="float-right">
                                         <div class="game-time-box">
@@ -52,6 +50,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 파워 사다리 -->
                         <div class="row mt-1">
                             <div class="col">
                                 <div class="minigame-title" id="section1">
@@ -59,14 +58,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue "
                                     :class="betType === 'PLDLR' && betSelect === 'Left' ? 'active' : ''"
                                     @click="setBet(id, 'PLDLR', 'Left', games.PLDLR.rateOfLeft)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDLR.rateOfLeft ? '' : 'blue'">
+                                    <div :class="end || !games.PLDLR.rateOfLeft ? '' : ''">
                                         <span>좌</span>
                                     </div>
                                     <div class="rate">
@@ -76,11 +75,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red "
                                     :class="betType === 'PLDLR' && betSelect === 'Right' ? 'active' : ''"
                                     @click="setBet(id, 'PLDLR', 'Right', games.PLDLR.rateOfRight)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDLR.rateOfRight ? '' : 'red'">
+                                    <div :class="end || !games.PLDLR.rateOfRight ? '' : ''">
                                         <span>우</span>
                                     </div>
                                     <div class="rate">
@@ -90,11 +89,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue "
                                     :class="betType === 'PLDTF' && betSelect === 'Three' ? 'active' : ''"
                                     @click="setBet(id, 'PLDTF', 'Three', games.PLDTF.rateOfThree)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDTF.rateOfThree ? '' : 'blue'">
+                                    <div :class="end || !games.PLDTF.rateOfThree ? '' : ''">
                                         <span>3줄</span>
                                     </div>
                                     <div class="rate">
@@ -104,11 +103,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PLDTF' && betSelect === 'Four' ? 'active' : ''"
                                     @click="setBet(id, 'PLDTF', 'Four', games.PLDTF.rateOfFour)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDTF.rateOfFour ? '' : 'red'">
+                                    <div :class="end || !games.PLDTF.rateOfFour ? '' : ''">
                                         <span>4줄</span>
                                     </div>
                                     <div class="rate">
@@ -118,11 +117,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PLDOE' && betSelect === 'Odd' ? 'active' : ''"
                                     @click="setBet(id, 'PLDOE', 'Odd', games.PLDOE.rateOfOdd)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDOE.rateOfOdd ? '' : 'blue'">
+                                    <div :class="end || !games.PLDOE.rateOfOdd ? '' : ''">
                                         <span>홀</span>
                                     </div>
                                     <div class="rate">
@@ -132,11 +131,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PLDOE' && betSelect === 'Even' ? 'active' : ''"
                                     @click="setBet(id, 'PLDOE', 'Even', games.PLDOE.rateOfEven)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDOE.rateOfEven ? '' : 'red'">
+                                    <div :class="end || !games.PLDOE.rateOfEven ? '' : ''">
                                         <span>짝</span>
                                     </div>
                                     <div class="rate">
@@ -145,6 +144,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 파워 사다리 조합 -->
                         <div class="row mt-1">
                             <div class="col">
                                 <div class="minigame-title" id="section2">
@@ -152,14 +152,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row my-1">
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PLDCOMBO' && betSelect === 'LeftThree' ? 'active' : ''"
                                     @click="setBet(id, 'PLDCOMBO', 'LeftThree', games.PLDCOMBO.rateOfLeftThree)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDCOMBO.rateOfLeftThree ? '' : 'blue'">
+                                    <div :class="end || !games.PLDCOMBO.rateOfLeftThree ? '' : ''">
                                         <span>좌3</span>
                                     </div>
                                     <div class="rate">
@@ -169,11 +169,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-blue"
                                     :class="betType === 'PLDCOMBO' && betSelect === 'LeftFour' ? 'active' : ''"
                                     @click="setBet(id, 'PLDCOMBO', 'LeftFour', games.PLDCOMBO.rateOfLeftFour)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDCOMBO.rateOfLeftFour ? '' : 'blue'">
+                                    <div :class="end || !games.PLDCOMBO.rateOfLeftFour ? '' : ''">
                                         <span>좌4</span>
                                     </div>
                                     <div class="rate">
@@ -183,11 +183,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PLDCOMBO' && betSelect === 'RightThree' ? 'active' : ''"
                                     @click="setBet(id, 'PLDCOMBO', 'RightThree', games.PLDCOMBO.rateOfRightThree)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDCOMBO.rateOfRightThree ? '' : 'red'">
+                                    <div :class="end || !games.PLDCOMBO.rateOfRightThree ? '' : ''">
                                         <span>우3</span>
                                     </div>
                                     <div class="rate">
@@ -197,11 +197,11 @@
                             </div>
                             <div class="col">
                                 <div
-                                    class="btn-minigame"
+                                    class="btn-minigame btn-bet-red"
                                     :class="betType === 'PLDCOMBO' && betSelect === 'RightFour' ? 'active' : ''"
                                     @click="setBet(id, 'PLDCOMBO', 'RightFour', games.PLDCOMBO.rateOfRightFour)"
                                 >
-                                    <div class="bet" :class="end || !games.PLDCOMBO.rateOfRightFour ? '' : 'red'">
+                                    <div :class="end || !games.PLDCOMBO.rateOfRightFour ? '' : ''">
                                         <span>우4</span>
                                     </div>
                                     <div class="rate">

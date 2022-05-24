@@ -1,35 +1,75 @@
 <template>
     <div class="row" data-aos="fade-in" data-aos-duration="1500">
-        <div class="col">
+        <div class="col sports-page">
             <div class="row">
-                <div class="col">
-                    <div class="page-title-wrap">
-                        <div class="page-title">
-                            <font-awesome-icon :icon="['fa', 'futbol']"/>
-                            <span class="ml-2">실시간 LIVE</span>
-                            <span class="float-right">
-                                <button type="button" class="btn-board" :disabled="loading" @click="selectCategory('')">
-                                    <font-awesome-icon :icon="['fa', 'globe']"/> 전체보기
-                                </button>
-                            </span>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <NavSports/>
                 </div>
             </div>
             <div class="row mt-1">
                 <div class="col">
+                    <div class="sports-page-header">
+                        <font-awesome-icon :icon="['fa', 'futbol']"/>
+                        실시간 <span>LIVE</span>
+                    </div>
+                    <div class="sports-header-list">
+                        <div class="search">
+                            <input type="text" name="skeyword" id="search-sports" placeholder="리그, 팀명을 입력해주세요" value="">
+                            <button type="submit" class="search-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="sports-event-header">
+                        <span class="event-title">Prematch <b>Event</b></span>
+                        <span class="sorting-method">
+                            <span class="type-time active">
+                                <font-awesome-icon :icon="['fa', 'clock']"/> 시간순정렬
+                            </span>
+                            <span class="type-league">
+                                <font-awesome-icon :icon="['fa', 'flag']"/> 리그순정렬
+                            </span>
+                        </span>
+                    </div>
                     <div class="sports-icon">
                         <div class="sports-icon-wrap">
                             <ul>
-                                <li>
-                                    <img src="/images/icon-basketball-gray.png" class="sports-category-icon" id="Basketball" alt="농구" title="농구" @click="selectCategory('Basketball')">
-                                    <b-tooltip target="Basketball" title="농구"></b-tooltip>
+                                <li @click="selectCategory('')">
+                                    <img src="/images/icon-all-gray.png" class="sports-category-icon" alt="전체" title="전체">
+                                    <div class="mt-1">전체</div>
                                 </li>
-                                <li>
-                                    <img src="/images/icon-volleyball-gray.png" class="sports-category-icon" id="Volleyball" alt="배구" title="배구" @click="selectCategory('Volleyball')">
-                                    <b-tooltip target="Volleyball" title="배구"></b-tooltip>
+                                <li @click="selectCategory('Basketball')">
+                                    <img src="/images/icon-basketball-gray.png" class="sports-category-icon" id="Basketball" alt="농구" title="농구">
+                                    <div class="mt-1">농구</div>
+                                </li>
+                                <li @click="selectCategory('Volleyball')">
+                                    <img src="/images/icon-volleyball-gray.png" class="sports-category-icon" id="Volleyball" alt="배구" title="배구">
+                                    <div class="mt-1">배구</div>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1 px-1">
+                <div class="col-12 game-info-box d-none d-xl-block">
+                    <div class="row">
+                        <div class="col ">
+                            리그/경기일시
+                        </div>
+                        <div class="col">
+                            구분
+                        </div>
+                        <div class="col-4">
+                            승(홈)언더
+                        </div>
+                        <div class="col">
+                            무/핸/합
+                        </div>
+                        <div class="col-4">
+                            패(원정)언더
                         </div>
                     </div>
                 </div>
@@ -38,18 +78,18 @@
                 <div class="row mt-1">
                     <div class="col">
                         <div class="sports">
-                            <div class="row mb-2" v-for="(v, index) in data" :key="index">
-                                <div class="col-9 col-xl-12 mt-3 g-league-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
+                            <div class="row" v-for="(v, index) in data" :key="index">
+                                <div class="col-9 col-xl-12 g-league-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
                                     <img :src="`/images/${$config.iconSport[v.sport]}`" class="sports-img">
                                     <span class="g-league">
                                         <font-awesome-icon :icon="['fa', 'angle-double-right']" class="ml-1 icon-league"/>
                                         {{ v.leagueKor }}
                                     </span>
                                 </div>
-                                <div class="col-3 d-xl-none mt-3 text-right g-date-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
+                                <div class="col-3 d-xl-none text-right g-date-mobile" v-if="data[index].leagueKor !== (index > 0 ? data[index - 1].leagueKor : null)">
                                     {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
                                 </div>
-                                <div class="col-12 mt-1" :class="{'mb-3': index + 1 === data.length}">
+                                <div class="col-12" :class="{'': index + 1 === data.length}">
                                     <div class="sports-px">
                                         <!-- 2쿼터 국내형 실시간 핸디캡 -->
                                         <div class="row g"
@@ -60,9 +100,12 @@
                                                 !checkNext(v._id, 'handicap3rdQuarterSpecial')
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">2쿼터 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">2쿼터 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                2쿼터 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -96,7 +139,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.handicap2ndQuarterSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -134,9 +177,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                2쿼터 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 2쿼터 국내형 실시간 오버언더 -->
                                         <div
@@ -148,9 +188,12 @@
                                                 !checkNext(v._id, 'underOver3rdQuarterSpecial')
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">2쿼터 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">2쿼터 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                2쿼터 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -186,7 +229,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.underOver2ndQuarterSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -226,9 +269,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                2쿼터 오버언더
-                                            </div>
                                         </div>
                                         <!-- 3쿼터 국내형 실시간 핸디캡 -->
                                         <div class="row g"
@@ -239,9 +279,12 @@
                                                 !checkNext(v._id, 'handicap4thQuarterSpecial')
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">3쿼터 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">3쿼터 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                3쿼터 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -275,7 +318,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.handicap3rdQuarterSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -313,9 +356,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                3쿼터 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 3쿼터 국내형 실시간 오버언더 -->
                                         <div
@@ -327,9 +367,12 @@
                                                 !checkNext(v._id, 'underOver4thQuarterSpecial')
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">3쿼터 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">3쿼터 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                3쿼터 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -365,7 +408,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.underOver3rdQuarterSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -405,9 +448,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                3쿼터 오버언더
-                                            </div>
                                         </div>
                                         <!-- 4쿼터 국내형 실시간 핸디캡 -->
                                         <div class="row g"
@@ -417,9 +457,12 @@
                                                 v.games.handicap4thQuarterSpecial.findIndex(x => x.showStatus) > -1
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">4쿼터 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">4쿼터 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                4쿼터 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -453,7 +496,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.handicap4thQuarterSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -491,9 +534,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                4쿼터 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 4쿼터 국내형 실시간 오버언더 -->
                                         <div
@@ -504,9 +544,12 @@
                                                 v.games.underOver4thQuarterSpecial.findIndex(x => x.showStatus) > -1
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">4쿼터 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">4쿼터 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                4쿼터 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -542,7 +585,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.underOver4thQuarterSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -582,9 +625,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                4쿼터 오버언더
-                                            </div>
                                         </div>
                                         <!-- 2세트 국내형 실시간 핸디캡 -->
                                         <div class="row g"
@@ -595,9 +635,12 @@
                                                 !checkNext(v._id, 'handicap3rdSetSpecial')
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">2세트 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">2세트 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                2세트 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -631,7 +674,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.handicap2ndSetSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -669,9 +712,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                2세트 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 2세트 국내형 실시간 오버언더 -->
                                         <div
@@ -683,9 +723,12 @@
                                                 !checkNext(v._id, 'underOver3rdSetSpecial')
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">2세트 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">2세트 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                2세트 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -721,7 +764,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.underOver2ndSetSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -761,9 +804,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                2세트 오버언더
-                                            </div>
                                         </div>
                                         <!-- 3세트 국내형 실시간 핸디캡 -->
                                         <div class="row g"
@@ -773,9 +813,12 @@
                                                 v.games.handicap3rdSetSpecial.findIndex(x => x.showStatus) > -1
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">3세트 핸디캡</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">3세트 핸디캡</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                3세트 핸디캡
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -809,7 +852,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.handicap3rdSetSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -847,9 +890,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                3세트 핸디캡
-                                            </div>
                                         </div>
                                         <!-- 3세트 국내형 실시간 오버언더 -->
                                         <div
@@ -860,9 +900,12 @@
                                                 v.games.underOver3rdSetSpecial.findIndex(x => x.showStatus) > -1
                                             "
                                         >
-                                            <div class="col-12 d-xl-none bg-black text-success">3세트 오버언더</div>
-                                            <div class="col-1 g-date d-none d-xl-block">
+                                            <div class="col-12 d-xl-none bg-sky-blue py-2">3세트 오버언더</div>
+                                            <div class="col g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div class="col g-count d-none d-xl-block o">
+                                                3세트 오버언더
                                             </div>
                                             <div
                                                 class="col-5 col-xl-4 g-home"
@@ -898,7 +941,7 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="col-2 g-x"
+                                                class="col g-x"
                                                 :class="{
                                                     'n': v.games.underOver3rdSetSpecial[0].status !== 'ACTIVE'
                                                 }"
@@ -938,9 +981,6 @@
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>
-                                            <div class="col-1 g-count d-none d-xl-block o">
-                                                3세트 오버언더
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -949,13 +989,22 @@
                     </div>
                 </div>
             </b-overlay>
-            <div class="row my-3">
-                <div class="col-12">
-                    <div class="card bg-dark">
-                        <div class="card-body pagination-body">
-                            <b-pagination-nav :link-gen="linkGen" :number-of-pages="numberOfPages" align="center" :limit="$config.pageLimit" use-router v-model="search.page"></b-pagination-nav>
-                        </div>
-                    </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <b-pagination-nav
+                        first-class="first-class"
+                        last-class="last-class"
+                        prev-class="prev-class"
+                        next-class="next-class"
+                        ellipsis-class="ellipsis-class"
+                        page-class="page-class"
+                        :link-gen="linkGen"
+                        :number-of-pages="numberOfPages"
+                        align="center"
+                        :limit="$config.pageLimit"
+                        use-router
+                        v-model="search.page"
+                    ></b-pagination-nav>
                 </div>
             </div>
         </div>
@@ -964,10 +1013,12 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import NavSports from '../components/NavSports'
 
     export default {
         name: 'SportsLiveKor',
         components: {
+            NavSports
         },
         computed: {
             ...mapGetters(['loading', 'isLogin', 'user', 'betCart']),
