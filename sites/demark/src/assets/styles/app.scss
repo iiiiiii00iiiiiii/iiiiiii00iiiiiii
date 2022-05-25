@@ -210,8 +210,8 @@ body {
 
         //header-mobile-layout
         --header-mobile-bg: var(--black-color);
-        --cart-count-bg: var(--denim-color);
-        --cart-count-border: var(--denim-color);
+        --cart-count-bg: var(--blue-color);
+        --cart-count-border: var(--blue-color);
         --header-mobile-menu-bg: var(--atomic-gradient);
         --header-mobile-menu-border: var(--aqua-color);
 
@@ -400,16 +400,18 @@ ul {
         .cart-count-box {
             position: absolute;
             top: 20px;
-            left: 22px;
-            right: 22px;
+            bottom: 15px;
+            left: 35px;
+            right: 7px;
 
             .cart-count {
-                width: 17px;
-                height: 17px;
-                line-height: 17px;
+                width: 15px;
+                height: 15px;
+                line-height: 14px;
                 background: var(--cart-count-bg);
                 border-radius: 50%;
                 display: inline-block;
+                margin: 0 auto;
                 text-align: center;
             }
         }

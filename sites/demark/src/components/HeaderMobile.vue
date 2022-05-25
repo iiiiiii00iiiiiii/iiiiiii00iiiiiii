@@ -10,7 +10,7 @@
                 </div>
                 <div class="col-2 header-mobile-right-wrap">
                     <img src="/images/icon-mobile-bars.png" class="icon-mobile-sign-in-alt" v-show="!isLogin" @click="$tools.pushRouter('/login', false)">
-                    <span class="cart-count-box text-center">
+                    <span class="cart-count-box">
                         <span class="cart-count" v-show="isLogin" @click="openRightSide()"> {{ betCart.length }} </span>
                     </span>
                     <img src="/images/icon-mobile-bars-2.png" class="icon-mobile-sign-in-alt" v-show="isLogin" @click="openRightSide()">
