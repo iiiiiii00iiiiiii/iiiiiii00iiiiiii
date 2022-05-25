@@ -37,11 +37,11 @@
                                     실시간
                                 </div>
                                 <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'Casino' ? 'active' : ''" @click="$tools.ready()">
+                                <div class="col menu-item" :class="router === 'Casino' ? 'active' : ''" @click="$tools.pushRouter('/casino', true)">
                                     카지노
                                 </div>
                                 <div class="line-vertical"></div>
-                                <div class="col menu-item" @click="$tools.ready()">
+                                <div class="col menu-item" @click="openKplay(0)">
                                     슬롯
                                 </div>
                                 <div class="line-vertical"></div>
@@ -87,8 +87,10 @@
                 const kplayWindow = window.open('', 'kplay', '_blank')
                 let r = await this.$http.get('/api/kpay-url', { id }, false)
 
-                if(r.error.response.status === 500) {
-                    kplayWindow.close()
+                if(r.error) {
+                    if(r.error.response.status === 500) {
+                        kplayWindow.close()
+                    }
                 }
                 else {
                     kplayWindow.location = r.data.launch_url

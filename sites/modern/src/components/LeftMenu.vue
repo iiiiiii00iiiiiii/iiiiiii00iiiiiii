@@ -29,7 +29,49 @@
             </tr>
             <tr>
                 <td class="menu-odd" @click="$tools.pushRouter('/friends', true)">추천인 현황</td>
+                <td class="menu-even" @click="$tools.pushRouter('/casino', true)">카지노</td>
+                <td class="menu-odd" @click="openKplay(0)">슬롯</td>
             </tr>
         </table>
     </div>
 </template>
+
+<script>
+    export default {
+        name: 'LeftMenu',
+        components: {
+        },
+        methods: {
+            async openKplay(id, needLogin) {
+                let isMobile = true
+                if(window.innerWidth >= 1200 ) {
+                    isMobile = false
+                }
+
+                if(needLogin && !this.isLogin) {
+                    if(isMobile) {
+                        this.$tools.sw('info', '로그인', '로그인 후 이용 가능 합니다.', '', () => {
+                            this.$tools.pushRouter('/login')
+                        })
+                    }
+                    else {
+                        this.$tools.sw('info', '로그인', '로그인 후 이용 가능 합니다.', '')
+                    }
+                    return
+                }
+
+                const kplayWindow = window.open('', 'kplay', '_blank')
+                let r = await this.$http.get('/api/kpay-url', { id }, false)
+
+                if(r.error) {
+                    if(r.error.response.status === 500) {
+                        kplayWindow.close()
+                    }
+                }
+                else {
+                    kplayWindow.location = r.data.launch_url
+                }
+            }
+        }
+    }
+</script>
