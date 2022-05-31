@@ -632,7 +632,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         new ObjectId("62730b3f5c36e2897e008f33"),
 //         new ObjectId("627329a15c36e2897e008f47"),
 //         new ObjectId("62729cd92eace3f1ece3f3cb"),
-//         new ObjectId("6272b1f12eace3f1ece3f3d4")
+//         new ObjectId("6272b1f12eace3f1ece3f3d4"),
+//         new ObjectId("6287efd45c36e2897e0097b4"),
+//         new ObjectId("6288325696f22b36b58cc73d"),
+//         new ObjectId("628989bf5c36e2897e009891"),
+//         new ObjectId("628e2dcc9863161e299c187e"),
+//         new ObjectId("627c01d65c36e2897e00932b"),
+//         new ObjectId("627e28f85c36e2897e0093bf"),
+//         new ObjectId("627d0a4c9863161e299c11c2"),
+//         new ObjectId("627d0aac5c36e2897e009365"),
+//         new ObjectId("628412945c36e2897e009653"),
+//         new ObjectId("628417485c36e2897e009654"),
+//         new ObjectId("628419ae5c36e2897e009656"),
+//         new ObjectId("628417485c36e2897e009655"),
+//         new ObjectId("6284260996f22b36b58cbbbf"),
+//         new ObjectId("6284260a96f22b36b58cbbc0"),
+//         new ObjectId("6284260a96f22b36b58cbbc1"),
+//         new ObjectId("6284ae1496f22b36b58cbc90"),
+//         new ObjectId("6284fdbb96f22b36b58cbd13"),
+//         new ObjectId("62850bd696f22b36b58cbd30")
 //     ]
 // }
 // // THREE
@@ -673,46 +691,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //     canCancelBetCount: 10,
 //     displaySportCross: []
 // }
-// // DEMARK
-// const config: TConfig = {
-//     db: {
-//         host: '18.181.237.109',
-//         port: 36186,
-//         name: 'demark',
-//         id: 'demark',
-//         password: 'Demark@4860'
-//     },
-//     casino: {
-//         apiURL: '',
-//         operator: '',
-//         privateKey: ''
-//     },
-//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-//     expiresIn: 60 * 60 * 1,
-//     pageSize: 30,
-//     sportPageSize: 30,
-//     sportsMaxRate: 100,
-//     powerballTime: 30,
-//     powerladderTime: 30,
-//     kenoladderTime: 30,
-//     boglePowerballTime: 30,
-//     bogleladderTime: 30,
-//     googlePowerball1: 15,
-//     googlePowerball3: 30,
-//     coinPowerball3: 30,
-//     coinPowerball: 30,
-//     kplay: {
-//         code: 'SFT0003',
-//         token: 'BkqULUffEMm1Zlk3zvCQC1DQ1f25fulo',
-//         key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
-//         endpoint: 'http://kplayone.com'
-//         // http://api.kplay.jmk.soft24.io/api
-//     },
-//     canCancelBetTime: 10,
-//     canCancelBetBeforeGameTime: 10,
-//     canCancelBetCount: 2,
-//     displaySportCross: []
-// }
+// DEMARK
+const config = {
+    db: {
+        host: '18.181.237.109',
+        port: 36186,
+        name: 'demark',
+        id: 'demark',
+        password: 'Demark@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 1,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 100,
+    powerballTime: 30,
+    powerladderTime: 30,
+    kenoladderTime: 30,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30,
+    coinPowerball3: 30,
+    coinPowerball: 30,
+    kplay: {
+        code: 'SFT0003',
+        token: 'BkqULUffEMm1Zlk3zvCQC1DQ1f25fulo',
+        key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmk.soft24.io/api
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 2,
+    displaySportCross: []
+};
 // // MCLAREN
 // const config: TConfig = {
 //     db: {
@@ -1344,7 +1362,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         new ObjectId("62730b3f5c36e2897e008f33"),
 //         new ObjectId("627329a15c36e2897e008f47"),
 //         new ObjectId("62729cd92eace3f1ece3f3cb"),
-//         new ObjectId("6272b1f12eace3f1ece3f3d4")
+//         new ObjectId("6272b1f12eace3f1ece3f3d4"),
+//         new ObjectId("6287efd45c36e2897e0097b4"),
+//         new ObjectId("6288325696f22b36b58cc73d"),
+//         new ObjectId("628989bf5c36e2897e009891"),
+//         new ObjectId("628e2dcc9863161e299c187e"),
+//         new ObjectId("627c01d65c36e2897e00932b"),
+//         new ObjectId("627e28f85c36e2897e0093bf"),
+//         new ObjectId("627d0a4c9863161e299c11c2"),
+//         new ObjectId("627d0aac5c36e2897e009365"),
+//         new ObjectId("628412945c36e2897e009653"),
+//         new ObjectId("628417485c36e2897e009654"),
+//         new ObjectId("628419ae5c36e2897e009656"),
+//         new ObjectId("628417485c36e2897e009655"),
+//         new ObjectId("6284260996f22b36b58cbbbf"),
+//         new ObjectId("6284260a96f22b36b58cbbc0"),
+//         new ObjectId("6284260a96f22b36b58cbbc1"),
+//         new ObjectId("6284ae1496f22b36b58cbc90"),
+//         new ObjectId("6284fdbb96f22b36b58cbd13"),
+//         new ObjectId("62850bd696f22b36b58cbd30")
 //     ]
 // }
 // // NAPOLI
@@ -1940,7 +1976,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         new ObjectId("62730b3f5c36e2897e008f33"),
 //         new ObjectId("627329a15c36e2897e008f47"),
 //         new ObjectId("62729cd92eace3f1ece3f3cb"),
-//         new ObjectId("6272b1f12eace3f1ece3f3d4")
+//         new ObjectId("6272b1f12eace3f1ece3f3d4"),
+//         new ObjectId("6287efd45c36e2897e0097b4"),
+//         new ObjectId("6288325696f22b36b58cc73d"),
+//         new ObjectId("628989bf5c36e2897e009891"),
+//         new ObjectId("628e2dcc9863161e299c187e"),
+//         new ObjectId("627c01d65c36e2897e00932b"),
+//         new ObjectId("627e28f85c36e2897e0093bf"),
+//         new ObjectId("627d0a4c9863161e299c11c2"),
+//         new ObjectId("627d0aac5c36e2897e009365"),
+//         new ObjectId("628412945c36e2897e009653"),
+//         new ObjectId("628417485c36e2897e009654"),
+//         new ObjectId("628419ae5c36e2897e009656"),
+//         new ObjectId("628417485c36e2897e009655"),
+//         new ObjectId("6284260996f22b36b58cbbbf"),
+//         new ObjectId("6284260a96f22b36b58cbbc0"),
+//         new ObjectId("6284260a96f22b36b58cbbc1"),
+//         new ObjectId("6284ae1496f22b36b58cbc90"),
+//         new ObjectId("6284fdbb96f22b36b58cbd13"),
+//         new ObjectId("62850bd696f22b36b58cbd30")
 //     ]
 // }
 // // STUDY
@@ -2535,7 +2589,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //         new ObjectId("62730b3f5c36e2897e008f33"),
 //         new ObjectId("627329a15c36e2897e008f47"),
 //         new ObjectId("62729cd92eace3f1ece3f3cb"),
-//         new ObjectId("6272b1f12eace3f1ece3f3d4")
+//         new ObjectId("6272b1f12eace3f1ece3f3d4"),
+//         new ObjectId("6287efd45c36e2897e0097b4"),
+//         new ObjectId("6288325696f22b36b58cc73d"),
+//         new ObjectId("628989bf5c36e2897e009891"),
+//         new ObjectId("628e2dcc9863161e299c187e"),
+//         new ObjectId("627c01d65c36e2897e00932b"),
+//         new ObjectId("627e28f85c36e2897e0093bf"),
+//         new ObjectId("627d0a4c9863161e299c11c2"),
+//         new ObjectId("627d0aac5c36e2897e009365"),
+//         new ObjectId("628412945c36e2897e009653"),
+//         new ObjectId("628417485c36e2897e009654"),
+//         new ObjectId("628419ae5c36e2897e009656"),
+//         new ObjectId("628417485c36e2897e009655"),
+//         new ObjectId("6284260996f22b36b58cbbbf"),
+//         new ObjectId("6284260a96f22b36b58cbbc0"),
+//         new ObjectId("6284260a96f22b36b58cbbc1"),
+//         new ObjectId("6284ae1496f22b36b58cbc90"),
+//         new ObjectId("6284fdbb96f22b36b58cbd13"),
+//         new ObjectId("62850bd696f22b36b58cbd30")
 //     ]
 // }
 // // PENT
@@ -2616,45 +2688,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //     canCancelBetCount: 10,
 //     displaySportCross: []
 // }
-// MODERN
-const config = {
-    db: {
-        host: '18.181.237.109',
-        port: 36186,
-        name: 'ns',
-        id: 'ns',
-        password: 'Ns@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 1,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxRate: 100,
-    powerballTime: 30,
-    powerladderTime: 30,
-    kenoladderTime: 30,
-    boglePowerballTime: 30,
-    bogleladderTime: 30,
-    googlePowerball1: 15,
-    googlePowerball3: 30,
-    coinPowerball3: 30,
-    coinPowerball: 30,
-    kplay: {
-        code: 'SFT0005',
-        token: 'A42UoW2OXZl6H7kylAe42sF03Td6t3xE',
-        key: 'Nvxh3fYlRRdyw3X50I2Db5UsohBDC6Xx',
-        endpoint: 'http://kplayone.com'
-    },
-    canCancelBetTime: 10,
-    canCancelBetBeforeGameTime: 10,
-    canCancelBetCount: 10,
-    displaySportCross: []
-};
+// // MODERN
+// const config: TConfig = {
+//     db: {
+//         host: '18.181.237.109',
+//         port: 36186,
+//         name: 'ns',
+//         id: 'ns',
+//         password: 'Ns@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 1,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxRate: 100,
+//     powerballTime: 30,
+//     powerladderTime: 30,
+//     kenoladderTime: 30,
+//     boglePowerballTime: 30,
+//     bogleladderTime: 30,
+//     googlePowerball1: 15,
+//     googlePowerball3: 30,
+//     coinPowerball3: 30,
+//     coinPowerball: 30,
+//     kplay: {
+//         code: 'SFT0005',
+//         token: 'A42UoW2OXZl6H7kylAe42sF03Td6t3xE',
+//         key: 'Nvxh3fYlRRdyw3X50I2Db5UsohBDC6Xx',
+//         endpoint: 'http://kplayone.com'
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 10,
+//     displaySportCross: []
+// }
 // // X
 // const config: TConfig = {
 //     db: {

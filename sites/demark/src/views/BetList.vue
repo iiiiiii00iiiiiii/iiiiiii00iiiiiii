@@ -18,7 +18,7 @@
                         </span>
                     </li>
                     <li>
-                        <span class="bet-history-menu-btn"  @click="$tools.pushRouter('/betlist?category=casino', true)" :class="{'active': search.category === 'casino'}">
+                        <span class="bet-history-menu-btn"  @click="$tools.ready('/betlist?category=casino', true)" :class="{'active': search.category === 'casino'}">
                             <font-awesome-icon :icon="['fa', 'rocket']"/> 카지노
                         </span>
                     </li>
@@ -69,8 +69,7 @@
                                         </thead>
                                         <tbody>
                                             <tr
-                                                v-for="(vv, ii) in v.detail"
-                                                :key="ii"
+                                                v-for="(vv, ii) in v.detail" :key="ii"
                                             >
                                                 <td>{{ $moment(vv.gameDateTime).format('MM/DD HH:mm') }}</td>
                                                 <td>
@@ -130,14 +129,14 @@
                                             <div class="col-3">
                                                 일시/리그
                                             </div>
-                                            <div class="col-4">
-                                                <div class="team-name">홈팀 vs 원정팀</div>
+                                            <div class="col-3">
+                                                홈팀 vs 원정팀
                                             </div>
                                             <div class="col">
                                                 베팅
                                             </div>
                                             <div class="col">
-                                                상태
+                                                상태/배당
                                             </div>
                                             <div class="col">
                                                 결과
@@ -155,27 +154,30 @@
                                                     {{ vv.leagueKor }}
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-3">
                                                 <div class="team-name">{{ vv.homeTeam }}</div>
                                                 <div class="team-name">VS</div>
                                                 <div class="team-name">{{ vv.awayTeam }}</div>
                                             </div>
-                                            <div class="col mt-3">
-                                                <span>{{ $config.convertBetTypeSports[vv.type] }}</span>
-                                                <span v-if="vv.standard || vv.standard === 0">
+                                            <div class="col-2 mt-1">
+                                                <div class="event-name">{{ $config.convertBetTypeSports[vv.type] }}</div>
+                                                <div v-if="vv.standard || vv.standard === 0">
                                                     [{{
                                                         vv.type === 'bothTeamsGoalWin' || vv.type === 'bothTeamsGoalWinOrDraw' ? $config.convertBetStandard[vv.standard] :
                                                         vv.type === 'xWithUnderOver' ? $config.convertBetStandardXwithUnderOver(vv.standard) : vv.standard
                                                     }}]
+                                                </div>
+                                                <span v-if="vv.type !== 'correctScoreFullTime'">
+                                                    ({{ $config.convertBetSelectSports[vv.select] }})
                                                 </span>
-                                                <div>
-                                                    <span v-if="vv.type !== 'correctScoreFullTime'"> ({{ $config.convertBetSelectSports[vv.select] }})</span>
+                                            </div>
+                                            <div class="col mt-1" :class="$config.sportsResultTextColor[vv.betResult]">
+                                                {{ $config.result[vv.betResult] }}
+                                                <div class="text-white">
+                                                    {{ $numeral(vv.finalRate).format('0.00') }}
                                                 </div>
                                             </div>
-                                            <div class="col mt-3" :class="$config.sportsResultTextColor[vv.betResult]">
-                                                {{ $config.result[vv.betResult] }}
-                                            </div>
-                                            <div class="col mt-3">
+                                            <div class="col mt-1">
                                                 <span v-if="vv.betResult !== 'I'">
                                                     <span v-if="$config.specialGameType.indexOf(vv.type) > -1">
                                                         {{ displaySpecialScore(vv.type, vv.select, vv.betResult) }}
@@ -385,6 +387,7 @@
     export default {
         name: 'BetList',
         components: {
+            
         },
         computed: {
             ...mapGetters(['loading']),

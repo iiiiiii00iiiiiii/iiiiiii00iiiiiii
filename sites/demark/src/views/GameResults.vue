@@ -137,16 +137,16 @@
                                             <div class="col col-xl-2 g-date d-none d-xl-block">
                                                 {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
                                             </div>
-                                            <div class="col-4 col-xl g-home" :class="v.resultData.homeScoreTotal > v.resultData.awayScoreTotal ? 'selectBet' : ''">
-                                                <div class="float-left g-home-team-mobile pl-1">
+                                            <div class="col-4 col-xl g-home">
+                                                <div class="float-left g-home-team-mobile">
                                                     {{ v.homeTeamKor ? v.homeTeamKor : v.homeTeam }}
                                                 </div>
                                             </div>
                                             <div class="col-1 col-xl g-x">
                                                 VS
                                             </div>
-                                            <div class="col-4 col-xl g-away" :class="v.resultData.homeScoreTotal < v.resultData.awayScoreTotal ? 'selectBet' : ''">
-                                                <div class="float-right g-away-team-mobile pr-1">
+                                            <div class="col-4 col-xl g-away">
+                                                <div class="float-right g-away-team-mobile">
                                                     {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                 </div>
                                             </div>

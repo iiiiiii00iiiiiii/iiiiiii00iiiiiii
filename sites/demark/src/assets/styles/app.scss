@@ -1572,7 +1572,12 @@ ul {
                 white-space: nowrap;
             }
             .team-name {
-                width: 128px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .event-name {
+                width: 60px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;

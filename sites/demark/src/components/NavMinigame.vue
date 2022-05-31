@@ -20,19 +20,19 @@
                             <img src="/images/icon-nav-minigame-4.png" alt="스피드사다리">
                             스피드사다리
                         </div>
-                        <div class="col-3 col-xl menu-name" @click="$tools.pushRouter('/boglepowerball', false)">
+                        <div class="col-3 col-xl menu-name" @click="$tools.ready('/boglepowerball', false)">
                             <img src="/images/icon-nav-minigame-5.png" alt="보글파워볼">
                             보글파워볼
                         </div>
-                        <div class="col-3 col-xl menu-name" @click="$tools.pushRouter('/bogleladder', false)">
+                        <div class="col-3 col-xl menu-name" @click="$tools.ready('/bogleladder', false)">
                             <img src="/images/icon-nav-minigame-5.png" alt="보글사다리">
                             보글사다리
                         </div>
-                        <div class="col-3 col-xl menu-name" @click="$tools.pushRouter('/googlepowerball1', false)">
+                        <div class="col-3 col-xl menu-name" @click="$tools.ready('/googlepowerball1', false)">
                             <img src="/images/icon-nav-minigame-6.png" alt="구글 1분">
                             구글 1분
                         </div>
-                        <div class="col-3 col-xl menu-name" @click="$tools.pushRouter('/googlepowerball3', false)">
+                        <div class="col-3 col-xl menu-name" @click="$tools.ready('/googlepowerball3', false)">
                             <img src="/images/icon-nav-minigame-6.png" alt="구글 3분">
                             구글 3분
                         </div>
@@ -78,19 +78,19 @@
                                     <img src="/images/icon-nav-minigame-3.png" alt="스피드 사다리">
                                     스피드 사다리
                                 </li>
-                                <li @click="$tools.pushRouter('/boglepowerball', false)">
+                                <li @click="$tools.ready('/boglepowerball', false)">
                                     <img src="/images/icon-nav-minigame-5.png" alt="보글파워볼">
                                     보글파워볼
                                 </li>
-                                <li @click="$tools.pushRouter('/bogleladder', false)">
+                                <li @click="$tools.ready('/bogleladder', false)">
                                     <img src="/images/icon-nav-minigame-5.png" alt="보글사다리">
                                     보글사다리
                                 </li>
-                                <li @click="$tools.pushRouter('/googlepowerball1', false)">
+                                <li @click="$tools.ready('/googlepowerball1', false)">
                                     <img src="/images/icon-nav-minigame-6.png" alt="구글 1분">
                                     구글 1분
                                 </li>
-                                <li @click="$tools.pushRouter('/googlepowerball3', false)">
+                                <li @click="$tools.ready('/googlepowerball3', false)">
                                     <img src="/images/icon-nav-minigame-6.png" alt="구글 3분">
                                     구글 3분
                                 </li>

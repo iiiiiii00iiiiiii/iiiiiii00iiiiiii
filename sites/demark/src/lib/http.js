@@ -44,10 +44,10 @@ const http = {
                     store.dispatch('delUser')
                     // tools.replaceRouter('/')
                 }
-                // else if(err.response.status === 503) {
-                //     store.dispatch('delUser')
-                //     tools.replaceRouter('/maintenance')
-                // }
+                else if(err.response.status === 503) {
+                    store.dispatch('delUser')
+                    tools.replaceRouter('/maintenance')
+                }
 
                 if(loading) store.dispatch('setLoading', false)
                 r.error = err
@@ -95,10 +95,10 @@ const http = {
                     store.dispatch('delUser')
                     tools.replaceRouter('/')
                 }
-                // else if(err.response.status === 503) {
-                //     store.dispatch('delUser')
-                //     tools.replaceRouter('/maintenance')
-                // }
+                else if(err.response.status === 503) {
+                    store.dispatch('delUser')
+                    tools.replaceRouter('/maintenance')
+                }
 
                 if(loading) store.dispatch('setLoading', false)
                 r.error = err
@@ -146,10 +146,10 @@ const http = {
                     store.dispatch('delUser')
                     tools.replaceRouter('/')
                 }
-                // else if(err.response.status === 503) {
-                //     store.dispatch('delUser')
-                //     tools.replaceRouter('/maintenance')
-                // }
+                else if(err.response.status === 503) {
+                    store.dispatch('delUser')
+                    tools.replaceRouter('/maintenance')
+                }
 
                 if(loading) store.dispatch('setLoading', false)
                 r.error = err
@@ -198,10 +198,10 @@ const http = {
                     store.dispatch('delUser')
                     tools.replaceRouter('/')
                 }
-                // else if(err.response.status === 503) {
-                //     store.dispatch('delUser')
-                //     tools.replaceRouter('/maintenance')
-                // }
+                else if(err.response.status === 503) {
+                    store.dispatch('delUser')
+                    tools.replaceRouter('/maintenance')
+                }
 
                 if(loading) store.dispatch('setLoading', false)
                 r.error = err

@@ -38,16 +38,16 @@
                 <div class="col-12 mb-5 col-xl-6">
                     <div class="row">
                         <div class="col-12 mt-2 mt-xl-0">
-                            <img src="/images/sub-banner-boglepowerball.png" class="sub-banner img-fluid" alt="보글 파워볼" title="보글 파워볼" @click="$tools.pushRouter('/boglepowerball', false)">
+                            <img src="/images/sub-banner-boglepowerball.png" class="sub-banner img-fluid" alt="보글 파워볼" title="보글 파워볼" @click="$tools.ready('/boglepowerball', false)">
                         </div>
                         <div class="col-12 mt-2">
-                            <img src="/images/sub-banner-bogleladder.png" class="sub-banner img-fluid" alt="보글 사다리" title="보글 사다리" @click="$tools.pushRouter('/bogleladder', false)">
+                            <img src="/images/sub-banner-bogleladder.png" class="sub-banner img-fluid" alt="보글 사다리" title="보글 사다리" @click="$tools.ready('/bogleladder', false)">
                         </div>
                         <div class="col-12 mt-2">
-                            <img src="/images/sub-banner-googlepowerball1.png" class="sub-banner img-fluid" alt="구글 1분 파워볼" title="구글 1분 파워볼" @click="$tools.pushRouter('/googlepowerball1', false)">
+                            <img src="/images/sub-banner-googlepowerball1.png" class="sub-banner img-fluid" alt="구글 1분 파워볼" title="구글 1분 파워볼" @click="$tools.ready('/googlepowerball1', false)">
                         </div>
                         <div class="col-12 mt-2">
-                            <img src="/images/sub-banner-googlepowerball3.png" class="sub-banner img-fluid" alt="구글 3분 파워볼" title="구글 3분 파워볼" @click="$tools.pushRouter('/googlepowerball3', false)">
+                            <img src="/images/sub-banner-googlepowerball3.png" class="sub-banner img-fluid" alt="구글 3분 파워볼" title="구글 3분 파워볼" @click="$tools.ready('/googlepowerball3', false)">
                         </div>
                         <div class="col-12 mt-2">
                             <img src="/images/sub-banner-coinpowerball3.png" class="sub-banner img-fluid" alt="코인 3분 파워볼" title="코인 3분 파워볼" @click="$tools.ready('/coinpowerball3', false)">
