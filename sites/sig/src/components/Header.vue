@@ -91,8 +91,10 @@
                 const kplayWindow = window.open('', 'kplay', '_blank')
                 let r = await this.$http.get('/api/kpay-url', { id }, false)
 
-                if(r.error.response.status === 500) {
-                    kplayWindow.close()
+                if(r.error) {
+                    if(r.error.response.status === 500) {
+                        kplayWindow.close()
+                    }
                 }
                 else {
                     kplayWindow.location = r.data.launch_url
