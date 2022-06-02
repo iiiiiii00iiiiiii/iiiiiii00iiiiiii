@@ -1089,6 +1089,54 @@ class MoneyController {
                 return;
             }
         });
+        this.exchangePointDemark = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-포인트 전환 전 회원 체크 ■■■■■■■■■■
+                const getKeys = ['isAgent', 'salary.calcType'];
+                const rUserInfo = yield userService.getUserInfo(v.decoded._id, getKeys, v.reqIpaddress);
+                if (rUserInfo.error) {
+                    data.errorTitle = '포인트 전환 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-포인트 전환 전 회원 체크 ■■■■■■■■■■
+                if (rUserInfo.data.isAgent === true && rUserInfo.data.salary.calcType === 'income') {
+                    data.errorTitle = '포인트 전환 실패 - 400';
+                    data = tools_1.default.denyValidate(data, 'agent', '죽장 총판은 포인트 변환 시 관리자에게 문의 하세요.');
+                    res.status(400).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-포인트 전환 ■■■■■■■■■■
+                const rPoint = yield moneyService.exchangePointDemark(v.decoded._id);
+                if (rPoint.error) {
+                    data.errorTitle = '포인트 전환 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-포인트 전환 ■■■■■■■■■■
+                if (rPoint.data.value) {
+                    // ■■■■■■■■■■ DB-포인트 전환 로그 ■■■■■■■■■■
+                    const rPointLog = yield moneyService.exchangePointLog(v.decoded._id, rPoint.data.value.id, rPoint.data.value.nick, rPoint.data.value.grade, rPoint.data.value.bankOwner, rPoint.data.value.isAgent, rPoint.data.value.isTest, rPoint.data.value.recommendTree, rPoint.data.value.money, rPoint.data.value.point);
+                    if (rPointLog.error) {
+                        data.errorTitle = '포인트 전환 실패 - 500';
+                        res.status(500).json(data);
+                        return;
+                    }
+                    // ■■■■■■■■■■ DB-포인트 전환 로그 ■■■■■■■■■■
+                }
+                res.end();
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '충전 신청 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
         this.deletePoint = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const validateData = {
                 _id: {

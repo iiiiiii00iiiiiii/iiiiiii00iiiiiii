@@ -1142,7 +1142,7 @@
                                                     <div
                                                         class="col-12"
                                                         v-if="v.games.x2ndInning && v.showConfig.x2ndInning && v.games.x2ndInning[0].status !== 'HIDE' && v.games.x2ndInning[0].showStatus"
-                                                    >   
+                                                    >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
                                                                 <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 2이닝 승무패
@@ -1230,7 +1230,7 @@
                                                             v.games.handicap2ndInning.findIndex(x => x.status !== 'HIDE') > -1 &&
                                                             v.games.handicap2ndInning.findIndex(x => x.showStatus) > -1
                                                         "
-                                                    >   
+                                                    >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
                                                                 <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 2이닝 핸디캡
@@ -3513,7 +3513,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 2세트 핸디캡 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 2세트 핸디캡
                                                             </div>
                                                         </div>
                                                         <div class="row" v-for="(vv, index) in v.games.handicap2ndSet" :key="index">
@@ -3673,7 +3673,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 2세트 홀짝 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 2세트 홀짝
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -3745,7 +3745,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 3세트 승패 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 3세트 승패
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -3821,7 +3821,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 3세트 핸디캡 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 3세트 핸디캡
                                                             </div>
                                                         </div>
                                                         <div class="row" v-for="(vv, index) in v.games.handicap3rdSet" :key="index">
@@ -4053,7 +4053,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 1피리어드 승무패 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 1피리어드 승무패
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -5437,7 +5437,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 3쿼터 승무패 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 3쿼터 승무패
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -5757,7 +5757,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 4쿼터 승무패 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 4쿼터 승무패
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -6325,7 +6325,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 전반전 홀짝 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 전반전 홀짝
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -7368,7 +7368,7 @@
                                                     >
                                                         <div class="row">
                                                             <div class="col-12 bet-type">
-                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 첫골 팀 
+                                                                <font-awesome-icon :icon="['fa', 'chevron-circle-down']"/> 첫골 팀
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -8422,6 +8422,11 @@
                         index: existSameGameIndex,
                         bet: v
                     })
+                    return
+                }
+
+                if(this.betCart.length === this.$config.sportsMaxFolder) {
+                    this.$tools.sw('info', '최대 폴더', `최대 ${this.$config.sportsMaxFolder}폴더 까지 배팅 가능 합니다.`)
                     return
                 }
 

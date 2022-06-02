@@ -147,7 +147,7 @@
             },
             // [포인트 전환]
             async exchangePoint() {
-                const r = await this.$http.post('/api/exchange-point')
+                const r = await this.$http.post('/api/exchange-point-demark')
                 if(r.error) return
 
                 this.chargeAmount = 0

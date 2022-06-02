@@ -1229,6 +1229,11 @@
                     return
                 }
 
+                if(this.betCart.length === this.$config.sportsMaxFolder) {
+                    this.$tools.sw('info', '최대 폴더', `최대 ${this.$config.sportsMaxFolder}폴더 까지 배팅 가능 합니다.`)
+                    return
+                }
+
                 this.setBetCart(v)
             },
             async ioBroadcast(v) {

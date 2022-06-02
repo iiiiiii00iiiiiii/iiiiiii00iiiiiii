@@ -600,6 +600,52 @@ class MoneyService {
                 }
             }));
         };
+        this.exchangePointDemark = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID),
+                        point: {
+                            $gt: 0
+                        }
+                    };
+                    const setQuery = [
+                        {
+                            $set: {
+                                money: {
+                                    $sum: ['$money', '$point']
+                                },
+                                point: 0
+                            }
+                        }
+                    ];
+                    const optionsQuery = {
+                        projection: {
+                            id: 1,
+                            nick: 1,
+                            grade: 1,
+                            bankOwner: 1,
+                            recommendTree: 1,
+                            isAgent: 1,
+                            isTest: 1,
+                            money: 1,
+                            point: 1,
+                            'salary.calcType': 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > exchangePointDemark');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.exchangePointLog = (userOID, userID, userNick, userGrade, userBankOwner, isAgent, isTest, userRecommendTree, money, point) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };

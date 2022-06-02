@@ -731,6 +731,56 @@ export default class MoneyService implements IMoneyService {
         })
     }
 
+    public exchangePointDemark = (userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID),
+                    point: {
+                        $gt: 0
+                    }
+                }
+
+                const setQuery: Array<any> = [
+                    {
+                        $set: {
+                            money: {
+                                $sum: ['$money', '$point']
+                            },
+                            point: 0
+                        }
+                    }
+                ]
+
+                const optionsQuery: any = {
+                    projection: {
+                        id: 1,
+                        nick: 1,
+                        grade: 1,
+                        bankOwner: 1,
+                        recommendTree: 1,
+                        isAgent: 1,
+                        isTest: 1,
+                        money: 1,
+                        point: 1,
+                        'salary.calcType': 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > exchangePointDemark')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public exchangePointLog = (
         userOID: string,
         userID: string,

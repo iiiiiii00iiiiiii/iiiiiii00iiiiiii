@@ -234,7 +234,7 @@
                                             class="col-12 px-0 col-xl-1 g-count cursor-pointer"
                                             :class="[{ '': Object.keys(v.games).length === 1 }, { '': Object.keys(v.games).length > 1 }]"
                                             @click="v._id === expand._id ? expand = {} : expandGame(v)"
-                                        >   
+                                        >
                                             <span class="sports-pick-plus d-none d-xl-inline-block">
                                                 +{{ calcCount(v.showConfig, v.games) }}
                                             </span>
@@ -5615,6 +5615,11 @@
                         index: existSameGameIndex,
                         bet: v
                     })
+                    return
+                }
+
+                if(this.betCart.length === this.$config.sportsMaxFolder) {
+                    this.$tools.sw('info', '최대 폴더', `최대 ${this.$config.sportsMaxFolder}폴더 까지 배팅 가능 합니다.`)
                     return
                 }
 

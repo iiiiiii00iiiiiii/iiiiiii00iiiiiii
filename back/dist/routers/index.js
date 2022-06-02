@@ -74,6 +74,7 @@ router.post('/set-exchange-pent', auth.checkLogin(), moneyCtr.setExchangePent);
 // Point
 router.get('/get-point-list', auth.checkLogin(), moneyCtr.getPointList);
 router.post('/exchange-point', auth.checkLogin(), moneyCtr.exchangePoint);
+router.post('/exchange-point-demark', auth.checkLogin(), moneyCtr.exchangePointDemark);
 router.delete('/delete-point', auth.checkLogin(), moneyCtr.deletePoint);
 router.delete('/delete-point-all', auth.checkLogin(), moneyCtr.deletePointAll);
 // Board

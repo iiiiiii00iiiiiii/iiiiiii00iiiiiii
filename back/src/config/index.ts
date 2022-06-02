@@ -27,7 +27,6 @@ type TConfig = {
     pageSize: number,
     sportPageSize: number,
     sportsMaxRate: number,
-
     powerballTime: number,
     powerladderTime: number,
     kenoladderTime: number,
@@ -72,7 +71,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 30,
 //     powerladderTime: 50,
 //     kenoladderTime: 50,
@@ -107,7 +106,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 30,
 //     powerladderTime: 30,
 //     kenoladderTime: 30,
@@ -722,7 +721,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 30,
 //     powerladderTime: 30,
 //     kenoladderTime: 30,
@@ -743,46 +742,46 @@ type TConfig = {
 //     displaySportCross: []
 // }
 
-// // DEMARK
-// const config: TConfig = {
-//     db: {
-//         host: '18.181.237.109',
-//         port: 36186,
-//         name: 'demark',
-//         id: 'demark',
-//         password: 'Demark@4860'
-//     },
-//     casino: {
-//         apiURL: '',
-//         operator: '',
-//         privateKey: ''
-//     },
-//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-//     expiresIn: 60 * 60 * 1,
-//     pageSize: 30,
-//     sportPageSize: 30,
-//     sportsMaxRate: 100,
-//     powerballTime: 30,
-//     powerladderTime: 30,
-//     kenoladderTime: 30,
-//     boglePowerballTime: 30,
-//     bogleladderTime: 30,
-//     googlePowerball1: 15,
-//     googlePowerball3: 30,
-//     coinPowerball3: 30,
-//     coinPowerball: 30,
-//     kplay: {
-//         code: 'SFT0003',
-//         token: 'BkqULUffEMm1Zlk3zvCQC1DQ1f25fulo',
-//         key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
-//         endpoint: 'http://kplayone.com'
-//         // http://api.kplay.jmk.soft24.io/api
-//     },
-//     canCancelBetTime: 10,
-//     canCancelBetBeforeGameTime: 10,
-//     canCancelBetCount: 2,
-//     displaySportCross: []
-// }
+// DEMARK
+const config: TConfig = {
+    db: {
+        host: '18.181.237.109',
+        port: 36186,
+        name: 'demark',
+        id: 'demark',
+        password: 'Demark@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 1,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxRate: 100,
+    powerballTime: 30,
+    powerladderTime: 30,
+    kenoladderTime: 30,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30,
+    coinPowerball3: 30,
+    coinPowerball: 30,
+    kplay: {
+        code: 'SFT0003',
+        token: 'BkqULUffEMm1Zlk3zvCQC1DQ1f25fulo',
+        key: 'SZKZdEvi6kOCSM3p3HRTYJ86lcNRuI3t',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmk.soft24.io/api
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 2,
+    displaySportCross: []
+}
 
 // // MCLAREN
 // const config: TConfig = {
@@ -802,7 +801,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 3,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 30,
 //     powerladderTime: 50,
 //     kenoladderTime: 50,
@@ -841,7 +840,6 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
 //     powerballTime: 30,
 //     powerladderTime: 30,
 //     kenoladderTime: 30,
@@ -1456,7 +1454,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 30,
 //     powerladderTime: 30,
 //     kenoladderTime: 30,
@@ -2071,7 +2069,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 20,
 //     powerladderTime: 20,
 //     kenoladderTime: 20,
@@ -2685,7 +2683,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 50,
 //     powerladderTime: 50,
 //     kenoladderTime: 50,
@@ -2726,7 +2724,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 50,
 //     powerladderTime: 50,
 //     kenoladderTime: 50,
@@ -2765,7 +2763,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 30,
 //     powerladderTime: 30,
 //     kenoladderTime: 30,
@@ -2805,7 +2803,7 @@ type TConfig = {
 //     expiresIn: 60 * 60 * 1,
 //     pageSize: 30,
 //     sportPageSize: 30,
-//     sportsMaxRate: 100,
+//     sportsMaxFolder: 10,
 //     powerballTime: 50,
 //     powerladderTime: 50,
 //     kenoladderTime: 50,
@@ -2827,46 +2825,46 @@ type TConfig = {
 //     displaySportCross: []
 // }
 
-// SIGNIEL
-const config: TConfig = {
-    db: {
-        host: '18.181.237.109',
-        port: 36186,
-        name: 'sig',
-        id: 'sig',
-        password: 'Sig@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 1,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxRate: 100,
-    powerballTime: 30,
-    powerladderTime: 30,
-    kenoladderTime: 30,
-    boglePowerballTime: 30,
-    bogleladderTime: 30,
-    googlePowerball1: 15,
-    googlePowerball3: 30,
-    coinPowerball3: 30,
-    coinPowerball: 30,
-    kplay: {
-        code: 'SFT0010',
-        token: 'zvJnD82CF6h1D5gCzZqHY2gheTJ0Ns3t',
-        key: '0UkXfnG8qhlmAH5R03sqwLSQcZK52Iho',
-        endpoint: 'http://kplayone.com'
-        // http://api.kplay.jsg.soft24.io/api
-    },
-    canCancelBetTime: 10,
-    canCancelBetBeforeGameTime: 10,
-    canCancelBetCount: 2,
-    displaySportCross: []
-}
+// // SIGNIEL
+// const config: TConfig = {
+//     db: {
+//         host: '18.181.237.109',
+//         port: 36186,
+//         name: 'sig',
+//         id: 'sig',
+//         password: 'Sig@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 1,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxFolder: 10,
+//     powerballTime: 30,
+//     powerladderTime: 30,
+//     kenoladderTime: 30,
+//     boglePowerballTime: 30,
+//     bogleladderTime: 30,
+//     googlePowerball1: 15,
+//     googlePowerball3: 30,
+//     coinPowerball3: 30,
+//     coinPowerball: 30,
+//     kplay: {
+//         code: 'SFT0010',
+//         token: 'zvJnD82CF6h1D5gCzZqHY2gheTJ0Ns3t',
+//         key: '0UkXfnG8qhlmAH5R03sqwLSQcZK52Iho',
+//         endpoint: 'http://kplayone.com'
+//         // http://api.kplay.jsg.soft24.io/api
+//     },
+//     canCancelBetTime: 10,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 2,
+//     displaySportCross: []
+// }
 
 
 

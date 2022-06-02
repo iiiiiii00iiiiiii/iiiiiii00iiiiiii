@@ -4,6 +4,7 @@ const config = {
     pageLimit: parseInt(process.env.VUE_APP_PAGE_LIMIT),
     gamePageSize: parseInt(process.env.VUE_APP_GAME_PAGE_SIZE),
     sportsMaxRate: parseInt(process.env.VUE_APP_SPORTS_MAX_RATE),
+    sportsMaxFolder: parseInt(process.env.VUE_APP_SPORTS_MAX_FOLDER),
     powerballTerm: parseInt(process.env.VUE_APP_POWERBALL_TIME),
     powerladderTerm: parseInt(process.env.VUE_APP_POWERLADDER_TIME),
     kenoladderTerm: parseInt(process.env.VUE_APP_KENOLADDER_TIME),

@@ -87,6 +87,10 @@ const tools: any = {
             rule: rule
         }
 
+        if(data.validates === undefined) {
+            data.validates = {  }
+        }
+
         data.validates.custom = {
             value: '',
             rule: {
