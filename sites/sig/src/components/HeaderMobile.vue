@@ -228,9 +228,9 @@
             padding-top: 2px;
             width: 25px;
             height: 25px;
-            border: 1px solid #8a641d;
+            border: 1px solid #1b1b1b;
             border-radius: 50%;
-            background-color: #7a5a1e;
+            background-color: #252525;
             display: inline-block;
             color: #fff;
             font-size: 0.75rem;
@@ -253,8 +253,8 @@
 
         padding-top: 10px;
         padding-bottom: 7px;
-        border-top: 2px solid #7a5a1e;
-        border-bottom: 1px solid #271f18;
+        border-top: 2px solid #080808;
+        border-bottom: 1px solid #080808;
 
         .header-mobile-menu-wrap {
             width: 650px;

@@ -65,6 +65,16 @@
                                     @click="openKplay(10)"
                                 >
                             </div>
+                            <div class="col-6 col-xl-4 mt-2 text-center">
+                                <img
+                                    src="images/big.png"
+                                    class="img-fluid cursor-pointer"
+                                    ref="big"
+                                    @mouseover="overImage('big')"
+                                    @mouseout="outImage('big')"
+                                    @click="openKplay(2)"
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>

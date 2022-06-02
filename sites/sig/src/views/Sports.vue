@@ -90,10 +90,6 @@
                                     <b-tooltip target="Dota 2" title="Dota 2"></b-tooltip>
                                 </li>
                                 <li>
-                                    <img src="/images/icon-dota2-gray.png" class="sports-category-icon" id="Dota 2" alt="Dota 2" title="Dota 2" @click="selectCategory('Dota 2')">
-                                    <b-tooltip target="Dota 2" title="Dota 2"></b-tooltip>
-                                </li>
-                                <li>
                                     <img src="/images/icon-fifa-gray.png" class="sports-category-icon" id="FIFA" alt="FIFA" title="FIFA" @click="selectCategory('FIFA')">
                                     <b-tooltip target="FIFA" title="FIFA"></b-tooltip>
                                 </li>
@@ -202,7 +198,7 @@
                                             >+{{ calcCount(v.showConfig, v.games) }}</div>
                                         </div>
                                         <div class="row" :id="`section-${v._id}`" v-if="expand._id === v._id">
-                                            <div class="col-12 my-2 p-3 game-detail">
+                                            <div class="col-12 my-2 p-md-3 game-detail">
                                                 <div class="row bg-team text-center py-3">
                                                     <div class="col-5 title-team">
                                                         {{ v.homeTeamKor ? v.homeTeamKor : v.homeTeam }}
@@ -214,7 +210,7 @@
                                                         {{ v.awayTeamKor ? v.awayTeamKor : v.awayTeam }}
                                                     </div>
                                                 </div>
-                                                <div class="row mt-2 p-3 expand-game">
+                                                <div class="row mt-2 p-md-3 expand-game">
                                                     <!-- ##승무패 x -->
                                                     <div
                                                         class="col-12"

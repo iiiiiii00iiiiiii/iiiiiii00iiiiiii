@@ -198,7 +198,7 @@
                                             >+{{ calcCount(v.showConfig, v.games) }}</div>
                                         </div>
                                         <div class="row" :id="`section-${v._id}`" v-if="expand._id === v._id">
-                                            <div class="col-12 my-2 p-3 game-detail">
+                                            <div class="col-12 my-2 p-md-3 game-detail">
                                                 <div class="row bg-team text-center py-3">
                                                     <div class="col-5 title-team">
                                                         {{ v.homeTeamKor ? v.homeTeamKor : v.homeTeam }}
@@ -212,7 +212,7 @@
                                                         <br>[ {{ v.resultData.awayScoreTotal }} ]
                                                     </div>
                                                 </div>
-                                                <div class="row mt-2 p-3 expand-game">
+                                                <div class="row mt-2 p-md-3 expand-game">
                                                     <!-- ##승무패 x -->
                                                     <div
                                                         class="col-12"

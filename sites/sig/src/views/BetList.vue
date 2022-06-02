@@ -51,7 +51,8 @@
                                             >배팅 삭제</button>
                                         </span>
                                     </div>
-                                    <div class="card-body">
+                                    <!-- pc -->
+                                    <div class="card-body d-none d-md-block">
                                         <div class="table-responsive">
                                             <table class="table table-borderless table-board text-nowrap">
                                                 <thead>
@@ -117,6 +118,88 @@
                                                 배당 : {{ $numeral(v.betRate).format('0,0.00') }} <span class="text-pink" v-if="v.bonusRate">(<font-awesome-icon :icon="['fab', 'bitcoin']"/> {{ v.bonusRate }})</span>
                                             </div>
                                             <div class="col-6 mt-2 mt-xl-0 col-xl-3 text-green">
+                                                당첨금액 : <span>{{ calcResult(v.betResult, v.betAmount, v.betRate) }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- mobile -->
+                                    <div class="card-body d-md-none">
+                                        <div class="mobile-betting-history">
+                                            <div class="col betting-history-header">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        일시/리그
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="team-name">
+                                                            홈팀 vs 원정팀
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        베팅
+                                                    </div>
+                                                    <div class="col">
+                                                        상태
+                                                    </div>
+                                                    <div class="col">
+                                                        결과
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col betting-history-list" v-for="(vv, ii) in v.detail" :key="ii">
+                                                <div class="row">
+                                                    <div class="col-3 mt-2">
+                                                        <div>
+                                                            {{ $moment(vv.gameDateTime).format('MM/DD HH:mm') }}
+                                                        </div>
+                                                        <div class="league-name">
+                                                            <img :src="`/images/${$config.iconSport[vv.sport]}`" class="sports-img">
+                                                            {{ vv.leagueKor }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col ">
+                                                        <div class="team-name">{{ vv.homeTeam }}</div>
+                                                        <div class="team-name">VS</div>
+                                                        <div class="team-name">{{ vv.awayTeam }}</div>
+                                                    </div>
+                                                    <div class="col mt-2">
+                                                        <div class="event-name">{{ $config.convertBetTypeSports[vv.type] }}</div>
+                                                        <div v-if="vv.standard || vv.standard === 0">
+                                                            [{{
+                                                                vv.type === 'bothTeamsGoalWin' || vv.type === 'bothTeamsGoalWinOrDraw' ? $config.convertBetStandard[vv.standard] :
+                                                                vv.type === 'xWithUnderOver' ? $config.convertBetStandardXwithUnderOver(vv.standard) : vv.standard
+                                                            }}]
+                                                        </div>
+                                                        <span v-if="vv.type !== 'correctScoreFullTime'"> ({{ $config.convertBetSelectSports[vv.select] }})</span>
+                                                    </div>
+                                                    <div class="col mt-2" :class="$config.sportsResultTextColor[vv.betResult]">
+                                                        {{ $config.result[vv.betResult] }}
+                                                    </div>
+                                                    <div class="col mt-2">
+                                                        <span v-if="vv.betResult !== 'I'">
+                                                            <span v-if="$config.specialGameType.indexOf(vv.type) > -1">
+                                                                {{ displaySpecialScore(vv.type, vv.select, vv.betResult) }}
+                                                            </span>
+                                                            <span v-else>
+                                                                {{ vv.score ? `${vv.score.homeScore || vv.score.homeScore === 0 ? vv.score.homeScore : '-' }:${vv.score.awayScore || vv.score.awayScore === 0 ? vv.score.awayScore : '-' }` : '-:-' }}
+                                                            </span>
+                                                        </span>
+                                                        <span v-else>-</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 text-center">
+                                            <div class="col-6 text-light-brown">
+                                                배팅금액 : <span>{{ $numeral(v.betAmount).format('0,0') }}</span>
+                                            </div>
+                                            <div class="col-6 text-light-brown">
+                                                예상 당첨금액 : <span>{{ $numeral(parseInt(v.betAmount * v.betRate)).format('0,0') }}</span>
+                                            </div>
+                                            <div class="col-6 my-2 text-light-brown">
+                                                배당 : {{ $numeral(v.betRate).format('0,0.00') }} <span class="text-pink" v-if="v.bonusRate">(<font-awesome-icon :icon="['fab', 'bitcoin']"/> {{ v.bonusRate }})</span>
+                                            </div>
+                                            <div class="col-6 my-2 text-green">
                                                 당첨금액 : <span>{{ calcResult(v.betResult, v.betAmount, v.betRate) }}</span>
                                             </div>
                                         </div>
@@ -271,11 +354,21 @@
         border: 0;
 
         .card-header {
-            background-color: #312215 !important;
-            color: #e2e2e2;
+            background: linear-gradient(180deg, #222, #252525) !important;
+            color: #fff;
+            padding: 15px 5px;
+
+            @media (min-width: 1200px) {
+                padding: 0.75rem 1.25rem;
+            }
         }
         .card-body {
             background-color: #0f0c08 !important;
+
+            padding: 0;
+            @media (min-width: 1200px) {
+                padding: 1.25rem;
+            }
         }
     }
 </style>

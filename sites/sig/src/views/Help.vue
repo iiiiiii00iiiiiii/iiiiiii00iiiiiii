@@ -15,17 +15,17 @@
                 <div class="col">
                     <div class="board-list">
                         <div class="row">
-                            <div class="col text-right">
+                            <div class="col button-list">
                                 <button type="button" class="btn-board" :disabled="loading" @click="deleteHelpAll()">
                                     <font-awesome-icon :icon="['fa', 'trash-alt']"/> 전체삭제
                                 </button>
-                                <button type="button" class="btn-board ml-2" :disabled="loading" @click="getList()">
+                                <button type="button" class="btn-board ml-1 ml-md-2" :disabled="loading" @click="getList()">
                                     <font-awesome-icon :icon="['fa', 'redo']"/> 새로고침
                                 </button>
-                                <button type="button" class="btn-write ml-2" :disabled="loading" @click="requestChargeInformation()">
+                                <button type="button" class="btn-write ml-1 ml-md-2" :disabled="loading" @click="requestChargeInformation()">
                                     <font-awesome-icon :icon="['fa', 'comments']"/> 입금계좌 문의
                                 </button>
-                                <button type="button" class="btn-write ml-2" :disabled="loading" @click="$tools.pushRouter(`/help-write/${search.page}`)">
+                                <button type="button" class="btn-write ml-1 ml-md-2" :disabled="loading" @click="$tools.pushRouter(`/help-write/${search.page}`)">
                                     <font-awesome-icon :icon="['fa', 'comments']"/> 문의하기
                                 </button>
                             </div>

@@ -15,7 +15,7 @@
             </div>
             <!-- PC 버전 START -->
             <div class="row pt-2 d-none d-xl-flex">
-                <div class="col">
+                <div class="col-6">
                     <div class="board" data-aos="zoom-in" data-aos-duration="1500">
                         <div class="board-title">
                             <span :class="selectBoard === 'notice' ? 'active' : ''" @click="selectBoard = 'notice'">공지사항</span>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-6">
                     <div class="board" data-aos="zoom-in" data-aos-duration="1500">
                         <div class="board-title">
                             <span class="active">이벤트</span>
@@ -77,16 +77,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="community-banner" data-aos="zoom-in" data-aos-duration="1500">
-                        <div>
-                            <img src="/images/banner-main-help.jpg" class="img-fluid cursor-pointer" alt="고객센터" titme="고객센터" @click="$tools.pushRouter('/help', true)">
-                        </div>
-                        <div class="mt-1">
-                            <img src="/images/banner-main-attendance.jpg" class="img-fluid cursor-pointer" alt="출석체크" titme="출석체크" @click="$tools.pushRouter('/attendance', true)">
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- <div class="row pt-2 d-none d-xl-flex"> -->
             <div class="row pt-2">
@@ -94,7 +84,7 @@
                 <div class="col-6 col-xl">
                     <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 0" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/sports', false)">
                         <div class="game-banner-site-name">
-                            THREE BET
+                            SIGNIEL BET
                         </div>
                         <div class="game-banner-title">
                             <font-awesome-icon :icon="['fa', 'cubes']"/> SPORTS
@@ -119,7 +109,7 @@
                 <div class="col-6 col-xl d-none d-xl-block">
                     <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 1" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/sportscross', false)">
                         <div class="game-banner-site-name">
-                            THREE BET
+                            SIGNIEL BET
                         </div>
                         <div class="game-banner-title">
                             <font-awesome-icon :icon="['fa', 'cubes']"/> CROSS
@@ -144,7 +134,7 @@
                 <div class="col-6 col-xl">
                     <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 2" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/sportslive', false)">
                         <div class="game-banner-site-name">
-                            THREE BET
+                            SIGNIEL BET
                         </div>
                         <div class="game-banner-title">
                             <font-awesome-icon :icon="['fa', 'cubes']"/> LIVE
@@ -169,7 +159,7 @@
                 <div class="col col-xl mt-2 mt-xl-0">
                     <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 3" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/casino', true)">
                         <div class="game-banner-site-name">
-                            THREE BET
+                            SIGNIEL BET
                         </div>
                         <div class="game-banner-title">
                             <font-awesome-icon :icon="['fa', 'cubes']"/> LIVE CASINO
@@ -194,7 +184,7 @@
                 <div class="col col-xl d-none d-xl-block">
                     <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 4" @mouseout="bannerIndex = null" @click="openKplay(0, true)">
                         <div class="game-banner-site-name">
-                            THREE BET
+                            SIGNIEL BET
                         </div>
                         <div class="game-banner-title">
                             <font-awesome-icon :icon="['fa', 'cubes']"/> SLOT GAMES
@@ -219,7 +209,7 @@
                 <div class="col col-xl d-xl-none mt-2 mt-xl-0">
                     <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 5" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/powerball')">
                         <div class="game-banner-site-name">
-                            THREE BET
+                            SIGNIEL BET
                         </div>
                         <div class="game-banner-title">
                             <font-awesome-icon :icon="['fa', 'cubes']"/> MINIGAMES
@@ -307,7 +297,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mt-2">
+                <!-- <div class="col-12 mt-2">
                     <div class="community-banner" data-aos="zoom-in" data-aos-duration="1500">
                         <div>
                             <img src="/images/banner-main-help.jpg" class="img-fluid cursor-pointer" alt="고객센터" titme="고객센터" @click="$tools.pushRouter('/help', true)">
@@ -320,7 +310,7 @@
                             <img src="/images/banner-main-attendance.jpg" class="img-fluid cursor-pointer" alt="출석체크" titme="출석체크" @click="$tools.pushRouter('/attendance', true)">
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <!-- MOBILE 버전 END -->
             <div class="row">
@@ -340,7 +330,7 @@
             <div class="row">
                 <div class="col">
                     <div class="copyright">
-                        Copyright © 믿을 수 있는 THREE BET SLUMBERS ALL RIGHTS RESERVE.<br>Solution By SOFT365.
+                        Copyright © 믿을 수 있는 SIGNIEL BET SLUMBERS ALL RIGHTS RESERVE.<br>Solution By SOFT365.
                     </div>
                 </div>
             </div>
@@ -418,7 +408,6 @@
         width: 100%;
         border: 1px solid #080500;
         border-radius: 3px;
-        background-color: #271f18;
         padding: 2px;
 
         .main-banner {
@@ -442,14 +431,14 @@
     .board {
         border: 1px solid #080500;
         border-radius: 3px;
-        background-color: #271f18;
+        background-color: #222;
         padding: 2px;
 
         .board-title {
             padding: 10px;
-            border-top: 3px solid #7a5a1e;
+            border-top: 3px solid #deb97d;
             font-weight: 700;
-            color: #c2c2c2;
+            color: #fff;
 
             span {
                 cursor: pointer;
@@ -490,7 +479,7 @@
         @media (max-width: 1199px) {
             border: 1px solid #080500;
             border-radius: 3px;
-            background-color: #271f18;
+            background-color: #0e0905;
             padding: 2px;
         }
     }
@@ -498,7 +487,7 @@
     .game-banner {
         border: 1px solid #080500;
         border-radius: 3px;
-        background-color: #271f18;
+        background-color: #afa08b;
         padding: 2px;
 
         img {
@@ -520,7 +509,7 @@
             z-index: 1020;
             padding: 10px;
             padding-top: 35px;
-            color: rgba(233, 233, 233, 0.835);
+            color: #fff;
             font-size: 0.875rem;
             font-weight: 600;
             font-family: 'Verdana', sans-serif;
@@ -583,7 +572,7 @@
         padding-top: 30px;
         padding-left: 30px;
         padding-right: 30px;
-        border-top: 2px solid #271f18;
+        border-top: 2px solid #deb97d;
         text-align: center;
     }
 
@@ -593,7 +582,6 @@
         margin-top: 30px;
         margin-bottom: 30px;
         padding: 30px;
-        background-color: #251405;
         border-radius: 3px;
         text-align: center;
     }

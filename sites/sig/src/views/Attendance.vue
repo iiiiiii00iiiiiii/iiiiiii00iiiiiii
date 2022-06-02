@@ -37,7 +37,7 @@
                             <div class="col-12 col-xl-8 offset-xl-2">
                                 <div class="row">
                                     <div class="col">
-                                        <div class="attendance-title">일</div>
+                                        <div class="attendance-title sunday">일</div>
                                     </div>
                                     <div class="col">
                                         <div class="attendance-title">월</div>
@@ -55,7 +55,7 @@
                                         <div class="attendance-title">금</div>
                                     </div>
                                     <div class="col">
-                                        <div class="attendance-title">토</div>
+                                        <div class="attendance-title saturday">토</div>
                                     </div>
                                 </div>
                                 <div class="row mt-2" v-for="(arr, i) in calendar" :key="i">
@@ -170,17 +170,24 @@
         padding-bottom: 10px;
         border: 0;
         border-radius: 5px;
-        color: #979696;
+        color: #fff;
         font-weight: 800;
-        text-shadow: 2px 2px 2px #111;
-        background-color: #30251c;
+        text-shadow: 1px 1px 1px #111;
+        background-color: #4E4E4E;
         text-align: center;
+
+        &.sunday {
+            color: red;
+        }
+        &.saturday {
+            color: blue;
+        }
     }
     .date {
         width: 100%;
         position: relative;
 
-         &::after {
+        &::after {
             content: "";
             display: block;
             padding-bottom: 100%;
@@ -197,10 +204,10 @@
 
             border: 0;
             border-radius: 5px;
-            color: #706f6f;
+            color: #fff;
             font-weight: 800;
             text-shadow: 2px 2px 2px #111;
-            background-color: #30251c;
+            background-color: #303030;
 
             font-size: 1rem;
             @media (min-width: 1200px) {

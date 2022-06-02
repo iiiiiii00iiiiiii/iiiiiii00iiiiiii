@@ -82,10 +82,6 @@
                                     <b-tooltip target="Dota 2" title="Dota 2"></b-tooltip>
                                 </li>
                                 <li>
-                                    <img src="/images/icon-dota2-gray.png" class="sports-category-icon" id="Dota 2" alt="Dota 2" title="Dota 2" @click="selectCategory('Dota 2')">
-                                    <b-tooltip target="Dota 2" title="Dota 2"></b-tooltip>
-                                </li>
-                                <li>
                                     <img src="/images/icon-fifa-gray.png" class="sports-category-icon" id="FIFA" alt="FIFA" title="FIFA" @click="selectCategory('FIFA')">
                                     <b-tooltip target="FIFA" title="FIFA"></b-tooltip>
                                 </li>

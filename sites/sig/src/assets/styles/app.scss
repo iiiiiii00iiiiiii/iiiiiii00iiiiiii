@@ -13,7 +13,7 @@
     width: 5px; /*스크롤바의 너비*/
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #3b2c12; /*스크롤바의 색상*/
+    background-color: #080500; /*스크롤바의 색상*/
 }
 ::-webkit-scrollbar-track {
     background-color: #150e04; /*스크롤바 트랙 색상*/
@@ -26,7 +26,7 @@ body {
     font-size: 0.875rem;
 
     &.brown {
-        --bg: #150e04;
+        --bg: #0F0F0F;
     }
 
     background-color: var(--bg);
@@ -37,7 +37,8 @@ body {
     z-index: 1020;
     top: 0;
     height: var(--header-height);
-    background: url(/images/bg-head.png) repeat #150e04;
+    background: #0F0F0F;
+    // background: url(/images/bg-head.png) repeat #150e04;
 
     .header-top{
         padding-left: calc(var(--left-width) - 100px);
@@ -48,10 +49,10 @@ body {
             padding-right: var(--right-width);
         }
 
-        height: 65px;
+        height: 66px;
 
         .logo {
-            margin-top: 15px;
+            width: 240px;
             cursor: pointer;
         }
     }
@@ -59,18 +60,18 @@ body {
     .header-menu {
         margin-top: 10px;
         width: 100%;
-        background: #413326;
-        background: linear-gradient(180deg, #413326, #251405);
+        background: linear-gradient(180deg, #222, #252525);
+        // background: linear-gradient(180deg, #b9aa87, #bda665);
 
-        border-top: 2px solid #080500;
-        border-bottom: 2px solid #080500;
+        border-top: 2px solid #343434;
+        border-bottom: 2px solid #343434;
 
         padding-left: calc(var(--left-width) - 100px);
         padding-right: calc(var(--right-width) - 100px);
 
         .line-vertical {
             width: 1px;
-            background-color: #150e04;
+            background-color: #343434;
         }
         .menu-item {
             transition: 0.5s;
@@ -78,14 +79,14 @@ body {
             padding-bottom: 10px;
             text-align: center;
             font-weight: 800;
-            color: #c1ad8b;
+            color: #fff;
             cursor: pointer;
-            border-bottom: 3px solid #251405;
+            border-bottom: 3px solid #222;
 
             &:hover {
                 transition: 0.3s;
-                background: #271c12;
-                color: #faa633;
+                background: #303030;
+                color: #deb97d;
                 border-bottom: 3px solid #7a5a1e;
             }
         }
@@ -101,7 +102,8 @@ body {
     z-index: 1020;
     top: 0;
     // height: var(--header-height);
-    background: url(/images/bg-head.png) repeat #150e04;
+    // background: url(/images/bg-head.png) repeat #150e04;
+    background-color: #0F0F0F;
 }
 .main-layout {
     min-height: calc(100vh - var(--header-height));
@@ -136,14 +138,14 @@ body {
     padding: 2px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #271f18;
+    background-color: #222;
 
     table {
         border-collapse: collapse;
         tr {
             td {
                 transition: 0.2s;
-                background-color: #24180e;
+                background-color: #393939;
                 color: #deb97d;
                 font-size: 0.75rem;
                 text-align: center;
@@ -159,8 +161,8 @@ body {
                 &.menu-odd {
                     transition: 0.2s;
                     width: 33.33333%;
-                    background-color: #251405;
-                    color: #c2c2c2;
+                    background-color: #6F6F6F;
+                    color: #fff;
                     padding-top: 10px;
                     padding-bottom: 10px;
 
@@ -173,8 +175,8 @@ body {
                 &.menu-even {
                     transition: 0.2s;
                     width: 33.33333%;
-                    background-color: #30251c;
-                    color: #c2c2c2;
+                    background-color: #4E4E4E;
+                    color: #fff;
                     padding-top: 10px;
                     padding-bottom: 10px;
 
@@ -194,7 +196,7 @@ body {
     padding: 2px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #271f18;
+    background-color: #303030;
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -205,7 +207,6 @@ body {
 
     .category-wrap {
         border: 1px solid #080500;
-        background-color: #24180e;
         color: #c2c2c2;
 
         .category {
@@ -216,15 +217,15 @@ body {
 
             &.active, &:hover {
                 transition: 0.2s;
-                background-color: #30251c;
+                background-color: #ad9d86;
+                color: #f3d29c;
             }
 
             &.line {
-                border-top: 1px solid #362b20;
-                border-bottom: 1px solid #15110b;
+                border-bottom: 1px solid #080500;
             }
             &.line-bottom {
-                border-bottom: 1px solid #15110b;
+                border-bottom: 1px solid #080500;
             }
             span {
                 display: inline-block;
@@ -267,7 +268,8 @@ body {
 
         .category-country {
             transition: 0.2s;
-            background-color: #24180e;
+            background-color: #5E5E5E;
+            color: #fff;
             padding-top: 5px;
             padding-bottom: 5px;
             cursor: pointer;
@@ -319,10 +321,10 @@ body {
         }
         .category-league {
             transition: 0.2s;
-            background-color: #24180e;
+            background-color: #919191;
             padding-top: 5px;
             padding-bottom: 5px;
-            color: #c2c2c2;
+            color: #fff;
 
             &.active, &:hover {
                 transition: 0.2s;
@@ -391,12 +393,13 @@ body {
     padding: 2px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #271f18;
+    background-color: #222;
 
     table {
         border-collapse: collapse;
 
         tr {
+            
             td {
                 background-color: #24180e;
                 color: #deb97d;
@@ -405,7 +408,7 @@ body {
 
                 &.betslip-title {
                     padding-left: 5px;
-                    background-color: #251405;
+                    background-color: #555555;
                     // background: #413326;
                     // background: linear-gradient(180deg, #413326, #251405);
 
@@ -416,18 +419,18 @@ body {
 
                 &.bet-amount-title {
                     text-align: center;
-                    background-color: #24180e;
+                    background-color: #747474;
                     // background: #413326;
                     // background: linear-gradient(180deg, #413326, #251405);
-                    color: #c2c2c2;
+                    color: #fff;
                 }
 
                 &.btn-bet-amount {
                     text-align: center;
-                    background-color: #30251c;
+                    background-color: #303030;
                     // background: #413326;
                     // background: linear-gradient(180deg, #413326, #251405);
-                    color: #c2c2c2;
+                    color: #fff;
                     cursor: pointer;
 
                     .undo {
@@ -466,12 +469,13 @@ body {
 
                 &.bet-rate-title {
                     padding-left: 5px;
-                    background-color: #251405;
+                    background-color: #222;
+                    color: #fff;
                 }
                 &.bet-rate-value {
                     padding-right: 5px;
-                    background-color: #251405;
-                    color: #f7911b;
+                    background-color: #222;
+                    color: #f3d29c;
                     text-align: right;
                 }
                 &.btn-bet-function {
@@ -479,7 +483,7 @@ body {
                     padding-bottom: 5px;
                     padding-left: 2px;
                     padding-right: 2px;
-                    background-color: #30251c;
+                    background-color: #222;
 
                     .btn-bet-left {
                         padding-right: 2px;
@@ -500,23 +504,23 @@ body {
 
                         &.cancel {
                             transition: 0.2s;
-                            background-color: #cb9f42;
+                            background-color: #677381;
                             color: #fff;
                             text-shadow: 1px 1px 1px #111;
 
                             &:hover {
                                 transition: 0.2s;
-                                background-color: #bb943f;
+                                background-color: #677381a6;
                             }
                         }
                         &.bet {
                             transition: 0.2s;
-                            background-color: #d2d2d2;
-                            color: #111;
+                            background-color: #cb9f42;
+                            color: #fff;
 
                             &:hover {
                                 transition: 0.2s;
-                                background-color: #bbb9b9;
+                                background-color: #cba042b4;
                             }
                         }
                     }
@@ -524,11 +528,12 @@ body {
 
                 &.bet-cart {
                     padding: 4px;
+                    background-color: #222;
                     .bet-cart-box {
                         padding: 10px 5px;
-                        background: #30251c;
+                        background: #080500;
                         border-radius: 3px;
-                        color: #b5c96f;
+                        color: #fff;
 
                         .bet-cart-left {
                             float: left;
@@ -555,13 +560,13 @@ body {
 
                 &.bet-info-title {
                     padding-left: 5px;
-                    background-color: #24180e;
-                    color: #c2c2c2;
+                    background-color: #222;
+                    color: #fff;
                 }
                 &.bet-info-value {
                     padding-right: 5px;
-                    background-color: #24180e;
-                    color: #c2c2c2;
+                    background-color: #222;
+                    color: #fff;
                     text-align: right;
                 }
             }
@@ -577,13 +582,12 @@ body {
     padding: 2px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background: linear-gradient(180deg, #1b1b1b, #252525);
 
     .page-title {
         padding: 15px 10px;
-        background-color: #30251c;
         border-radius: 3px;
-        color: #c2c2c2;
+        color: #fff;
         font-weight: 700;
     }
 }
@@ -699,8 +703,8 @@ body {
 }
 .btn-delete, .btn-write {
     transition: 0.2s;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
     background-color: #c74509;
     border: 0;
     border-radius: 3px;
@@ -714,8 +718,8 @@ body {
 }
 .btn-board, .btn-minigames {
     transition: 0.2s;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
     background-color: #867306;
     border: 0;
     border-radius: 3px;
@@ -749,9 +753,9 @@ body {
 .first-class, .last-class, .prev-class, .next-class, .ellipsis-class {
     a, span, button {
         background-color: inherit !important;
-        color: #c2c2c2 !important;
+        color: #bda665 !important;
         font-weight: 800;
-        border: 1px solid #38260a !important;
+        border: 1px solid #2d2d2d !important;
 
         &:focus {
             outline: 0;
@@ -761,7 +765,7 @@ body {
 }
 .page-class {
     a, button {
-        border: 1px solid #38260a !important;
+        border: 1px solid #2d2d2d !important;
         background-color: inherit;
         color: #c2c2c2;
 
@@ -790,7 +794,7 @@ body {
     padding: 10px 2px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
 
     .money-notice-title {
         padding: 10px 20px;
@@ -808,7 +812,7 @@ body {
         padding-left: 20px;
         padding-right: 20px;
         padding-bottom: 10px;
-        color: #b2b2b2;
+        color: #fff;
 
         font-size: 0.75rem;
         @media (min-width: 1200px) {
@@ -845,17 +849,21 @@ body {
     }
 }
 .money-button-wrap {
-    padding: 20px 20px;
+    padding: 10px 10px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
+
+    @media (min-width: 1200px) {
+        padding: 20px 20px;
+    }
 
     .btn-money {
         margin: 0 auto;
         padding-top: 8px;
         padding-bottom: 8px;
-        background-color: #433527;
-        color: #c2c2c2;
+        background-color: #bda665;
+        color: #fff;
         font-weight: 700;
         text-shadow: 1px 1px 3px #000;
         box-shadow: 3px 3px 3px #000 !important;
@@ -870,7 +878,7 @@ body {
     padding: 20px 20px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
 
     .money-input {
         border: 0;
@@ -912,41 +920,58 @@ body {
     }
 }
 .money-list, .board-list, .board-write, .board-detail, .bet-list {
-    padding: 20px 20px;
+    padding: 20px 5px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
     font-size: 0.75rem;
 
+    @media (min-width: 1200px) {
+        padding: 20px 20px;
+    }
+
+    .button-list {
+        text-align: center;
+        @media (min-width: 1200px) {
+            text-align: right;
+        }
+    }
+
+
     .table-responsive {
+        
         &::-webkit-scrollbar {
             height: 1px !important; /*스크롤바의 너비*/
         }
     }
 
     thead {
+        
         tr {
+
             th {
-                background-color: #1d130b;
-                color: #c2c2c2;
-                border-top: 1px solid #38260a;
-                border-bottom: 2px solid #38260a;
+                background-color: #303030;
+                color: #fff;
+                border-top: 1px solid #080500;
+                border-bottom: 2px solid #080500;
             }
         }
     }
     tbody {
+
         tr {
             &:nth-child(odd) {
-                background-color: #15110b;
+                background-color: #222;
             }
             &:nth-child(even) {
-                background-color: #1f190f;
+                background-color: #303030;
             }
 
             td {
-                color: #c2c2c2;
+                color: #fff;
 
                 &.board-content {
+
                     img {
                         max-width: 100%;
                         height: auto;
@@ -954,6 +979,52 @@ body {
                 }
             }
         }
+    }
+    .mobile-betting-history {
+        text-align: center;
+        color: #fff;
+        
+        .betting-history-header {
+            background-color: #303030;
+            border-top: 1px solid #080500;
+            border-bottom: 2px solid #080500;
+            height: 40px;
+            line-height: 40px;
+            
+        }
+        .betting-history-list {
+            border-bottom: 2px solid #080500;
+            line-height: 20px;
+
+            &:nth-child(odd) {
+                background-color: #303030;
+            }
+            &:nth-child(even) {
+                background-color: #222;
+            }
+        }
+        .league-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            img {
+                width: 17%;
+            }
+        }
+        .team-name {
+            width: 95px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .event-name {
+            width: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
     }
 }
 
@@ -983,6 +1054,10 @@ body {
 
     .logo-wrap {
         text-align: center;
+
+        img {
+            width: 260px;
+        }
     }
     .join-title, .login-title {
         margin-top: 1.5rem;
@@ -992,14 +1067,14 @@ body {
 
     label {
         padding-left: 5px;
-        color: #af8746;
+        color: #deb97d;
         font-size: 0.75rem;
         font-weight: 700;
     }
 
     .join-input, .login-input {
         background-color: #080500;
-        border: 1px solid #24180e;
+        border: 1px solid #ad9d86;
         color: #c2c2c2;
         height: 40px;
 
@@ -1061,19 +1136,19 @@ body {
     width: 100%;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
     font-size: 0.75rem;
 
     label {
         padding-left: 5px;
-        color: #af8746;
+        color: #deb97d;
         font-size: 0.75rem;
         font-weight: 700;
     }
 
     .join-input {
         background-color: #080500;
-        border: 1px solid #24180e;
+        border: 1px solid #ad9d86;
         color: #c2c2c2;
         height: 40px;
 
@@ -1185,7 +1260,7 @@ body {
     padding: 10px 2px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
 
     .sports-icon-wrap {
         width: 850px;
@@ -1198,7 +1273,7 @@ body {
                 padding-left: 10px;
                 padding-right: 10px;
                 float: left;
-                color: #c2c2c2 !important;
+                color: #fff !important;
                 font-size: 0.75rem;
                 font-weight: 700;
                 cursor: pointer;
@@ -1217,7 +1292,7 @@ body {
     padding: 10px 5px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
     font-size: 0.75rem;
 
     .sports-px {
@@ -1239,12 +1314,12 @@ body {
         color: #939393;
     }
     .g {
-        color: #e2e2e2;
+        color: #fff;
     }
     .g-date {
         border: 1px solid #111;
         border-radius: 3px;
-        background-color: #291c15;
+        background-color: #303030;
         text-align: center;
         padding: 8px 0;
     }
@@ -1255,12 +1330,12 @@ body {
     .g-home, .g-away, .g-center, .g-explain, .g-yes, .g-no {
         border: 1px solid #111;
         border-radius: 3px;
-        background: linear-gradient(180deg, #413326, #251405);
+        background: linear-gradient(180deg, #222222, #252525);
         padding: 8px 0;
         font-weight: 700;
 
         &.n {
-            background-color: #251405 !important;
+            background-color: #303030 !important;
             background: none;
         }
     }
@@ -1282,12 +1357,12 @@ body {
     .g-x {
         border: 1px solid #111;
         border-radius: 3px;
-        background: linear-gradient(180deg, #413326, #251405);
+        background: linear-gradient(180deg, #222222, #252525);
         text-align: center;
         padding: 8px 0;
 
         &.n {
-            background-color: #251405 !important;
+            background-color: #303030 !important;
             background: none;
         }
     }
@@ -1299,10 +1374,10 @@ body {
         padding: 8px 0;
 
         &.o {
-            background-color: #291c15;
+            background-color: #555;
         }
         &.n {
-            background: linear-gradient(180deg, #413326, #251405);
+            background-color: #555;
         }
     }
     .g-count-mobile {
@@ -1321,14 +1396,14 @@ body {
         }
     }
     .g-home-team-mobile {
-        width: 70%;
+        width: 65%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         text-align: left;
     }
     .g-away-team-mobile {
-        width: 70%;
+        width: 65%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1351,15 +1426,17 @@ body {
     .col-4-5 {
         position: relative;
         width: 100%;
-        padding-right: 5px;
-        padding-left: 5px;
+        padding-right: 3px;
+        padding-left: 3px;
 
-        flex: 37.499999985%;
+        flex: 36.499999985%;
         max-width: 37.499999985%;
 
         @media (min-width: 1200px) {
             flex: 0 0 33.33333%;
             max-width: 33.33333%;
+            padding-right: 5px;
+            padding-left: 5px;
         }
     }
     .can-bet {
@@ -1368,23 +1445,24 @@ body {
         &:hover {
             @media (min-width: 1200px) {
                 color: #000 !important;
-                background: linear-gradient(180deg, #ffc052, #f68710);
+                background: linear-gradient(180deg, #afa08b, #c4ab64);
                 &.selectBet {
-                    background: linear-gradient(180deg, #ffc052, #f68710);
+                    background: linear-gradient(180deg, #afa08b, #c4ab64);
                 }
             }
         }
     }
     .selectBet {
         color: #000 !important;
-        background: linear-gradient(180deg, #ffc052, #f68710);
+        background: linear-gradient(180deg, #afa08b, #c4ab64);
     }
     .game-detail {
         border-radius: 3px;
-        background-color: #332d29;
+        background-color: #303030;
     }
     .bg-team {
-        background-color: #15110b;
+        border: 1px solid #080500;
+        background: linear-gradient(180deg, #1b1b1b, #252525);
         border-radius: 3px;
     }
     .img-vs {
@@ -1393,7 +1471,7 @@ body {
     .title-team {
         font-size: 0.875rem;
         font-weight: 600;
-        color: #e2e2e2;
+        color: #fff;
         padding-top: 6px;
 
         @media (min-width: 1200px) {
@@ -1402,12 +1480,11 @@ body {
     }
     .expand-game {
         border-radius: 3px;
-        background-color: #15110b;
-        color: #e2e2e2;
+        color: #fff;
 
         .g-home, .g-x, .g-away, .g-center, .g-explain, .g-yes, .g-no {
             font-weight: 700;
-            color: #e2e2e2;
+            color: #fff;
         }
     }
     .circle-down {
@@ -1423,7 +1500,7 @@ body {
     padding: 10px 5px;
     border: 1px solid #080500;
     border-radius: 3px;
-    background-color: #15110b;
+    background-color: #111;
 }
 
 // left side
@@ -1494,7 +1571,7 @@ body {
 }
 .minigame-info {
     padding: 10px 5px;
-    background: linear-gradient(180deg, #413326, #251405);
+    background: linear-gradient(180deg, #222222, #252525);
     border-radius: 3px;
     color: #e2e2e2;
     font-size: 1rem;
@@ -1529,7 +1606,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 3px;
-    background: linear-gradient(180deg, #413326, #251405);
+    background: linear-gradient(180deg, #222222, #252525);
     color: #c2c2c2;
     font-size: 1rem;
     font-weight: 700;

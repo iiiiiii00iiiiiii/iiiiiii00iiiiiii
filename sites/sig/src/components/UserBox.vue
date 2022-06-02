@@ -64,15 +64,15 @@
         padding: 2px;
         border: 1px solid #080500;
         border-radius: 3px;
-        background-color: #271f18;
+        background-color: #222;
 
         table {
             border-collapse: collapse;
 
             tr {
                 td {
-                    background-color: #433527;
-                    color: #c2c2c2;
+                    background-color: #303030;
+                    color: #fff;
                     font-size: 0.75rem;
                     border: 1px solid #080500;
 

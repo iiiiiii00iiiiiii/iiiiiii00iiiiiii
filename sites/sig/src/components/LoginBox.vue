@@ -38,7 +38,7 @@
                 </tr>
                 <tr height="30">
                     <td class="pl-1" colspan="2">
-                       <span class="cursor-pointer" @click="$tools.pushRouter('/join', false)">쓰리벳 회원가입</span>
+                        <span class="cursor-pointer" @click="$tools.pushRouter('/join', false)">시그니엘 회원가입</span>
                     </td>
                 </tr>
             </table>
@@ -107,15 +107,15 @@
         padding: 2px;
         border: 1px solid #080500;
         border-radius: 3px;
-        background-color: #271f18;
+        background-color: #222;
 
         table {
             border-collapse: collapse;
 
             tr {
+
                 td {
-                    background-color: #24180e;
-                    color: #c2c2c2;
+                    color: #fff;
                     font-size: 0.75rem;
                     border: 1px solid #080500;
 
@@ -126,7 +126,7 @@
                         height: 30px;
 
                         &::placeholder {
-                            color: #c2c2c2;
+                            color: #fff;
                         }
 
                         &:focus {
@@ -139,13 +139,13 @@
                         width: 100%;
                         height: 63px;
                         border: 0;
-                        color: #c2c2c2;
+                        color: #fff;
                         font-weight: 800;
-                        background-color: #251405;
+                        background-color: #ad9e87;
                         transition: 0.3s;
 
                         &:hover {
-                            color: #f3d29c;
+                            color: #deb97d;
                             transition: 0.5s;
                         }
 
