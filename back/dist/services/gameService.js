@@ -101,11 +101,11 @@ class GameService {
                         findQuery.sport.$nin.push('Dota 2');
                         findQuery.sport.$nin.push('FIFA');
                     }
-                    if (config_1.default.displaySportCross.length > 0) {
-                        findQuery.leagueOID = {
-                            $in: config_1.default.displaySportCross
-                        };
-                    }
+                    // if(config.displaySportCross.length > 0) {
+                    //     findQuery.leagueOID = {
+                    //         $in: config.displaySportCross
+                    //     }
+                    // }
                     const whatQuery = {
                         projection: {
                             sport: 1,

@@ -101,11 +101,11 @@ export default class GameService implements IGameService {
                     findQuery.sport.$nin.push('FIFA')
                 }
 
-                if(config.displaySportCross.length > 0) {
-                    findQuery.leagueOID = {
-                        $in: config.displaySportCross
-                    }
-                }
+                // if(config.displaySportCross.length > 0) {
+                //     findQuery.leagueOID = {
+                //         $in: config.displaySportCross
+                //     }
+                // }
 
                 const whatQuery: any = {
                     projection: {
