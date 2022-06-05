@@ -7818,7 +7818,10 @@
                     this.setBetInfo({
                         min: r.data.betInfo[`lv${this.user.grade}`].min,
                         max: r.data.betInfo[`lv${this.user.grade}`].max,
-                        benefit: r.data.betInfo[`lv${this.user.grade}`].benefit
+                        benefit: r.data.betInfo[`lv${this.user.grade}`].benefit,
+                        min1Folder: r.data.betInfo1Folder.min,
+                        max1Folder: r.data.betInfo1Folder.max,
+                        benefit1Folder: r.data.betInfo1Folder.benefit
                     })
                 }
 

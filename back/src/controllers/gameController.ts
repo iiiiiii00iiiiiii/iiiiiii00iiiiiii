@@ -808,10 +808,24 @@ export default class GameController implements IGameController {
             }
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
 
+            let rConfig1Folder: any = null
+            if(config.db.id === 'sig') {
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+                const getKeys1Folder: Array<string> = ['category', 'min', 'max', 'benefit']
+                rConfig1Folder = await etcService.getConfigInfo1Folder(getKeys1Folder)
+                if(rConfig1Folder.error) {
+                    data.errorTitle = '스포츠 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+            }
+
             res.json({
                 recordSet: r.data,
                 recordCount: r.count,
-                betInfo: rConfig.data
+                betInfo: rConfig.data,
+                betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
             })
         } catch (e) {
             logger.error(e)
@@ -1161,12 +1175,26 @@ export default class GameController implements IGameController {
                 res.status(500).json(data)
                 return
             }
-            // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기
+
+            let rConfig1Folder: any = null
+            if(config.db.id === 'sig') {
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+                const getKeys1Folder: Array<string> = ['category', 'min', 'max', 'benefit']
+                rConfig1Folder = await etcService.getConfigInfo1Folder(getKeys1Folder)
+                if(rConfig1Folder.error) {
+                    data.errorTitle = '스포츠 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+            }
 
             res.json({
                 recordSet: r.data,
                 recordCount: r.count,
-                betInfo: rConfig.data
+                betInfo: rConfig.data,
+                betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
             })
         } catch (e) {
             logger.error(e)
@@ -1411,10 +1439,24 @@ export default class GameController implements IGameController {
             }
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
 
+            let rConfig1Folder: any = null
+            if(config.db.id === 'sig') {
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+                const getKeys1Folder: Array<string> = ['category', 'min', 'max', 'benefit']
+                rConfig1Folder = await etcService.getConfigInfo1Folder(getKeys1Folder)
+                if(rConfig1Folder.error) {
+                    data.errorTitle = '스포츠 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+            }
+
             res.json({
                 recordSet: r.data,
                 recordCount: r.count,
-                betInfo: rConfig.data
+                betInfo: rConfig.data,
+                betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
             })
         } catch (e) {
             logger.error(e)
@@ -1654,10 +1696,24 @@ export default class GameController implements IGameController {
             }
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
 
+            let rConfig1Folder: any = null
+            if(config.db.id === 'sig') {
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+                const getKeys1Folder: Array<string> = ['category', 'min', 'max', 'benefit']
+                rConfig1Folder = await etcService.getConfigInfo1Folder(getKeys1Folder)
+                if(rConfig1Folder.error) {
+                    data.errorTitle = '스포츠 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+            }
+
             res.json({
                 recordSet: r.data,
                 recordCount: r.count,
-                betInfo: rConfig.data
+                betInfo: rConfig.data,
+                betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
             })
         } catch (e) {
             logger.error(e)
@@ -1743,10 +1799,24 @@ export default class GameController implements IGameController {
             }
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
 
+            let rConfig1Folder: any = null
+            if(config.db.id === 'sig') {
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+                const getKeys1Folder: Array<string> = ['category', 'min', 'max', 'benefit']
+                rConfig1Folder = await etcService.getConfigInfo1Folder(getKeys1Folder)
+                if(rConfig1Folder.error) {
+                    data.errorTitle = '스포츠 실패 - 500'
+                    res.status(500).json(data)
+                    return
+                }
+                // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
+            }
+
             res.json({
                 recordSet: r.data,
                 recordCount: r.count,
-                betInfo: rConfig.data
+                betInfo: rConfig.data,
+                betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
             })
         } catch (e) {
             logger.error(e)

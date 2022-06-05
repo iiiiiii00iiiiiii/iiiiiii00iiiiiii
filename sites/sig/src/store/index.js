@@ -43,7 +43,10 @@ export default new Vuex.Store({
         betInfo: {
             min: 0,
             max: 0,
-            benefit: 0
+            benefit: 0,
+            min1Folder: 0,
+            max1Folder: 0,
+            benefit1Folder: 0
         },
         // 미니게임 배팅 내역
         minigameBetListRecent: [],
@@ -189,7 +192,10 @@ export default new Vuex.Store({
             state.betInfo = tools.deepClone({
                 min: 0,
                 max: 0,
-                benefit: 0
+                benefit: 0,
+                min1Folder: 0,
+                max1Folder: 0,
+                benefit1Folder: 0
             })
         },
         // 미니게임 배팅 내역

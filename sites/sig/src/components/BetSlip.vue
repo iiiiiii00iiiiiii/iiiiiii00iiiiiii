@@ -360,21 +360,45 @@
                 }
 
                 if(betData.betGameType !== 'minigames') {
-                    if(betData.betAmount < this.betInfo.min) {
-                        this.$tools.sw('warning', '최소 배팅금액', `최소 ${this.$numeral(this.betInfo.min).format('0,0')}원 이상 배팅 가능 합니다.`)
-                        return
+                    if(betData.betCount === 1) {
+                        if(betData.betAmount < this.betInfo.min1Folder) {
+                            this.$tools.sw('warning', '최소 배팅금액', `최소 ${this.$numeral(this.betInfo.min1Folder).format('0,0')}원 이상 배팅 가능 합니다.`)
+                            return
+                        }
+
+                        if(betData.betAmount > this.betInfo.max1Folder) {
+                            this.$tools.sw('warning', '최대 배팅금액', `최대 ${this.$numeral(this.betInfo.max1Folder).format('0,0')}원 이하 배팅 가능 합니다.`)
+                            return
+                        }
+
+                        // ######################### 최대 당첨금 넣기 #########################
+                        if(this.benefit > this.betInfo.benefit1Folder) {
+                            this.$tools.sw('warning', '최대 당첨금액', `최대 당첨금액은 ${this.$numeral(this.betInfo.benefit1Folder).format('0,0')}원 까지 입니다.`)
+                            return
+                        }
                     }
+                    else {
+                        if(betData.betAmount < this.betInfo.min) {
+                            this.$tools.sw('warning', '최소 배팅금액', `최소 ${this.$numeral(this.betInfo.min).format('0,0')}원 이상 배팅 가능 합니다.`)
+                            return
+                        }
 
-                    if(betData.betAmount > this.betInfo.max) {
-                        this.$tools.sw('warning', '최대 배팅금액', `최대 ${this.$numeral(this.betInfo.max).format('0,0')}원 이하 배팅 가능 합니다.`)
-                        return
-                    }
+                        if(betData.betAmount > this.betInfo.max) {
+                            this.$tools.sw('warning', '최대 배팅금액', `최대 ${this.$numeral(this.betInfo.max).format('0,0')}원 이하 배팅 가능 합니다.`)
+                            return
+                        }
 
-                    // ######################### 최대 당첨금 넣기 #########################
+                        // ######################### 최대 당첨금 넣기 #########################
 
-                    if(betData.betRate > parseInt(betMaxRate)) {
-                        this.$tools.sw('warning', '최대 배팅배당', `최대 ${this.$numeral(betMaxRate).format('0,0')}배 까지 배팅 가능 합니다.`)
-                        return
+                        if(betData.betRate > parseInt(betMaxRate)) {
+                            this.$tools.sw('warning', '최대 배팅배당', `최대 ${this.$numeral(betMaxRate).format('0,0')}배 까지 배팅 가능 합니다.`)
+                            return
+                        }
+
+                        if(this.benefit > this.betInfo.benefit) {
+                            this.$tools.sw('warning', '최대 당첨금액', `최대 당첨금액은 ${this.$numeral(this.betInfo.benefit).format('0,0')}원 까지 입니다.`)
+                            return
+                        }
                     }
                 }
                 else {
