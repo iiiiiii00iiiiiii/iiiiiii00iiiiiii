@@ -5282,12 +5282,25 @@
                     v.games.handicap.sort((a, b) => {
                         return (a.homeStandard < b.homeStandard) ? -1 : (a.homeStandard > b.homeStandard) ? 1: 0
                     })
+
+                    if(v.games.handicap.length > 5) {
+                        v.games.handicap.shift()
+                        v.games.handicap.shift()
+                        v.games.handicap.pop()
+                        v.games.handicap.pop()
+                    }
                 }
                 //  오버언더 정렬
                 if(v.games.underOver && v.games.underOver.length > 1) {
                     v.games.underOver.sort((a, b) => {
                         return (a.standard < b.standard) ? -1 : (a.standard > b.standard) ? 1: 0
                     })
+                    if(v.games.underOver.length > 5) {
+                        v.games.underOver.shift()
+                        v.games.underOver.shift()
+                        v.games.underOver.pop()
+                        v.games.underOver.pop()
+                    }
                 }
                 //  1이닝 핸디캡 정렬
                 if(v.games.handicap1stInning && v.games.handicap1stInning.length > 1) {
@@ -5378,12 +5391,34 @@
                     v.games.handicap1stHalf.sort((a, b) => {
                         return (a.homeStandard < b.homeStandard) ? -1 : (a.homeStandard > b.homeStandard) ? 1: 0
                     })
+
+                    let h = 1000000
+                    let indexH = -1
+                    for(let i = 0; i < v.games.handicap1stHalf.length; i++) {
+                        let nh = Math.abs(v.games.handicap1stHalf[i].homeRate - v.games.handicap1stHalf[i].awayRate)
+                        if(nh <= h) {
+                            h = nh
+                            indexH = i
+                        }
+                    }
+                    this.$set(v.games, 'handicap1stHalf', [v.games.handicap1stHalf[indexH]])
                 }
                 //  전반전 오버언더 정렬
                 if(v.games.underOver1stHalf && v.games.underOver1stHalf.length > 1) {
                     v.games.underOver1stHalf.sort((a, b) => {
                         return (a.standard < b.standard) ? -1 : (a.standard > b.standard) ? 1: 0
                     })
+
+                    let h = 1000000
+                    let indexH = -1
+                    for(let i = 0; i < v.games.underOver1stHalf.length; i++) {
+                        let nh = Math.abs(v.games.underOver1stHalf[i].underRate - v.games.underOver1stHalf[i].overRate)
+                        if(nh <= h) {
+                            h = nh
+                            indexH = i
+                        }
+                    }
+                    this.$set(v.games, 'underOver1stHalf', [v.games.underOver1stHalf[indexH]])
                 }
                 //  5이닝 오버언더 정렬
                 if(v.games.underOverFirst5Innings && v.games.underOverFirst5Innings.length > 1) {
@@ -5396,12 +5431,34 @@
                     v.games.handicap2ndHalf.sort((a, b) => {
                         return (a.homeStandard < b.homeStandard) ? -1 : (a.homeStandard > b.homeStandard) ? 1: 0
                     })
+
+                    let h = 1000000
+                    let indexH = -1
+                    for(let i = 0; i < v.games.handicap2ndHalf.length; i++) {
+                        let nh = Math.abs(v.games.handicap2ndHalf[i].homeRate - v.games.handicap2ndHalf[i].awayRate)
+                        if(nh <= h) {
+                            h = nh
+                            indexH = i
+                        }
+                    }
+                    this.$set(v.games, 'handicap2ndHalf', [v.games.handicap2ndHalf[indexH]])
                 }
                 //  후반전 오버언더 정렬
-                if(v.games.oddEven2ndHalf && v.games.oddEven2ndHalf.length > 1) {
-                    v.games.oddEven2ndHalf.sort((a, b) => {
+                if(v.games.underOver2ndHalf && v.games.underOver2ndHalf.length > 1) {
+                    v.games.underOver2ndHalf.sort((a, b) => {
                         return (a.standard < b.standard) ? -1 : (a.standard > b.standard) ? 1: 0
                     })
+
+                    let h = 1000000
+                    let indexH = -1
+                    for(let i = 0; i < v.games.underOver2ndHalf.length; i++) {
+                        let nh = Math.abs(v.games.underOver2ndHalf[i].underRate - v.games.underOver2ndHalf[i].overRate)
+                        if(nh <= h) {
+                            h = nh
+                            indexH = i
+                        }
+                    }
+                    this.$set(v.games, 'underOver2ndHalf', [v.games.underOver2ndHalf[indexH]])
                 }
                 //  정확한 점수 정렬
                 if(v.games.correctScoreFullTime && v.games.correctScoreFullTime.length > 1) {
