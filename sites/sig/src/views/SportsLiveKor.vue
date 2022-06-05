@@ -997,7 +997,7 @@
         methods: {
             ...mapActions(['setBetCart', 'changeBetCart', 'deleteBetCart', 'deleteBetCartAll', 'setBetInfo']),
             socketInit() {
-                this.socket = this.$io.connect('https://live-x.thvmxm.com')
+                this.socket = this.$io.connect('https://live-sig.thvmxm.com')
                 this.socket.on('connect', () => {
                     // console.log('연결됨.')
                     this.setFromRouter()
