@@ -1155,7 +1155,7 @@ export default class GameController implements IGameController {
 
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
             const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
-            const rConfig: TService = await etcService.getConfigInfo('sportsBet', getKeys)
+            const rConfig: TService = await etcService.getConfigInfo('sportsBetCross', getKeys)
             if(rConfig.error) {
                 data.errorTitle = '스포츠 실패 - 500'
                 res.status(500).json(data)
@@ -1403,7 +1403,7 @@ export default class GameController implements IGameController {
 
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
             const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
-            const rConfig: TService = await etcService.getConfigInfo('sportsBet', getKeys)
+            const rConfig: TService = await etcService.getConfigInfo('sportsBetLive', getKeys)
             if(rConfig.error) {
                 data.errorTitle = '스포츠 실패 - 500'
                 res.status(500).json(data)
@@ -1646,7 +1646,7 @@ export default class GameController implements IGameController {
 
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
             const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
-            const rConfig: TService = await etcService.getConfigInfo('sportsBet', getKeys)
+            const rConfig: TService = await etcService.getConfigInfo('sportsBetSpecial', getKeys)
             if(rConfig.error) {
                 data.errorTitle = '스포츠 실패 - 500'
                 res.status(500).json(data)
@@ -1735,7 +1735,7 @@ export default class GameController implements IGameController {
 
             // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
             const getKeys: Array<string> = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9']
-            const rConfig: TService = await etcService.getConfigInfo('sportsBet', getKeys)
+            const rConfig: TService = await etcService.getConfigInfo('sportsBetLiveKor', getKeys)
             if(rConfig.error) {
                 data.errorTitle = '스포츠 실패 - 500'
                 res.status(500).json(data)
