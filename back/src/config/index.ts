@@ -37,6 +37,10 @@ type TConfig = {
     googlePowerball3: number,
     coinPowerball3: number,
     coinPowerball: number,
+    eosPowerball1: number,
+    eosPowerball3: number,
+    eosPowerball: number,
+    speedladder: number
     kplay: {
         code: string,
         token: string,
@@ -2289,6 +2293,10 @@ const config: TConfig = {
     googlePowerball3: 30,
     coinPowerball3: 30,
     coinPowerball: 30,
+    eosPowerball1: 15,
+    eosPowerball3: 30,
+    eosPowerball: 30,
+    speedladder: 15,
     kplay: {
         code: 'SFT0010',
         token: 'zvJnD82CF6h1D5gCzZqHY2gheTJ0Ns3t',

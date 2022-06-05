@@ -5,10 +5,16 @@
             v-if="router === 'Powerball' ||
             router === 'Powerladder' ||
             router === 'Kenoladder' ||
+            router === 'Speedladder' ||
             router === 'BoglePowerball' ||
             router === 'Bogleladder' ||
             router === 'GooglePowerball1' ||
-            router === 'GooglePowerball3'"
+            router === 'GooglePowerball3' ||
+            router === 'EosPowerball1' ||
+            router === 'EosPowerball3' ||
+            router === 'EosPowerball' ||
+            router === 'CoinPowerball3' ||
+            router === 'CoinPowerball'"
         />
         <LeftCategory v-else/>
         <BannerLeft/>

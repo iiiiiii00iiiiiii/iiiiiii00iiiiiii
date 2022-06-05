@@ -399,7 +399,7 @@ body {
         border-collapse: collapse;
 
         tr {
-            
+
             td {
                 background-color: #24180e;
                 color: #deb97d;
@@ -939,14 +939,14 @@ body {
 
 
     .table-responsive {
-        
+
         &::-webkit-scrollbar {
             height: 1px !important; /*스크롤바의 너비*/
         }
     }
 
     thead {
-        
+
         tr {
 
             th {
@@ -983,14 +983,14 @@ body {
     .mobile-betting-history {
         text-align: center;
         color: #fff;
-        
+
         .betting-history-header {
             background-color: #303030;
             border-top: 1px solid #080500;
             border-bottom: 2px solid #080500;
             height: 40px;
             line-height: 40px;
-            
+
         }
         .betting-history-list {
             border-bottom: 2px solid #080500;
@@ -1024,7 +1024,7 @@ body {
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        
+
     }
 }
 
@@ -1565,6 +1565,20 @@ body {
 .iframe-game-trust {
     width: 100%;
     height: 553px;
+    border: 0;
+    transform: scale(1.0);
+    transform-origin: 0 0;
+}
+#frame-wrap-dream {
+    width: 789px;
+    height: 609px;
+    margin-left:auto;
+    margin-right:auto;
+    overflow: hidden;
+}
+.iframe-game-dream {
+    width: 789px;
+    height: 609px;
     border: 0;
     transform: scale(1.0);
     transform-origin: 0 0;
