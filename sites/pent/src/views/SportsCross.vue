@@ -823,9 +823,9 @@
 
                 if(v.sport === 'Baseball') {
                     //  일치하는 _id 건에 대한 승무패, 핸디캡 검사
-                    if(v.type === 'run1stInning' || v.type === 'handicapKor' || v.type === 'underOverKor') {
+                    if(v.type === 'run1stInning' || (v.type === 'handicapKor' || v.type === 'underOverKor')) {
                         let existSameGameIndex = this.betCart.findIndex((x) => {
-                            return v._id === x._id && v.type !== x.type && (x.type === 'run1stInning' || x.type === 'handicapKor' || x.type === 'underOverKor')
+                            return v._id === x._id && v.type !== x.type && (x.type === 'run1stInning' || (x.type === 'handicapKor' || x.type === 'underOverKor'))
                         })
 
                         if(existSameGameIndex > -1) {
