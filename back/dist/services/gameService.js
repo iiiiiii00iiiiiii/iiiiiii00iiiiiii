@@ -285,7 +285,7 @@ class GameService {
                             'games.underOverTotalSetKor': 1,
                             'games.underOverKor': 1,
                             'games.first7PointsKor': 1,
-                            'games.run1stInningKor': 1,
+                            'games.run1stInning': 1,
                             'games.firstHomerKor': 1,
                             'games.first5PointsKor': 1
                         }
@@ -348,7 +348,7 @@ class GameService {
                             'games.underOverTotalSetKor': 1,
                             'games.underOverKor': 1,
                             'games.first7PointsKor': 1,
-                            'games.run1stInningKor': 1,
+                            'games.run1stInning': 1,
                             'games.firstHomerKor': 1,
                             'games.first5PointsKor': 1
                         }

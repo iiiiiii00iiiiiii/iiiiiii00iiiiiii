@@ -793,7 +793,7 @@ class GameController {
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
                 });
             }
             catch (e) {
@@ -1142,7 +1142,7 @@ class GameController {
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
                 });
             }
             catch (e) {
@@ -1388,7 +1388,7 @@ class GameController {
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
                 });
             }
             catch (e) {
@@ -1630,7 +1630,7 @@ class GameController {
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
                 });
             }
             catch (e) {
@@ -1726,7 +1726,7 @@ class GameController {
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder.data ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
                 });
             }
             catch (e) {

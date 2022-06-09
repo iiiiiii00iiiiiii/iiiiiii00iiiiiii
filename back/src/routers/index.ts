@@ -129,6 +129,14 @@ router.post('/charge-information', auth.checkLogin(), boardCtr.chargeInformation
 router.delete('/delete-help', auth.checkLogin(), boardCtr.deleteHelp)
 router.delete('/delete-help-all', auth.checkLogin(), boardCtr.deleteHelpAll)
 
+// Free
+router.get('/get-free-list', auth.checkLogin(), boardCtr.getFreeList)
+router.get('/get-free-detail', auth.checkLogin(), boardCtr.getFreeDetail)
+router.get('/get-board-bet-list', auth.checkLogin(), betCtr.getBoardBetList)
+router.post('/free', auth.checkLogin(), boardCtr.free)
+router.post('/free-comment', auth.checkLogin(), boardCtr.freeComment)
+
+
 
 // Message
 router.get('/get-message-list', auth.checkLogin(), messageCtr.getMessageList)

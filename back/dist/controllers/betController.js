@@ -737,6 +737,18 @@ class BetController {
                     r.rate = games.games[game.type][index].overRate;
                 return r;
             }
+            //  1이닝 득점/무득점
+            if (game.type === 'run1stInning') {
+                if (games.games[game.type][0].status !== 'ACTIVE' || !games.games[game.type][0].showStatus) {
+                    r.status = false;
+                    return r;
+                }
+                if (game.select === 'yes')
+                    r.rate = games.games[game.type][0].yesRate;
+                if (game.select === 'no')
+                    r.rate = games.games[game.type][0].noRate;
+                return r;
+            }
             //  2이닝 승무패
             if (game.type === 'x2ndInning') {
                 if (games.games[game.type][0].status !== 'ACTIVE' || !games.games[game.type][0].showStatus) {
@@ -2978,6 +2990,31 @@ class BetController {
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '배팅 내역 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getBoardBetList = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+                const r = yield betService.getBoardBetList(v.decoded._id);
+                if (r.error) {
+                    data.errorTitle = '배팅 내역 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+                res.json({
+                    recordSet: r.data
                 });
             }
             catch (e) {

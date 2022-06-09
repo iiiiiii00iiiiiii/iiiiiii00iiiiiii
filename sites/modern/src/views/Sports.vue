@@ -5366,8 +5366,8 @@
                     })
                 }
                 //  후반전 오버언더 정렬
-                if(v.games.oddEven2ndHalf && v.games.oddEven2ndHalf.length > 1) {
-                    v.games.oddEven2ndHalf.sort((a, b) => {
+                if(v.games.underOver2ndHalf && v.games.underOver2ndHalf.length > 1) {
+                    v.games.underOver2ndHalf.sort((a, b) => {
                         return (a.standard < b.standard) ? -1 : (a.standard > b.standard) ? 1: 0
                     })
                 }

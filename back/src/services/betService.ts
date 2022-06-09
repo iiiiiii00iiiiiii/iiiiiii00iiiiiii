@@ -397,6 +397,51 @@ export default class BetService implements IBetService {
         })
     }
 
+    public getBoardBetList = (userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    deleteStatus: false,
+                    regDateTime: {
+                        $gte: moment().subtract(7, 'day').toDate()
+                    },
+                    useBoard: {
+                        $ne: true
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        gameType: 1,
+                        betAmount: 1,
+                        betRate: 1,
+                        betBenefit: 1,
+                        betResult: 1,
+                        betCount: 1,
+                        detail: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const sortQuery: any = {
+                    _id: -1
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betSports').find(findQuery, whatQuery).sort(sortQuery).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > getBoardBetList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public getMinigamesBetList = (page: number, userOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }

@@ -42,6 +42,9 @@ Vue.prototype.$sw = sw
 import Cleave from 'cleave.js'
 Vue.prototype.$cleave = Cleave
 
+import striptags from 'striptags'
+Vue.prototype.$striptags = striptags
+
 // aos
 import AOS from 'aos'
 import 'aos/dist/aos.css'

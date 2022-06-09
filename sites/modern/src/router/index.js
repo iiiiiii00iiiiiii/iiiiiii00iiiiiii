@@ -226,6 +226,28 @@ const routes = [
         meta: { layout: 'Default' },
         beforeEnter: getInformation()
     },
+    // free
+    {
+        path: '/free',
+        name: 'Free',
+        component: () => import(/* webpackChunkName: "free" */ '../views/Free.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformation()
+    },
+    {
+        path: '/free/detail/:_id/:page',
+        name: 'FreeDetail',
+        component: () => import(/* webpackChunkName: "freedetail" */ '../views/FreeDetail.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformation()
+    },
+    {
+        path: '/free-write/:page',
+        name: 'FreeWrite',
+        component: () => import(/* webpackChunkName: "freewrite" */ '../views/FreeWrite.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformation()
+    },
     // message
     {
         path: '/message',

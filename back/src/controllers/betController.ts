@@ -750,6 +750,18 @@ export default class BetController implements IBetController {
 
             return r
         }
+        //  1이닝 득점/무득점
+        if(game.type === 'run1stInning') {
+            if(games.games[game.type][0].status !== 'ACTIVE' || !games.games[game.type][0].showStatus) {
+                r.status = false
+                return r
+            }
+
+            if(game.select === 'yes') r.rate = games.games[game.type][0].yesRate
+            if(game.select === 'no') r.rate = games.games[game.type][0].noRate
+
+            return r
+        }
         //  2이닝 승무패
         if(game.type === 'x2ndInning') {
             if(games.games[game.type][0].status !== 'ACTIVE' || !games.games[game.type][0].showStatus) {
@@ -3098,6 +3110,32 @@ export default class BetController implements IBetController {
             res.json({
                 recordSet: r.data,
                 recordCount: r.count
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+    public getBoardBetList = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+            const r: TService = await betService.getBoardBetList(v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data
             })
         } catch (e) {
             logger.error(e)

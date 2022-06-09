@@ -5,10 +5,10 @@
                 <font-awesome-icon :icon="['fa', 'bars']" class="icon-mobile-bars" @click="openLeftSide()"/>
             </div>
             <div class="col-8 header-mobile-logo-wrap">
-                <img src="/images/logo.png" class="mobile-logo" alt="로고" title="로고" data-aos="flip-up" data-aos-duration="1500" @click="$tools.pushRouter('/home', false)">
+                <img src="/images/logo.png" class="mobile-logo" alt="로고" title="로고" data-aos="flip-up" data-aos-duration="1500" @click="$tools.pushRouter('/home', true)">
             </div>
             <div class="col-2 header-mobile-right-wrap">
-                <font-awesome-icon :icon="['fa', 'sign-in-alt']" class="icon-mobile-sign-in-alt" v-show="!isLogin" @click="$tools.pushRouter('/', false)"/>
+                <font-awesome-icon :icon="['fa', 'sign-in-alt']" class="icon-mobile-sign-in-alt" v-show="!isLogin" @click="$tools.pushRouter('/', true)"/>
                 <span class="cart-count" v-show="isLogin" @click="openRightSide()"> {{ betCart.length }} </span>
                 <font-awesome-icon :icon="['fa', 'shopping-cart']" class="icon-mobile-sign-in-alt" v-show="isLogin" @click="openRightSide()"/>
             </div>
@@ -21,12 +21,13 @@
                             <li @click="$tools.pushRouter('/sports')">해외형 스포츠</li>
                             <li @click="$tools.pushRouter('/sportscross')">국내형 스포츠</li>
                             <li @click="$tools.pushRouter('/sportslive')">라이브 스포츠</li>
-                            <li @click="$tools.pushRouter('/sportsspecial', false)">스페셜</li>
-                            <li @click="$tools.pushRouter('/sportslivekor', false)">실시간</li>
+                            <li @click="$tools.pushRouter('/sportsspecial', true)">스페셜</li>
+                            <li @click="$tools.pushRouter('/sportslivekor', true)">실시간</li>
                             <li @click="$tools.pushRouter('/casino', true)">카지노</li>
                             <li @click="openKplay(0, true)">슬롯</li>
-                            <li @click="$tools.pushRouter('/powerball', false)">미니게임</li>
-                            <li @click="$tools.pushRouter('/rules', false)">경기규정</li>
+                            <li @click="$tools.pushRouter('/powerball', true)">미니게임</li>
+                            <li @click="$tools.pushRouter('/free', true)">게시판</li>
+                            <li @click="$tools.pushRouter('/rules', true)">경기규정</li>
                         </ul>
                     </div>
                 </div>
@@ -178,7 +179,7 @@
                 }
 
                 const kplayWindow = window.open('', 'kplay', '_blank')
-                let r = await this.$http.get('/api/kpay-url', { id }, false)
+                let r = await this.$http.get('/api/kpay-url', { id }, true)
 
                 if(r.error) {
                     if(r.error.response.status === 500) {
@@ -259,7 +260,7 @@
         border-bottom: 1px solid #242424;
 
         .header-mobile-menu-wrap {
-            width: 650px;
+            width: 700px;
 
             ul {
                 list-style: none;

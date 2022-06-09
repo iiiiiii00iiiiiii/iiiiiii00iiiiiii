@@ -159,8 +159,8 @@
                 <!-- 월드 리그 -->
                 <div
                     class="category-country line-country"
+                    v-show="showPopular === 'Football' && popularFootball.wLeague.league.length > 0 && popularFootball.wLeague.count > 0"
                     v-for="(v, index) in popularFootball.wLeague.league" :key="index"
-                    v-show="showPopular === 'Football' && popularFootball.wLeague && popularFootball.wLeague.count > 0"
                 >
                     <span class="category-contry-icon" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${v.leagueKor}`)">
                         ◎
@@ -1324,7 +1324,12 @@
                 showSportsTitle: true,
                 showSportsCrossTitle: true,
                 showPopularTitle: true,
-                popularFootball: {},
+                popularFootball: {
+                    wLeague: {
+                        count: 0,
+                        league: []
+                    }
+                },
                 popularBaseball: {},
                 popularBasketball: {},
                 popularHockey: {},

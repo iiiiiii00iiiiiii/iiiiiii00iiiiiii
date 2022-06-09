@@ -625,6 +625,275 @@ class BoardService {
                 }
             }));
         };
+        this.getFreeList = (page) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            title: 1,
+                            content: 1,
+                            commentsCount: 1,
+                            hit: 1,
+                            writerNick: 1,
+                            writerGrade: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const skip = (page - 1) * config_1.default.pageSize;
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('boardFree').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config_1.default.pageSize).toArray();
+                    r.count = yield pool.collection('boardFree').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getFreeList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getFreeDetail = (_id) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(_id),
+                        deleteStatus: false
+                    };
+                    const setQuery = {
+                        $inc: {
+                            hit: 1
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            title: 1,
+                            content: 1,
+                            hit: 1,
+                            writerNick: 1,
+                            writerGrade: 1,
+                            gameID: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('boardFree').findOneAndUpdate(findQuery, setQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getFreeDetail');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getFreeComments = (_id) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        boardOID: new db_1.ObjectID(_id),
+                        deleteStatus: false
+                    };
+                    const whatQuery = {
+                        projection: {
+                            comment: 1,
+                            writerNick: 1,
+                            writerGrade: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('boardComments').find(findQuery, whatQuery).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getFreeComments');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.free = (title, content, userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, isAgent, memoShort, ipaddress, gameID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        title: (0, modules_1.mongoSanitize)(title),
+                        content: (0, modules_1.mongoSanitize)(content),
+                        commentsCount: 0,
+                        writerOID: new db_1.ObjectID(userOID),
+                        recommendTree: userRecommendTree,
+                        writerID: userID,
+                        writerNick: userNick,
+                        writerGrade: userGrade,
+                        bankOwner: userBankOwner,
+                        hit: 0,
+                        answerStatus: false,
+                        check: false,
+                        readAnswerStatus: false,
+                        deleteStatus: false,
+                        isAgent,
+                        memoShort,
+                        ipaddress,
+                        regDateTime: new Date(),
+                        gameID: gameID ? new db_1.ObjectID(gameID) : null
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('boardFree').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > free');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getBoardInfo = (userGrade) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        category: 'configBoard'
+                    };
+                    const whatQuery = {
+                        projection: {
+                            [`lv${userGrade}`]: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('config').findOne(findQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getBoardInfo');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getPrizeLogCount = (userOID, isBet) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        sortation: isBet ? 'bettingPrize' : 'normalPrize'
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').countDocuments(findQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BoardService > getPrizeLogCount');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.addPointForBoard = (userOID, point) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(userOID)
+                    };
+                    let setQuery = {
+                        $inc: {
+                            point
+                        }
+                    };
+                    const optionsQuery = {
+                        projection: {
+                            point: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > addPointForBoard');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.addMoneyForBoardLog = (userOID, userID, userNick, userGrade, userBankOwner, userRecommendTree, process, point, isTest, isAgent, isBet) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const insertQuery = {
+                        moneyOID: null,
+                        userOID: new db_1.ObjectID(userOID),
+                        userID,
+                        userNick,
+                        userGrade,
+                        userBankOwner,
+                        userRecommendTree,
+                        before: point,
+                        process,
+                        after: point + process,
+                        sortation: `${isBet ? 'bettingPrize' : 'normalPrize'}`,
+                        reason: `게시판 등록 ${isBet ? '- 배팅' : ' - 일반'}`,
+                        adminOID: null,
+                        adminID: null,
+                        adminNick: null,
+                        adminGrade: null,
+                        deleteStatus: false,
+                        regDateTime: new Date(),
+                        isTest,
+                        isAgent
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('moneyLog').insertOne(insertQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > addMoneyForBoardLog');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.betUpdate = (userOID, gameID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(gameID),
+                        userOID: new db_1.ObjectID(userOID)
+                    };
+                    const setQuery = {
+                        $set: {
+                            useBoard: true
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betSports').updateOne(findQuery, setQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('MoneyService > betUpdate');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = BoardService;

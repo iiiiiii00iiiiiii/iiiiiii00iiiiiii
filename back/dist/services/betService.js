@@ -365,6 +365,47 @@ class BetService {
                 }
             }));
         };
+        this.getBoardBetList = (userOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        userOID: new db_1.ObjectID(userOID),
+                        deleteStatus: false,
+                        regDateTime: {
+                            $gte: (0, modules_1.moment)().subtract(7, 'day').toDate()
+                        },
+                        useBoard: {
+                            $ne: true
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            gameType: 1,
+                            betAmount: 1,
+                            betRate: 1,
+                            betBenefit: 1,
+                            betResult: 1,
+                            betCount: 1,
+                            detail: 1,
+                            regDateTime: 1
+                        }
+                    };
+                    const sortQuery = {
+                        _id: -1
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betSports').find(findQuery, whatQuery).sort(sortQuery).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > getBoardBetList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.getMinigamesBetList = (page, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };

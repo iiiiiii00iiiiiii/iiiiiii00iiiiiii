@@ -706,4 +706,326 @@ export default class BoardService implements IBoardService {
             }
         })
     }
+
+    public getFreeList = (page: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        title: 1,
+                        content: 1,
+                        commentsCount: 1,
+                        hit: 1,
+                        writerNick: 1,
+                        writerGrade: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const skip: number = (page - 1) * config.pageSize
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardFree').find(findQuery, whatQuery).sort({ _id: -1 }).skip(skip).limit(config.pageSize).toArray()
+                r.count = await pool.collection('boardFree').countDocuments(findQuery)
+
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getFreeList')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getFreeDetail = (_id: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(_id),
+                    deleteStatus: false
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        hit: 1
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        title: 1,
+                        content: 1,
+                        hit: 1,
+                        writerNick: 1,
+                        writerGrade: 1,
+                        gameID: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardFree').findOneAndUpdate(findQuery, setQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getFreeDetail')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getFreeComments = (_id: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    boardOID: new ObjectID(_id),
+                    deleteStatus: false
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        comment: 1,
+                        writerNick: 1,
+                        writerGrade: 1,
+                        regDateTime: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardComments').find(findQuery, whatQuery).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getFreeComments')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public free = (
+        title: string,
+        content: string,
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBankOwner: string,
+        userRecommendTree: Array<any>,
+        isAgent: boolean,
+        memoShort: string,
+        ipaddress: string,
+        gameID: string
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    title: mongoSanitize(title),
+                    content: mongoSanitize(content),
+                    commentsCount: 0,
+                    writerOID: new ObjectID(userOID),
+                    recommendTree: userRecommendTree,
+                    writerID: userID,
+                    writerNick: userNick,
+                    writerGrade: userGrade,
+                    bankOwner: userBankOwner,
+                    hit: 0,
+                    answerStatus: false,
+                    check: false,
+                    readAnswerStatus: false,
+                    deleteStatus: false,
+                    isAgent,
+                    memoShort,
+                    ipaddress,
+                    regDateTime: new Date(),
+                    gameID: gameID ? new ObjectID(gameID) : null
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardFree').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > free')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getBoardInfo = (userGrade: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    category: 'configBoard'
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        [`lv${userGrade}`]: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('config').findOne(findQuery, whatQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getBoardInfo')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getPrizeLogCount = (userOID: string, isBet: boolean): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    sortation: isBet ? 'bettingPrize' : 'normalPrize'
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getPrizeLogCount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public addPointForBoard = (userOID: string, point: number): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(userOID)
+                }
+
+                let setQuery: any = {
+                    $inc: {
+                        point
+                    }
+                }
+
+                const optionsQuery: any = {
+                    projection: {
+                        point: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('users').findOneAndUpdate(findQuery, setQuery, optionsQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > addPointForBoard')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public addMoneyForBoardLog = (
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBankOwner: string,
+        userRecommendTree: Array<any>,
+        process: number,
+        point: number,
+        isTest: boolean,
+        isAgent: boolean,
+        isBet: boolean
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    moneyOID: null,
+                    userOID: new ObjectID(userOID),
+                    userID,
+                    userNick,
+                    userGrade,
+                    userBankOwner,
+                    userRecommendTree,
+                    before: point,
+                    process,
+                    after: point + process,
+                    sortation: `${ isBet ? 'bettingPrize' : 'normalPrize' }`,
+                    reason: `게시판 등록 ${ isBet ? '- 배팅' : ' - 일반' }`,
+                    adminOID: null,
+                    adminID: null,
+                    adminNick: null,
+                    adminGrade: null,
+                    deleteStatus: false,
+                    regDateTime: new Date(),
+                    isTest,
+                    isAgent
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > addMoneyForBoardLog')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public betUpdate = (userOID: string, gameID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(gameID),
+                    userOID: new ObjectID(userOID)
+                }
+
+                const setQuery: any = {
+                    $set: {
+                        useBoard: true
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betSports').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > betUpdate')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

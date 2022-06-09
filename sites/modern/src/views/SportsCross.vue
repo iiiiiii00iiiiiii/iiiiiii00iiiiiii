@@ -431,6 +431,90 @@
                                                 오버언더
                                             </div>
                                         </div>
+                                        <!-- 1이닝 득점/무득점 -->
+                                        <div
+                                            class="row g"
+                                            v-if="v.games.run1stInning && v.showConfig.run1stInning && v.games.run1stInning[0].status === 'ACTIVE' && v.games.run1stInning[0].showStatus"
+                                        >
+                                            <div class="col-1 g-date d-none d-xl-block">
+                                                {{ $moment(v.gameDateTime).format('MM/DD HH:mm') }}
+                                            </div>
+                                            <div
+                                                class="col-5 col-xl-4 g-home can-bet"
+                                                :class="{
+                                                    'n': !v.showConfig.run1stInning || v.games.run1stInning[0].status !== 'ACTIVE' || !v.games.run1stInning[0].showStatus,
+                                                    'selectBet': betCart.findIndex((x) => x._id === v._id && x.type === 'run1stInning' && x.standard === null && x.select === 'yes') > -1
+                                                }"
+                                                @click="setBet({
+                                                    _id: v._id,
+                                                    sport: v.sport,
+                                                    type: 'run1stInning',
+                                                    homeTeam: v.homeTeamKor ? v.homeTeamKor : v.homeTeam,
+                                                    awayTeam: v.awayTeamKor ? v.awayTeamKor : v.awayTeam,
+                                                    select: 'yes',
+                                                    selectRate: v.games.run1stInning[0].yesRate,
+                                                    standard: null
+                                                })"
+                                            >
+                                                <div class="float-left pl-1 pl-xl-2 g-home-team-mobile-cross">
+                                                    1이닝 득점
+                                                </div>
+                                                <div class="float-right pr-1 pr-xl-2">
+                                                    <!-- <small class="x d-sm-none">X</small> -->
+                                                    <!-- <small class="x d-none d-sm-inline">1x2</small> -->
+                                                    {{ $numeral(v.games.run1stInning[0].yesRate).format('0.00') }}
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="col-2 g-x"
+                                                :class="{
+                                                    'n': !v.showConfig.x || v.games.run1stInning[0].status !== 'ACTIVE' || !v.games.run1stInning[0].showStatus,
+                                                    'can-bet': v.showConfig.x && v.games.run1stInning[0].status === 'ACTIVE' && v.games.run1stInning[0].showStatus && v.games.run1stInning[0].drawRate,
+                                                    'selectBet': betCart.findIndex((x) => x._id === v._id && x.type === 'run1stInning' && x.standard === null && x.select === 'draw') > -1
+                                                }"
+                                                @click="v.showConfig.x && v.games.run1stInning[0].status === 'ACTIVE' && v.games.run1stInning[0].showStatus && v.games.run1stInning[0].drawRate ? setBet({
+                                                    _id: v._id,
+                                                    sport: v.sport,
+                                                    type: 'run1stInning',
+                                                    homeTeam: v.homeTeamKor ? v.homeTeamKor : v.homeTeam,
+                                                    awayTeam: v.awayTeamKor ? v.awayTeamKor : v.awayTeam,
+                                                    select: 'draw',
+                                                    selectRate: v.games.run1stInning[0].drawRate,
+                                                    standard: null
+                                                }) : null"
+                                            >
+                                                {{ v.games.run1stInning[0].drawRate ? $numeral(v.games.run1stInning[0].drawRate).format('0.00') : 'vs' }}
+                                            </div>
+                                            <div
+                                                class="col-5 col-xl-4 g-away can-bet"
+                                                :class="{
+                                                    'n': !v.showConfig.x || v.games.run1stInning[0].status !== 'ACTIVE' || !v.games.run1stInning[0].showStatus,
+                                                    'selectBet': betCart.findIndex((x) => x._id === v._id && x.type === 'run1stInning' && x.standard === null && x.select === 'no') > -1
+                                                }"
+                                                @click="setBet({
+                                                    _id: v._id,
+                                                    sport: v.sport,
+                                                    type: 'run1stInning',
+                                                    homeTeam: v.homeTeamKor ? v.homeTeamKor : v.homeTeam,
+                                                    awayTeam: v.awayTeamKor ? v.awayTeamKor : v.awayTeam,
+                                                    select: 'no',
+                                                    selectRate: v.games.run1stInning[0].noRate,
+                                                    standard: null
+                                                })"
+                                            >
+                                                <div class="float-left pl-1 pl-xl-2">
+                                                    {{ $numeral(v.games.run1stInning[0].noRate).format('0.00') }}
+                                                    <!-- <small class="x d-sm-none">X</small>
+                                                    <small class="x d-none d-sm-inline">1x2</small> -->
+                                                </div>
+                                                <div class="float-right pr-1 pr-xl-2 g-away-team-mobile-cross">
+                                                    1이닝 무득점
+                                                </div>
+                                            </div>
+                                            <div class="col-1 g-count d-none d-xl-block o">
+                                                1이닝 득/무득
+                                            </div>
+                                        </div>
                                         <!-- 선 7득점 [농구] -->
                                         <!-- <div
                                             class="row g"
@@ -753,6 +837,20 @@
                     if(existSameGameIndex > -1) {
                         this.$tools.sw('warning', '조합불가', '동일경기 조합은 불가능 합니다.')
                         return
+                    }
+                }
+
+                if(v.sport === 'Baseball') {
+                    //  일치하는 _id 건에 대한 승무패, 핸디캡 검사
+                    if(v.type === 'run1stInning' || v.type === 'handicapKor' || v.type === 'underOverKor') {
+                        let existSameGameIndex = this.betCart.findIndex((x) => {
+                            return v._id === x._id && v.type !== x.type && (x.type === 'run1stInning' || x.type === 'handicapKor' || x.type === 'underOverKor')
+                        })
+
+                        if(existSameGameIndex > -1) {
+                            this.$tools.sw('warning', '조합불가', '동일경기 1이닝 득/무득은 핸디캡 또는 언더오버와 조합이 불가능 합니다.')
+                            return
+                        }
                     }
                 }
 
