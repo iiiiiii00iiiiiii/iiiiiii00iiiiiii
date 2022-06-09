@@ -823,12 +823,23 @@
 
                 if(v.sport === 'Baseball') {
                     //  일치하는 _id 건에 대한 승무패, 핸디캡 검사
-                    if(v.type === 'run1stInning' || (v.type === 'handicapKor' || v.type === 'underOverKor')) {
-                        let existSameGameIndex = this.betCart.findIndex((x) => {
-                            return v._id === x._id && v.type !== x.type && (x.type === 'run1stInning' || (x.type === 'handicapKor' || x.type === 'underOverKor'))
-                        })
+                    if(v.type === 'run1stInning' || v.type === 'handicapKor' || v.type === 'underOverKor') {
+                        let existSameGameIndex = -1
+                        let existSameGameIndex2 = -1
 
-                        if(existSameGameIndex > -1) {
+                        if(v.type === 'run1stInning') {
+                            existSameGameIndex = this.betCart.findIndex((x) => {
+                                return v._id === x._id && v.type !== x.type && (x.type === 'handicapKor' || x.type === 'underOverKor')
+                            })
+                        }
+
+                        if(v.type === 'handicapKor' || v.type === 'underOverKor') {
+                            existSameGameIndex2 = this.betCart.findIndex((x) => {
+                                return v._id === x._id && v.type !== x.type && x.type === 'run1stInning'
+                            })
+                        }
+
+                        if(existSameGameIndex > -1 || existSameGameIndex2 > -1) {
                             this.$tools.sw('warning', '조합불가', '동일경기 1이닝 득/무득은 핸디캡 또는 언더오버와 조합이 불가능 합니다.')
                             return
                         }
