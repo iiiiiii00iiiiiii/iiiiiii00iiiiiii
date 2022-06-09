@@ -62,7 +62,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-12 mt-1 text-light-brown">
+                                    <div class="col-12 mt-1 text-danger">
                                         <span class="cursor-pointer" @click="$tools.pushRouter('/join')">아직 회원이 아니세요? 회원가입</span>
                                     </div>
                                 </form>
