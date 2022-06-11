@@ -3000,6 +3000,31 @@ class BetController {
             }
         });
         this.getBoardBetList = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+                const r = yield betService.getBoardBetList(v.decoded._id);
+                if (r.error) {
+                    data.errorTitle = '배팅 내역 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+                res.json({
+                    recordSet: r.data
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '배팅 내역 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
+        this.getBoardBetListForView = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const validateData = {
                 _id: {
                     value: req.query._id,
@@ -3043,7 +3068,7 @@ class BetController {
             // validate end
             try {
                 // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
-                const r = yield betService.getBoardBetList(v._id);
+                const r = yield betService.getBoardBetListForView(v._id);
                 if (r.error) {
                     data.errorTitle = '배팅 내역 실패 - 500';
                     res.status(500).json(data);

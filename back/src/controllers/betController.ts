@@ -3119,6 +3119,34 @@ export default class BetController implements IBetController {
         }
     }
     public getBoardBetList = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+            const r: TService = await betService.getBoardBetList(v.decoded._id)
+            if(r.error) {
+                data.errorTitle = '배팅 내역 실패 - 500'
+                res.status(500).json(data)
+                return
+            }
+            // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+
+            res.json({
+                recordSet: r.data
+            })
+        } catch (e) {
+            logger.error(e)
+            data.errorTitle = '배팅 내역 실패 - 500'
+            res.status(500).json(data)
+            return
+        }
+    }
+    
+
+    public getBoardBetListForView = async (req: req, res: res): Promise<void> => {
         const validateData: any = {
             _id: {
                 value: req.query._id,
@@ -3164,7 +3192,7 @@ export default class BetController implements IBetController {
 
         try {
             // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
-            const r: TService = await betService.getBoardBetList(v._id)
+            const r: TService = await betService.getBoardBetListForView(v._id)
             if(r.error) {
                 data.errorTitle = '배팅 내역 실패 - 500'
                 res.status(500).json(data)

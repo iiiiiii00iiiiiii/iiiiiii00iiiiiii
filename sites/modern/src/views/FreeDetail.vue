@@ -312,7 +312,7 @@
                 this.comment = r.data.answer
 
                 if(this.gameID) {
-                    const r = await this.$http.get('/api/get-board-bet-list', {
+                    const r = await this.$http.get('/api/get-board-bet-list-view', {
                         _id: this.gameID
                     })
 

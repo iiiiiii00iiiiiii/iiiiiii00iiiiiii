@@ -97,6 +97,7 @@ router.delete('/delete-help-all', auth.checkLogin(), boardCtr.deleteHelpAll);
 router.get('/get-free-list', auth.checkLogin(), boardCtr.getFreeList);
 router.get('/get-free-detail', auth.checkLogin(), boardCtr.getFreeDetail);
 router.get('/get-board-bet-list', auth.checkLogin(), betCtr.getBoardBetList);
+router.get('/get-board-bet-list-view', auth.checkLogin(), betCtr.getBoardBetListForView);
 router.post('/free', auth.checkLogin(), boardCtr.free);
 router.post('/free-comment', auth.checkLogin(), boardCtr.freeComment);
 // Message
