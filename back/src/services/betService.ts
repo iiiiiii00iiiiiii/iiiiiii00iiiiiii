@@ -397,20 +397,13 @@ export default class BetService implements IBetService {
         })
     }
 
-    public getBoardBetList = (userOID: string): Promise<TService> => {
+    public getBoardBetList = (betOID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
             try {
                 const findQuery: any = {
-                    userOID: new ObjectID(userOID),
-                    deleteStatus: false,
-                    regDateTime: {
-                        $gte: moment().subtract(7, 'day').toDate()
-                    },
-                    useBoard: {
-                        $ne: true
-                    }
+                    _id: new ObjectID(betOID)
                 }
 
                 const whatQuery: any = {
@@ -422,16 +415,13 @@ export default class BetService implements IBetService {
                         betResult: 1,
                         betCount: 1,
                         detail: 1,
-                        regDateTime: 1
+                        regDateTime: 1,
+                        bonusRate: 1
                     }
                 }
 
-                const sortQuery: any = {
-                    _id: -1
-                }
-
                 const pool: any = await mongoDB.connect()
-                r.data = await pool.collection('betSports').find(findQuery, whatQuery).sort(sortQuery).toArray()
+                r.data = await pool.collection('betSports').findOne(findQuery, whatQuery)
                 resolve(r)
             } catch (err) {
                 logger.error('BetService > getBoardBetList')

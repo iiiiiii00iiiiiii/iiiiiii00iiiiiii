@@ -1309,14 +1309,14 @@ class MoneyController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
-                // ■■■■■■■■■■ DB-문의 등록 ■■■■■■■■■■
-                const r = yield boardService.free(v.title, v.content, v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, v.decoded.isAgent, rUserInfo.data.memoShort, v.reqIpaddress, v.id);
+                // ■■■■■■■■■■ DB-댓글 등록 ■■■■■■■■■■
+                const r = yield boardService.freeComment(v._id, v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.commentContent, v.reqIpaddress);
                 if (r.error) {
                     data.errorTitle = '등록 실패 - 500';
                     res.status(500).json(data);
                     return;
                 }
-                // ■■■■■■■■■■ DB-문의 등록 ■■■■■■■■■■
+                // ■■■■■■■■■■ DB-댓글 등록 ■■■■■■■■■■
                 if (r.data.insertedCount === 0) {
                     data.errorTitle = '등록 실패 - 500';
                     res.status(500).json(data);
@@ -1331,32 +1331,22 @@ class MoneyController {
                 }
                 // ■■■■■■■■■■ DB-레벨에 따른 게시판 설정 가져오기 ■■■■■■■■■■
                 let bonus = 0;
-                let betCount = 0;
+                let count = 0;
                 let needPrize = true;
-                if (v.id) {
-                    bonus = rBoardInfo.data[`lv${v.decoded.grade}`].bettingPrize;
-                }
-                else {
-                    bonus = rBoardInfo.data[`lv${v.decoded.grade}`].normalPrize;
-                }
+                bonus = rBoardInfo.data[`lv${v.decoded.grade}`].replyPrize;
                 if (bonus === 0) {
                     needPrize = false;
                 }
                 // ■■■■■■■■■■ DB-이미 받은 내역 있는지 가져오기 ■■■■■■■■■■
-                const rBoardBonus = yield boardService.getPrizeLogCount(v.decoded._id, v.id ? true : false);
+                const rBoardBonus = yield boardService.getCommentPrizeLogCount(v.decoded._id);
                 if (rBoardBonus.error) {
                     data.errorTitle = '등록 실패 - 500';
                     res.status(500).json(data);
                     return;
                 }
                 // ■■■■■■■■■■ DB-이미 받은 내역 있는지 가져오기 ■■■■■■■■■■
-                if (v.id) {
-                    betCount = rBoardInfo.data[`lv${v.decoded.grade}`].bettingCount;
-                }
-                else {
-                    betCount = rBoardInfo.data[`lv${v.decoded.grade}`].normalCount;
-                }
-                if (betCount <= rBoardBonus.data) {
+                count = rBoardInfo.data[`lv${v.decoded.grade}`].replyCount;
+                if (count <= rBoardBonus.data) {
                     needPrize = false;
                 }
                 if (needPrize === true) {
@@ -1364,14 +1354,12 @@ class MoneyController {
                     const rAddPoint = yield boardService.addPointForBoard(v.decoded._id, bonus);
                     // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
                     // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
-                    yield boardService.addMoneyForBoardLog(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, bonus, rAddPoint.data.value.point, rUserInfo.data.isTest, rUserInfo.data.isAgent, v.id ? true : false);
+                    yield boardService.addMoneyForBoardCommentLog(v.decoded._id, v.decoded.id, v.decoded.nick, v.decoded.grade, v.decoded.bankOwner, rUserInfo.data.recommendTree, bonus, rAddPoint.data.value.point, rUserInfo.data.isTest, rUserInfo.data.isAgent, v.id ? true : false);
                     // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
                 }
-                if (v.id) {
-                    // ■■■■■■■■■■ DB-USER 경기 업데이트 해주기. ■■■■■■■■■■
-                    yield boardService.betUpdate(v.decoded._id, v.id);
-                    // ■■■■■■■■■■ DB-USER 경기 업데이트 해주기. ■■■■■■■■■■
-                }
+                // ■■■■■■■■■■ DB-댓글 카운터 업데이트 해주기. ■■■■■■■■■■
+                yield boardService.freeCommentCountUpdate(v._id);
+                // ■■■■■■■■■■ DB-USER 경기 업데이트 해주기. ■■■■■■■■■■
                 res.json(r.data);
             }
             catch (e) {

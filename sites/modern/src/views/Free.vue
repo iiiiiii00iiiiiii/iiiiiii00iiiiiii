@@ -45,6 +45,7 @@
                                                         @click="$tools.pushRouter(`/free/detail/${item._id}/${search.page}`)"
                                                     >
                                                         {{ item.title }} <span class="text-yellow">({{ item.commentsCount }})</span>
+                                                        <span class="badge badge-danger ml-1" v-if="item.gameID">BET</span>
                                                     </span>
                                                 </td>
                                                 <td>

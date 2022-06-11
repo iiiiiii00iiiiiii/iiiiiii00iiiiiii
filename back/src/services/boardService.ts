@@ -724,7 +724,8 @@ export default class BoardService implements IBoardService {
                         hit: 1,
                         writerNick: 1,
                         writerGrade: 1,
-                        regDateTime: 1
+                        regDateTime: 1,
+                        gameID: 1
                     }
                 }
 
@@ -867,6 +868,45 @@ export default class BoardService implements IBoardService {
         })
     }
 
+    public freeComment = (
+        boardOID: string,
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        comment: string,
+        ipaddress: string
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    boardOID: new ObjectID(boardOID),
+                    which: 'free',
+                    isMember: true,
+                    writerOID: userOID,
+                    writerID: userID,
+                    writerNick: userNick,
+                    writerGrade: userGrade,
+                    comment: mongoSanitize(comment),
+                    deleteStatus: false,
+                    ipaddress,
+                    regDateTime: new Date()
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardComments').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > freeComment')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public getBoardInfo = (userGrade: number): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -901,7 +941,11 @@ export default class BoardService implements IBoardService {
             try {
                 const findQuery: any = {
                     userOID: new ObjectID(userOID),
-                    sortation: isBet ? 'bettingPrize' : 'normalPrize'
+                    sortation: isBet ? 'bettingPrize' : 'normalPrize',
+                    regDateTime: {
+                        $gte: moment().startOf('day').toDate(),
+                        $lte: moment().endOf('day').toDate()
+                    }
                 }
 
                 const pool: any = await mongoDB.connect()
@@ -909,6 +953,32 @@ export default class BoardService implements IBoardService {
                 resolve(r)
             } catch (err) {
                 logger.error('BoardService > getPrizeLogCount')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getCommentPrizeLogCount = (userOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    userOID: new ObjectID(userOID),
+                    sortation: 'replyPrize',
+                    regDateTime: {
+                        $gte: moment().startOf('day').toDate(),
+                        $lte: moment().endOf('day').toDate()
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').countDocuments(findQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('BoardService > getCommentPrizeLogCount')
                 logger.error(err)
                 r.error = err
                 resolve(r)
@@ -1001,6 +1071,58 @@ export default class BoardService implements IBoardService {
         })
     }
 
+    public addMoneyForBoardCommentLog = (
+        userOID: string,
+        userID: string,
+        userNick: string,
+        userGrade: number,
+        userBankOwner: string,
+        userRecommendTree: Array<any>,
+        process: number,
+        point: number,
+        isTest: boolean,
+        isAgent: boolean,
+        isBet: boolean
+    ): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const insertQuery: any = {
+                    moneyOID: null,
+                    userOID: new ObjectID(userOID),
+                    userID,
+                    userNick,
+                    userGrade,
+                    userBankOwner,
+                    userRecommendTree,
+                    before: point,
+                    process,
+                    after: point + process,
+                    sortation: 'replyPrize',
+                    reason: '게시판 댓글',
+                    adminOID: null,
+                    adminID: null,
+                    adminNick: null,
+                    adminGrade: null,
+                    deleteStatus: false,
+                    regDateTime: new Date(),
+                    isTest,
+                    isAgent
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('moneyLog').insertOne(insertQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > addMoneyForBoardCommentLog')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public betUpdate = (userOID: string, gameID: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
@@ -1028,4 +1150,31 @@ export default class BoardService implements IBoardService {
             }
         })
     }
+
+    public freeCommentCountUpdate = (boardOID: string): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    _id: new ObjectID(boardOID)
+                }
+
+                const setQuery: any = {
+                    $inc: {
+                        commentsCount: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('boardFree').updateOne(findQuery, setQuery)
+                resolve(r)
+            } catch (err) {
+                logger.error('MoneyService > freeCommentCountUpdate')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }    
 }
