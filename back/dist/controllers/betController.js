@@ -3024,6 +3024,66 @@ class BetController {
                 return;
             }
         });
+        this.getBoardBetListForView = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const validateData = {
+                _id: {
+                    value: req.query._id,
+                    rule: {
+                        required: true,
+                        alphaNumber: true,
+                        min: 24,
+                        max: 24
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요.',
+                        alphaNumber: '파라메터 오류. 관리자에게 문의하세요.',
+                        min: '파라메터 오류. 관리자에게 문의하세요.',
+                        max: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
+                }
+            };
+            // validate start
+            let v = {};
+            let data = {};
+            try {
+                v = validate.validate(validateData);
+                if (v.error) {
+                    v.errorTitle = '배팅 내역 실패 - 500';
+                    res.status(500).json(v);
+                    return;
+                }
+                data = v;
+                if (v.firstError) {
+                    data.errorTitle = '배팅 내역 실패 - 400';
+                    res.status(400).json(data);
+                    return;
+                }
+                v = tools_1.default.generateReqValue(data.validates, req);
+            }
+            catch (error) {
+                v.errorTitle = '배팅 내역 validate 실패 - 500';
+                res.status(500).json(v);
+                return;
+            }
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+                const r = yield betService.getBoardBetListForView(v._id);
+                if (r.error) {
+                    data.errorTitle = '배팅 내역 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
+                // ■■■■■■■■■■ DB-배팅 내역 가져오기 ■■■■■■■■■■
+                res.json(r.data);
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                data.errorTitle = '배팅 내역 실패 - 500';
+                res.status(500).json(data);
+                return;
+            }
+        });
         this.getMinigamesBetList = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const validateData = {
                 page: {

@@ -1369,9 +1369,6 @@ export default class MoneyController implements IMoneyController {
             }
 
 
-
-
-
             res.json(r.data)
         } catch (e) {
             logger.error(e)
@@ -1447,27 +1444,22 @@ export default class MoneyController implements IMoneyController {
             }
             // ■■■■■■■■■■ DB-회원정보 가져오기 ■■■■■■■■■■
 
-            // ■■■■■■■■■■ DB-문의 등록 ■■■■■■■■■■
-            const r: TService = await boardService.free(
-                v.title,
-                v.content,
+            // ■■■■■■■■■■ DB-댓글 등록 ■■■■■■■■■■
+            const r: TService = await boardService.freeComment(
+                v._id,
                 v.decoded._id,
                 v.decoded.id,
                 v.decoded.nick,
                 v.decoded.grade,
-                v.decoded.bankOwner,
-                rUserInfo.data.recommendTree,
-                v.decoded.isAgent,
-                rUserInfo.data.memoShort,
-                v.reqIpaddress,
-                v.id
+                v.commentContent,
+                v.reqIpaddress                
             )
             if(r.error) {
                 data.errorTitle = '등록 실패 - 500'
                 res.status(500).json(data)
                 return
             }
-            // ■■■■■■■■■■ DB-문의 등록 ■■■■■■■■■■
+            // ■■■■■■■■■■ DB-댓글 등록 ■■■■■■■■■■
 
             if(r.data.insertedCount === 0) {
                 data.errorTitle = '등록 실패 - 500'
@@ -1485,22 +1477,17 @@ export default class MoneyController implements IMoneyController {
             // ■■■■■■■■■■ DB-레벨에 따른 게시판 설정 가져오기 ■■■■■■■■■■
 
             let bonus: number = 0
-            let betCount: number = 0
+            let count: number = 0
             let needPrize: boolean = true
 
-            if(v.id) {
-                bonus = rBoardInfo.data[`lv${v.decoded.grade}`].bettingPrize
-            }
-            else {
-                bonus = rBoardInfo.data[`lv${v.decoded.grade}`].normalPrize
-            }
+            bonus = rBoardInfo.data[`lv${v.decoded.grade}`].replyPrize
 
             if(bonus === 0) {
                 needPrize = false
             }
 
             // ■■■■■■■■■■ DB-이미 받은 내역 있는지 가져오기 ■■■■■■■■■■
-            const rBoardBonus: TService = await boardService.getPrizeLogCount(v.decoded._id,  v.id ? true : false)
+            const rBoardBonus: TService = await boardService.getCommentPrizeLogCount(v.decoded._id)
             if(rBoardBonus.error) {
                 data.errorTitle = '등록 실패 - 500'
                 res.status(500).json(data)
@@ -1508,14 +1495,9 @@ export default class MoneyController implements IMoneyController {
             }
             // ■■■■■■■■■■ DB-이미 받은 내역 있는지 가져오기 ■■■■■■■■■■
 
-            if(v.id) {
-                betCount = rBoardInfo.data[`lv${v.decoded.grade}`].bettingCount
-            }
-            else {
-                betCount = rBoardInfo.data[`lv${v.decoded.grade}`].normalCount
-            }
+            count = rBoardInfo.data[`lv${v.decoded.grade}`].replyCount
 
-            if(betCount <= rBoardBonus.data) {
+            if(count <= rBoardBonus.data) {
                 needPrize = false
             }
 
@@ -1525,7 +1507,7 @@ export default class MoneyController implements IMoneyController {
                 // ■■■■■■■■■■ DB-USER 에 돈 넣어 주기. ■■■■■■■■■■
 
                 // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
-                await boardService.addMoneyForBoardLog(
+                await boardService.addMoneyForBoardCommentLog(
                     v.decoded._id,
                     v.decoded.id,
                     v.decoded.nick,
@@ -1541,16 +1523,10 @@ export default class MoneyController implements IMoneyController {
                 // ■■■■■■■■■■ DB-로그 ■■■■■■■■■■
             }
 
-            if(v.id) {
-                // ■■■■■■■■■■ DB-USER 경기 업데이트 해주기. ■■■■■■■■■■
-                await boardService.betUpdate(v.decoded._id, v.id)
-                // ■■■■■■■■■■ DB-USER 경기 업데이트 해주기. ■■■■■■■■■■
-            }
-
-
-
-
-
+            // ■■■■■■■■■■ DB-댓글 카운터 업데이트 해주기. ■■■■■■■■■■
+            await boardService.freeCommentCountUpdate(v._id)
+            // ■■■■■■■■■■ DB-USER 경기 업데이트 해주기. ■■■■■■■■■■
+            
             res.json(r.data)
         } catch (e) {
             logger.error(e)

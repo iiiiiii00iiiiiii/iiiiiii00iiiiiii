@@ -406,6 +406,38 @@ class BetService {
                 }
             }));
         };
+        this.getBoardBetListForView = (betOID) => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        _id: new db_1.ObjectID(betOID)
+                    };
+                    const whatQuery = {
+                        projection: {
+                            gameType: 1,
+                            betAmount: 1,
+                            betRate: 1,
+                            betBenefit: 1,
+                            betResult: 1,
+                            betCount: 1,
+                            detail: 1,
+                            regDateTime: 1,
+                            bonusRate: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betSports').findOne(findQuery, whatQuery);
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > getBoardBetList');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.getMinigamesBetList = (page, userOID) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
