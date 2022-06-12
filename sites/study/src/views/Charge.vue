@@ -234,7 +234,7 @@ import UrgentNotice from '@/components/UrgentNotice.vue'
         methods: {
             setFromRouter() {
                 this.search.page = this.$route.query.page ? this.$route.query.page : 1
-                // this.getList()
+                this.getList()
             },
             linkGen(page) {
                 return `?page=${page}`
