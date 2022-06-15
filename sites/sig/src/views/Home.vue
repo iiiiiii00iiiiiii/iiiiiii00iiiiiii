@@ -464,10 +464,10 @@
                     padding-left: 10px;
 
                     &:nth-child(odd) {
-                        background-color: #2c2015;
+                        background-color: #303030;
                     }
                     &:nth-child(even) {
-                        background-color: #30251c;
+                        background-color: #222;
                     }
                 }
             }
@@ -579,11 +579,15 @@
     .sports-banner {
         width: 98%;
         margin: 0 auto;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        padding: 30px;
+        padding: 20px;
         border-radius: 3px;
         text-align: center;
+
+        @media (min-width: 1200px) {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 30px;
+        }
     }
 
     .copyright {

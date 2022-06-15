@@ -157,7 +157,7 @@
                                                             {{ vv.leagueKor }}
                                                         </div>
                                                     </div>
-                                                    <div class="col ">
+                                                    <div class="col-4">
                                                         <div class="team-name">{{ vv.homeTeam }}</div>
                                                         <div class="team-name">VS</div>
                                                         <div class="team-name">{{ vv.awayTeam }}</div>

@@ -16,7 +16,7 @@
     background-color: #080500; /*스크롤바의 색상*/
 }
 ::-webkit-scrollbar-track {
-    background-color: #150e04; /*스크롤바 트랙 색상*/
+    background-color: #303030; /*스크롤바 트랙 색상*/
 }
 
 body {
@@ -622,6 +622,9 @@ body {
 .text-yellow {
     color: #ffcc00;
 }
+.text-red {
+    color: #ff0000 !important;
+}
 
 // width, height
 .w-10 {
@@ -1019,7 +1022,7 @@ body {
             white-space: nowrap;
         }
         .event-name {
-            width: 50px;
+            width: 45px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

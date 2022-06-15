@@ -38,7 +38,7 @@
                 </tr>
                 <tr height="30">
                     <td class="pl-1" colspan="2">
-                        <span class="cursor-pointer" @click="$tools.pushRouter('/join', false)">시그니엘 회원가입</span>
+                        시그니엘 <span class="cursor-pointer text-red" @click="$tools.pushRouter('/join', false)">회원가입</span>
                     </td>
                 </tr>
             </table>
