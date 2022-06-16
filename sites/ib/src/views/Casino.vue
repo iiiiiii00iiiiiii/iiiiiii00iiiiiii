@@ -14,8 +14,8 @@
                     <div class="row">
                         <div class="col-12">
                             <img
-                                src="/images/sub-banner-evolution.png" 
-                                class="sub-banner img-fluid" alt="에볼루션" title="에볼루션" 
+                                src="/images/sub-banner-evolution.png"
+                                class="sub-banner img-fluid" alt="에볼루션" title="에볼루션"
                                 @click="openKplay(1)">
                         </div>
                         <div class="col-12 mt-2">
@@ -29,6 +29,13 @@
                                 src="/images/sub-banner-sexy.png"
                                 class="sub-banner img-fluid" alt="섹시 게이밍" title="섹시 게이밍"
                                 @click="openKplay(9)"
+                            >
+                        </div>
+                        <div class="col-12 mt-2">
+                            <img
+                                src="/images/sub-banner-loyal.png"
+                                class="sub-banner img-fluid" alt="로얄지 카지노" title="로얄지 카지노"
+                                @click="openKplay(16)"
                             >
                         </div>
                     </div>
