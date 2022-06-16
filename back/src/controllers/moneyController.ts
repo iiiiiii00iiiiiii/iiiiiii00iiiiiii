@@ -520,14 +520,14 @@ export default class MoneyController implements IMoneyController {
                 rule: {
                     required: true,
                     number: true,
-                    gte: 10000,
+                    gte: 50000,
                     lte: 999999999
                 },
                 message: {
-                    required: '환전 신청은 1만원 이상 1만원 단위로 가능합니다.',
-                    number: '환전 신청은 1만원 이상 1만원 단위로 가능합니다.',
-                    gte: '환전 신청은 1만원 이상 1만원 단위로 가능합니다.',
-                    lte: '환전 신청은 1만원 이상 1만원 단위로 가능합니다.'
+                    required: '환전 신청은 5만원 이상 1만원 단위로 가능합니다.',
+                    number: '환전 신청은 5만원 이상 1만원 단위로 가능합니다.',
+                    gte: '환전 신청은 5만원 이상 1만원 단위로 가능합니다.',
+                    lte: '환전 신청은 5만원 이상 1만원 단위로 가능합니다.'
                 }
             },
             passwordExchange: {

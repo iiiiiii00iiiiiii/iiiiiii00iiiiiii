@@ -2281,60 +2281,14 @@ type TConfig = {
 //     displaySportCross: []
 // }
 
-// SIGNIEL
-const config: TConfig = {
-    db: {
-        host: '18.181.237.109',
-        port: 36186,
-        name: 'sig',
-        id: 'sig',
-        password: 'Sig@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 1,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxFolder: 10,
-    sportsMaxRate: 100,
-    powerballTime: 30,
-    powerladderTime: 30,
-    kenoladderTime: 30,
-    boglePowerballTime: 30,
-    bogleladderTime: 30,
-    googlePowerball1: 15,
-    googlePowerball3: 30,
-    coinPowerball3: 30,
-    coinPowerball: 30,
-    eosPowerball1: 15,
-    eosPowerball3: 30,
-    eosPowerball: 30,
-    speedladder: 15,
-    kplay: {
-        code: 'SFT0010',
-        token: 'zvJnD82CF6h1D5gCzZqHY2gheTJ0Ns3t',
-        key: '0UkXfnG8qhlmAH5R03sqwLSQcZK52Iho',
-        endpoint: 'http://kplayone.com'
-        // http://api.kplay.jsg.soft24.io/api
-    },
-    canCancelBetTime: 10,
-    canCancelBetBeforeGameTime: 10,
-    canCancelBetCount: 2,
-    displaySportCross: []
-}
-
-// // UP
+// // SIGNIEL
 // const config: TConfig = {
 //     db: {
-//         host: '52.199.250.180',
+//         host: '18.181.237.109',
 //         port: 36186,
-//         name: 'up',
-//         id: 'up',
-//         password: 'Up@4860'
+//         name: 'sig',
+//         id: 'sig',
+//         password: 'Sig@4860'
 //     },
 //     casino: {
 //         apiURL: '',
@@ -2361,17 +2315,63 @@ const config: TConfig = {
 //     eosPowerball: 30,
 //     speedladder: 15,
 //     kplay: {
-//         code: 'SFT0006',
-//         token: 'IoySI0OF2khy92YQeL2u3gIciy2khz5t',
-//         key: 'Z7STpvXQWxAxriKQ0UHDwHvQcf32a5zd',
+//         code: 'SFT0010',
+//         token: 'zvJnD82CF6h1D5gCzZqHY2gheTJ0Ns3t',
+//         key: '0UkXfnG8qhlmAH5R03sqwLSQcZK52Iho',
 //         endpoint: 'http://kplayone.com'
-//         // http://api.kplay.jmk.soft24.io/api
+//         // http://api.kplay.jsg.soft24.io/api
 //     },
 //     canCancelBetTime: 10,
 //     canCancelBetBeforeGameTime: 10,
 //     canCancelBetCount: 2,
 //     displaySportCross: []
 // }
+
+// UP
+const config: TConfig = {
+    db: {
+        host: '52.199.250.180',
+        port: 36186,
+        name: 'up',
+        id: 'up',
+        password: 'Up@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 1,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxFolder: 10,
+    sportsMaxRate: 100,
+    powerballTime: 30,
+    powerladderTime: 30,
+    kenoladderTime: 30,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30,
+    coinPowerball3: 30,
+    coinPowerball: 30,
+    eosPowerball1: 15,
+    eosPowerball3: 30,
+    eosPowerball: 30,
+    speedladder: 15,
+    kplay: {
+        code: 'SFT0011',
+        token: '2v0VCrHtG7zeNszk7bmtg8hxcHeDE99V',
+        key: 'Uq83bvlYey4673v3rIeylTGm8K6C5MuW',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmk.soft24.io/api
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 2,
+    displaySportCross: []
+}
 
 
 

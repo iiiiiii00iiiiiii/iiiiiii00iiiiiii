@@ -34,13 +34,13 @@ export default class UserController implements IUserController {
                 value: req.query.id ? req.query.id.toString().toLowerCase() : req.query.id,
                 rule: {
                     required: true,
-                    alphaNumber: true,
+                    // alphaNumber: true,
                     min: 3,
                     max: 20
                 },
                 message: {
                     required: '아이디는 3~20자(영문, 숫자)로 입력하세요.',
-                    alphaNumber: '아이디는 3~20자(영문, 숫자)로 입력하세요.',
+                    // alphaNumber: '아이디는 3~20자(영문, 숫자)로 입력하세요.',
                     min: '아이디는 3~20자(영문, 숫자)로 입력하세요.',
                     max: '아이디는 3~20자(영문, 숫자)로 입력하세요.'
                 }
@@ -111,15 +111,23 @@ export default class UserController implements IUserController {
             }
             // ■■■■■■■■■■ DB-비밀번호 가지고 오기 ■■■■■■■■■■
 
-            if(rPassword.data.password === '') {
-                // ■■■■■■■■■■ DB-비밀번호 설정 가지고 오기 ■■■■■■■■■■
-                const rSetPassword: TService = await userService.setPassword(v.id, v.password)
-                if(rSetPassword.error) {
-                    data.errorTitle = '로그인 실패 - 500'
-                    res.status(500).json(data)
-                    return
+            if(rPassword.data) {
+                if(rPassword.data.password === '') {
+                    // ■■■■■■■■■■ DB-비밀번호 설정 가지고 오기 ■■■■■■■■■■
+                    const rSetPassword: TService = await userService.setPassword(v.id, v.password)
+                    if(rSetPassword.error) {
+                        data.errorTitle = '로그인 실패 - 500'
+                        res.status(500).json(data)
+                        return
+                    }
+                    // ■■■■■■■■■■ DB-비밀번호 설정 가지고 오기 ■■■■■■■■■■
                 }
-                // ■■■■■■■■■■ DB-비밀번호 설정 가지고 오기 ■■■■■■■■■■
+            }
+            else {
+                data = tools.denyValidate(data, 'auth', '아이디 또는 비밀번호를 확인하세요.')
+                data.errorTitle = '로그인 실패 - 400'
+                res.status(400).json(data)
+                return
             }
 
             // ■■■■■■■■■■ DB-유저 로그인 ■■■■■■■■■■
