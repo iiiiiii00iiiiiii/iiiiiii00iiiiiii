@@ -51,3 +51,6 @@ sites/x2/package-lock.json
 
 sites/x3/node_modules
 sites/x3/package-lock.json
+
+sites/ib/node_modules
+sites/ib/package-lock.json

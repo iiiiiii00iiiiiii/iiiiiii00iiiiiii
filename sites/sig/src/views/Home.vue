@@ -436,7 +436,7 @@
 
         .board-title {
             padding: 10px;
-            border-top: 3px solid #deb97d;
+            border-top: 3px solid #888888;
             font-weight: 700;
             color: #fff;
 
@@ -487,7 +487,7 @@
     .game-banner {
         border: 1px solid #080500;
         border-radius: 3px;
-        background-color: #afa08b;
+        background-color: #888888;
         padding: 2px;
 
         img {
@@ -572,7 +572,7 @@
         padding-top: 30px;
         padding-left: 30px;
         padding-right: 30px;
-        border-top: 2px solid #deb97d;
+        border-top: 2px solid #888888;
         text-align: center;
     }
 
