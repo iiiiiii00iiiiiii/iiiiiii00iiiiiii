@@ -382,50 +382,50 @@
 //     versionKey: 'version'
 // }
 
-// // SIGNIEL
-// module.exports = {
-//     apps: [
-//         {
-//             name: "[SIG]CLIENT",
-//             script: "./dist/app.js",
-//             env: {
-//                 "PORT": 3017,
-//                 "NODE_ENV": "development"
-//             },
-//             env_production: {
-//                 "PORT": 3017,
-//                 "NODE_ENV": "production"
-//             }
-//         }
-//     ],
-//     frontPort: 3016,
-//     port: 3017,
-//     pageSize: 30,
-//     pageLimit: 7,
-//     version: '0.0.0',
-//     versionKey: 'version'
-// }
-
-// IB
+// SIGNIEL
 module.exports = {
     apps: [
         {
-            name: "[IB]CLIENT",
+            name: "[SIG]CLIENT",
             script: "./dist/app.js",
             env: {
-                "PORT": 3001,
+                "PORT": 3017,
                 "NODE_ENV": "development"
             },
             env_production: {
-                "PORT": 3001,
+                "PORT": 3017,
                 "NODE_ENV": "production"
             }
         }
     ],
-    frontPort: 3000,
-    port: 3001,
+    frontPort: 3016,
+    port: 3017,
     pageSize: 30,
     pageLimit: 7,
     version: '0.0.0',
     versionKey: 'version'
 }
+
+// // IB
+// module.exports = {
+//     apps: [
+//         {
+//             name: "[IB]CLIENT",
+//             script: "./dist/app.js",
+//             env: {
+//                 "PORT": 3001,
+//                 "NODE_ENV": "development"
+//             },
+//             env_production: {
+//                 "PORT": 3001,
+//                 "NODE_ENV": "production"
+//             }
+//         }
+//     ],
+//     frontPort: 3000,
+//     port: 3001,
+//     pageSize: 30,
+//     pageLimit: 7,
+//     version: '0.0.0',
+//     versionKey: 'version'
+// }
