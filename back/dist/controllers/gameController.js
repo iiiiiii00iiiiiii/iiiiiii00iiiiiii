@@ -1282,7 +1282,7 @@ class GameController {
                 // }
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
                 const getKeys = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9'];
-                const rConfig = yield etcService.getConfigInfo('sportsBet', getKeys);
+                const rConfig = yield etcService.getConfigInfo('sportsBetCross', getKeys);
                 if (rConfig.error) {
                     data.errorTitle = '스포츠 실패 - 500';
                     res.status(500).json(data);
@@ -1461,7 +1461,7 @@ class GameController {
                 // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
                 const getKeys = ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'lv8', 'lv9'];
-                const rConfig = yield etcService.getConfigInfo('sportsBet', getKeys);
+                const rConfig = yield etcService.getConfigInfo('sportsBetLive', getKeys);
                 if (rConfig.error) {
                     data.errorTitle = '스포츠 실패 - 500';
                     res.status(500).json(data);
