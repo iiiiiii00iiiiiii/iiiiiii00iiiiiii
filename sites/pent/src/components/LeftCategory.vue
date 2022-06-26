@@ -24,16 +24,7 @@
                     </span>
                     <span class="category-count">
                         <span class="count">
-                            {{ popularFootball.kLeague ? $numeral(
-                                popularFootball.kLeague.count
-                                + popularFootball.jLeague.count
-                                + popularFootball.pLeague.count
-                                + popularFootball.bLeague.count
-                                + popularFootball.sLeague.count
-                                + popularFootball.pmLeague.count
-                                + popularFootball.lLeague.count
-                                + popularFootball.wLeague.count
-                            ).format('0,0') : 0 }}
+                            {{ $numeral(countFootball()).format('0,0') }}
                         </span>
                     </span>
                 </div>
@@ -156,23 +147,44 @@
                         </span>
                     </span>
                 </div>
-                <!-- 월드 리그 -->
+                <!-- ETC -->
                 <div
                     class="category-country line-country"
-                    v-show="showPopular === 'Football' && popularFootball.wLeague.league.length > 0 && popularFootball.wLeague.count > 0"
-                    v-for="(v, index) in popularFootball.wLeague.league" :key="index"
+                    :class="showCountryETC.Football.findIndex((x) => x === country) > -1 ? 'active' : ''"
+                    v-for="(v, country, index) in categoryETC.Football"
+                    :key="`Football-${country}-${index}`"
+                    v-show="showPopular === 'Football'"
                 >
-                    <span class="category-contry-icon" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${v.leagueKor}`)">
+                    <span class="category-contry-icon" @click="expandLeagueETC('Football', country)">
                         ◎
                     </span>
-                    <span class="category-country-content" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${v.leagueKor}`)">
-                        {{ v ? $tools.cut(v.leagueKor, 13, '...') : '' }}
+                    <span class="category-country-content" @click="expandLeagueETC('Football', country)">
+                        <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
+                        {{ country }}
                     </span>
-                    <span class="category-country-count" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${v.leagueKor}`)">
+                    <span class="category-country-count" @click="expandLeagueETC('Football', country)">
                         <span class="count">
-                            {{ $numeral(v ? v.count : 0).format('0,0') }}
+                            {{ $numeral(countOfCategory.Football.country[country].countOfGame).format('0,0') }}
                         </span>
                     </span>
+                    <div
+                        class="category-league line-league"
+                        :class="{'mt-5px': j === 0, 'active': $route.query.sport === 'Football' && $route.query.league === league}"
+                        v-for="(vv, league, j) in countOfCategory.Football.country[country].league"
+                        :key="`Football-${country}-${league}-${j}`"
+                        v-show="showCountryETC.Football.findIndex((x) => x === country) > -1"
+                        @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${league}`)"
+                    >
+                        <span class="category-league-blank"></span>
+                        <span class="category-league-content">
+                            {{ $tools.cut(league, 13, '...') }}
+                        </span>
+                        <span class="category-league-count">
+                            <span class="count">
+                                {{ $numeral(countOfCategory.Football.country[country].league[league]).format('0,0') }}
+                            </span>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="category" :class="{'active': showPopular === 'Basketball'}" @click="expandPopular('Basketball')">
@@ -184,11 +196,7 @@
                     </span>
                     <span class="category-count">
                         <span class="count">
-                            {{ popularBasketball.NBA ? $numeral(
-                                popularBasketball.NBA.count
-                                +popularBasketball.KBL.count
-                                +popularBasketball.WKBL.count
-                            ).format('0,0') : 0 }}
+                            {{ $numeral(countBasketball()).format('0,0') }}
                         </span>
                     </span>
                 </div>
@@ -253,11 +261,7 @@
                     </span>
                     <span class="category-count">
                         <span class="count">
-                            {{ popularBaseball.MLB ? $numeral(
-                                popularBaseball.MLB.count
-                                +popularBaseball.NPB.count
-                                +popularBaseball.KBO.count
-                            ).format('0,0') : 0 }}
+                            {{ $numeral(countBaseball()).format('0,0') }}
                         </span>
                     </span>
                 </div>
@@ -355,10 +359,7 @@
                     </span>
                     <span class="category-count">
                         <span class="count">
-                            {{ popularVolleyball.vLeague ? $numeral(
-                                popularVolleyball.vLeague.count
-                                +popularVolleyball.wvLeague.count
-                            ).format('0,0') : 0 }}
+                            {{ $numeral(countVolleyball()).format('0,0') }}
                         </span>
                     </span>
                 </div>
@@ -1324,17 +1325,20 @@
                 showSportsTitle: true,
                 showSportsCrossTitle: true,
                 showPopularTitle: true,
-                popularFootball: {
-                    wLeague: {
-                        count: 0,
-                        league: []
-                    }
-                },
+                popularFootball: {},
+                popularFootballETC: {},
                 popularBaseball: {},
                 popularBasketball: {},
                 popularHockey: {},
                 popularVolleyball: {},
-                showPopular: ''
+                showPopular: {},
+                categoryETC: {
+                    Football: {}
+                },
+                showCountryETC: {
+                    Football: []
+                },
+                countOfETC: 0
             }
         },
         methods: {
@@ -1352,29 +1356,46 @@
                 this.countOfCategoryCross = r.data.countOfCategory
                 this.countryOIDCross = r.data.countryOID
 
-                this.popularFootball = r.data.popularFootball
                 this.popularBaseball = r.data.popularBaseball
                 this.popularBasketball = r.data.popularBasketball
                 this.popularHockey = r.data.popularHockey
                 this.popularVolleyball = r.data.popularVolleyball
 
+                let cntETC = 0
+                if(r.data.category.Football['월드']) {
+                    this.$set(this.categoryETC.Football, '월드', r.data.category.Football['월드'])
+                    cntETC += this.countOfCategory.Football.country['월드'].countOfGame
+                }
+                if(r.data.category.Football['국제 경기']) {
+                    this.$set(this.categoryETC.Football, '국제 경기', r.data.category.Football['국제 경기'])
+                    cntETC += this.countOfCategory.Football.country['국제 경기'].countOfGame
+                }
+                if(r.data.category.Football['클럽친선']) {
+                    this.$set(this.categoryETC.Football, '클럽친선', r.data.category.Football['클럽친선'])
+                    cntETC += this.countOfCategory.Football.country['클럽친선'].countOfGame
+                }
+
+                this.countOfETC = cntETC
+
+                // console.log(this.categoryETC)
+
                 // console.log(this.category)
                 // console.log(this.countOfCategory)
 
-                this.$set(this.popularFootball, 'wLeague', {})
-                this.$set(this.popularFootball.wLeague, 'count', 0)
-                this.$set(this.popularFootball.wLeague, 'league', [])
+                // this.$set(this.popularFootball, 'wLeague', {})
+                // this.$set(this.popularFootball.wLeague, 'count', 0)
+                // this.$set(this.popularFootball.wLeague, 'league', [])
 
                 // 축구 월드 리그.
-                if(this.countOfCategory.Football.country['월드']) {
-                    this.$set(this.popularFootball.wLeague, 'count', this.countOfCategory.Football.country['월드'].countOfGame)
-                    Object.keys(this.countOfCategory.Football.country['월드'].league).forEach(key => {
-                        this.popularFootball.wLeague.league.push({
-                            leagueKor: key,
-                            count: this.countOfCategory.Football.country['월드'].league[key]
-                        })
-                    })
-                }
+                // if(this.countOfCategory.Football.country['월드']) {
+                //     this.$set(this.popularFootball.wLeague, 'count', this.countOfCategory.Football.country['월드'].countOfGame)
+                //     Object.keys(this.countOfCategory.Football.country['월드'].league).forEach(key => {
+                //         this.popularFootball.wLeague.league.push({
+                //             leagueKor: key,
+                //             count: this.countOfCategory.Football.country['월드'].league[key]
+                //         })
+                //     })
+                // }
             },
             expandCountry(v) {
                 if(this.showSport === v) {
@@ -1414,6 +1435,46 @@
                     return
                 }
                 this.showPopular = sport
+            },
+            expandLeagueETC(sport, v) {
+                let index = this.showCountryETC[sport].findIndex((x) => x === v)
+                if(index > -1) {
+                    this.showCountryETC[sport].splice(index, 1)
+                }
+                else {
+                    this.showCountryETC[sport].push(v)
+                }
+            },
+            countFootball() {
+                let cnt = 0
+                if(this.popularFootball.kLeague) cnt += this.popularFootball.kLeague.count
+                if(this.popularFootball.jLeague) cnt += this.popularFootball.jLeague.count
+                if(this.popularFootball.pLeague) cnt += this.popularFootball.pLeague.count
+                if(this.popularFootball.bLeague) cnt += this.popularFootball.bLeague.count
+                if(this.popularFootball.sLeague) cnt += this.popularFootball.sLeague.count
+                if(this.popularFootball.pmLeague) cnt += this.popularFootball.pmLeague.count
+                if(this.popularFootball.lLeague) cnt += this.popularFootball.lLeague.count
+                return cnt + this.countOfETC
+            },
+            countBasketball() {
+                let cnt = 0
+                if(this.popularBasketball.NBA) cnt += this.popularBasketball.NBA.count
+                if(this.popularBasketball.KBL) cnt += this.popularBasketball.KBL.count
+                if(this.popularBasketball.WKBL) cnt += this.popularBasketball.WKBL.count
+                return cnt
+            },
+            countBaseball() {
+                let cnt = 0
+                if(this.popularBaseball.MLB) cnt += this.popularBaseball.MLB.count
+                if(this.popularBaseball.NPB) cnt += this.popularBaseball.NPB.count
+                if(this.popularBaseball.KBO) cnt += this.popularBaseball.KBO.count
+                return cnt
+            },
+            countVolleyball() {
+                let cnt = 0
+                if(this.popularVolleyball.vLeague) cnt += this.popularVolleyball.vLeague.count
+                if(this.popularVolleyball.wvLeague) cnt += this.popularVolleyball.wvLeague.count
+                return cnt
             }
         }
     }
