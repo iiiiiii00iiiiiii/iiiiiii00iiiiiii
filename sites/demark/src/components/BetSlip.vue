@@ -333,39 +333,19 @@
                 }
 
                 if(betData.betGameType !== 'minigames') {
-                    if(betData.betGameType === 'sportsLive' || betData.betGameType === 'sportsLiveKor' || betData.betGameType === 'sportsSpecial') {
-                        if(betData.betAmount < 5000) {
-                            this.$tools.sw('warning', '최소 배팅금액', `최소 5,000원 이상 배팅 가능 합니다.`)
-                            return
-                        }
-
-                        if(betData.betAmount > 2000000) {
-                            this.$tools.sw('warning', '최대 배팅금액', `최대 2,000,000원 이하 배팅 가능 합니다.`)
-                            return
-                        }
-
-                        if(this.benefit > 5000000) {
-                            this.$tools.sw('warning', '최대 당첨금', `최대 당첨금은 5,000,000원 이하 입니다.`)
-                            return
-                        }
+                    if(betData.betAmount < this.betInfo.min) {
+                        this.$tools.sw('warning', '최소 배팅금액', `최소 ${this.$numeral(this.betInfo.min).format('0,0')}원 이상 배팅 가능 합니다.`)
+                        return
                     }
-                    else {
-                        if(betData.betAmount < this.betInfo.min) {
-                            this.$tools.sw('warning', '최소 배팅금액', `최소 ${this.$numeral(this.betInfo.min).format('0,0')}원 이상 배팅 가능 합니다.`)
-                            return
-                        }
 
-                        if(betData.betAmount > this.betInfo.max) {
-                            this.$tools.sw('warning', '최대 배팅금액', `최대 ${this.$numeral(this.betInfo.max).format('0,0')}원 이하 배팅 가능 합니다.`)
-                            return
-                        }
+                    if(betData.betAmount > this.betInfo.max) {
+                        this.$tools.sw('warning', '최대 배팅금액', `최대 ${this.$numeral(this.betInfo.max).format('0,0')}원 이하 배팅 가능 합니다.`)
+                        return
+                    }
 
-                        if(this.benefit > this.betInfo.benefit) {
-                            this.$tools.sw('warning', '최대 당첨금', `최대 당첨금은 ${this.$numeral(this.betInfo.benefit).format('0,0')}원 이하 입니다.`)
-                            return
-                        }
-
-                        // ######################### 최대 당첨금 넣기 #########################
+                    if(this.benefit > this.betInfo.benefit) {
+                        this.$tools.sw('warning', '최대 당첨금', `최대 당첨금은 ${this.$numeral(this.betInfo.benefit).format('0,0')}원 이하 입니다.`)
+                        return
                     }
 
                     if(betData.betRate > parseInt(betMaxRate)) {
