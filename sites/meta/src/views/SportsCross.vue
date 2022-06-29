@@ -692,6 +692,7 @@
             },
             selectCategory(sport) {
                 this.search.sport = sport
+                this.search.league = ''
                 let path = encodeURI(`${this.$route.path}${this.linkGen(1)}`)
                 if(path === this.$route.fullPath) {
                     this.getList()
