@@ -648,7 +648,8 @@
                 overlay: false,
                 search: {
                     page: 1,
-                    sport: ''
+                    sport: '',
+                    league: ''
                 },
                 expand: {},
                 data: [],
@@ -663,12 +664,13 @@
             setFromRouter() {
                 this.search.page = this.$route.query.page ? this.$route.query.page : 1
                 this.search.sport = this.$route.query.sport ? this.$route.query.sport : ''
+                this.search.league = this.$route.query.league ? this.$route.query.league : ''
 
                 this.getList()
                 // this.infiniteHandler()
             },
             linkGen(page) {
-                return `?page=${page}&sport=${this.search.sport}`
+                return `?page=${page}&sport=${this.search.sport}&league=${this.search.league}`
             },
             async getList() {
                 this.overlay = true

@@ -255,7 +255,7 @@ export default class GameService implements IGameService {
         })
     }
 
-    public getPrematchCrossList = (page: number, sport: string): Promise<TService> => {
+    public getPrematchCrossList = (page: number, sport: string, league?: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -272,14 +272,20 @@ export default class GameService implements IGameService {
                 }
 
                 if(sport) findQuery.sport = sport
-
                 if(!sport && config.db.id === 'demark') {
                     findQuery.sport.$nin.push('LoL')
                 }
 
-                if(config.displaySportCross.length > 0) {
-                    findQuery.leagueOID = {
-                        $in: config.displaySportCross
+
+
+                if(league) {
+                    findQuery.leagueKor = league
+                }
+                else {
+                    if(config.displaySportCross.length > 0) {
+                        findQuery.leagueOID = {
+                            $in: config.displaySportCross
+                        }
                     }
                 }
 

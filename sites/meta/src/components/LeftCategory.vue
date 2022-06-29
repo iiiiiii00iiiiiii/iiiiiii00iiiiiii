@@ -39,7 +39,7 @@
                     v-for="(vv, league, j) in countOfCategory.Football.country[country].league"
                     :key="`Football-${country}-${league}-${j}`"
                     v-show="showCountry.Football.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Football&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -90,7 +90,7 @@
                     v-for="(vv, league, j) in countOfCategory.Basketball.country[country].league"
                     :key="`Basketball-${country}-${league}-${j}`"
                     v-show="showCountry.Basketball.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Basketball&league=${league}`, false)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Basketball&league=${league}`, false)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -141,7 +141,7 @@
                     v-for="(vv, league, j) in countOfCategory.Baseball.country[country].league"
                     :key="`Baseball-${country}-${league}-${j}`"
                     v-show="showCountry.Baseball.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Baseball&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Baseball&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -192,7 +192,7 @@
                     v-for="(vv, league, j) in countOfCategory['Ice Hockey'].country[country].league"
                     :key="`Ice Hockey-${country}-${league}-${j}`"
                     v-show="showCountry['Ice Hockey'].findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Ice Hockey&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Ice Hockey&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -243,7 +243,7 @@
                     v-for="(vv, league, j) in countOfCategory.Tennis.country[country].league"
                     :key="`Tennis-${country}-${league}-${j}`"
                     v-show="showCountry.Tennis.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Tennis&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Tennis&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -294,7 +294,7 @@
                     v-for="(vv, league, j) in countOfCategory.Handball.country[country].league"
                     :key="`Handball-${country}-${league}-${j}`"
                     v-show="showCountry.Handball.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Handball&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Handball&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -345,7 +345,7 @@
                     v-for="(vv, league, j) in countOfCategory.Volleyball.country[country].league"
                     :key="`Volleyball-${country}-${league}-${j}`"
                     v-show="showCountry.Volleyball.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Volleyball&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Volleyball&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -396,7 +396,7 @@
                     v-for="(vv, league, j) in countOfCategory['Rugby League'].country[country].league"
                     :key="`Rugby League-${country}-${league}-${j}`"
                     v-show="showCountry['Rugby League'].findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Rugby League&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Rugby League&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -447,7 +447,7 @@
                     v-for="(vv, league, j) in countOfCategory['Rugby Union'].country[country].league"
                     :key="`Rugby Union-${country}-${league}-${j}`"
                     v-show="showCountry['Rugby Union'].findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Rugby Union&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Rugby Union&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -498,7 +498,7 @@
                     v-for="(vv, league, j) in countOfCategory.Boxing.country[country].league"
                     :key="`Boxing-${country}-${league}-${j}`"
                     v-show="showCountry.Boxing.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Boxing&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Boxing&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -549,7 +549,7 @@
                     v-for="(vv, league, j) in countOfCategory['Table Tennis'].country[country].league"
                     :key="`Table Tennis-${country}-${league}-${j}`"
                     v-show="showCountry['Table Tennis'].findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Table Tennis&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Table Tennis&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -600,7 +600,7 @@
                     v-for="(vv, league, j) in countOfCategory.MMA.country[country].league"
                     :key="`MMA-${country}-${league}-${j}`"
                     v-show="showCountry.MMA.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=MMA&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=MMA&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -651,7 +651,7 @@
                     v-for="(vv, league, j) in countOfCategory.Golf.country[country].league"
                     :key="`Golf-${country}-${league}-${j}`"
                     v-show="showCountry.Golf.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Golf&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Golf&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -702,7 +702,7 @@
                     v-for="(vv, league, j) in countOfCategory.Darts.country[country].league"
                     :key="`Darts-${country}-${league}-${j}`"
                     v-show="showCountry.Darts.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Darts&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Darts&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -753,7 +753,7 @@
                     v-for="(vv, league, j) in countOfCategory.LoL.country[country].league"
                     :key="`LoL-${country}-${league}-${j}`"
                     v-show="showCountry.LoL.findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=LoL&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=LoL&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -804,7 +804,7 @@
                     v-for="(vv, league, j) in countOfCategory['CS:GO'].country[country].league"
                     :key="`CS:GO-${country}-${league}-${j}`"
                     v-show="showCountry['CS:GO'].findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=CS:GO&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=CS:GO&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">
@@ -855,7 +855,7 @@
                     v-for="(vv, league, j) in countOfCategory['Dota 2'].country[country].league"
                     :key="`Dota 2-${country}-${league}-${j}`"
                     v-show="showCountry['Dota 2'].findIndex((x) => x === country) > -1"
-                    @click="$tools.pushRouter(`/sports?page=1&sport=Dota 2&league=${league}`)"
+                    @click="$tools.pushRouter(`/sportscross?page=1&sport=Dota 2&league=${league}`)"
                 >
                     <span class="category-league-blank"></span>
                     <span class="category-league-content">

@@ -177,6 +177,35 @@ export default class BetService implements IBetService {
         })
     }
 
+    public betBonusAll = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        type: 1,
+                        folder: 1,
+                        allowRate: 1,
+                        bonusRate: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('betBonus').find(findQuery, whatQuery).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('BetService > betBonusAll')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
     public betSubtractSports = (v: any): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }

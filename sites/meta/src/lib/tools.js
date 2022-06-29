@@ -50,6 +50,9 @@ const tools = {
     reloadRouter: () => {
         window.location.reload()
     },
+    locationHref: (url) => {
+        window.location.href = url
+    },
     historyGo: (num) => {
         router.go(num)
     },

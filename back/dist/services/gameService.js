@@ -243,7 +243,7 @@ class GameService {
                 }
             }));
         };
-        this.getPrematchCrossList = (page, sport) => {
+        this.getPrematchCrossList = (page, sport, league) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -262,10 +262,15 @@ class GameService {
                     if (!sport && config_1.default.db.id === 'demark') {
                         findQuery.sport.$nin.push('LoL');
                     }
-                    if (config_1.default.displaySportCross.length > 0) {
-                        findQuery.leagueOID = {
-                            $in: config_1.default.displaySportCross
-                        };
+                    if (league) {
+                        findQuery.leagueKor = league;
+                    }
+                    else {
+                        if (config_1.default.displaySportCross.length > 0) {
+                            findQuery.leagueOID = {
+                                $in: config_1.default.displaySportCross
+                            };
+                        }
                     }
                     const whatQuery = {
                         projection: {

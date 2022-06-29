@@ -165,6 +165,31 @@ class BetService {
                 }
             }));
         };
+        this.betBonusAll = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {};
+                    const whatQuery = {
+                        projection: {
+                            type: 1,
+                            folder: 1,
+                            allowRate: 1,
+                            bonusRate: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('betBonus').find(findQuery, whatQuery).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('BetService > betBonusAll');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
         this.betSubtractSports = (v) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };

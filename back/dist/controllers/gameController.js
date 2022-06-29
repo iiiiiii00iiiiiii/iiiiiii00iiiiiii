@@ -19,6 +19,8 @@ const gameService_1 = __importDefault(require("../services/gameService"));
 const gameService = new gameService_1.default();
 const etcService_1 = __importDefault(require("../services/etcService"));
 const etcService = new etcService_1.default();
+const betService_1 = __importDefault(require("../services/betService"));
+const betService = new betService_1.default();
 const validate_1 = __importDefault(require("../lib/validate"));
 const validate = new validate_1.default();
 class GameController {
@@ -789,11 +791,19 @@ class GameController {
                     }
                     // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
                 }
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -882,10 +892,18 @@ class GameController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
-                    betInfo: rConfig.data
+                    betInfo: rConfig.data,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -983,10 +1001,18 @@ class GameController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
-                    betInfo: rConfig.data
+                    betInfo: rConfig.data,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -1021,6 +1047,15 @@ class GameController {
                         required: '파라메터 오류. 관리자에게 문의하세요.',
                         or: '파라메터 오류. 관리자에게 문의하세요.'
                     }
+                },
+                league: {
+                    value: req.query.league,
+                    rule: {
+                        required: false
+                    },
+                    message: {
+                        required: '파라메터 오류. 관리자에게 문의하세요.'
+                    }
                 }
             };
             // validate start
@@ -1050,7 +1085,7 @@ class GameController {
             v.page = parseInt(v.page);
             try {
                 // ■■■■■■■■■■ DB-스포츠 경기 리스트 가져오기 ■■■■■■■■■■
-                const r = yield gameService.getPrematchCrossList(v.page, v.sport);
+                const r = yield gameService.getPrematchCrossList(v.page, v.sport, v.league);
                 if (r.error) {
                     data.errorTitle = '스포츠 실패 - 500';
                     res.status(500).json(data);
@@ -1138,11 +1173,19 @@ class GameController {
                     }
                     // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
                 }
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -1289,10 +1332,18 @@ class GameController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
-                    betInfo: rConfig.data
+                    betInfo: rConfig.data,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -1384,11 +1435,19 @@ class GameController {
                     }
                     // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
                 }
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -1468,10 +1527,18 @@ class GameController {
                     return;
                 }
                 // ■■■■■■■■■■ DB-스포츠 환경 설정 가져오기 ■■■■■■■■■■
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
-                    betInfo: rConfig.data
+                    betInfo: rConfig.data,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -1626,11 +1693,19 @@ class GameController {
                     }
                     // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
                 }
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {
@@ -1722,11 +1797,19 @@ class GameController {
                     }
                     // ■■■■■■■■■■ DB-스포츠 환경 설정 단폴더 가져오기 ■■■■■■■■■■
                 }
+                // 보너스 폴더 전체 가져오기.
+                const rBonusInfo = yield betService.betBonusAll();
+                if (rBonusInfo.error) {
+                    data.errorTitle = '스포츠 실패 - 500';
+                    res.status(500).json(data);
+                    return;
+                }
                 res.json({
                     recordSet: r.data,
                     recordCount: r.count,
                     betInfo: rConfig.data,
-                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null
+                    betInfo1Folder: rConfig1Folder ? rConfig1Folder.data : null,
+                    bonusInfo: rBonusInfo.data
                 });
             }
             catch (e) {

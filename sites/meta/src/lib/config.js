@@ -355,6 +355,13 @@ const config = {
         bogleladder: '보글 사다리',
         googlePowerball1: '구글 1분 파워볼',
         googlePowerball3: '구글 3분 파워볼',
+        coinPowerball3: '코인 3분 파워볼',
+        coinPowerball: '코인 5분 파워볼',
+        eosPowerball1: '이오스 1분 파워볼',
+        eosPowerball3: '이오스 3분 파워볼',
+        eosPowerball: '이오스 5분 파워볼',
+        speedladder: '스피드 사다리'
+
     }
 }
 
