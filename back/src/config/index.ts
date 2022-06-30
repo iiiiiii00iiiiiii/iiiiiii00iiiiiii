@@ -2119,51 +2119,51 @@ type TConfig = {
 //     ]
 // }
 
-// PENT
-const config: TConfig = {
-    db: {
-        host: '18.181.237.109',
-        port: 36186,
-        name: 'pent',
-        id: 'pent',
-        password: 'Pent@4860'
-    },
-    casino: {
-        apiURL: '',
-        operator: '',
-        privateKey: ''
-    },
-    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
-    expiresIn: 60 * 60 * 1,
-    pageSize: 30,
-    sportPageSize: 30,
-    sportsMaxFolder: 10,
-    sportsMaxRate: 100,
-    powerballTime: 50,
-    powerladderTime: 50,
-    kenoladderTime: 50,
-    boglePowerballTime: 50,
-    bogleladderTime: 50,
-    googlePowerball1: 15,
-    googlePowerball3: 50,
-    coinPowerball3: 30,
-    coinPowerball: 30,
-    eosPowerball1: 15,
-    eosPowerball3: 30,
-    eosPowerball: 30,
-    speedladder: 15,
-    kplay: {
-        code: '',
-        token: '',
-        key: '',
-        endpoint: 'http://kplayone.com'
-        // http://api.kplay.jmk.soft24.io/api
-    },
-    canCancelBetTime: 30,
-    canCancelBetBeforeGameTime: 10,
-    canCancelBetCount: 5,
-    displaySportCross: []
-}
+// // PENT
+// const config: TConfig = {
+//     db: {
+//         host: '18.181.237.109',
+//         port: 36186,
+//         name: 'pent',
+//         id: 'pent',
+//         password: 'Pent@4860'
+//     },
+//     casino: {
+//         apiURL: '',
+//         operator: '',
+//         privateKey: ''
+//     },
+//     jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+//     expiresIn: 60 * 60 * 1,
+//     pageSize: 30,
+//     sportPageSize: 30,
+//     sportsMaxFolder: 10,
+//     sportsMaxRate: 100,
+//     powerballTime: 50,
+//     powerladderTime: 50,
+//     kenoladderTime: 50,
+//     boglePowerballTime: 50,
+//     bogleladderTime: 50,
+//     googlePowerball1: 15,
+//     googlePowerball3: 50,
+//     coinPowerball3: 30,
+//     coinPowerball: 30,
+//     eosPowerball1: 15,
+//     eosPowerball3: 30,
+//     eosPowerball: 30,
+//     speedladder: 15,
+//     kplay: {
+//         code: '',
+//         token: '',
+//         key: '',
+//         endpoint: 'http://kplayone.com'
+//         // http://api.kplay.jmk.soft24.io/api
+//     },
+//     canCancelBetTime: 30,
+//     canCancelBetBeforeGameTime: 10,
+//     canCancelBetCount: 5,
+//     displaySportCross: []
+// }
 
 // // NS
 // const config: TConfig = {
@@ -2380,6 +2380,52 @@ const config: TConfig = {
 //     canCancelBetCount: 2,
 //     displaySportCross: []
 // }
+
+// NACHO
+const config: TConfig = {
+    db: {
+        host: '52.199.250.180',
+        port: 36186,
+        name: 'nacho',
+        id: 'nacho',
+        password: 'Nacho@4860'
+    },
+    casino: {
+        apiURL: '',
+        operator: '',
+        privateKey: ''
+    },
+    jwtSecret: 'To!@#$%^&*()0987654321Esta365!To',
+    expiresIn: 60 * 60 * 1,
+    pageSize: 30,
+    sportPageSize: 30,
+    sportsMaxFolder: 10,
+    sportsMaxRate: 100,
+    powerballTime: 30,
+    powerladderTime: 30,
+    kenoladderTime: 30,
+    boglePowerballTime: 30,
+    bogleladderTime: 30,
+    googlePowerball1: 15,
+    googlePowerball3: 30,
+    coinPowerball3: 30,
+    coinPowerball: 30,
+    eosPowerball1: 15,
+    eosPowerball3: 30,
+    eosPowerball: 30,
+    speedladder: 15,
+    kplay: {
+        code: '',
+        token: '',
+        key: '',
+        endpoint: 'http://kplayone.com'
+        // http://api.kplay.jmk.soft24.io/api
+    },
+    canCancelBetTime: 10,
+    canCancelBetBeforeGameTime: 10,
+    canCancelBetCount: 2,
+    displaySportCross: []
+}
 
 
 
