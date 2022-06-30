@@ -70,7 +70,8 @@
                 router === 'BoglePowerball' ||
                 router === 'Bogleladder' ||
                 router === 'GooglePowerball1' ||
-                router === 'GooglePowerball3'"
+                router === 'GooglePowerball3' ||
+                router === 'CoinPowerball'"
             />
             <LeftCategory v-else/>
             <BannerLeft/>

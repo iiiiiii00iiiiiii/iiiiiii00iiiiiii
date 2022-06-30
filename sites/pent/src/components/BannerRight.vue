@@ -5,7 +5,7 @@
         </div> -->
 
         <div class="mt-1 text-center">
-            <img src="/images/banner-right-powerball.png" class="img-fluid cursor-pointer" alt="파워볼" title="파워볼" @click="$tools.pushRouter('/powerball')">
+            <img src="/images/banner-right-powerball.png" class="img-fluid cursor-pointer" alt="코인 파워볼" title="코인 파워볼" @click="$tools.pushRouter('/coinpowerball')">
         </div>
         <div class="mt-1 text-center">
             <img src="/images/banner-right-domain.gif" class="img-fluid cursor-pointer" alt="평생주소" title="평생주소" @click="$tools.openNewTab('https://www.펜트홈.com')">

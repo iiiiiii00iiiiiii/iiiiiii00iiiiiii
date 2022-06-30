@@ -31,17 +31,7 @@
         </table>
         <table class="w-100">
             <tr>
-                <td class="py-2 menu-7 border-top-none" @click="$tools.pushRouter('/powerball', false)">동행복권 파워볼</td>
-            </tr>
-        </table>
-        <table class="w-100">
-            <tr>
                 <td class="py-2 menu-4 border-top-none" @click="$tools.pushRouter('/coinpowerball', false)">코인 파워볼</td>
-            </tr>
-        </table>
-        <table class="w-100">
-            <tr>
-                <td class="py-2 menu-7 border-top-none" @click="$tools.pushRouter('/powerladder', false)">파워 사다리</td>
             </tr>
         </table>
         <table class="w-100">
