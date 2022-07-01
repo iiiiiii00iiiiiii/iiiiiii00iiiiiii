@@ -46,7 +46,7 @@
                                     슬롯
                                 </div>
                                 <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'Powerball' || router === 'Powerladder' || router === 'Kenoladder' ? 'active' : ''" @click="$tools.pushRouter('/boglepowerball'), false">
+                                <div class="col menu-item" :class="router === 'MinigameMenu' ? 'active' : ''" @click="$tools.pushRouter('/minigamemenu'), false">
                                     미니게임
                                 </div>
                                 <div class="line-vertical"></div>

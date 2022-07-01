@@ -18,14 +18,14 @@
         </table>
         <table class="w-100">
             <tr>
-                <td class="py-2 menu-1" @click="$tools.pushRouter('/sports', false)">스포츠</td>
-                <td class="py-2 menu-2" @click="$tools.pushRouter('/sportscross', false)">크로스</td>
+                <td class="py-2 menu-1" @click="$tools.pushRouter('/sports', false)">해외형</td>
+                <td class="py-2 menu-2" @click="$tools.pushRouter('/sportscross', false)">국내형</td>
                 <td class="py-2 menu-3" @click="$tools.pushRouter('/sportslive', false)">라이브</td>
                 <td class="py-2 menu-5" @click="$tools.pushRouter('/sportsspecial', false)">스페셜</td>
             </tr>
             <tr>
                 <td class="py-2 menu-4" @click="$tools.pushRouter('/sportslivekor', false)">실시간</td>
-                <td class="py-2 menu-5" @click="$tools.pushRouter('/boglepowerball', false)">미니게임</td>
+                <td class="py-2 menu-5" @click="$tools.pushRouter('/minigamemenu', false)">미니게임</td>
                 <td class="py-2 menu-6" @click="$tools.ready('/casino', true)">카지노</td>
                 <td class="py-2 menu-7" @click="$tools.ready(0)">슬롯</td>
 

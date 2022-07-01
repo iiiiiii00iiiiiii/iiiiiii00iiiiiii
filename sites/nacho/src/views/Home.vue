@@ -106,8 +106,8 @@
                     </div>
                 </div>
                 <div class="col-3 col-xl">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/boglepowerball', false)">
-                        <img src="/images/banner-4.png" alt="LIVE CASINO" title="LIVE CASINO">
+                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/minigamemenu', false)">
+                        <img src="/images/banner-4.png" alt="미니게임" title="미니게임">
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
                 </div>
                 <div class="col-3 col-xl">
                     <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @click="$tools.pushRouter('/exchange', true)">
-                        <img src="/images/banner-8.png" alt="LIVE CASINO" title="LIVE CASINO">
+                        <img src="/images/banner-8.png" alt="EXCHANGE" title="EXCHANGE">
                     </div>
                 </div>
             </div>

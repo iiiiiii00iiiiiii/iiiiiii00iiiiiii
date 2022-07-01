@@ -23,7 +23,7 @@
                             <li @click="$tools.pushRouter('/sportslive')">라이브 스포츠</li>
                             <li @click="$tools.pushRouter('/sportsspecial', false)">스페셜</li>
                             <li @click="$tools.pushRouter('/sportslivekor', false)">실시간</li>
-                            <li @click="$tools.pushRouter('/boglepowerball', false)">미니게임</li>
+                            <li @click="$tools.pushRouter('/minigamemenu', false)">미니게임</li>
                             <li @click="$tools.pushRouter('/rules', false)">이용규정</li>
                         </ul>
                     </div>

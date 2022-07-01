@@ -286,6 +286,13 @@ const routes = [
     },
     // minigames
     {
+        path: '/minigamemenu',
+        name: 'MinigameMenu',
+        component: () => import(/* webpackChunkName: "minigamemenu" */ '../views/MinigameMenu.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
         path: '/powerball',
         name: 'Powerball',
         component: () => import(/* webpackChunkName: "powerball" */ '../views/Powerball.vue'),
