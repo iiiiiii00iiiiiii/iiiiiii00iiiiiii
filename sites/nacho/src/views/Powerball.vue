@@ -1,6 +1,11 @@
 <template>
     <div class="row mb-3" data-aos="fade-in" data-aos-duration="1500">
         <div class="col">
+            <div class="row">
+                <div class="col-12">
+                    <NavMinigame/>
+                </div>
+            </div>
             <div class="row mt-2">
                 <div class="col">
                     <div class="page-title-wrap">
@@ -449,11 +454,13 @@
     import { mapGetters, mapActions } from 'vuex'
 
     import MinigameBetListRecent from '../components/MinigameBetListRecent.vue'
+    import NavMinigame from '../components/NavMinigame.vue'
 
     export default {
         name: 'Powerball',
         components: {
-            MinigameBetListRecent
+            MinigameBetListRecent,
+            NavMinigame
         },
         computed: {
             ...mapGetters(['loading', 'betCart', 'router', 'isLogin']),

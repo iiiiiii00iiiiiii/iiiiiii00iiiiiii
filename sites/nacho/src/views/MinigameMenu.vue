@@ -17,16 +17,45 @@
                         <div class="row">
                             <div class="col-12 col-xl-6 text-center">
                                 <img
+                                    src="images/sub-banner-eospowerball1.png"
+                                    class="img-fluid cursor-pointer rounded"
+                                    @click="$tools.pushRouter('/eospowerball1')"
+                                >
+                            </div>
+                            <div class="col-12 col-xl-6 mt-2 mt-xl-0 text-center">
+                                <img
+                                    src="images/sub-banner-eospowerball3.png"
+                                    class="img-fluid cursor-pointer rounded"
+                                    @click="$tools.pushRouter('/eospowerball3')"
+                                >
+                            </div>
+                            <div class="col-12 col-xl-6 mt-2 text-center">
+                                <img
+                                    src="images/sub-banner-eospowerball5.png"
+                                    class="img-fluid cursor-pointer rounded"
+                                    @click="$tools.pushRouter('/eospowerball')"
+                                >
+                            </div>
+
+                            <div class="col-12 col-xl-6 mt-2 text-center">
+                                <img
                                     src="/images/sub-banner-boglepowerball.png"
                                     class="img-fluid cursor-pointer rounded"
                                     @click="$tools.pushRouter('/boglepowerball')"
                                 >
                             </div>
-                            <div class="col-12 col-xl-6 mt-2 mt-xl-0 text-center">
+                            <div class="col-12 col-xl-6 mt-2 text-center">
                                 <img
                                     src="/images/sub-banner-bogleladder.png"
                                     class="img-fluid cursor-pointer rounded"
                                     @click="$tools.pushRouter('/bogleladder')"
+                                >
+                            </div>
+                            <div class="col-12 col-xl-6 mt-2 text-center">
+                                <img
+                                    src="images/sub-banner-speedladder.png"
+                                    class="img-fluid cursor-pointer rounded"
+                                    @click="$tools.pushRouter('/speedladder')"
                                 >
                             </div>
                             <div class="col-12 col-xl-6 mt-2 text-center">
@@ -41,34 +70,6 @@
                                     src="/images/sub-banner-coinpowerball5.png"
                                     class="img-fluid cursor-pointer rounded"
                                     @click="$tools.pushRouter('/coinpowerball')"
-                                >
-                            </div>
-                            <div class="col-12 col-xl-6 mt-2 text-center">
-                                <img
-                                    src="images/sub-banner-eospowerball1.png"
-                                    class="img-fluid cursor-pointer rounded"
-                                    @click="$tools.pushRouter('/eospowerball1')"
-                                >
-                            </div>
-                            <div class="col-12 col-xl-6 mt-2 text-center">
-                                <img
-                                    src="images/sub-banner-eospowerball3.png"
-                                    class="img-fluid cursor-pointer rounded"
-                                    @click="$tools.pushRouter('/eospowerball3')"
-                                >
-                            </div>
-                            <div class="col-12 col-xl-6 mt-2 text-center">
-                                <img
-                                    src="images/sub-banner-eospowerball5.png"
-                                    class="img-fluid cursor-pointer rounded"
-                                    @click="$tools.pushRouter('/eospowerball')"
-                                >
-                            </div>
-                            <div class="col-12 col-xl-6 mt-2 text-center">
-                                <img
-                                    src="images/sub-banner-speedladder.png"
-                                    class="img-fluid cursor-pointer rounded"
-                                    @click="$tools.pushRouter('/speedladder')"
                                 >
                             </div>
                             <div class="col-12 col-xl-6 mt-2 text-center">
