@@ -430,7 +430,7 @@
                 v-show="showSport === 'Rugby Union'"
             >
                 <span class="category-contry-icon" @click="expandLeague('Rugby Union', country)">
-                    img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
+                    <img class="country-img mr-1" :src="`http://img.thvmxm.com/${countryOID[country]}.png`">
                 </span>
                 <span class="category-country-content" @click="expandLeague('Rugby Union', country)">
                     {{ country }}

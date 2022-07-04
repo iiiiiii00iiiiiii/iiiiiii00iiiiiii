@@ -70,6 +70,8 @@ const router = express.Router()
 
 // router.get('/get-dashboard', boardCtr.getDashboard)
 router.get('/get-home', etcCtr.getHome)
+router.get('/get-home-match', etcCtr.getHomeMatch)
+
 
 
 

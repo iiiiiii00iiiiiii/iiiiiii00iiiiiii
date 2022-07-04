@@ -256,6 +256,41 @@ export default class EtcController implements IEtcController {
         }
     }
 
+    public getHomeMatch = async (req: req, res: res): Promise<void> => {
+        // validate start
+        let v: any = tools.generateReqValue({}, req)
+        let data: any = v
+        // validate end
+
+        try {
+            // ■■■■■■■■■■ DB-프리매치 가져오기 ■■■■■■■■■■
+            const rPrematch: TService = await etcService.getHomeMatch()
+            if(rPrematch.error) {
+                rPrematch.data = []
+            }
+            // ■■■■■■■■■■ DB-프리매치 가져오기 ■■■■■■■■■■
+
+            // ■■■■■■■■■■ DB-라이브 가져오기 ■■■■■■■■■■
+            const rLive: TService = await etcService.getHomeLive()
+            if(rLive.error) {
+                rLive.data = []
+            }
+            // ■■■■■■■■■■ DB-라이브 가져오기 ■■■■■■■■■■
+
+            res.json({
+                prematch: rPrematch.data,
+                live: rLive.data
+            })
+        } catch (e) {
+            logger.error(e)
+            res.json({
+                prematch: [],
+                live: []
+            })
+            return
+        }
+    }
+
     public getShortNotice = async (req: req, res: res): Promise<void> => {
         // validate start
         let v: any = tools.generateReqValue({}, req)

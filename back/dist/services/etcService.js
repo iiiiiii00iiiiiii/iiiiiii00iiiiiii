@@ -328,6 +328,78 @@ class EtcService {
                 }
             }));
         };
+        this.getHomeMatch = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        resultStatus: false,
+                        gameDateTime: {
+                            $gt: new Date()
+                        },
+                        showStatus: true
+                    };
+                    const whatQuery = {
+                        projection: {
+                            sport: 1,
+                            countryKor: 1,
+                            leagueKor: 1,
+                            gameDateTime: 1,
+                            homeTeamKor: 1,
+                            awayTeamKor: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('sportsPrematch').find(findQuery, whatQuery).limit(4).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getHomeMatch');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
+        this.getHomeLive = () => {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let r = { error: null, data: null, count: null };
+                try {
+                    const findQuery = {
+                        resultStatus: false,
+                        gameDateTime: {
+                            $gt: new Date()
+                        },
+                        showStatus: true,
+                        onAir: {
+                            $in: ['ready', 'onAir']
+                        },
+                        sport: {
+                            $in: ['Basketball', 'Baseball']
+                        }
+                    };
+                    const whatQuery = {
+                        projection: {
+                            sport: 1,
+                            countryKor: 1,
+                            leagueKor: 1,
+                            gameDateTime: 1,
+                            homeTeamKor: 1,
+                            awayTeamKor: 1
+                        }
+                    };
+                    const pool = yield db_1.mongoDB.connect();
+                    r.data = yield pool.collection('sportsLive').find(findQuery, whatQuery).limit(4).toArray();
+                    resolve(r);
+                }
+                catch (err) {
+                    modules_1.logger.error('EtcService > getHomeLive');
+                    modules_1.logger.error(err);
+                    r.error = err;
+                    resolve(r);
+                }
+            }));
+        };
     }
 }
 exports.default = EtcService;

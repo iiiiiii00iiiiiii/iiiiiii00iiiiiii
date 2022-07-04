@@ -234,6 +234,38 @@ class EtcController {
                 return;
             }
         });
+        this.getHomeMatch = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            // validate start
+            let v = tools_1.default.generateReqValue({}, req);
+            let data = v;
+            // validate end
+            try {
+                // ■■■■■■■■■■ DB-프리매치 가져오기 ■■■■■■■■■■
+                const rPrematch = yield etcService.getHomeMatch();
+                if (rPrematch.error) {
+                    rPrematch.data = [];
+                }
+                // ■■■■■■■■■■ DB-프리매치 가져오기 ■■■■■■■■■■
+                // ■■■■■■■■■■ DB-라이브 가져오기 ■■■■■■■■■■
+                const rLive = yield etcService.getHomeLive();
+                if (rLive.error) {
+                    rLive.data = [];
+                }
+                // ■■■■■■■■■■ DB-라이브 가져오기 ■■■■■■■■■■
+                res.json({
+                    prematch: rPrematch.data,
+                    live: rLive.data
+                });
+            }
+            catch (e) {
+                modules_1.logger.error(e);
+                res.json({
+                    prematch: [],
+                    live: []
+                });
+                return;
+            }
+        });
         this.getShortNotice = (req, res) => __awaiter(this, void 0, void 0, function* () {
             // validate start
             let v = tools_1.default.generateReqValue({}, req);

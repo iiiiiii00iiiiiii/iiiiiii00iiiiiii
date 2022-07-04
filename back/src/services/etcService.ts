@@ -367,4 +367,82 @@ export default class EtcService implements IEtcService {
             }
         })
     }
+
+    public getHomeMatch = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    resultStatus: false,
+                    gameDateTime: {
+                        $gt: new Date()
+                    },
+                    showStatus: true
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        sport: 1,
+                        countryKor: 1,
+                        leagueKor: 1,
+                        gameDateTime: 1,
+                        homeTeamKor: 1,
+                        awayTeamKor: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsPrematch').find(findQuery, whatQuery).limit(4).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > getHomeMatch')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
+
+    public getHomeLive = (): Promise<TService> => {
+        return new Promise<TService>(async (resolve, reject) => {
+            let r: TService = { error: null, data: null, count: null }
+
+            try {
+                const findQuery: any = {
+                    resultStatus: false,
+                    gameDateTime: {
+                        $gt: new Date()
+                    },
+                    showStatus: true,
+                    onAir: {
+                        $in: ['ready', 'onAir']
+                    },
+                    sport: {
+                        $in: ['Basketball', 'Baseball']
+                    }
+                }
+
+                const whatQuery: any = {
+                    projection: {
+                        sport: 1,
+                        countryKor: 1,
+                        leagueKor: 1,
+                        gameDateTime: 1,
+                        homeTeamKor: 1,
+                        awayTeamKor: 1
+                    }
+                }
+
+                const pool: any = await mongoDB.connect()
+                r.data = await pool.collection('sportsLive').find(findQuery, whatQuery).limit(4).toArray()
+                resolve(r)
+            } catch (err) {
+                logger.error('EtcService > getHomeLive')
+                logger.error(err)
+                r.error = err
+                resolve(r)
+            }
+        })
+    }
 }

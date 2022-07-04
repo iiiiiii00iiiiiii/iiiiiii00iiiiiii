@@ -74,8 +74,8 @@ import {
     faSyncAlt, faDice, faHistory,faPenSquare,faClipboardCheck,faCog,
     faBookOpen,faRocket,faClock,faFlag,faChevronLeft,faChevronRight
 } from '@fortawesome/free-solid-svg-icons'
-import { 
-    
+import {
+
 } from '@fortawesome/free-regular-svg-icons'
 import {
     faBitcoin, faPinterestP,
@@ -96,6 +96,8 @@ library.add([
 ])
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+import _ from 'lodash'
+Vue.prototype.$_ = _
 
 // Layout
 import Default from '@/layout/Default'

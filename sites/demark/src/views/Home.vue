@@ -39,229 +39,68 @@
             </div>
             <div class="middle-contents">
                 <div class="contents-data">
-                    <div class="content-header"> 
+                    <div class="content-header">
                         <span>
                             <font-awesome-icon :icon="['fa', 'bell']"/> 스포츠매치
-                        </span> 
-                        <span class="entire-btn" @click="$tools.pushRouter('/sports', false)">전체보기</span> 
+                        </span>
+                        <span class="entire-btn" @click="$tools.pushRouter('/sports', false)">전체보기</span>
                     </div>
-                    <div class="content-game">
+                    <div class="content-game" v-for="(v, index) in prematch" :key="index">
                         <div class="game-header">
                             <span class="competition-event">
                                 <span>
-                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                    <img :src="`/images/${$config.iconSport[v.sport]}`" class="sports-img"> {{ $config.sport[v.sport] }}
                                 </span>
                                 <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
                                 <b class="competition-league">
-                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                    <img :src="`http://img.thvmxm.com/${$config.iconCountry[v.countryKor]}.png`" alt="아이스하키" title="아이스하키"> {{ v.countryKor }}
                                 </b>
                             </span>
                         </div>
                         <div class="team-name">
                             <ul>
                                 <li>
-                                    <span>05-13 22:20</span>
+                                    <span>{{ $moment(v.gameDateTime).format('MM-DD HH:mm') }}</span>
                                 </li>
                                 <li>
-                                    <span class="content-game-home">미국</span>
+                                    <span class="content-game-home">{{ v.homeTeamKor }}</span>
                                     <span class="content-game-vs">vs</span>
-                                    <span class="content-game-away">라트비아</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="content-game">
-                        <div class="game-header">
-                            <span class="competition-event">
-                                <span>
-                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
-                                </span>
-                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
-                                <b class="competition-league">
-                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
-                                </b>
-                            </span>
-                        </div>
-                        <div class="team-name">
-                            <ul>
-                                <li>
-                                    <span>05-13 22:20</span>
-                                </li>
-                                <li>
-                                    <span class="content-game-home">미국</span>
-                                    <span class="content-game-vs">vs</span>
-                                    <span class="content-game-away">라트비아</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="content-game">
-                        <div class="game-header">
-                            <span class="competition-event">
-                                <span>
-                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
-                                </span>
-                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
-                                <b class="competition-league">
-                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
-                                </b>
-                            </span>
-                        </div>
-                        <div class="team-name">
-                            <ul>
-                                <li>
-                                    <span>05-13 22:20</span>
-                                </li>
-                                <li>
-                                    <span class="content-game-home">미국</span>
-                                    <span class="content-game-vs">vs</span>
-                                    <span class="content-game-away">라트비아</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="content-game">
-                        <div class="game-header">
-                            <span class="competition-event">
-                                <span>
-                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
-                                </span>
-                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
-                                <b class="competition-league">
-                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
-                                </b>
-                            </span>
-                        </div>
-                        <div class="team-name">
-                            <ul>
-                                <li>
-                                    <span>05-13 22:20</span>
-                                </li>
-                                <li>
-                                    <span class="content-game-home">미국</span>
-                                    <span class="content-game-vs">vs</span>
-                                    <span class="content-game-away">라트비아</span>
+                                    <span class="content-game-away">{{ v.awayTeamKor }}</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="contents-data d-none d-md-block">
-                    <div class="content-header"> 
+                    <div class="content-header">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-alarm-fill" viewBox="0 0 16 16">
                                 <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z"/>
                             </svg> 라이브매치
-                        </span> 
-                        <span class="entire-btn" @click="$tools.pushRouter('/sportslive', false)">전체보기</span> 
+                        </span>
+                        <span class="entire-btn" @click="$tools.pushRouter('/sportslive', false)">전체보기</span>
                     </div>
-                    <div class="content-game">
+                    <div class="content-game" v-for="(v, index) in live" :key="index">
                         <div class="game-header">
                             <span class="competition-event">
                                 <span>
-                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
+                                    <img :src="`/images/${$config.iconSport[v.sport]}`" class="sports-img"> {{ $config.sport[v.sport] }}
                                 </span>
                                 <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
                                 <b class="competition-league">
-                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
+                                    <img :src="`http://img.thvmxm.com/${$config.iconCountry[v.countryKor]}.png`" alt="아이스하키" title="아이스하키"> {{ v.countryKor }}
                                 </b>
-                                <span class="time">05-13 22:20</span>
                             </span>
                         </div>
-                        <div class="livegame-team-name">
+                        <div class="team-name">
                             <ul>
                                 <li>
-                                    <p> 알 수 없음 </p>
-                                    <span class="score">
-                                        <span class="content-livegame-home">0</span>
-                                        <span class="content-livegame-vs">vs</span> 
-                                        <span class="content-livegame-away">0</span>
-                                    </span>
+                                    <span>{{ $moment(v.gameDateTime).format('MM-DD HH:mm') }}</span>
                                 </li>
                                 <li>
-                                    <img src="/images/usa-img.png" alt="미국">
-                                    <span class="home-team">미국</span>
-                                </li>
-                                <li>
-                                    <span class="content-livegame-vs">vs</span>
-                                </li>
-                                <li>
-                                    <span class="away-team">라트비아</span>
-                                    <img src="/images/lsa-imf.png" alt="라트비아">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="content-game">
-                        <div class="game-header">
-                            <span class="competition-event">
-                                <span>
-                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
-                                </span>
-                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
-                                <b class="competition-league">
-                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
-                                </b>
-                                <span class="time">05-13 22:20</span>
-                            </span>
-                        </div>
-                        <div class="livegame-team-name">
-                            <ul>
-                                <li>
-                                    <p> 알 수 없음 </p>
-                                    <span class="score">
-                                        <span class="content-livegame-home">0</span>
-                                        <span class="content-livegame-vs">vs</span> 
-                                        <span class="content-livegame-away">0</span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <img src="/images/usa-img.png" alt="미국">
-                                    <span class="home-team">미국</span>
-                                </li>
-                                <li>
-                                    <span class="content-livegame-vs">vs</span>
-                                </li>
-                                <li>
-                                    <span class="away-team">라트비아</span>
-                                    <img src="/images/lsa-imf.png" alt="라트비아">
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="content-game">
-                        <div class="game-header">
-                            <span class="competition-event">
-                                <span>
-                                    <img src="/images/icon-icehockey-gray.png" alt="아이스하키" title="아이스하키"> 아이스하키
-                                </span>
-                                <font-awesome-icon class="double-right-icon" :icon="['fa', 'angle-double-right']"/>
-                                <b class="competition-league">
-                                    <img src="/images/usa-img.png" alt="아이스하키" title="아이스하키"> 월드챔피언쉽 2021
-                                </b>
-                                <span class="time">05-13 22:20</span>
-                            </span>
-                        </div>
-                        <div class="livegame-team-name">
-                            <ul>
-                                <li>
-                                    <p> 알 수 없음 </p>
-                                    <span class="score">
-                                        <span class="content-livegame-home">0</span>
-                                        <span class="content-livegame-vs">vs</span> 
-                                        <span class="content-livegame-away">0</span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <img src="/images/usa-img.png" alt="미국">
-                                    <span class="home-team">미국</span>
-                                </li>
-                                <li>
-                                    <span class="content-livegame-vs">vs</span>
-                                </li>
-                                <li>
-                                    <span class="away-team">라트비아</span>
-                                    <img src="/images/lsa-imf.png" alt="라트비아">
+                                    <span class="content-game-home">{{ v.homeTeamKor }}</span>
+                                    <span class="content-game-vs">vs</span>
+                                    <span class="content-game-away">{{ v.awayTeamKor }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -310,11 +149,14 @@
                 selectBoard: 'notice',
                 notice: [],
                 event: [],
-                faq: []
+                faq: [],
+                prematch: [],
+                live: []
             }
         },
         created() {
             this.getDashboard()
+            this.getMatch()
         },
         methods: {
             async getDashboard() {
@@ -324,6 +166,13 @@
                 this.notice = r.data.dashboard.notice
                 this.event = r.data.dashboard.event
                 this.faq = r.data.dashboard.faq
+            },
+            async getMatch() {
+                const r = await this.$http.get('/api/get-home-match')
+
+                this.prematch = r.data.prematch
+                this.live = r.data.live
+                if(r.error) return
             },
             async openKplay(id) {
                 const kplayWindow = window.open('', 'kplay', '_blank')

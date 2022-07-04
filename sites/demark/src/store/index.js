@@ -48,6 +48,7 @@ export default new Vuex.Store({
             max: 0,
             benefit: 0
         },
+        bonusInfo: [],
         // 미니게임 배팅 내역
         minigameBetListRecent: [],
         // 사이드바 보이기 여부
@@ -97,6 +98,10 @@ export default new Vuex.Store({
         // 배팅 한도 금액
         betInfo: state => {
             return state.betInfo
+        },
+        // 보너스 폴더
+        bonusInfo: state => {
+            return state.bonusInfo
         },
         // 미니게임 배팅 내역
         minigameBetListRecent: state => {
@@ -197,6 +202,10 @@ export default new Vuex.Store({
                 benefit: 0
             })
         },
+        // 보너스 폴더
+        setBonusInfo: (state, payload) => {
+            state.bonusInfo = tools.deepClone(payload)
+        },
         // 미니게임 배팅 내역
         getMinigameBetListRecent: (state, payload) => {
             state.minigameBetListRecent = payload
@@ -277,6 +286,10 @@ export default new Vuex.Store({
         // 배팅 한도 금액 삭제
         deleteBetInfo: ({ commit }) => {
             commit('deleteBetInfo')
+        },
+        // 보너스 폴더
+        setBonusInfo: ({ commit }, payload) => {
+            commit('setBonusInfo', payload)
         },
         // 미니게임 배팅 내역
         getMinigameBetListRecent: async ({ commit }) => {

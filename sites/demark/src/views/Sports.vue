@@ -5359,7 +5359,9 @@
                 },
                 expand: {},
                 data: [],
-                dataCount: 0
+                dataCount: 0,
+                betInfo: {},
+                bonusInfo: []
             }
         },
         created() {
@@ -5367,7 +5369,7 @@
             // this.getList()
         },
         methods: {
-            ...mapActions(['setBetCart', 'changeBetCart', 'deleteBetCart', 'deleteBetCartAll', 'setBetInfo']),
+            ...mapActions(['setBetCart', 'changeBetCart', 'deleteBetCart', 'deleteBetCartAll', 'setBetInfo', 'setBonusInfo']),
             setFromRouter() {
                 this.search.page = this.$route.query.page ? this.$route.query.page : 1
                 this.search.sport = this.$route.query.sport ? this.$route.query.sport : ''
@@ -5389,6 +5391,7 @@
                 this.data = r.data.recordSet
                 this.dataCount = r.data.recordCount
                 this.betInfo = r.data.betInfo
+                this.bonusInfo = r.data.bonusInfo
 
                 if(this.isLogin) {
                     this.setBetInfo({
@@ -5396,6 +5399,8 @@
                         max: r.data.betInfo[`lv${this.user.grade}`].max,
                         benefit: r.data.betInfo[`lv${this.user.grade}`].benefit
                     })
+
+                    this.setBonusInfo(this.bonusInfo)
                 }
             },
             selectCategory(sport) {

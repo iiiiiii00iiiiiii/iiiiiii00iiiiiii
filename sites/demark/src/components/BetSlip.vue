@@ -144,15 +144,54 @@
             }
         },
         computed: {
-            ...mapGetters(['router', 'loading', 'user', 'betCart', 'betInfo']),
+            ...mapGetters(['router', 'loading', 'user', 'betCart', 'betInfo', 'bonusInfo']),
             betRate() {
                 let rate = 0
 
                 if(this.betCart.length > 0) {
-                    rate = 1
+                    let arrayBetBonus = []
+                    if(this.router === 'Sports') {
+                        arrayBetBonus = this.bonusInfo.filter(x => x.type === 'prematchEurope')
+                    }
+                    else if(this.router === 'SportsCross') {
+                        arrayBetBonus = this.bonusInfo.filter(x => x.type === 'prematchKor')
+                    }
+                    else if(this.router === 'SportsSpecial') {
+                        arrayBetBonus = this.bonusInfo.filter(x => x.type === 'special')
+                    }
+                    else if(this.router === 'SportsLive') {
+                        arrayBetBonus = this.bonusInfo.filter(x => x.type === 'live')
+                    }
+                    else if(this.router === 'SportsLiveKor') {
+                        arrayBetBonus = this.bonusInfo.filter(x => x.type === 'realtime')
+                    }
+
+                    let bonusRate = 1
+                    let needRate = 1
+                    if(arrayBetBonus.length > 0) {
+                        arrayBetBonus = this.$_.sortBy(arrayBetBonus, 'folder').reverse()
+                        for(let i = 0; i < arrayBetBonus.length; i++) {
+                            if(arrayBetBonus[i].folder <= this.betCart.length) {
+                                bonusRate = arrayBetBonus[i].bonusRate
+                                needRate = arrayBetBonus[i].allowRate
+                                break
+                            }
+                        }
+
+                        for(let i = 0; i < this.betCart.length; i++) {
+                            if(this.betCart[i].selectRate <= needRate) {
+                                bonusRate = 1
+                                break
+                            }
+                        }
+                    }
+
+                    rate = bonusRate
                     for(let i = 0; i < this.betCart.length; i++) {
                         rate *= this.betCart[i].selectRate
                     }
+
+                    // console.log(rate)
                 }
                 return parseInt((rate * 100)) / 100
             },
@@ -254,12 +293,19 @@
                 this.betAmount = 0
             },
             max() {
-                if(this.user.money >= this.betMax) {
-                    document.querySelector('#betAmount').value = this.$numeral(this.betMax).format('0,0')
-                    document.querySelector('#betAmountMobile').value = this.$numeral(this.betMax).format('0,0')
-                    // document.querySelector('#betAmountMinigame').value = this.$numeral(this.betMax).format('0,0')
+                if(this.betCart.length === 0) return
 
-                    this.betAmount = this.$numeral(this.betMax).format('0,0')
+                let maxBenefit = this.betInfo.benefit
+                let betRate = this.betRate
+
+                let betAmount = parseInt(maxBenefit / betRate)
+
+                if(this.user.money >= betAmount) {
+                    document.querySelector('#betAmount').value = this.$numeral(betAmount).format('0,0')
+                    document.querySelector('#betAmountMobile').value = this.$numeral(betAmount).format('0,0')
+                    // document.querySelector('#betAmountMinigame').value = this.$numeral(betAmount).format('0,0')
+
+                    this.betAmount = this.$numeral(betAmount).format('0,0')
                 }
                 else {
                     document.querySelector('#betAmount').value = this.$numeral(this.user.money).format('0,0')
@@ -268,6 +314,11 @@
 
                     this.betAmount = this.$numeral(this.user.money).format('0,0')
                 }
+
+
+                // console.log(this.betCart)
+                // console.log(this.betInfo)
+                // console.log(this.bonusInfo)
             },
             deleteBetAll() {
                 this.deleteBetCartAll()

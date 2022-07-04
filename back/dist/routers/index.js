@@ -51,6 +51,7 @@ const kplayCtr = new kplayController_1.default();
 const router = express_1.default.Router();
 // router.get('/get-dashboard', boardCtr.getDashboard)
 router.get('/get-home', etcCtr.getHome);
+router.get('/get-home-match', etcCtr.getHomeMatch);
 // User
 router.get('/login', userCtr.login);
 router.post('/join', userCtr.join);
