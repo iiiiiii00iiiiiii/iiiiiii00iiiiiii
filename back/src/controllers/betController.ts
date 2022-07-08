@@ -3144,7 +3144,7 @@ export default class BetController implements IBetController {
             return
         }
     }
-    
+
 
     public getBoardBetListForView = async (req: req, res: res): Promise<void> => {
         const validateData: any = {

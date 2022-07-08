@@ -137,7 +137,7 @@
                 const sumAmount = parseInt(this.betAmountMinigame.toString().replace(/,/gi, '')) + amount
 
                 let money = 0
-                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball') {
+                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball3' || this.router === 'CoinPowerball' || this.router === 'EosPowerball3' || this.router === 'EosPowerball' || this.router === 'BoglePowerball' || this.router === 'Bogleladder') {
                     money = this.user.minigameMoney
                 }
                 else {
@@ -217,11 +217,11 @@
                 this.betAmountMinigame = 0
             },
             max() {
-                if(this.router !== 'Powerball' && this.router !== 'Powerladder' && this.router !== 'CoinPowerball') return
+                if(this.router !== 'Powerball' && this.router !== 'Powerladder' && this.router !== 'CoinPowerball3' && this.router !== 'CoinPowerball' && this.router !== 'EosPowerball3' && this.router !== 'EosPowerball' && this.router !== 'BoglePowerball' && this.router !== 'Bogleladder') return
                 if(this.$store.state.end) return
 
                 let money = 0
-                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball') {
+                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball3' || this.router === 'CoinPowerball' || this.router === 'EosPowerball3' || this.router === 'EosPowerball' || this.router === 'BoglePowerball' || this.router === 'Bogleladder') {
                     money = this.user.minigameMoney
                 }
                 else {

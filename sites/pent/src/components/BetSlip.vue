@@ -299,7 +299,7 @@
             },
             max() {
                 let money = 0
-                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball') {
+                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball3' || this.router === 'CoinPowerball' || this.router === 'EosPowerball3' || this.router === 'EosPowerball' || this.router === 'BoglePowerball' || this.router === 'Bogleladder') {
                     money = this.user.minigameMoney
                 }
                 else {
@@ -367,7 +367,7 @@
 
                     betData.betGameType = 'sportsLiveKor'
                 }
-                else if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball') {
+                else if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball3' || this.router === 'CoinPowerball' || this.router === 'EosPowerball3' || this.router === 'EosPowerball' || this.router === 'BoglePowerball' || this.router === 'Bogleladder') {
                     betCart = this.betCart
                     betURL = '/api/bet'
 
@@ -465,7 +465,7 @@
                         this.deleteBetAll()
                         this.init()
 
-                        if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball') {
+                        if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball3' || this.router === 'CoinPowerball' || this.router === 'EosPowerball3' || this.router === 'EosPowerball' || this.router === 'BoglePowerball' || this.router === 'Bogleladder') {
                             this.getMinigameBetListRecent()
                             this.getInformation()
                         }

@@ -342,9 +342,30 @@ const routes = [
         beforeEnter: getInformationWithout()
     },
     {
+        path: '/coinpowerball3',
+        name: 'CoinPowerball3',
+        component: () => import(/* webpackChunkName: "coinpowerball3" */ '../views/CoinPowerball3.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
         path: '/coinpowerball',
         name: 'CoinPowerball',
         component: () => import(/* webpackChunkName: "coinpowerball" */ '../views/CoinPowerball.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
+        path: '/eospowerball3',
+        name: 'EosPowerball3',
+        component: () => import(/* webpackChunkName: "eospowerball3" */ '../views/EosPowerball3.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
+    {
+        path: '/eospowerball',
+        name: 'EosPowerball',
+        component: () => import(/* webpackChunkName: "eospowerball" */ '../views/EosPowerball.vue'),
         meta: { layout: 'Default' },
         beforeEnter: getInformationWithout()
     },

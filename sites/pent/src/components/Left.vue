@@ -1,15 +1,21 @@
 <template>
     <div>
         <LeftMenu/>
-        <!-- <LeftMinigameCategory
+        <LeftMinigameCategory
             v-if="router === 'Powerball' ||
             router === 'Powerladder' ||
             router === 'Kenoladder' ||
             router === 'BoglePowerball' ||
             router === 'Bogleladder' ||
+            router === 'CoinPowerball3' ||
+            router === 'CoinPowerball' ||
+            router === 'EosPowerball3' ||
+            router === 'EosPowerball' ||
+            router === 'GooglePowerball1' ||
+            router === 'GooglePowerball1' ||
             router === 'GooglePowerball1' ||
             router === 'GooglePowerball3'"
-        /> -->
+        />
         <LeftCategory/>
         <BannerLeft/>
     </div>
@@ -20,7 +26,7 @@
 
     import LeftMenu from '../components/LeftMenu.vue'
     import LeftCategory from '../components/LeftCategory.vue'
-    // import LeftMinigameCategory from '../components/LeftMinigameCategory.vue'
+    import LeftMinigameCategory from '../components/LeftMinigameCategory.vue'
     import BannerLeft from '../components/BannerLeft.vue'
 
     export default {
@@ -28,7 +34,7 @@
         components: {
             LeftMenu,
             LeftCategory,
-            // LeftMinigameCategory,
+            LeftMinigameCategory,
             BannerLeft
         },
         computed: {

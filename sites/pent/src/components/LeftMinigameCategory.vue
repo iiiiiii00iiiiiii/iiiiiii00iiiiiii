@@ -1,97 +1,54 @@
 <template>
     <div class="left-category">
         <div class="category-wrap">
-            <div class="category line-bottom py-1" @click="$tools.pushRouter('/powerball', false)">
+            <div class="category line-bottom py-1" @click="$tools.pushRouter('/coinpowerball3', false)">
                 <span class="category-icon">
-                    <img src="/images/icon-powerball.png" alt="파워볼" title="파워볼">
+                    <img src="/images/icon-nav-minigame-7.png" alt="코인 3분 파워볼" title="코인 3분 파워볼">
                 </span>
                 <span class="category-name">
-                    파워볼
+                    코인 3분 파워볼
                 </span>
-                <!-- <span class="category-count">
-                    <span class="count">
-                        {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
-                    </span>
-                </span> -->
             </div>
-            <div class="category line-bottom py-1" @click="$tools.pushRouter('/powerladder', false)">
+            <div class="category line-bottom py-1" @click="$tools.pushRouter('/coinpowerball', false)">
                 <span class="category-icon">
-                    <img src="/images/icon-powerladder.png" alt="파워 사다리" title="파워 사다리">
+                    <img src="/images/icon-nav-minigame-7.png" alt="코인 5분 파워볼" title="코인 5분 파워볼">
                 </span>
                 <span class="category-name">
-                    파워 사다리
+                    코인 5분 파워볼
                 </span>
-                <!-- <span class="category-count">
-                    <span class="count">
-                        {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
-                    </span>
-                </span> -->
             </div>
-            <div class="category line-bottom py-1" @click="$tools.pushRouter('/kenoladder', false)">
+            <div class="category line-bottom py-1" @click="$tools.pushRouter('/eospowerball3', false)">
                 <span class="category-icon">
-                    <img src="/images/icon-kenoladder.png" alt="키노 사다리" title="키노 사다리">
+                    <img src="/images/icon-nav-minigame-8.png" alt="이오스 3분 파워볼" title="이오스 3분 파워볼">
                 </span>
                 <span class="category-name">
-                    키노 사다리
+                    이오스 3분 파워볼
                 </span>
-                <!-- <span class="category-count">
-                    <span class="count">
-                        {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
-                    </span>
-                </span> -->
             </div>
-            <!-- <div class="category line-bottom py-1" @click="$tools.pushRouter('/boglepowerball', false)">
+            <div class="category line-bottom py-1" @click="$tools.pushRouter('/eospowerball', false)">
                 <span class="category-icon">
-                    <img src="/images/icon-boglePowerball.png" alt="보글 파워볼" title="보글 파워볼">
+                    <img src="/images/icon-nav-minigame-8.png" alt="이오스 5분 파워볼" title="이오스 5분 파워볼">
+                </span>
+                <span class="category-name">
+                    이오스 5분 파워볼
+                </span>
+            </div>
+            <div class="category line-bottom py-1" @click="$tools.pushRouter('/boglepowerball', false)">
+                <span class="category-icon">
+                    <img src="/images/icon-nav-minigame-5.png" alt="보글 파워볼" title="보글 파워볼">
                 </span>
                 <span class="category-name">
                     보글 파워볼
                 </span>
-                <span class="category-count">
-                    <span class="count">
-                        {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
-                    </span>
-                </span>
-            </div> -->
-            <!-- <div class="category line-bottom py-1" @click="$tools.pushRouter('/bogleladder', false)">
+            </div>
+            <div class="category line-bottom py-1" @click="$tools.pushRouter('/bogleladder', false)">
                 <span class="category-icon">
-                    <img src="/images/icon-boglePowerball.png" alt="보글 사다리" title="보글 사다리">
+                    <img src="/images/icon-nav-minigame-5.png" alt="보글 사다리" title="보글 사다리">
                 </span>
                 <span class="category-name">
                     보글 사다리
                 </span>
-                <span class="category-count">
-                    <span class="count">
-                        {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
-                    </span>
-                </span>
-            </div> -->
-            <!-- <div class="category line-bottom py-1" @click="$tools.pushRouter('/googlepowerball1', false)">
-                <span class="category-icon">
-                    <img src="/images/icon-googlePowerball1.png" alt="구글 1분 파워볼" title="구글 1분 파워볼">
-                </span>
-                <span class="category-name">
-                    구글 1분 파워볼
-                </span>
-                <span class="category-count">
-                    <span class="count">
-                        {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
-                    </span>
-                </span>
-            </div> -->
-            <!-- <div class="category line-bottom py-1" @click="$tools.pushRouter('/googlepowerball3', false)">
-                <span class="category-icon">
-                    <img src="/images/icon-googlePowerball3.png" alt="구글 3분 파워볼" title="구글 3분 파워볼">
-                </span>
-                <span class="category-name">
-                    구글 3분 파워볼
-                </span>
-                <span class="category-count">
-                    <span class="count">
-                        {{ countOfCategory.Football ? $numeral(countOfCategory.Football.countOfGame).format('0,0') : 0 }}
-                    </span>
-                </span>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>

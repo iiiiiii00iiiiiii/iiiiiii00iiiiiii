@@ -13,6 +13,8 @@ const config = {
     googlePowerball3Term: parseInt(process.env.VUE_APP_GOOGLEPOWERBALL3_TIME),
     coinPowerball3Term: parseInt(process.env.VUE_APP_COINPOWERBALL3_TIME),
     coinPowerballTerm: parseInt(process.env.VUE_APP_COINPOWERBALL_TIME),
+    eosPowerball3Term: parseInt(process.env.VUE_APP_EOSPOWERBALL3_TIME),
+    eosPowerballTerm: parseInt(process.env.VUE_APP_EOSPOWERBALL_TIME),
     statusCharge: ['확인 중', '충전 완료', '충전 취소'],
     statusChargeClass: ['', 'text-green', 'text-orange'],
     statusExchange: ['확인 중', '환전 완료', '환전 취소'],
@@ -353,9 +355,9 @@ const config = {
         googlePowerball3: '구글 3분 파워볼',
         eosPowerball1: '이오스 1분 파워볼',
         eosPowerball3: '이오스 3분 파워볼',
-        eosPowerball: '이오스 파워볼',
+        eosPowerball: '이오스 5분 파워볼',
         coinPowerball3: '코인 3분 파워볼',
-        coinPowerball: '코인 파워볼',
+        coinPowerball: '코인 5분 파워볼',
         speedladder: '스피드 사다리'
     }
 }

@@ -19,7 +19,7 @@
             <Right/>
         </div>
         <div class="fixed-bottom d-xl-none">
-            <BetSlipMinigame v-show="betCart.length > 0 && !showSideBars && (this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'Kenoladder' || this.router === 'BoglePowerball' || this.router === 'Bogleladder' || this.router === 'GooglePowerball1' || this.router === 'GooglePowerball3' || this.router === 'CoinPowerball')"/>
+            <BetSlipMinigame v-show="betCart.length > 0 && !showSideBars && (this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'Kenoladder' || this.router === 'BoglePowerball' || this.router === 'Bogleladder' || this.router === 'GooglePowerball1' || this.router === 'GooglePowerball3' || this.router === 'CoinPowerball3' || this.router === 'CoinPowerball' || this.router === 'EosPowerball3' || this.router === 'EosPowerball')"/>
         </div>
     </div>
 </template>
