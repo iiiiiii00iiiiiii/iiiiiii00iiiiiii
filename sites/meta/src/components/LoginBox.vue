@@ -38,7 +38,7 @@
                 </tr>
                 <tr height="30">
                     <td class="pl-1" colspan="2">
-                       <span class="cursor-pointer" @click="$tools.pushRouter('/join', false)">디마크 회원가입</span>
+                       <span class="cursor-pointer" @click="$tools.pushRouter('/join', false)">메타 회원가입</span>
                     </td>
                 </tr>
             </table>
