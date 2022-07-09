@@ -218,7 +218,7 @@
                 const sumAmount = parseInt(this.betAmount.toString().replace(/,/gi, '')) + amount
 
                 let money = 0
-                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball') {
+                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball' || this.router === 'BoglePowerball' || this.router === 'Bogleladder' || this.router === 'EosPowerball3' || this.router === 'EosPowerball') {
                     money = this.user.minigameMoney
                 }
                 else {

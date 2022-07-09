@@ -10,6 +10,9 @@ sites/#meta
 sites/backnum/node_modules
 sites/backnum/package-lock.json
 
+sites/smart/node_modules
+sites/smart/package-lock.json
+
 sites/demark/node_modules
 sites/demark/package-lock.json
 
