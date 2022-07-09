@@ -215,7 +215,7 @@
                 </div>
                 <!-- 슬롯 - PC -->
                 <div class="col col-xl d-none d-xl-block">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 4" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/powerball', false)">
+                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 4" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/eospowerball', false)">
                         <div class="game-banner-site-name">
                             MODERN TIMES
                         </div>
@@ -240,7 +240,7 @@
                 </div>
                 <!-- 미니게임 - MOBILE -->
                 <div class="col col-xl d-xl-none mt-2 mt-xl-0">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 5" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/powerball')">
+                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 5" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/eospowerball')">
                         <div class="game-banner-site-name">
                             MODERN TIMES
                         </div>

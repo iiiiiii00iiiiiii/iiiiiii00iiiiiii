@@ -9,6 +9,8 @@
             router === 'Bogleladder' ||
             router === 'GooglePowerball1' ||
             router === 'GooglePowerball3' ||
+            router === 'EosPowerball3' ||
+            router === 'EosPowerball' ||
             router === 'CoinPowerball3' ||
             router === 'CoinPowerball'"
         />

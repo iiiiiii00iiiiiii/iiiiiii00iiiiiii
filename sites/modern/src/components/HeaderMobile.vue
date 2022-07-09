@@ -25,7 +25,7 @@
                             <li @click="$tools.pushRouter('/sportslivekor', true)">실시간</li>
                             <li @click="$tools.pushRouter('/casino', true)">카지노</li>
                             <li @click="openKplay(0, true)">슬롯</li>
-                            <li @click="$tools.pushRouter('/powerball', true)">미니게임</li>
+                            <li @click="$tools.pushRouter('/eospowerball', true)">미니게임</li>
                             <li @click="$tools.pushRouter('/free', true)">게시판</li>
                             <li @click="$tools.pushRouter('/rules', true)">경기규정</li>
                         </ul>
@@ -68,6 +68,8 @@
                 router === 'Bogleladder' ||
                 router === 'GooglePowerball1' ||
                 router === 'GooglePowerball3' ||
+                router === 'EosPowerball3' ||
+                router === 'EosPowerball' ||
                 router === 'CoinPowerball3' ||
                 router === 'CoinPowerball'"
             />
