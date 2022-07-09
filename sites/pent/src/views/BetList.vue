@@ -252,7 +252,7 @@
                 let now = this.$moment().unix()
                 regDateTime = this.$moment(regDateTime).unix()
 
-                if(regDateTime + 600 <= now) {
+                if(regDateTime + 1800 <= now) {
                     return false
                 }
 

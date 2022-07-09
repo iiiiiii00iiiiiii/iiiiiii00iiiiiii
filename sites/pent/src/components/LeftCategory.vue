@@ -45,6 +45,23 @@
                         </span>
                     </span>
                 </div>
+                <!-- K2리그 -->
+                <div
+                    class="category-country line-country"
+                    v-show="showPopular === 'Football' && popularFootball.kLeague2 && popularFootball.kLeague2.count > 0"
+                >
+                    <span class="category-contry-icon" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${popularFootball.kLeague2.leagueKor}`)">
+                        ◎
+                    </span>
+                    <span class="category-country-content" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${popularFootball.kLeague2.leagueKor}`)">
+                        {{ popularFootball.kLeague2 ? $tools.cut(popularFootball.kLeague2.leagueKor, 13, '...') : '' }}
+                    </span>
+                    <span class="category-country-count" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${popularFootball.kLeague2.leagueKor}`)">
+                        <span class="count">
+                            {{ $numeral(popularFootball.kLeague2 ? popularFootball.kLeague2.count : 0).format('0,0') }}
+                        </span>
+                    </span>
+                </div>
                 <!-- J리그 -->
                 <div
                     class="category-country line-country"
@@ -59,6 +76,23 @@
                     <span class="category-country-count" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${popularFootball.jLeague.leagueKor}`)">
                         <span class="count">
                             {{ $numeral(popularFootball.jLeague ? popularFootball.jLeague.count : 0).format('0,0') }}
+                        </span>
+                    </span>
+                </div>
+                <!-- J리그2 -->
+                <div
+                    class="category-country line-country"
+                    v-show="showPopular === 'Football' && popularFootball.jLeague2 && popularFootball.jLeague2.count > 0"
+                >
+                    <span class="category-contry-icon" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${popularFootball.jLeague2.leagueKor}`)">
+                        ◎
+                    </span>
+                    <span class="category-country-content" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${popularFootball.jLeague2.leagueKor}`)">
+                        {{ popularFootball.jLeague2 ? $tools.cut(popularFootball.jLeague2.leagueKor, 13, '...') : '' }}
+                    </span>
+                    <span class="category-country-count" @click="$tools.pushRouter(`/sports?page=1&sport=Football&league=${popularFootball.jLeague2.leagueKor}`)">
+                        <span class="count">
+                            {{ $numeral(popularFootball.jLeague2 ? popularFootball.jLeague2.count : 0).format('0,0') }}
                         </span>
                     </span>
                 </div>
@@ -1356,6 +1390,7 @@
                 this.countOfCategoryCross = r.data.countOfCategory
                 this.countryOIDCross = r.data.countryOID
 
+                this.popularFootball = r.data.popularFootball
                 this.popularBaseball = r.data.popularBaseball
                 this.popularBasketball = r.data.popularBasketball
                 this.popularHockey = r.data.popularHockey
@@ -1448,7 +1483,9 @@
             countFootball() {
                 let cnt = 0
                 if(this.popularFootball.kLeague) cnt += this.popularFootball.kLeague.count
+                if(this.popularFootball.kLeague2) cnt += this.popularFootball.kLeague2.count
                 if(this.popularFootball.jLeague) cnt += this.popularFootball.jLeague.count
+                if(this.popularFootball.jLeague2) cnt += this.popularFootball.jLeague2.count
                 if(this.popularFootball.pLeague) cnt += this.popularFootball.pLeague.count
                 if(this.popularFootball.bLeague) cnt += this.popularFootball.bLeague.count
                 if(this.popularFootball.sLeague) cnt += this.popularFootball.sLeague.count

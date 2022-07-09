@@ -73,8 +73,8 @@
                                     v-model="moneyMethod"
                                 >
                                     <option value="">전환 머니 선택</option>
-                                    <option value="minigameMoney">스포츠 -> 파워볼</option>
-                                    <option value="money">파워볼 -> 스포츠</option>
+                                    <option value="minigameMoney">스포츠 -> 미니게임</option>
+                                    <option value="money">미니게임 -> 스포츠</option>
                                 </select>
                             </div>
                             <div class="col-12 col-xl pt-1 pt-xl-0">

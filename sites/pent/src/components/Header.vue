@@ -38,8 +38,8 @@
                                     실시간
                                 </div>
                                 <div class="line-vertical"></div>
-                                <div class="col menu-item" :class="router === 'CoinPowerball' ? 'active' : ''" @click="$tools.pushRouter('/coinpowerball'), false">
-                                    코인 파워볼
+                                <div class="col menu-item" :class="router === 'MiniGameMenu' ? 'active' : ''" @click="$tools.pushRouter('/minigamemenu'), false">
+                                    미니게임
                                 </div>
                                 <!-- <div class="line-vertical"></div>
                                 <div class="col menu-item" :class="router === 'Casino' ? 'active' : ''" @click="$tools.pushRouter('/casino', true)">

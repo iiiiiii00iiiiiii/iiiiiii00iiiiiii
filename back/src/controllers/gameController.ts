@@ -69,7 +69,15 @@ export default class GameController implements IGameController {
                         count: 0,
                         leagueKor: ''
                     },
+                    kLeague2: {
+                        count: 0,
+                        leagueKor: ''
+                    },
                     jLeague: {
+                        count: 0,
+                        leagueKor: ''
+                    },
+                    jLeague2: {
                         count: 0,
                         leagueKor: ''
                     },
@@ -165,9 +173,17 @@ export default class GameController implements IGameController {
                             popularFootball.kLeague.count++
                             popularFootball.kLeague.leagueKor = rCategory.data[i].leagueKor
                         }
+                        if(rCategory.data[i].leagueOID.toString() === '5f48d76cb4e1811a747f6eb2') {  // K2리그
+                            popularFootball.kLeague2.count++
+                            popularFootball.kLeague2.leagueKor = rCategory.data[i].leagueKor
+                        }
                         else if(rCategory.data[i].leagueOID.toString() === '5f48c8e4b4e1811a747f6d6c') {  // J리그
                             popularFootball.jLeague.count++
                             popularFootball.jLeague.leagueKor = rCategory.data[i].leagueKor
+                        }
+                        else if(rCategory.data[i].leagueOID.toString() === '5f48c8e3b4e1811a747f6d6a') {  // J2리그
+                            popularFootball.jLeague2.count++
+                            popularFootball.jLeague2.leagueKor = rCategory.data[i].leagueKor
                         }
                         else if(rCategory.data[i].leagueOID.toString() === '5f5b613b67fb22444c8b4da3') {  // 프리미어
                             popularFootball.pLeague.count++

@@ -19,7 +19,7 @@
                 </td>
             </tr>
             <tr height="25">
-                <td class="top w-70 text-left pl-2 py-5px">
+                <td class="top w-70 text-left pl-1 py-5px">
                     <font-awesome-icon :icon="['fa', 'won-sign']"/>
                     <span class="user-info"> 스포츠 <span class="user-money">{{ $numeral(user.money).format('0,0') }}</span> 원</span>
                     <button type="button" class="btn-exchange-money float-right" :disabled="loading" @click="$tools.pushRouter('/transfermoney', true)">
@@ -31,7 +31,7 @@
             <tr height="25">
                 <td class="top w-70 text-left pl-1 py-5px">
                     <font-awesome-icon :icon="['fa', 'won-sign']"/>
-                    <span class="user-info"> 파워볼 <span class="user-money">{{ $numeral(user.minigameMoney).format('0,0') }}</span> 원</span>
+                    <span class="user-info"> 미니게임 <span class="user-money">{{ $numeral(user.minigameMoney).format('0,0') }}</span> 원</span>
                     <button type="button" class="btn-exchange-money float-right" :disabled="loading" @click="$tools.pushRouter('/transfermoney', true)">
                         <font-awesome-icon :icon="['fa', 'exchange-alt']"/>
                         전환

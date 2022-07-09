@@ -31,7 +31,7 @@
         </table>
         <table class="w-100">
             <tr>
-                <td class="py-2 menu-4 border-top-none" @click="$tools.pushRouter('/coinpowerball', false)">코인 파워볼</td>
+                <td class="py-2 menu-4 border-top-none" @click="$tools.pushRouter('/minigamemenu', false)">미니게임</td>
             </tr>
         </table>
         <table class="w-100">

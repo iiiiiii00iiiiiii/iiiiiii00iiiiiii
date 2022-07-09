@@ -13,23 +13,24 @@
                 <font-awesome-icon :icon="['fa', 'shopping-cart']" class="icon-mobile-sign-in-alt" v-show="isLogin" @click="openRightSide()"/>
             </div>
         </div>
-        <!-- <div class="row mt-2">
+        <div class="row mt-2">
             <div class="col">
                 <div class="header-mobile-menu">
                     <div class="header-mobile-menu-wrap">
                         <ul>
-                            <li @click="$tools.pushRouter('/sports')">해외형 스포츠</li>
-                            <li @click="$tools.pushRouter('/sportscross')">국내형 스포츠</li>
-                            <li @click="$tools.pushRouter('/sportslive')">라이브 스포츠</li>
+                            <li @click="$tools.pushRouter('/sports', false)">해외형 스포츠</li>
+                            <li @click="$tools.pushRouter('/sportscross', false)">국내형 스포츠</li>
+                            <li @click="$tools.pushRouter('/sportslive', false)">라이브 스포츠</li>
                             <li @click="$tools.pushRouter('/sportsspecial', false)">스페셜</li>
                             <li @click="$tools.pushRouter('/sportslivekor', false)">실시간</li>
-                            <li @click="$tools.pushRouter('/powerball', false)">미니게임</li>
-                            <li @click="$tools.pushRouter('/rules', false)">경기규정</li>
+                            <li @click="$tools.pushRouter('/minigamemenu', false)">미니게임</li>
+                            <li @click="$tools.pushRouter('/rules', true)">경기규정</li>
+                            <li @click="$tools.pushRouter('/transfermoney', true)">머니전환</li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="row mt-2 header-mobile-menu" v-if="isLogin">
             <div class="col text-yellow fs-075rem">
                 <div class="pl-2 pt-1">
@@ -241,7 +242,7 @@
         border-bottom: 1px solid #271f18;
 
         .header-mobile-menu-wrap {
-            width: 530px;
+            width: 600px;
 
             ul {
                 list-style: none;
