@@ -209,7 +209,7 @@
                     </div>
                 </div>
                 <div class="col col-xl d-xl-none mt-2 mt-xl-0">
-                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 5" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/powerball')">
+                    <div class="game-banner" data-aos="zoom-in" data-aos-duration="1500" @mouseover="bannerIndex = 5" @mouseout="bannerIndex = null" @click="$tools.pushRouter('/minigamemenu')">
                         <div class="game-banner-site-name">
                             PentHouse
                         </div>
@@ -229,7 +229,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img src="/images/banner-6.jpg" alt="SLOT GAMES" title="SLOT GAMES">
+                        <img src="/images/banner-6.jpg" alt="MINIGAMES" title="MINIGAMES">
                     </div>
                 </div>
             </div>
