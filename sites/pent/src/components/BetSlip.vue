@@ -258,7 +258,7 @@
             },
             setBetAmount(e) {
                 let money = 0
-                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball') {
+                if(this.router === 'Powerball' || this.router === 'Powerladder' || this.router === 'CoinPowerball3' || this.router === 'CoinPowerball' || this.router === 'EosPowerball3' || this.router === 'EosPowerball' || this.router === 'BoglePowerball' || this.router === 'Bogleladder') {
                     money = this.user.minigameMoney
                 }
                 else {
