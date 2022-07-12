@@ -23,8 +23,10 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless table-board text-nowrap">
+                                <!-- <div class="table-responsive"> -->
+                                <div>
+                                    <table class="table table-borderless table-board">
+                                    <!-- <table class="table table-borderless table-board text-nowrap"> -->
                                         <thead>
                                             <tr>
                                                 <th>

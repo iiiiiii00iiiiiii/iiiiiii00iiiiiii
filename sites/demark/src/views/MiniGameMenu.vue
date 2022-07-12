@@ -13,13 +13,13 @@
                 <div class="col-12 col-xl-6">
                     <div class="row">
                         <div class="col-12">
-                            <img src="/images/sub-banner-powerball.png" class="sub-banner img-fluid" alt="파워볼" title="파워볼" @click="$tools.pushRouter('/powerball', false)">
+                            <img src="/images/sub-banner-powerball.png" class="sub-banner img-fluid" alt="파워볼" title="파워볼" @click="$tools.ready('/powerball', false)">
                         </div>
                         <div class="col-12 mt-2">
-                            <img src="/images/sub-banner-powerladder.png" class="sub-banner img-fluid" alt="파워 사다리" title="파워 사다리" @click="$tools.pushRouter('/powerladder', false)">
+                            <img src="/images/sub-banner-powerladder.png" class="sub-banner img-fluid" alt="파워 사다리" title="파워 사다리" @click="$tools.ready('/powerladder', false)">
                         </div>
                         <div class="col-12 mt-2">
-                            <img src="/images/sub-banner-kenoladder.png" class="sub-banner img-fluid" alt="키노 사다리" title="키노 사다리" @click="$tools.pushRouter('/kenoladder', false)">
+                            <img src="/images/sub-banner-kenoladder.png" class="sub-banner img-fluid" alt="키노 사다리" title="키노 사다리" @click="$tools.ready('/kenoladder', false)">
                         </div>
                         <div class="col-12 mt-2">
                             <img src="/images/sub-banner-speedladder.png" class="sub-banner img-fluid" alt="스피드 사다리" title="스피드 사다리" @click="$tools.ready('/speedladder', false)">
@@ -31,7 +31,7 @@
                             <img src="/images/sub-banner-eospowerball3.png" class="sub-banner img-fluid" alt="이오스 3분 파워볼" title="이오스 3분 파워볼" @click="$tools.ready('/eospowerball3', false)">
                         </div>
                         <div class="col-12 mt-2">
-                            <img src="/images/sub-banner-eospowerball5.png" class="sub-banner img-fluid" alt="이오스 5분 파워볼" title="이오스 5분 파워볼" @click="$tools.ready('/eospowerball', false)">
+                            <img src="/images/sub-banner-eospowerball5.png" class="sub-banner img-fluid" alt="이오스 5분 파워볼" title="이오스 5분 파워볼" @click="$tools.pushRouter('/eospowerball', false)">
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
     export default {
         name: 'MinigameMenu',
         components: {
-            
+
         },
         computed: {
         },

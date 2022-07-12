@@ -4,15 +4,15 @@
             <div class="row">
                 <div class="col-12 minigame-menu d-none d-xl-block">
                     <div class="row">
-                        <div class="col-3 col-xl menu-name" @click="$tools.pushRouter('/powerball', false)">
+                        <div class="col-3 col-xl menu-name" @click="$tools.ready('/powerball', false)">
                             <img src="/images/icon-nav-minigame-1.png" alt="파워볼">
                             파워볼
                         </div>
-                        <div class="col-3 col-xl menu-name" @click="$tools.pushRouter('/powerladder', false)">
+                        <div class="col-3 col-xl menu-name" @click="$tools.ready('/powerladder', false)">
                             <img src="/images/icon-nav-minigame-2.png" alt="파워사다리">
                             파워사다리
                         </div>
-                        <div class="col-3 col-xl menu-name" @click="$tools.pushRouter('/kenoladder', false)">
+                        <div class="col-3 col-xl menu-name" @click="$tools.ready('/kenoladder', false)">
                             <img src="/images/icon-nav-minigame-3.png" alt="키노사다리">
                             키노사다리
                         </div>
@@ -52,7 +52,7 @@
                             <img src="/images/icon-nav-minigame-8.png" alt="EOS 3분">
                             EOS 3분
                         </div>
-                        <div class="col-3 col-xl menu-name-second" @click="$tools.ready('/eospowerball', false)">
+                        <div class="col-3 col-xl menu-name-second" @click="$tools.pushRouter('/eospowerball', false)">
                             <img src="/images/icon-nav-minigame-8.png" alt="EOS 5분">
                             EOS 5분
                         </div>
