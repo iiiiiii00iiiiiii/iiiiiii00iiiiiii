@@ -356,6 +356,13 @@ const routes = [
         meta: { layout: 'Default' },
         beforeEnter: getInformationWithout()
     },
+    {
+        path: '/eospowerball',
+        name: 'EosPowerball',
+        component: () => import(/* webpackChunkName: "eospowerball" */ '../views/EosPowerball.vue'),
+        meta: { layout: 'Default' },
+        beforeEnter: getInformationWithout()
+    },
     // betlist
     {
         path: '/betlist',

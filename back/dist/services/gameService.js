@@ -67,7 +67,7 @@ class GameService {
                 }
             }));
         };
-        this.getPrematchList = (page, sport, league) => {
+        this.getPrematchList = (page, sport, league, query) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -100,6 +100,16 @@ class GameService {
                         findQuery.sport.$nin.push('CS:GO');
                         findQuery.sport.$nin.push('Dota 2');
                         findQuery.sport.$nin.push('FIFA');
+                    }
+                    if (query) {
+                        findQuery.$or = [
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) }
+                        ];
                     }
                     // if(config.displaySportCross.length > 0) {
                     //     findQuery.leagueOID = {
@@ -243,7 +253,7 @@ class GameService {
                 }
             }));
         };
-        this.getPrematchCrossList = (page, sport, league) => {
+        this.getPrematchCrossList = (page, sport, league, query) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -271,6 +281,16 @@ class GameService {
                                 $in: config_1.default.displaySportCross
                             };
                         }
+                    }
+                    if (query) {
+                        findQuery.$or = [
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) }
+                        ];
                     }
                     const whatQuery = {
                         projection: {
@@ -376,7 +396,7 @@ class GameService {
                 }
             }));
         };
-        this.getLiveList = (page, sport) => {
+        this.getLiveList = (page, sport, league, query) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -392,6 +412,26 @@ class GameService {
                         findQuery.sport = sport;
                     if (!sport && config_1.default.db.id === 'demark') {
                         findQuery.sport.$nin.push('LoL');
+                    }
+                    if (league) {
+                        findQuery.leagueKor = league;
+                    }
+                    else {
+                        if (config_1.default.displaySportCross.length > 0) {
+                            findQuery.leagueOID = {
+                                $in: config_1.default.displaySportCross
+                            };
+                        }
+                    }
+                    if (query) {
+                        findQuery.$or = [
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) }
+                        ];
                     }
                     const whatQuery = {
                         projection: {
@@ -516,7 +556,7 @@ class GameService {
                 }
             }));
         };
-        this.getPrematchSpecialList = (page, sport) => {
+        this.getPrematchSpecialList = (page, sport, league, query) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -558,6 +598,26 @@ class GameService {
                         { 'showConfig.firstDragon1stSet': true, 'specialActiveObject.firstDragon1stSet': true },
                         { 'showConfig.firstBlood1stSet': true, 'specialActiveObject.firstBlood1stSet': true }
                     ];
+                    if (league) {
+                        findQuery.leagueKor = league;
+                    }
+                    else {
+                        if (config_1.default.displaySportCross.length > 0) {
+                            findQuery.leagueOID = {
+                                $in: config_1.default.displaySportCross
+                            };
+                        }
+                    }
+                    if (query) {
+                        findQuery.$or = [
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) }
+                        ];
+                    }
                     const whatQuery = {
                         projection: {
                             sport: 1,
@@ -609,7 +669,7 @@ class GameService {
                 }
             }));
         };
-        this.getLiveKorList = (page, sport) => {
+        this.getLiveKorList = (page, sport, league, query) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let r = { error: null, data: null, count: null };
                 try {
@@ -638,6 +698,26 @@ class GameService {
                         //     $in: ['USA', 'Korea']
                         // }
                         findQuery.custom = true;
+                    }
+                    if (league) {
+                        findQuery.leagueKor = league;
+                    }
+                    else {
+                        if (config_1.default.displaySportCross.length > 0) {
+                            findQuery.leagueOID = {
+                                $in: config_1.default.displaySportCross
+                            };
+                        }
+                    }
+                    if (query) {
+                        findQuery.$or = [
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { leagueKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { homeTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toLocaleLowerCase())}`) },
+                            { awayTeamKor: new RegExp(`^${(0, modules_1.mongoSanitize)(query.toUpperCase())}`) }
+                        ];
                     }
                     const whatQuery = {
                         projection: {

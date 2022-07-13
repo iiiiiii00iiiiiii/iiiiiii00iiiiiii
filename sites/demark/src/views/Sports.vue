@@ -14,15 +14,17 @@
                     </div>
                     <div class="sports-header-list">
                         <div class="search">
-                            <input type="text" name="skeyword" id="search-sports" placeholder="리그, 팀명을 입력해주세요" value="">
-                            <button type="submit" class="search-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                            </button>
+                            <form @submit.prevent="submit()">
+                                <input type="text" name="skeyword" id="search-sports" placeholder="리그, 팀명을 입력해주세요" v-model="search.query">
+                                <button type="submit" class="search-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    <div class="sports-event-header">
+                    <!-- <div class="sports-event-header">
                         <span class="event-title">Prematch <b>Event</b></span>
                         <span class="sorting-method">
                             <span class="type-time active">
@@ -32,8 +34,8 @@
                                 <font-awesome-icon :icon="['fa', 'flag']"/> 리그순정렬
                             </span>
                         </span>
-                    </div>
-                    <div class="sports-icon">
+                    </div> -->
+                    <div class="sports-icon mt-2">
                         <div class="sports-icon-wrap">
                             <ul>
                                 <li @click="selectCategory('')">
@@ -56,10 +58,10 @@
                                     <img src="/images/icon-icehockey-gray.png" class="sports-category-icon" id="Ice Hockey" alt="아이스하키" title="아이스하키">
                                     <div class="mt-1">아이스하키</div>
                                 </li>
-                                <li @click="selectCategory('Tennis')">
+                                <!-- <li @click="selectCategory('Tennis')">
                                     <img src="/images/icon-tennis-gray.png" class="sports-category-icon" id="Tennis" alt="테니스" title="테니스">
                                     <div class="mt-1">테니스</div>
-                                </li>
+                                </li> -->
                                 <li @click="selectCategory('Handball')">
                                     <img src="/images/icon-handball-gray.png" class="sports-category-icon" id="Handball" alt="핸드볼" title="핸드볼">
                                     <div class="mt-1">핸드볼</div>
@@ -80,10 +82,10 @@
                                     <img src="/images/icon-boxing-gray.png" class="sports-category-icon" id="Boxing" alt="권투" title="권투">
                                     <div class="mt-1">권투</div>
                                 </li>
-                                <li @click="selectCategory('Table Tennis')">
+                                <!-- <li @click="selectCategory('Table Tennis')">
                                     <img src="/images/icon-tabletennis-gray.png" class="sports-category-icon" id="Table Tennis" alt="탁구" title="탁구">
                                     <div class="mt-1">탁구</div>
-                                </li>
+                                </li> -->
                                 <li @click="selectCategory('MMA')">
                                     <img src="/images/icon-mma-gray.png" class="sports-category-icon" id="MMA" alt="이종격투기" title="이종격투기">
                                     <div class="mt-1">이종격투기</div>
@@ -5355,7 +5357,8 @@
                 search: {
                     page: 1,
                     sport: '',
-                    league: ''
+                    league: '',
+                    query: ''
                 },
                 expand: {},
                 data: [],
@@ -5374,11 +5377,12 @@
                 this.search.page = this.$route.query.page ? this.$route.query.page : 1
                 this.search.sport = this.$route.query.sport ? this.$route.query.sport : ''
                 this.search.league = this.$route.query.league ? this.$route.query.league : ''
+                this.search.query = this.$route.query.query ? this.$route.query.query : ''
 
                 this.getList()
             },
             linkGen(page) {
-                return `?page=${page}&sport=${this.search.sport}&league=${this.search.league}`
+                return `?page=${page}&sport=${this.search.sport}&league=${this.search.league}&query=${this.search.query}`
             },
             async getList() {
                 this.overlay = true
@@ -5629,7 +5633,13 @@
                 }
 
                 this.setBetCart(v)
-            }
+            },
+            submit() {
+                const path = encodeURI(`${this.$route.path}${this.linkGen(1)}`)
+
+                if(path !== this.$route.fullPath) this.$tools.pushRouter(path)
+                else this.getList()
+            },
         },
         beforeRouteLeave (to, from, next) {
             this.deleteBetCartAll()

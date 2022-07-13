@@ -65,7 +65,7 @@ export default class GameService implements IGameService {
         })
     }
 
-    public getPrematchList = (page: number, sport: string, league: string): Promise<TService> => {
+    public getPrematchList = (page: number, sport: string, league: string, query: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -99,6 +99,17 @@ export default class GameService implements IGameService {
                     findQuery.sport.$nin.push('CS:GO')
                     findQuery.sport.$nin.push('Dota 2')
                     findQuery.sport.$nin.push('FIFA')
+                }
+
+                if(query) {
+                    findQuery.$or = [
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) }
+                    ]
                 }
 
                 // if(config.displaySportCross.length > 0) {
@@ -255,7 +266,7 @@ export default class GameService implements IGameService {
         })
     }
 
-    public getPrematchCrossList = (page: number, sport: string, league?: string): Promise<TService> => {
+    public getPrematchCrossList = (page: number, sport: string, league: string, query: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -287,6 +298,17 @@ export default class GameService implements IGameService {
                             $in: config.displaySportCross
                         }
                     }
+                }
+
+                if(query) {
+                    findQuery.$or = [
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) }
+                    ]
                 }
 
                 const whatQuery: any = {
@@ -402,7 +424,7 @@ export default class GameService implements IGameService {
         })
     }
 
-    public getLiveList = (page: number, sport: string): Promise<TService> => {
+    public getLiveList = (page: number, sport: string, league: string, query: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -420,6 +442,28 @@ export default class GameService implements IGameService {
 
                 if(!sport && config.db.id === 'demark') {
                     findQuery.sport.$nin.push('LoL')
+                }
+
+                if(league) {
+                    findQuery.leagueKor = league
+                }
+                else {
+                    if(config.displaySportCross.length > 0) {
+                        findQuery.leagueOID = {
+                            $in: config.displaySportCross
+                        }
+                    }
+                }
+
+                if(query) {
+                    findQuery.$or = [
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) }
+                    ]
                 }
 
                 const whatQuery: any = {
@@ -558,7 +602,7 @@ export default class GameService implements IGameService {
         })
     }
 
-    public getPrematchSpecialList = (page: number, sport: string): Promise<TService> => {
+    public getPrematchSpecialList = (page: number, sport: string, league: string, query: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -603,6 +647,28 @@ export default class GameService implements IGameService {
                     { 'showConfig.firstDragon1stSet': true, 'specialActiveObject.firstDragon1stSet': true },
                     { 'showConfig.firstBlood1stSet': true, 'specialActiveObject.firstBlood1stSet': true }
                 ]
+
+                if(league) {
+                    findQuery.leagueKor = league
+                }
+                else {
+                    if(config.displaySportCross.length > 0) {
+                        findQuery.leagueOID = {
+                            $in: config.displaySportCross
+                        }
+                    }
+                }
+
+                if(query) {
+                    findQuery.$or = [
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) }
+                    ]
+                }
 
                 const whatQuery: any = {
                     projection: {
@@ -659,7 +725,7 @@ export default class GameService implements IGameService {
         })
     }
 
-    public getLiveKorList = (page: number, sport: string): Promise<TService> => {
+    public getLiveKorList = (page: number, sport: string, league: string, query: string): Promise<TService> => {
         return new Promise<TService>(async (resolve, reject) => {
             let r: TService = { error: null, data: null, count: null }
 
@@ -690,6 +756,28 @@ export default class GameService implements IGameService {
                     //     $in: ['USA', 'Korea']
                     // }
                     findQuery.custom = true
+                }
+
+                if(league) {
+                    findQuery.leagueKor = league
+                }
+                else {
+                    if(config.displaySportCross.length > 0) {
+                        findQuery.leagueOID = {
+                            $in: config.displaySportCross
+                        }
+                    }
+                }
+
+                if(query) {
+                    findQuery.$or = [
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { leagueKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { homeTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toLocaleLowerCase())}`) },
+                        { awayTeamKor: new RegExp(`^${mongoSanitize(query.toUpperCase())}`) }
+                    ]
                 }
 
                 const whatQuery: any = {

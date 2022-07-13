@@ -12,6 +12,7 @@ const config = {
     bogleladderTerm: parseInt(process.env.VUE_APP_BOGLELADDER_TIME),
     googlePowerball1Term: parseInt(process.env.VUE_APP_GOOGLEPOWERBALL1_TIME),
     googlePowerball3Term: parseInt(process.env.VUE_APP_GOOGLEPOWERBALL3_TIME),
+    eosPowerballTerm: parseInt(process.env.VUE_APP_EOSPOWERBALL_TIME),
     statusCharge: ['확인 중', '입금 완료', '입금 취소'],
     statusChargeClass: ['', 'text-green', 'text-orange'],
     statusExchange: ['확인 중', '출금 완료', '출금 취소'],
@@ -96,7 +97,9 @@ const config = {
         '클럽친선': "5e7f52e4ea48d13eb07a7073",
         '파라과이': "5f10b1e001a10c1bfc99ce90",
         '필리핀': "5f816c3023f8242b7b1c8554",
-        '호주': "5eec99b3c2999b0ec0caffe1"
+        '호주': "5eec99b3c2999b0ec0caffe1",
+        '스코틀랜드': '5f24013701a10c1bfc9a455b',
+        '콜롬비아': '5f3bdfa4b5258615ecd0c75b'
     },
     convertBetTypeSports: {
         x: '승무패',
@@ -404,6 +407,7 @@ const config = {
         bogleladder: '보글 사다리',
         googlePowerball1: '구글 1분 파워볼',
         googlePowerball3: '구글 3분 파워볼',
+        eosPowerball: '이오스 5분 파워볼'
     }
 }
 
