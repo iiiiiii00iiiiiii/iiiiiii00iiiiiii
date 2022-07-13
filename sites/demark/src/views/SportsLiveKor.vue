@@ -24,7 +24,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="sports-event-header">
+                    <!-- <div class="sports-event-header">
                         <span class="event-title">Prematch <b>Event</b></span>
                         <span class="sorting-method">
                             <span class="type-time active">
@@ -34,8 +34,8 @@
                                 <font-awesome-icon :icon="['fa', 'flag']"/> 리그순정렬
                             </span>
                         </span>
-                    </div>
-                    <div class="sports-icon">
+                    </div> -->
+                    <div class="sports-icon mt-2">
                         <div class="sports-icon-wrap">
                             <ul>
                                 <li @click="selectCategory('')">
