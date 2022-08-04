@@ -58,5 +58,14 @@ sites/x3/package-lock.json
 sites/ib/node_modules
 sites/ib/package-lock.json
 
+sites/apple/node_modules
+sites/apple/package-lock.json
+
+sites/ocean/node_modules
+sites/ocean/package-lock.json
+
+sites/ocen/node_modules
+sites/ocen/package-lock.json
+
 sites/xxx/node_modules
 sites/xxx/package-lock.json
