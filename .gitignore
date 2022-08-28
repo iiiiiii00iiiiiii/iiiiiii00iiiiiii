@@ -6,6 +6,10 @@ back/package-lock.json
 sites/###meta
 sites/##meta
 sites/#meta
+sites/#nacho
+
+sites/myname/node_modules
+sites/myname/package-lock.json
 
 sites/backnum/node_modules
 sites/backnum/package-lock.json
